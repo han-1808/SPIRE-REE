@@ -1,0 +1,15 @@
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.1
+scikit-learn==1.5.1
+openpyxl==3.1.2
+pyarrow==16.1.0
+xgboost==2.1.1
+lightgbm==4.5.0
+catboost==1.2.7
+shap==0.46.0
+torch==2.4.1
+torch-geometric==2.6.1
+pykrige==1.7.2
+matplotlib==3.10.8
+cartopy==0.25.0

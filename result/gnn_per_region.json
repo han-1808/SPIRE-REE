@@ -1,0 +1,2128 @@
+{
+  "experiment": "gnn_per_region_inductive",
+  "description": "SPIRE / GCN / GAT trained per-region. Each region forms its own graph. 5 nodes randomly held out as test (strictly inductive: each test node augmented one-by-one into the train+val graph). SPIRE tuned; GCN and GAT reuse the same best config.",
+  "models": [
+    "spire",
+    "gcn",
+    "gat"
+  ],
+  "n_test_per_region": 5,
+  "regions": [
+    "Africa",
+    "China",
+    "East Asia",
+    "Europe",
+    "Middle East",
+    "North America",
+    "Oceania",
+    "Russian Federation",
+    "South America",
+    "South and Central Asia"
+  ],
+  "runs": [
+    {
+      "run_id": "orig",
+      "seed": 42,
+      "avg_metrics": {
+        "spire": {
+          "accuracy": 0.9,
+          "precision": 0.915,
+          "recall": 0.975,
+          "f1": 0.9353174603174603,
+          "roc_auc": 0.9523809523809523,
+          "pr_auc": 0.9722222222222222
+        },
+        "gcn": {
+          "accuracy": 0.76,
+          "precision": 0.7866666666666667,
+          "recall": 0.9416666666666667,
+          "f1": 0.8373015873015873,
+          "roc_auc": 0.5952380952380951,
+          "pr_auc": 0.8148809523809523
+        },
+        "gat": {
+          "accuracy": 0.76,
+          "precision": 0.795,
+          "recall": 0.95,
+          "f1": 0.8373015873015873,
+          "roc_auc": 0.6190476190476192,
+          "pr_auc": 0.8323412698412699
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_total": 235,
+          "n_train": 184,
+          "n_val": 46,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.001
+          ],
+          "best_val_f1": 0.9014084507042254,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.0,
+              "pr_auc": 0.4777777777777778
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "China": {
+          "n_total": 214,
+          "n_train": 168,
+          "n_val": 41,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9444444444444444,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          }
+        },
+        "East Asia": {
+          "n_total": 358,
+          "n_train": 283,
+          "n_val": 70,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.9814814814814815,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.16666666666666666,
+              "pr_auc": 0.5333333333333333
+            }
+          }
+        },
+        "Europe": {
+          "n_total": 383,
+          "n_train": 303,
+          "n_val": 75,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.916030534351145,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          }
+        },
+        "Middle East": {
+          "n_total": 63,
+          "n_train": 47,
+          "n_val": 11,
+          "n_test": 5,
+          "best_config": [
+            32,
+            1,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 1.0,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            }
+          }
+        },
+        "North America": {
+          "n_total": 423,
+          "n_train": 335,
+          "n_val": 83,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.8846153846153846,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            },
+            "gat": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7
+            }
+          }
+        },
+        "Oceania": {
+          "n_total": 504,
+          "n_train": 400,
+          "n_val": 99,
+          "n_test": 5,
+          "best_config": [
+            128,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9078947368421053,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_total": 147,
+          "n_train": 114,
+          "n_val": 28,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.001
+          ],
+          "best_val_f1": 0.972972972972973,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          }
+        },
+        "South America": {
+          "n_total": 253,
+          "n_train": 199,
+          "n_val": 49,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9512195121951219,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": null,
+              "pr_auc": null
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_total": 532,
+          "n_train": 422,
+          "n_val": 105,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9397590361445783,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 17,
+      "seed": 17,
+      "avg_metrics": {
+        "spire": {
+          "accuracy": 0.86,
+          "f1": 0.9,
+          "roc_auc": 0.8166666666666668,
+          "pr_auc": 0.9316666666666666
+        },
+        "gcn": {
+          "accuracy": 0.7,
+          "f1": 0.7448412698412697,
+          "roc_auc": 0.575,
+          "pr_auc": 0.7593055555555555
+        },
+        "gat": {
+          "accuracy": 0.74,
+          "f1": 0.805952380952381,
+          "roc_auc": 0.7749999999999999,
+          "pr_auc": 0.9023611111111111
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_total": 235,
+          "n_train": 184,
+          "n_val": 46,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.9014084507042254,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          }
+        },
+        "China": {
+          "n_total": 214,
+          "n_train": 168,
+          "n_val": 41,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.8387096774193549,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.3333333333333333,
+              "f1": 0.5,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            }
+          }
+        },
+        "East Asia": {
+          "n_total": 358,
+          "n_train": 283,
+          "n_val": 70,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9278350515463918,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Europe": {
+          "n_total": 383,
+          "n_train": 303,
+          "n_val": 75,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9618320610687023,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Middle East": {
+          "n_total": 63,
+          "n_train": 47,
+          "n_val": 11,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.8888888888888888,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "North America": {
+          "n_total": 423,
+          "n_train": 335,
+          "n_val": 83,
+          "n_test": 5,
+          "best_config": [
+            128,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.8817204301075269,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "gat": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Oceania": {
+          "n_total": 504,
+          "n_train": 400,
+          "n_val": 99,
+          "n_test": 5,
+          "best_config": [
+            32,
+            1,
+            0.5,
+            0.001
+          ],
+          "best_val_f1": 0.9411764705882353,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_total": 147,
+          "n_train": 114,
+          "n_val": 28,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.9473684210526315,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "gat": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "South America": {
+          "n_total": 253,
+          "n_train": 199,
+          "n_val": 49,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9302325581395349,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_total": 532,
+          "n_train": 422,
+          "n_val": 105,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 1.0,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.3333333333333333,
+              "pr_auc": 0.5888888888888889
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 21,
+      "seed": 21,
+      "avg_metrics": {
+        "spire": {
+          "accuracy": 0.8400000000000001,
+          "precision": 0.8216666666666667,
+          "recall": 1.0,
+          "f1": 0.8934920634920636,
+          "roc_auc": 0.9,
+          "pr_auc": 0.9394444444444444
+        },
+        "gcn": {
+          "accuracy": 0.76,
+          "precision": 0.795,
+          "recall": 0.95,
+          "f1": 0.8373015873015873,
+          "roc_auc": 0.7,
+          "pr_auc": 0.8880555555555555
+        },
+        "gat": {
+          "accuracy": 0.74,
+          "precision": 0.765,
+          "recall": 0.925,
+          "f1": 0.8150793650793651,
+          "roc_auc": 0.7666666666666666,
+          "pr_auc": 0.9155555555555555
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_total": 235,
+          "n_train": 184,
+          "n_val": 46,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.001
+          ],
+          "best_val_f1": 0.9166666666666666,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "China": {
+          "n_total": 214,
+          "n_train": 168,
+          "n_val": 41,
+          "n_test": 5,
+          "best_config": [
+            32,
+            1,
+            0.5,
+            0.001
+          ],
+          "best_val_f1": 0.8947368421052632,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7555555555555555
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            }
+          }
+        },
+        "East Asia": {
+          "n_total": 358,
+          "n_train": 283,
+          "n_val": 70,
+          "n_test": 5,
+          "best_config": [
+            128,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9380530973451328,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7
+            },
+            "gat": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Europe": {
+          "n_total": 383,
+          "n_train": 303,
+          "n_val": 75,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9343065693430657,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Middle East": {
+          "n_total": 63,
+          "n_train": 47,
+          "n_val": 11,
+          "n_test": 5,
+          "best_config": [
+            32,
+            1,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 1.0,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7555555555555555
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8666666666666667
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8666666666666667
+            }
+          }
+        },
+        "North America": {
+          "n_total": 423,
+          "n_train": 335,
+          "n_val": 83,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.001
+          ],
+          "best_val_f1": 0.8932038834951457,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "gat": {
+              "accuracy": 0.2,
+              "precision": 0.5,
+              "recall": 0.25,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          }
+        },
+        "Oceania": {
+          "n_total": 504,
+          "n_train": 400,
+          "n_val": 99,
+          "n_test": 5,
+          "best_config": [
+            128,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.9212121212121213,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_total": 147,
+          "n_train": 114,
+          "n_val": 28,
+          "n_test": 5,
+          "best_config": [
+            64,
+            1,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9285714285714286,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "South America": {
+          "n_total": 253,
+          "n_train": 199,
+          "n_val": 49,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.9285714285714286,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_total": 532,
+          "n_train": 422,
+          "n_val": 105,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9705882352941176,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 20,
+      "seed": 50,
+      "avg_metrics": {
+        "spire": {
+          "accuracy": 0.9,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9416666666666667,
+          "roc_auc": 0.95,
+          "pr_auc": 0.99
+        },
+        "gcn": {
+          "accuracy": 0.6799999999999999,
+          "precision": 0.6616666666666667,
+          "recall": 0.825,
+          "f1": 0.7198412698412697,
+          "roc_auc": 0.775,
+          "pr_auc": 0.905
+        },
+        "gat": {
+          "accuracy": 0.74,
+          "precision": 0.725,
+          "recall": 1.0,
+          "f1": 0.8165873015873016,
+          "roc_auc": 0.7,
+          "pr_auc": 0.8431944444444444
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_total": 235,
+          "n_train": 184,
+          "n_val": 46,
+          "n_test": 5,
+          "best_config": [
+            128,
+            1,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9210526315789473,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.0,
+              "pr_auc": 0.4777777777777778
+            }
+          }
+        },
+        "China": {
+          "n_total": 214,
+          "n_train": 168,
+          "n_val": 41,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9047619047619048,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.6666666666666666,
+              "recall": 0.5,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "East Asia": {
+          "n_total": 358,
+          "n_train": 283,
+          "n_val": 70,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.8936170212765957,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          }
+        },
+        "Europe": {
+          "n_total": 383,
+          "n_train": 303,
+          "n_val": 75,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9133858267716536,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Middle East": {
+          "n_total": 63,
+          "n_train": 47,
+          "n_val": 11,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.001
+          ],
+          "best_val_f1": 0.9411764705882353,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          }
+        },
+        "North America": {
+          "n_total": 423,
+          "n_train": 335,
+          "n_val": 83,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.8623853211009175,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Oceania": {
+          "n_total": 504,
+          "n_train": 400,
+          "n_val": 99,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9251700680272109,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_total": 147,
+          "n_train": 114,
+          "n_val": 28,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.001
+          ],
+          "best_val_f1": 0.9333333333333333,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          }
+        },
+        "South America": {
+          "n_total": 253,
+          "n_train": 199,
+          "n_val": 49,
+          "n_test": 5,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.963855421686747,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_total": 532,
+          "n_train": 422,
+          "n_val": 105,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9508196721311475,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "roc_auc": 0.75,
+              "pr_auc": 0.5
+            },
+            "gat": {
+              "accuracy": 0.4,
+              "precision": 0.25,
+              "recall": 1.0,
+              "f1": 0.4,
+              "roc_auc": 0.25,
+              "pr_auc": 0.25
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 2,
+      "seed": 32,
+      "avg_metrics": {
+        "spire": {
+          "accuracy": 0.9,
+          "precision": 0.905,
+          "recall": 0.975,
+          "f1": 0.926984126984127,
+          "roc_auc": 0.9666666666666666,
+          "pr_auc": 0.9805555555555555
+        },
+        "gcn": {
+          "accuracy": 0.6799999999999999,
+          "precision": 0.705,
+          "recall": 0.9,
+          "f1": 0.7626984126984128,
+          "roc_auc": 0.5583333333333333,
+          "pr_auc": 0.7602777777777778
+        },
+        "gat": {
+          "accuracy": 0.74,
+          "precision": 0.745,
+          "recall": 0.95,
+          "f1": 0.8067460317460317,
+          "roc_auc": 0.6666666666666667,
+          "pr_auc": 0.8522222222222222
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_total": 235,
+          "n_train": 184,
+          "n_val": 46,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.8732394366197183,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.16666666666666669,
+              "pr_auc": 0.3666666666666667
+            },
+            "gat": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            }
+          }
+        },
+        "China": {
+          "n_total": 214,
+          "n_train": 168,
+          "n_val": 41,
+          "n_test": 5,
+          "best_config": [
+            32,
+            1,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9444444444444444,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.2,
+              "precision": 0.25,
+              "recall": 0.5,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.16666666666666669,
+              "pr_auc": 0.3666666666666667
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          }
+        },
+        "East Asia": {
+          "n_total": 358,
+          "n_train": 283,
+          "n_val": 70,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9433962264150944,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Europe": {
+          "n_total": 383,
+          "n_train": 303,
+          "n_val": 75,
+          "n_test": 5,
+          "best_config": [
+            128,
+            2,
+            0.3,
+            0.001
+          ],
+          "best_val_f1": 0.9032258064516129,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gat": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "Middle East": {
+          "n_total": 63,
+          "n_train": 47,
+          "n_val": 11,
+          "n_test": 5,
+          "best_config": [
+            32,
+            1,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9523809523809523,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          }
+        },
+        "North America": {
+          "n_total": 423,
+          "n_train": 335,
+          "n_val": 83,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.8602150537634409,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.0,
+              "pr_auc": 0.4777777777777778
+            },
+            "gat": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7555555555555555
+            }
+          }
+        },
+        "Oceania": {
+          "n_total": 504,
+          "n_train": 400,
+          "n_val": 99,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.925,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_total": 147,
+          "n_train": 114,
+          "n_val": 28,
+          "n_test": 5,
+          "best_config": [
+            32,
+            1,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9285714285714286,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        },
+        "South America": {
+          "n_total": 253,
+          "n_train": 199,
+          "n_val": 49,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9523809523809523,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_total": 532,
+          "n_train": 422,
+          "n_val": 105,
+          "n_test": 5,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9782608695652174,
+          "test_metrics": {
+            "spire": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "gcn": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            },
+            "gat": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            }
+          }
+        }
+      }
+    }
+  ]
+}

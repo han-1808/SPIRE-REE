@@ -1,0 +1,1700 @@
+{
+  "experiment": "ablation_feature_exp3",
+  "description": "Feature ablation for SPIRE on Exp 3 (global inductive, 5 nodes/region). full=13-dim (SHAP+ensemble+edge-stat), no_edge_stats=11-dim (SHAP+ensemble), no_ensemble=10-dim (SHAP only). Test splits shared across modes per seed.",
+  "model": "spire",
+  "modes": [
+    "no_edge_stats",
+    "no_ensemble"
+  ],
+  "seeds": [
+    42,
+    23,
+    10,
+    16,
+    49
+  ],
+  "runs": {
+    "no_edge_stats": {
+      "42": {
+        "avg_metrics": {
+          "accuracy": 0.8600000000000001,
+          "f1": 0.8301587301587301,
+          "pr_auc": 0.9208333333333334,
+          "roc_auc": 0.8958333333333334
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.916267942583732,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9178532311062432,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              1,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9117647058823529,
+            "metrics": {
+              "accuracy": 0.4,
+              "f1": 0.0,
+              "roc_auc": 0.16666666666666669,
+              "pr_auc": 0.3666666666666667
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9066985645933014,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9142212189616253,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9214536928487691,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9057071960297767,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9138134592680047,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9022379269729093,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.001
+            ],
+            "best_val_f1": 0.9111111111111111,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "23": {
+        "avg_metrics": {
+          "accuracy": 0.9400000000000001,
+          "f1": 0.9555555555555555,
+          "pr_auc": 0.9722222222222222,
+          "roc_auc": 0.9722222222222223
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8948004836759371,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8980099502487562,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9272300469483568,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8986568986568987,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.908881199538639,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              1,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9200913242009132,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9236276849642004,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9144893111638955,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9095238095238095,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8950542822677925,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "10": {
+        "avg_metrics": {
+          "accuracy": 0.8800000000000001,
+          "f1": 0.893095238095238,
+          "pr_auc": 0.9214285714285714,
+          "roc_auc": 0.8928571428571429
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9289871944121071,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.001
+            ],
+            "best_val_f1": 0.9165714285714286,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.908235294117647,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9165659008464329,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.001
+            ],
+            "best_val_f1": 0.9086538461538461,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8991696322657177,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8864197530864197,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9208972845336482,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9187935034802784,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8996458087367178,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "16": {
+        "avg_metrics": {
+          "accuracy": 0.86,
+          "f1": 0.9130952380952382,
+          "pr_auc": 0.9603395061728395,
+          "roc_auc": 0.8796296296296295
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9066002490660025,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9077490774907749,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9156908665105387,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.909310761789601,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9033760186263097,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9157769869513642,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9014423076923077,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9041420118343195,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9312288613303269,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "49": {
+        "avg_metrics": {
+          "accuracy": 0.8600000000000001,
+          "f1": 0.9105555555555556,
+          "pr_auc": 0.9916666666666667,
+          "roc_auc": 0.9583333333333334
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9205983889528193,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9142857142857143,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9168704156479217,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9172749391727494,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9265944645006017,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9142857142857143,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.001
+            ],
+            "best_val_f1": 0.9120750293083235,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9167643610785463,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9066339066339066,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              1,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9069212410501193,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      }
+    },
+    "no_ensemble": {
+      "42": {
+        "avg_metrics": {
+          "accuracy": 0.76,
+          "f1": 0.7482539682539682,
+          "pr_auc": 0.9015625,
+          "roc_auc": 0.8125
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8772782503037667,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8868360277136259,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8896473265073948,
+            "metrics": {
+              "accuracy": 0.2,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.0,
+              "pr_auc": 0.325
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8735083532219571,
+            "metrics": {
+              "accuracy": 0.4,
+              "f1": 0.5714285714285714
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8968713789107764,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9037758830694276,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8843373493975903,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8878718535469108,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8793309438470729,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8993788819875776,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "23": {
+        "avg_metrics": {
+          "accuracy": 0.8800000000000001,
+          "f1": 0.9238095238095237,
+          "pr_auc": 0.9305555555555555,
+          "roc_auc": 0.9444444444444445
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8679706601466992,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.001
+            ],
+            "best_val_f1": 0.871859296482412,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8914819136522754,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8692493946731235,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8754448398576512,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              1,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8896247240618101,
+            "metrics": {
+              "accuracy": 0.4,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9022379269729093,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8824242424242424,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8822115384615384,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8665850673194615,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "10": {
+        "avg_metrics": {
+          "accuracy": 0.6799999999999999,
+          "f1": 0.7665873015873015,
+          "pr_auc": 0.9142857142857144,
+          "roc_auc": 0.8571428571428571
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.896551724137931,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8974358974358975,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8923444976076556,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8918918918918919,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8983050847457628,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8888888888888888,
+            "metrics": {
+              "accuracy": 0.4,
+              "f1": 0.4,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8621553884711779,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8779931584948689,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8888888888888888,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8796185935637664,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "16": {
+        "avg_metrics": {
+          "accuracy": 0.7000000000000001,
+          "f1": 0.7607142857142857,
+          "pr_auc": 0.9212962962962963,
+          "roc_auc": 0.7314814814814814
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.001
+            ],
+            "best_val_f1": 0.88,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8801955990220048,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.89179548156956,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8751515151515151,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8784596871239471,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8815165876777251,
+            "metrics": {
+              "accuracy": 0.2,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8943661971830986,
+            "metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8742368742368742,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.001
+            ],
+            "best_val_f1": 0.8805790108564535,
+            "metrics": {
+              "accuracy": 0.4,
+              "f1": 0.4,
+              "roc_auc": 0.3333333333333333,
+              "pr_auc": 0.7
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.899188876013905,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "49": {
+        "avg_metrics": {
+          "accuracy": 0.86,
+          "f1": 0.9006349206349207,
+          "pr_auc": 0.9729166666666668,
+          "roc_auc": 0.875
+        },
+        "per_region": {
+          "Africa": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8983833718244804,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8929001203369434,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8985148514851485,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Europe": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8914141414141414,
+            "metrics": {
+              "accuracy": 0.4,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Middle East": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8909952606635071,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "North America": {
+            "n_test": 5,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8907563025210085,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test": 5,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8883666274970623,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8843861740166865,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.8797083839611178,
+            "metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test": 5,
+            "best_config": [
+              64,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8814814814814815,
+            "metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "summary": {
+    "no_edge_stats": {
+      "input_dim": 11,
+      "n_seeds": 5,
+      "avg_metrics": {
+        "accuracy": 0.8800000000000001,
+        "f1": 0.9004920634920636,
+        "pr_auc": 0.9532980599647267,
+        "roc_auc": 0.9197751322751323
+      },
+      "std_metrics": {
+        "accuracy": 0.03098386676965934,
+        "f1": 0.040727368794326084,
+        "pr_auc": 0.028105083657250167,
+        "roc_auc": 0.03780709294907344
+      }
+    },
+    "no_ensemble": {
+      "input_dim": 10,
+      "n_seeds": 5,
+      "avg_metrics": {
+        "accuracy": 0.776,
+        "f1": 0.82,
+        "pr_auc": 0.9281233465608466,
+        "roc_auc": 0.8441137566137566
+      },
+      "std_metrics": {
+        "accuracy": 0.08138795979750325,
+        "f1": 0.07588624776697801,
+        "pr_auc": 0.024314293816690327,
+        "roc_auc": 0.07053428020529734
+      }
+    }
+  }
+}

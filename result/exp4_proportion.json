@@ -1,0 +1,4806 @@
+{
+  "experiment": "exp4_proportion",
+  "description": "Leave-one-region-out proportion prediction. For each held-out region, every node is predicted; predicted_proportion = mean(y_prob). Metric: MAE and RMSE of |predicted \u2212 actual| across 10 regions. Baselines use 11 features (10 SHAP + xgb_score). SPIRE is inductive (same mechanism as Exp 1).",
+  "models": [
+    "xgboost",
+    "lightgbm",
+    "catboost",
+    "random_forest",
+    "svm",
+    "mlp",
+    "autoencoder",
+    "spatial_knn",
+    "kriging",
+    "spire",
+    "gcn",
+    "gat"
+  ],
+  "regions": [
+    "Africa",
+    "China",
+    "East Asia",
+    "Europe",
+    "Middle East",
+    "North America",
+    "Oceania",
+    "Russian Federation",
+    "South America",
+    "South and Central Asia"
+  ],
+  "aggregated_metrics": {
+    "xgboost": {
+      "mae": 0.1479814840851009,
+      "rmse": 0.17987924123856194,
+      "n_regions": 10
+    },
+    "lightgbm": {
+      "mae": 0.151018825175533,
+      "rmse": 0.18332430974796657,
+      "n_regions": 10
+    },
+    "catboost": {
+      "mae": 0.14416766260881192,
+      "rmse": 0.17663411884962377,
+      "n_regions": 10
+    },
+    "random_forest": {
+      "mae": 0.13711137657853062,
+      "rmse": 0.16936004444624683,
+      "n_regions": 10
+    },
+    "svm": {
+      "mae": 0.14115490265390748,
+      "rmse": 0.17287603468883955,
+      "n_regions": 10
+    },
+    "mlp": {
+      "mae": 0.1446139831853495,
+      "rmse": 0.18124558209852126,
+      "n_regions": 10
+    },
+    "autoencoder": {
+      "mae": 0.14265422560512214,
+      "rmse": 0.1704204929321608,
+      "n_regions": 10
+    },
+    "spatial_knn": {
+      "mae": 0.16244797591844745,
+      "rmse": 0.19599857012255892,
+      "n_regions": 10
+    },
+    "kriging": {
+      "mae": 0.1682283424771159,
+      "rmse": 0.18302267838882072,
+      "n_regions": 10
+    },
+    "spire": {
+      "mae": 0.10263190914758853,
+      "rmse": 0.12380760479448487,
+      "n_regions": 10
+    },
+    "gcn": {
+      "mae": 0.14691975653612044,
+      "rmse": 0.16887206808227137,
+      "n_regions": 10
+    },
+    "gat": {
+      "mae": 0.19353936790537538,
+      "rmse": 0.23082031773085446,
+      "n_regions": 10
+    }
+  },
+  "per_region": {
+    "Africa": {
+      "n_test": 235,
+      "actual_proportion": 0.7574468085106383,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.8548539876937866,
+          "abs_error": 0.09740717918314834
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.8704930052477743,
+          "abs_error": 0.113046196737136
+        },
+        "catboost": {
+          "predicted_proportion": 0.871375521703256,
+          "abs_error": 0.11392871319261777
+        },
+        "random_forest": {
+          "predicted_proportion": 0.8792198581560284,
+          "abs_error": 0.12177304964539015
+        },
+        "svm": {
+          "predicted_proportion": 0.8756937951243712,
+          "abs_error": 0.1182469866137329
+        },
+        "mlp": {
+          "predicted_proportion": 0.8770452583095838,
+          "abs_error": 0.11959844979894552
+        },
+        "spire": {
+          "predicted_proportion": 0.8110302966959932,
+          "abs_error": 0.053583488185354966,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.917617237008872
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.8983668479295079,
+          "abs_error": 0.14092003941886966
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.9581568087893773,
+          "abs_error": 0.20071000027873898
+        },
+        "kriging": {
+          "predicted_proportion": 0.639466809894506,
+          "abs_error": 0.11797999861613229
+        },
+        "gcn": {
+          "predicted_proportion": 0.7368704471182316,
+          "abs_error": 0.020576361392406706,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.005
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.9370513812024542,
+          "abs_error": 0.17960457269181596,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.005
+          ]
+        }
+      }
+    },
+    "China": {
+      "n_test": 214,
+      "actual_proportion": 0.4719626168224299,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.7979155778884888,
+          "abs_error": 0.32595296106605887
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.7948602014339379,
+          "abs_error": 0.32289758461150797
+        },
+        "catboost": {
+          "predicted_proportion": 0.7885834881534689,
+          "abs_error": 0.316620871331039
+        },
+        "random_forest": {
+          "predicted_proportion": 0.8015420560747664,
+          "abs_error": 0.32957943925233646
+        },
+        "svm": {
+          "predicted_proportion": 0.7939489916233,
+          "abs_error": 0.3219863748008701
+        },
+        "mlp": {
+          "predicted_proportion": 0.8122387520761807,
+          "abs_error": 0.3402761352537508
+        },
+        "spire": {
+          "predicted_proportion": 0.6994328096913713,
+          "abs_error": 0.22747019286894143,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9009009009009009
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.7693104654372089,
+          "abs_error": 0.29734784861477903
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.7186434672825334,
+          "abs_error": 0.24668085046010346
+        },
+        "kriging": {
+          "predicted_proportion": 0.6692489176872549,
+          "abs_error": 0.19728630086482501
+        },
+        "gcn": {
+          "predicted_proportion": 0.6230445672696996,
+          "abs_error": 0.1510819504472697,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.7712335221678297,
+          "abs_error": 0.2992709053453998,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ]
+        }
+      }
+    },
+    "East Asia": {
+      "n_test": 358,
+      "actual_proportion": 0.7178770949720671,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.7360231280326843,
+          "abs_error": 0.01814603306061724
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.7266971753277994,
+          "abs_error": 0.00882008035573234
+        },
+        "catboost": {
+          "predicted_proportion": 0.7197340857761527,
+          "abs_error": 0.0018569908040856342
+        },
+        "random_forest": {
+          "predicted_proportion": 0.715661080074488,
+          "abs_error": 0.002216014897579055
+        },
+        "svm": {
+          "predicted_proportion": 0.7052516751813713,
+          "abs_error": 0.012625419790695758
+        },
+        "mlp": {
+          "predicted_proportion": 0.705420310747913,
+          "abs_error": 0.012456784224154083
+        },
+        "spire": {
+          "predicted_proportion": 0.7121736804314749,
+          "abs_error": 0.0057034145405922,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.001
+          ],
+          "best_val_f1": 0.8984700973574409
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.6858759167524533,
+          "abs_error": 0.03200117821961379
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.7394224979513679,
+          "abs_error": 0.021545402979300854
+        },
+        "kriging": {
+          "predicted_proportion": 0.6419272539293579,
+          "abs_error": 0.07594984104270919
+        },
+        "gcn": {
+          "predicted_proportion": 0.676805493135692,
+          "abs_error": 0.04107160183637504,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.001
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.6669588216356725,
+          "abs_error": 0.05091827333639454,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.001
+          ]
+        }
+      }
+    },
+    "Europe": {
+      "n_test": 383,
+      "actual_proportion": 0.8093994778067886,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.7439517974853516,
+          "abs_error": 0.065447680321437
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.7472749262746265,
+          "abs_error": 0.06212455153216201
+        },
+        "catboost": {
+          "predicted_proportion": 0.7387121957654189,
+          "abs_error": 0.07068728204136965
+        },
+        "random_forest": {
+          "predicted_proportion": 0.7500261096605744,
+          "abs_error": 0.05937336814621419
+        },
+        "svm": {
+          "predicted_proportion": 0.7743797455528229,
+          "abs_error": 0.03501973225396571
+        },
+        "mlp": {
+          "predicted_proportion": 0.7731159802107505,
+          "abs_error": 0.036283497596038106
+        },
+        "spire": {
+          "predicted_proportion": 0.7611733717119258,
+          "abs_error": 0.048226106094862775,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.9070422535211268
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.7918313260252254,
+          "abs_error": 0.017568151781563124
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.8990173418332341,
+          "abs_error": 0.08961786402644556
+        },
+        "kriging": {
+          "predicted_proportion": 0.6276858546487076,
+          "abs_error": 0.18171362315808093
+        },
+        "gcn": {
+          "predicted_proportion": 0.6336131663920052,
+          "abs_error": 0.1757863114147834,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.005
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.6341308985226459,
+          "abs_error": 0.17526857928414263,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.005
+          ]
+        }
+      }
+    },
+    "Middle East": {
+      "n_test": 63,
+      "actual_proportion": 0.873015873015873,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.7374104857444763,
+          "abs_error": 0.1356053872713967
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.7254001826491909,
+          "abs_error": 0.1476156903666821
+        },
+        "catboost": {
+          "predicted_proportion": 0.7283190303296826,
+          "abs_error": 0.14469684268619043
+        },
+        "random_forest": {
+          "predicted_proportion": 0.7160317460317458,
+          "abs_error": 0.15698412698412723
+        },
+        "svm": {
+          "predicted_proportion": 0.6777309901720902,
+          "abs_error": 0.19528488284378287
+        },
+        "mlp": {
+          "predicted_proportion": 0.7544309356608968,
+          "abs_error": 0.11858493735497622
+        },
+        "spire": {
+          "predicted_proportion": 0.8028128673396413,
+          "abs_error": 0.07020300567623172,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9082240762812872
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.6962645756616602,
+          "abs_error": 0.1767512973542128
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.5678745836998055,
+          "abs_error": 0.30514128931606754
+        },
+        "kriging": {
+          "predicted_proportion": 0.6442622871928347,
+          "abs_error": 0.22875358582303829
+        },
+        "gcn": {
+          "predicted_proportion": 0.6090890959141746,
+          "abs_error": 0.26392677710169843,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.01
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.6966407696406046,
+          "abs_error": 0.1763751033752684,
+          "best_config": [
+            64,
+            2,
+            0.5,
+            0.01
+          ]
+        }
+      }
+    },
+    "North America": {
+      "n_test": 423,
+      "actual_proportion": 0.5791962174940898,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.5999867916107178,
+          "abs_error": 0.02079057411662799
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.5630299870752083,
+          "abs_error": 0.016166230418881433
+        },
+        "catboost": {
+          "predicted_proportion": 0.5692832025485877,
+          "abs_error": 0.009913014945502119
+        },
+        "random_forest": {
+          "predicted_proportion": 0.5649802994483846,
+          "abs_error": 0.014215918045705211
+        },
+        "svm": {
+          "predicted_proportion": 0.5473108966054896,
+          "abs_error": 0.03188532088860019
+        },
+        "mlp": {
+          "predicted_proportion": 0.5574153639015168,
+          "abs_error": 0.02178085359257298
+        },
+        "spire": {
+          "predicted_proportion": 0.7745998827454328,
+          "abs_error": 0.195403665251343,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.9171270718232044
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.5458318165322867,
+          "abs_error": 0.03336440096180304
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.539352691507039,
+          "abs_error": 0.039843525987050765
+        },
+        "kriging": {
+          "predicted_proportion": 0.6649658252096949,
+          "abs_error": 0.08576960771560516
+        },
+        "gcn": {
+          "predicted_proportion": 0.6466340083743382,
+          "abs_error": 0.06743779088024837,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.5720731744247689,
+          "abs_error": 0.007123043069320878,
+          "best_config": [
+            32,
+            2,
+            0.3,
+            0.01
+          ]
+        }
+      }
+    },
+    "Oceania": {
+      "n_test": 504,
+      "actual_proportion": 0.7718253968253969,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.9534906148910522,
+          "abs_error": 0.1816652180656554
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.9672624541071833,
+          "abs_error": 0.1954370572817864
+        },
+        "catboost": {
+          "predicted_proportion": 0.9318521153078284,
+          "abs_error": 0.16002671848243155
+        },
+        "random_forest": {
+          "predicted_proportion": 0.8884391534391534,
+          "abs_error": 0.1166137566137565
+        },
+        "svm": {
+          "predicted_proportion": 0.9016278078033295,
+          "abs_error": 0.12980241097793266
+        },
+        "mlp": {
+          "predicted_proportion": 0.916832337106282,
+          "abs_error": 0.14500694028088512
+        },
+        "spire": {
+          "predicted_proportion": 0.8258356381048788,
+          "abs_error": 0.05401024127948195,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.01
+          ],
+          "best_val_f1": 0.8895434462444771
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.921340958067975,
+          "abs_error": 0.14951556124257814
+        },
+        "spatial_knn": {
+          "predicted_proportion": 1.0,
+          "abs_error": 0.22817460317460314
+        },
+        "kriging": {
+          "predicted_proportion": 0.6301255839940709,
+          "abs_error": 0.14169981283132593
+        },
+        "gcn": {
+          "predicted_proportion": 0.6199403558931653,
+          "abs_error": 0.15188504093223154,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.01
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.34102244015842204,
+          "abs_error": 0.4308029566669748,
+          "best_config": [
+            64,
+            2,
+            0.3,
+            0.01
+          ]
+        }
+      }
+    },
+    "Russian Federation": {
+      "n_test": 147,
+      "actual_proportion": 0.5374149659863946,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.8451479077339172,
+          "abs_error": 0.30773294174752264
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.8405328782419375,
+          "abs_error": 0.30311791225554285
+        },
+        "catboost": {
+          "predicted_proportion": 0.840336864390505,
+          "abs_error": 0.30292189840411043
+        },
+        "random_forest": {
+          "predicted_proportion": 0.8090022675736961,
+          "abs_error": 0.2715873015873015
+        },
+        "svm": {
+          "predicted_proportion": 0.8226572265617929,
+          "abs_error": 0.28524226057539825
+        },
+        "mlp": {
+          "predicted_proportion": 0.8380417786261901,
+          "abs_error": 0.3006268126397955
+        },
+        "spire": {
+          "predicted_proportion": 0.7127628657890825,
+          "abs_error": 0.17534789980268795,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ],
+          "best_val_f1": 0.9148099606815203
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.8184879700213418,
+          "abs_error": 0.28107300403494717
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.5135887487421043,
+          "abs_error": 0.02382621724429035
+        },
+        "kriging": {
+          "predicted_proportion": 0.6626666306371635,
+          "abs_error": 0.12525166465076887
+        },
+        "gcn": {
+          "predicted_proportion": 0.7170689377654977,
+          "abs_error": 0.17965397177910314,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.7388543216955095,
+          "abs_error": 0.20143935570911486,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.005
+          ]
+        }
+      }
+    },
+    "South America": {
+      "n_test": 253,
+      "actual_proportion": 0.83399209486166,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.6303962469100952,
+          "abs_error": 0.20359584795156482
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.6143030917578692,
+          "abs_error": 0.2196890031037908
+        },
+        "catboost": {
+          "predicted_proportion": 0.6296993512302997,
+          "abs_error": 0.2042927436313603
+        },
+        "random_forest": {
+          "predicted_proportion": 0.6458102766798418,
+          "abs_error": 0.18818181818181823
+        },
+        "svm": {
+          "predicted_proportion": 0.6555511142545681,
+          "abs_error": 0.1784409806070919
+        },
+        "mlp": {
+          "predicted_proportion": 0.5903656892566422,
+          "abs_error": 0.2436264056050178
+        },
+        "spire": {
+          "predicted_proportion": 0.9208812110508855,
+          "abs_error": 0.08688911618922546,
+          "best_config": [
+            128,
+            2,
+            0.3,
+            0.005
+          ],
+          "best_val_f1": 0.9139072847682119
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.6481735303112508,
+          "abs_error": 0.18581856455040924
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.5066768791182943,
+          "abs_error": 0.32731521574336575
+        },
+        "kriging": {
+          "predicted_proportion": 0.6354898411405403,
+          "abs_error": 0.19850225372111974
+        },
+        "gcn": {
+          "predicted_proportion": 0.7042295851490714,
+          "abs_error": 0.12976250971258863,
+          "best_config": [
+            128,
+            2,
+            0.3,
+            0.005
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.9101829081184779,
+          "abs_error": 0.07619081325681787,
+          "best_config": [
+            128,
+            2,
+            0.3,
+            0.005
+          ]
+        }
+      }
+    },
+    "South and Central Asia": {
+      "n_test": 532,
+      "actual_proportion": 0.37593984962406013,
+      "per_model": {
+        "xgboost": {
+          "predicted_proportion": 0.49941086769104004,
+          "abs_error": 0.12347101806697991
+        },
+        "lightgbm": {
+          "predicted_proportion": 0.4972137947161682,
+          "abs_error": 0.12127394509210809
+        },
+        "catboost": {
+          "predicted_proportion": 0.49267140019347233,
+          "abs_error": 0.1167315505694122
+        },
+        "random_forest": {
+          "predicted_proportion": 0.4865288220551379,
+          "abs_error": 0.11058897243107779
+        },
+        "svm": {
+          "predicted_proportion": 0.47895450681106466,
+          "abs_error": 0.10301465718700453
+        },
+        "mlp": {
+          "predicted_proportion": 0.48383886513141855,
+          "abs_error": 0.10789901550735842
+        },
+        "spire": {
+          "predicted_proportion": 0.485421811211224,
+          "abs_error": 0.10948196158716389,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.01
+          ],
+          "best_val_f1": 0.9037974683544304
+        },
+        "autoencoder": {
+          "predicted_proportion": 0.4881220594965054,
+          "abs_error": 0.11218220987244526
+        },
+        "spatial_knn": {
+          "predicted_proportion": 0.5175646395985681,
+          "abs_error": 0.141624789974508
+        },
+        "kriging": {
+          "predicted_proportion": 0.7053165859716142,
+          "abs_error": 0.32937673634755404
+        },
+        "gcn": {
+          "predicted_proportion": 0.6639550994885596,
+          "abs_error": 0.28801524986449945,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.01
+          ]
+        },
+        "gat": {
+          "predicted_proportion": 0.7143399259425643,
+          "abs_error": 0.3384000763185042,
+          "best_config": [
+            32,
+            2,
+            0.5,
+            0.01
+          ]
+        }
+      }
+    }
+  },
+  "runs": {
+    "42": {
+      "aggregated_metrics": {
+        "xgboost": {
+          "mae": 0.1479814840851009,
+          "rmse": 0.17987924123856194,
+          "n_regions": 10
+        },
+        "lightgbm": {
+          "mae": 0.151018825175533,
+          "rmse": 0.18332430974796657,
+          "n_regions": 10
+        },
+        "catboost": {
+          "mae": 0.14416766260881192,
+          "rmse": 0.17663411884962377,
+          "n_regions": 10
+        },
+        "random_forest": {
+          "mae": 0.13711137657853062,
+          "rmse": 0.16936004444624683,
+          "n_regions": 10
+        },
+        "svm": {
+          "mae": 0.14115490265390748,
+          "rmse": 0.17287603468883955,
+          "n_regions": 10
+        },
+        "mlp": {
+          "mae": 0.1446139831853495,
+          "rmse": 0.18124558209852126,
+          "n_regions": 10
+        },
+        "autoencoder": {
+          "mae": 0.14265422560512214,
+          "rmse": 0.1704204929321608,
+          "n_regions": 10
+        },
+        "spatial_knn": {
+          "mae": 0.16244797591844745,
+          "rmse": 0.19599857012255892,
+          "n_regions": 10
+        },
+        "kriging": {
+          "mae": 0.1682283424771159,
+          "rmse": 0.18302267838882072,
+          "n_regions": 10
+        },
+        "spire": {
+          "mae": 0.10263190914758853,
+          "rmse": 0.12380760479448487,
+          "n_regions": 10
+        },
+        "gcn": {
+          "mae": 0.14691975653612044,
+          "rmse": 0.16887206808227137,
+          "n_regions": 10
+        },
+        "gat": {
+          "mae": 0.19353936790537538,
+          "rmse": 0.23082031773085446,
+          "n_regions": 10
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_test": 235,
+          "actual_proportion": 0.7574468085106383,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8548539876937866,
+              "abs_error": 0.09740717918314834
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8704930052477743,
+              "abs_error": 0.113046196737136
+            },
+            "catboost": {
+              "predicted_proportion": 0.871375521703256,
+              "abs_error": 0.11392871319261777
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8792198581560284,
+              "abs_error": 0.12177304964539015
+            },
+            "svm": {
+              "predicted_proportion": 0.8756937951243712,
+              "abs_error": 0.1182469866137329
+            },
+            "mlp": {
+              "predicted_proportion": 0.8770452583095838,
+              "abs_error": 0.11959844979894552
+            },
+            "spire": {
+              "predicted_proportion": 0.8110302966959932,
+              "abs_error": 0.053583488185354966,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.005
+              ],
+              "best_val_f1": 0.917617237008872
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8983668479295079,
+              "abs_error": 0.14092003941886966
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.9581568087893773,
+              "abs_error": 0.20071000027873898
+            },
+            "kriging": {
+              "predicted_proportion": 0.639466809894506,
+              "abs_error": 0.11797999861613229
+            },
+            "gcn": {
+              "predicted_proportion": 0.7368704471182316,
+              "abs_error": 0.020576361392406706,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.9370513812024542,
+              "abs_error": 0.17960457269181596,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.005
+              ]
+            }
+          }
+        },
+        "China": {
+          "n_test": 214,
+          "actual_proportion": 0.4719626168224299,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7979155778884888,
+              "abs_error": 0.32595296106605887
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7948602014339379,
+              "abs_error": 0.32289758461150797
+            },
+            "catboost": {
+              "predicted_proportion": 0.7885834881534689,
+              "abs_error": 0.316620871331039
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8015420560747664,
+              "abs_error": 0.32957943925233646
+            },
+            "svm": {
+              "predicted_proportion": 0.7939489916233,
+              "abs_error": 0.3219863748008701
+            },
+            "mlp": {
+              "predicted_proportion": 0.8122387520761807,
+              "abs_error": 0.3402761352537508
+            },
+            "spire": {
+              "predicted_proportion": 0.6994328096913713,
+              "abs_error": 0.22747019286894143,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9009009009009009
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7693104654372089,
+              "abs_error": 0.29734784861477903
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7186434672825334,
+              "abs_error": 0.24668085046010346
+            },
+            "kriging": {
+              "predicted_proportion": 0.6692489176872549,
+              "abs_error": 0.19728630086482501
+            },
+            "gcn": {
+              "predicted_proportion": 0.6230445672696996,
+              "abs_error": 0.1510819504472697,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7712335221678297,
+              "abs_error": 0.2992709053453998,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "East Asia": {
+          "n_test": 358,
+          "actual_proportion": 0.7178770949720671,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7360231280326843,
+              "abs_error": 0.01814603306061724
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7266971753277994,
+              "abs_error": 0.00882008035573234
+            },
+            "catboost": {
+              "predicted_proportion": 0.7197340857761527,
+              "abs_error": 0.0018569908040856342
+            },
+            "random_forest": {
+              "predicted_proportion": 0.715661080074488,
+              "abs_error": 0.002216014897579055
+            },
+            "svm": {
+              "predicted_proportion": 0.7052516751813713,
+              "abs_error": 0.012625419790695758
+            },
+            "mlp": {
+              "predicted_proportion": 0.705420310747913,
+              "abs_error": 0.012456784224154083
+            },
+            "spire": {
+              "predicted_proportion": 0.7121736804314749,
+              "abs_error": 0.0057034145405922,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.001
+              ],
+              "best_val_f1": 0.8984700973574409
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6858759167524533,
+              "abs_error": 0.03200117821961379
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7394224979513679,
+              "abs_error": 0.021545402979300854
+            },
+            "kriging": {
+              "predicted_proportion": 0.6419272539293579,
+              "abs_error": 0.07594984104270919
+            },
+            "gcn": {
+              "predicted_proportion": 0.676805493135692,
+              "abs_error": 0.04107160183637504,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.001
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6669588216356725,
+              "abs_error": 0.05091827333639454,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.001
+              ]
+            }
+          }
+        },
+        "Europe": {
+          "n_test": 383,
+          "actual_proportion": 0.8093994778067886,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7439517974853516,
+              "abs_error": 0.065447680321437
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7472749262746265,
+              "abs_error": 0.06212455153216201
+            },
+            "catboost": {
+              "predicted_proportion": 0.7387121957654189,
+              "abs_error": 0.07068728204136965
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7500261096605744,
+              "abs_error": 0.05937336814621419
+            },
+            "svm": {
+              "predicted_proportion": 0.7743797455528229,
+              "abs_error": 0.03501973225396571
+            },
+            "mlp": {
+              "predicted_proportion": 0.7731159802107505,
+              "abs_error": 0.036283497596038106
+            },
+            "spire": {
+              "predicted_proportion": 0.7611733717119258,
+              "abs_error": 0.048226106094862775,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.005
+              ],
+              "best_val_f1": 0.9070422535211268
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7918313260252254,
+              "abs_error": 0.017568151781563124
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.8990173418332341,
+              "abs_error": 0.08961786402644556
+            },
+            "kriging": {
+              "predicted_proportion": 0.6276858546487076,
+              "abs_error": 0.18171362315808093
+            },
+            "gcn": {
+              "predicted_proportion": 0.6336131663920052,
+              "abs_error": 0.1757863114147834,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6341308985226459,
+              "abs_error": 0.17526857928414263,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.005
+              ]
+            }
+          }
+        },
+        "Middle East": {
+          "n_test": 63,
+          "actual_proportion": 0.873015873015873,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7374104857444763,
+              "abs_error": 0.1356053872713967
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7254001826491909,
+              "abs_error": 0.1476156903666821
+            },
+            "catboost": {
+              "predicted_proportion": 0.7283190303296826,
+              "abs_error": 0.14469684268619043
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7160317460317458,
+              "abs_error": 0.15698412698412723
+            },
+            "svm": {
+              "predicted_proportion": 0.6777309901720902,
+              "abs_error": 0.19528488284378287
+            },
+            "mlp": {
+              "predicted_proportion": 0.7544309356608968,
+              "abs_error": 0.11858493735497622
+            },
+            "spire": {
+              "predicted_proportion": 0.8028128673396413,
+              "abs_error": 0.07020300567623172,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9082240762812872
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6962645756616602,
+              "abs_error": 0.1767512973542128
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5678745836998055,
+              "abs_error": 0.30514128931606754
+            },
+            "kriging": {
+              "predicted_proportion": 0.6442622871928347,
+              "abs_error": 0.22875358582303829
+            },
+            "gcn": {
+              "predicted_proportion": 0.6090890959141746,
+              "abs_error": 0.26392677710169843,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6966407696406046,
+              "abs_error": 0.1763751033752684,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "North America": {
+          "n_test": 423,
+          "actual_proportion": 0.5791962174940898,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.5999867916107178,
+              "abs_error": 0.02079057411662799
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.5630299870752083,
+              "abs_error": 0.016166230418881433
+            },
+            "catboost": {
+              "predicted_proportion": 0.5692832025485877,
+              "abs_error": 0.009913014945502119
+            },
+            "random_forest": {
+              "predicted_proportion": 0.5649802994483846,
+              "abs_error": 0.014215918045705211
+            },
+            "svm": {
+              "predicted_proportion": 0.5473108966054896,
+              "abs_error": 0.03188532088860019
+            },
+            "mlp": {
+              "predicted_proportion": 0.5574153639015168,
+              "abs_error": 0.02178085359257298
+            },
+            "spire": {
+              "predicted_proportion": 0.7745998827454328,
+              "abs_error": 0.195403665251343,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9171270718232044
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.5458318165322867,
+              "abs_error": 0.03336440096180304
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.539352691507039,
+              "abs_error": 0.039843525987050765
+            },
+            "kriging": {
+              "predicted_proportion": 0.6649658252096949,
+              "abs_error": 0.08576960771560516
+            },
+            "gcn": {
+              "predicted_proportion": 0.6466340083743382,
+              "abs_error": 0.06743779088024837,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.5720731744247689,
+              "abs_error": 0.007123043069320878,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Oceania": {
+          "n_test": 504,
+          "actual_proportion": 0.7718253968253969,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.9534906148910522,
+              "abs_error": 0.1816652180656554
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.9672624541071833,
+              "abs_error": 0.1954370572817864
+            },
+            "catboost": {
+              "predicted_proportion": 0.9318521153078284,
+              "abs_error": 0.16002671848243155
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8884391534391534,
+              "abs_error": 0.1166137566137565
+            },
+            "svm": {
+              "predicted_proportion": 0.9016278078033295,
+              "abs_error": 0.12980241097793266
+            },
+            "mlp": {
+              "predicted_proportion": 0.916832337106282,
+              "abs_error": 0.14500694028088512
+            },
+            "spire": {
+              "predicted_proportion": 0.8258356381048788,
+              "abs_error": 0.05401024127948195,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8895434462444771
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.921340958067975,
+              "abs_error": 0.14951556124257814
+            },
+            "spatial_knn": {
+              "predicted_proportion": 1.0,
+              "abs_error": 0.22817460317460314
+            },
+            "kriging": {
+              "predicted_proportion": 0.6301255839940709,
+              "abs_error": 0.14169981283132593
+            },
+            "gcn": {
+              "predicted_proportion": 0.6199403558931653,
+              "abs_error": 0.15188504093223154,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.34102244015842204,
+              "abs_error": 0.4308029566669748,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_test": 147,
+          "actual_proportion": 0.5374149659863946,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8451479077339172,
+              "abs_error": 0.30773294174752264
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8405328782419375,
+              "abs_error": 0.30311791225554285
+            },
+            "catboost": {
+              "predicted_proportion": 0.840336864390505,
+              "abs_error": 0.30292189840411043
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8090022675736961,
+              "abs_error": 0.2715873015873015
+            },
+            "svm": {
+              "predicted_proportion": 0.8226572265617929,
+              "abs_error": 0.28524226057539825
+            },
+            "mlp": {
+              "predicted_proportion": 0.8380417786261901,
+              "abs_error": 0.3006268126397955
+            },
+            "spire": {
+              "predicted_proportion": 0.7127628657890825,
+              "abs_error": 0.17534789980268795,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ],
+              "best_val_f1": 0.9148099606815203
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8184879700213418,
+              "abs_error": 0.28107300403494717
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5135887487421043,
+              "abs_error": 0.02382621724429035
+            },
+            "kriging": {
+              "predicted_proportion": 0.6626666306371635,
+              "abs_error": 0.12525166465076887
+            },
+            "gcn": {
+              "predicted_proportion": 0.7170689377654977,
+              "abs_error": 0.17965397177910314,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7388543216955095,
+              "abs_error": 0.20143935570911486,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ]
+            }
+          }
+        },
+        "South America": {
+          "n_test": 253,
+          "actual_proportion": 0.83399209486166,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.6303962469100952,
+              "abs_error": 0.20359584795156482
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.6143030917578692,
+              "abs_error": 0.2196890031037908
+            },
+            "catboost": {
+              "predicted_proportion": 0.6296993512302997,
+              "abs_error": 0.2042927436313603
+            },
+            "random_forest": {
+              "predicted_proportion": 0.6458102766798418,
+              "abs_error": 0.18818181818181823
+            },
+            "svm": {
+              "predicted_proportion": 0.6555511142545681,
+              "abs_error": 0.1784409806070919
+            },
+            "mlp": {
+              "predicted_proportion": 0.5903656892566422,
+              "abs_error": 0.2436264056050178
+            },
+            "spire": {
+              "predicted_proportion": 0.9208812110508855,
+              "abs_error": 0.08688911618922546,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.9139072847682119
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6481735303112508,
+              "abs_error": 0.18581856455040924
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5066768791182943,
+              "abs_error": 0.32731521574336575
+            },
+            "kriging": {
+              "predicted_proportion": 0.6354898411405403,
+              "abs_error": 0.19850225372111974
+            },
+            "gcn": {
+              "predicted_proportion": 0.7042295851490714,
+              "abs_error": 0.12976250971258863,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.9101829081184779,
+              "abs_error": 0.07619081325681787,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_test": 532,
+          "actual_proportion": 0.37593984962406013,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.49941086769104004,
+              "abs_error": 0.12347101806697991
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.4972137947161682,
+              "abs_error": 0.12127394509210809
+            },
+            "catboost": {
+              "predicted_proportion": 0.49267140019347233,
+              "abs_error": 0.1167315505694122
+            },
+            "random_forest": {
+              "predicted_proportion": 0.4865288220551379,
+              "abs_error": 0.11058897243107779
+            },
+            "svm": {
+              "predicted_proportion": 0.47895450681106466,
+              "abs_error": 0.10301465718700453
+            },
+            "mlp": {
+              "predicted_proportion": 0.48383886513141855,
+              "abs_error": 0.10789901550735842
+            },
+            "spire": {
+              "predicted_proportion": 0.485421811211224,
+              "abs_error": 0.10948196158716389,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9037974683544304
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.4881220594965054,
+              "abs_error": 0.11218220987244526
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5175646395985681,
+              "abs_error": 0.141624789974508
+            },
+            "kriging": {
+              "predicted_proportion": 0.7053165859716142,
+              "abs_error": 0.32937673634755404
+            },
+            "gcn": {
+              "predicted_proportion": 0.6639550994885596,
+              "abs_error": 0.28801524986449945,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7143399259425643,
+              "abs_error": 0.3384000763185042,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        }
+      }
+    },
+    "1": {
+      "aggregated_metrics": {
+        "xgboost": {
+          "mae": 0.14733895793535115,
+          "rmse": 0.1789216192816465,
+          "n_regions": 10
+        },
+        "lightgbm": {
+          "mae": 0.15019441792683452,
+          "rmse": 0.18447308757464215,
+          "n_regions": 10
+        },
+        "catboost": {
+          "mae": 0.14441692793458807,
+          "rmse": 0.17725745080099886,
+          "n_regions": 10
+        },
+        "random_forest": {
+          "mae": 0.13615366014632024,
+          "rmse": 0.17041858840637086,
+          "n_regions": 10
+        },
+        "svm": {
+          "mae": 0.14088341662148737,
+          "rmse": 0.17265027391644183,
+          "n_regions": 10
+        },
+        "mlp": {
+          "mae": 0.14490678591016196,
+          "rmse": 0.1884569120629051,
+          "n_regions": 10
+        },
+        "autoencoder": {
+          "mae": 0.13629655023775156,
+          "rmse": 0.16586264134367568,
+          "n_regions": 10
+        },
+        "spatial_knn": {
+          "mae": 0.16244797591844745,
+          "rmse": 0.19599857012255892,
+          "n_regions": 10
+        },
+        "kriging": {
+          "mae": 0.1682283424771159,
+          "rmse": 0.18302267838882072,
+          "n_regions": 10
+        },
+        "spire": {
+          "mae": 0.09165438665649354,
+          "rmse": 0.1099927685829221,
+          "n_regions": 10
+        },
+        "gcn": {
+          "mae": 0.16250581698338712,
+          "rmse": 0.18489678199006512,
+          "n_regions": 10
+        },
+        "gat": {
+          "mae": 0.1917690074631618,
+          "rmse": 0.21770789897522905,
+          "n_regions": 10
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_test": 235,
+          "actual_proportion": 0.7574468085106383,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8603425621986389,
+              "abs_error": 0.10289575368800064
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8597453985196557,
+              "abs_error": 0.10229859000901742
+            },
+            "catboost": {
+              "predicted_proportion": 0.874665273638958,
+              "abs_error": 0.11721846512831968
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8838581560283687,
+              "abs_error": 0.12641134751773042
+            },
+            "svm": {
+              "predicted_proportion": 0.8772569451869018,
+              "abs_error": 0.1198101366762635
+            },
+            "mlp": {
+              "predicted_proportion": 0.8682820980348395,
+              "abs_error": 0.11083528952420119
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8936415146801628,
+              "abs_error": 0.13619470616952456
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.9581568087893773,
+              "abs_error": 0.20071000027873898
+            },
+            "kriging": {
+              "predicted_proportion": 0.639466809894506,
+              "abs_error": 0.11797999861613229
+            },
+            "spire": {
+              "predicted_proportion": 0.9271720976271528,
+              "abs_error": 0.16972528911651452,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9182879377431906
+            },
+            "gcn": {
+              "predicted_proportion": 0.718699350889693,
+              "abs_error": 0.038747457620945336,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.8970630666042896,
+              "abs_error": 0.1396162580936513,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "China": {
+          "n_test": 214,
+          "actual_proportion": 0.4719626168224299,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7984468936920166,
+              "abs_error": 0.3264842768695867
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8025589519463003,
+              "abs_error": 0.33059633512387043
+            },
+            "catboost": {
+              "predicted_proportion": 0.7828579984942096,
+              "abs_error": 0.31089538167177966
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8017133956386293,
+              "abs_error": 0.3297507788161994
+            },
+            "svm": {
+              "predicted_proportion": 0.794679035464413,
+              "abs_error": 0.3227164186419831
+            },
+            "mlp": {
+              "predicted_proportion": 0.819610429969315,
+              "abs_error": 0.3476478131468851
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7676710579129338,
+              "abs_error": 0.29570844109050387
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7186434672825334,
+              "abs_error": 0.24668085046010346
+            },
+            "kriging": {
+              "predicted_proportion": 0.6692489176872549,
+              "abs_error": 0.19728630086482501
+            },
+            "spire": {
+              "predicted_proportion": 0.5655011139950437,
+              "abs_error": 0.09353849717261375,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9018087855297158
+            },
+            "gcn": {
+              "predicted_proportion": 0.6885447325271981,
+              "abs_error": 0.21658211570476815,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7313158013553263,
+              "abs_error": 0.25935318453289635,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "East Asia": {
+          "n_test": 358,
+          "actual_proportion": 0.7178770949720671,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7341775894165039,
+              "abs_error": 0.01630049444443682
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7269274465725293,
+              "abs_error": 0.009050351600462192
+            },
+            "catboost": {
+              "predicted_proportion": 0.7207468706487842,
+              "abs_error": 0.00286977567671709
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7196182495344506,
+              "abs_error": 0.0017411545623835512
+            },
+            "svm": {
+              "predicted_proportion": 0.7045273320668337,
+              "abs_error": 0.013349762905233375
+            },
+            "mlp": {
+              "predicted_proportion": 0.72177736832146,
+              "abs_error": 0.003900273349392913
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.697721213457619,
+              "abs_error": 0.020155881514448137
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7394224979513679,
+              "abs_error": 0.021545402979300854
+            },
+            "kriging": {
+              "predicted_proportion": 0.6419272539293579,
+              "abs_error": 0.07594984104270919
+            },
+            "spire": {
+              "predicted_proportion": 0.7408812822287579,
+              "abs_error": 0.023004187256690845,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.8997214484679665
+            },
+            "gcn": {
+              "predicted_proportion": 0.7118723895296705,
+              "abs_error": 0.006004705442396618,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.8270078977393038,
+              "abs_error": 0.10913080276723675,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "Europe": {
+          "n_test": 383,
+          "actual_proportion": 0.8093994778067886,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.746385395526886,
+              "abs_error": 0.06301408227990257
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7415097911636923,
+              "abs_error": 0.06788968664309625
+            },
+            "catboost": {
+              "predicted_proportion": 0.7498685706005298,
+              "abs_error": 0.059530907206258754
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7533855526544821,
+              "abs_error": 0.05601392515230641
+            },
+            "svm": {
+              "predicted_proportion": 0.7733017103164982,
+              "abs_error": 0.03609776749029037
+            },
+            "mlp": {
+              "predicted_proportion": 0.8225588064123309,
+              "abs_error": 0.013159328605542364
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7918901912443862,
+              "abs_error": 0.01750928656240236
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.8990173418332341,
+              "abs_error": 0.08961786402644556
+            },
+            "kriging": {
+              "predicted_proportion": 0.6276858546487076,
+              "abs_error": 0.18171362315808093
+            },
+            "spire": {
+              "predicted_proportion": 0.8163650464704236,
+              "abs_error": 0.006965568663635069,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.9085794655414908
+            },
+            "gcn": {
+              "predicted_proportion": 0.6647111654437242,
+              "abs_error": 0.14468831236306434,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.5738302452912841,
+              "abs_error": 0.23556923251550443,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "Middle East": {
+          "n_test": 63,
+          "actual_proportion": 0.873015873015873,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7256271839141846,
+              "abs_error": 0.14738868910168845
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.717610447978911,
+              "abs_error": 0.15540542503696197
+            },
+            "catboost": {
+              "predicted_proportion": 0.7298528143859805,
+              "abs_error": 0.14316305862989254
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7115873015873015,
+              "abs_error": 0.16142857142857148
+            },
+            "svm": {
+              "predicted_proportion": 0.679099975465082,
+              "abs_error": 0.19391589755079097
+            },
+            "mlp": {
+              "predicted_proportion": 0.7219419125665949,
+              "abs_error": 0.15107396044927812
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6977463757147275,
+              "abs_error": 0.1752694973011455
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5678745836998055,
+              "abs_error": 0.30514128931606754
+            },
+            "kriging": {
+              "predicted_proportion": 0.6442622871928347,
+              "abs_error": 0.22875358582303829
+            },
+            "spire": {
+              "predicted_proportion": 0.7129842322911062,
+              "abs_error": 0.16003164072476683,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9082125603864735
+            },
+            "gcn": {
+              "predicted_proportion": 0.6061187958906568,
+              "abs_error": 0.26689707712521626,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6696578169625903,
+              "abs_error": 0.20335805605328272,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "North America": {
+          "n_test": 423,
+          "actual_proportion": 0.5791962174940898,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.5997334122657776,
+              "abs_error": 0.020537194771687806
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.5836330333788813,
+              "abs_error": 0.004436815884791501
+            },
+            "catboost": {
+              "predicted_proportion": 0.5707070893034953,
+              "abs_error": 0.008489128190594442
+            },
+            "random_forest": {
+              "predicted_proportion": 0.574909377462569,
+              "abs_error": 0.0042868400315208
+            },
+            "svm": {
+              "predicted_proportion": 0.5487757386099914,
+              "abs_error": 0.03042047888409838
+            },
+            "mlp": {
+              "predicted_proportion": 0.5792843077522856,
+              "abs_error": 8.80902581957832e-05
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.544449667361805,
+              "abs_error": 0.03474655013228478
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.539352691507039,
+              "abs_error": 0.039843525987050765
+            },
+            "kriging": {
+              "predicted_proportion": 0.6649658252096949,
+              "abs_error": 0.08576960771560516
+            },
+            "spire": {
+              "predicted_proportion": 0.5954604509416483,
+              "abs_error": 0.016264233447558563,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9186206896551724
+            },
+            "gcn": {
+              "predicted_proportion": 0.44800165541311526,
+              "abs_error": 0.13119456208097452,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6710575965913474,
+              "abs_error": 0.09186137909725767,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "Oceania": {
+          "n_test": 504,
+          "actual_proportion": 0.7718253968253969,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.9481528401374817,
+              "abs_error": 0.17632744331208483
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.9682965951222043,
+              "abs_error": 0.19647119829680748
+            },
+            "catboost": {
+              "predicted_proportion": 0.9361514903928161,
+              "abs_error": 0.16432609356741923
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8802910052910052,
+              "abs_error": 0.10846560846560838
+            },
+            "svm": {
+              "predicted_proportion": 0.8998409507090634,
+              "abs_error": 0.1280155538836666
+            },
+            "mlp": {
+              "predicted_proportion": 0.9224858821986837,
+              "abs_error": 0.1506604853732868
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8966743822730621,
+              "abs_error": 0.1248489854476652
+            },
+            "spatial_knn": {
+              "predicted_proportion": 1.0,
+              "abs_error": 0.22817460317460314
+            },
+            "kriging": {
+              "predicted_proportion": 0.6301255839940709,
+              "abs_error": 0.14169981283132593
+            },
+            "spire": {
+              "predicted_proportion": 0.952830356054215,
+              "abs_error": 0.1810049592288181,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8905325443786982
+            },
+            "gcn": {
+              "predicted_proportion": 0.6444655483559011,
+              "abs_error": 0.12735984846949577,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.5246063917283974,
+              "abs_error": 0.24721900509699946,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_test": 147,
+          "actual_proportion": 0.5374149659863946,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8436791300773621,
+              "abs_error": 0.30626416409096746
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8476866996683722,
+              "abs_error": 0.3102717336819776
+            },
+            "catboost": {
+              "predicted_proportion": 0.8410212151146133,
+              "abs_error": 0.30360624912821865
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8203628117913833,
+              "abs_error": 0.28294784580498866
+            },
+            "svm": {
+              "predicted_proportion": 0.8233274619178129,
+              "abs_error": 0.2859124959314183
+            },
+            "mlp": {
+              "predicted_proportion": 0.8657560457071413,
+              "abs_error": 0.32834107972074666
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8259452418081924,
+              "abs_error": 0.2885302758217978
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5135887487421043,
+              "abs_error": 0.02382621724429035
+            },
+            "kriging": {
+              "predicted_proportion": 0.6626666306371635,
+              "abs_error": 0.12525166465076887
+            },
+            "spire": {
+              "predicted_proportion": 0.605754368799124,
+              "abs_error": 0.06833940281272943,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ],
+              "best_val_f1": 0.9168831168831169
+            },
+            "gcn": {
+              "predicted_proportion": 0.6981974233980892,
+              "abs_error": 0.1607824574116946,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7005072649644346,
+              "abs_error": 0.16309229897804,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ]
+            }
+          }
+        },
+        "South America": {
+          "n_test": 253,
+          "actual_proportion": 0.83399209486166,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.6428049206733704,
+              "abs_error": 0.19118717418828968
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.6274671870899338,
+              "abs_error": 0.20652490777172627
+            },
+            "catboost": {
+              "predicted_proportion": 0.6184556187116439,
+              "abs_error": 0.21553647615001614
+            },
+            "random_forest": {
+              "predicted_proportion": 0.6535704874835311,
+              "abs_error": 0.18042160737812896
+            },
+            "svm": {
+              "predicted_proportion": 0.6584378019184445,
+              "abs_error": 0.17555429294321556
+            },
+            "mlp": {
+              "predicted_proportion": 0.5932104402175561,
+              "abs_error": 0.24078165464410395
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6746536607280272,
+              "abs_error": 0.1593384341336328
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5066768791182943,
+              "abs_error": 0.32731521574336575
+            },
+            "kriging": {
+              "predicted_proportion": 0.6354898411405403,
+              "abs_error": 0.19850225372111974
+            },
+            "spire": {
+              "predicted_proportion": 0.7368604254323562,
+              "abs_error": 0.09713166942930385,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9148099606815203
+            },
+            "gcn": {
+              "predicted_proportion": 0.5715834242788699,
+              "abs_error": 0.26240867058279016,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7902168537317057,
+              "abs_error": 0.043775241129954345,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_test": 532,
+          "actual_proportion": 0.37593984962406013,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.4989301562309265,
+              "abs_error": 0.12299030660686638
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.49493898484369414,
+              "abs_error": 0.11899913521963401
+            },
+            "catboost": {
+              "predicted_proportion": 0.4944735936207246,
+              "abs_error": 0.1185337439966645
+            },
+            "random_forest": {
+              "predicted_proportion": 0.48600877192982445,
+              "abs_error": 0.11006892230576432
+            },
+            "svm": {
+              "predicted_proportion": 0.4789812109319738,
+              "abs_error": 0.10304136130791369
+            },
+            "mlp": {
+              "predicted_proportion": 0.47851973365404676,
+              "abs_error": 0.10257988402998663
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.4866032938281708,
+              "abs_error": 0.11066344420411067
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5175646395985681,
+              "abs_error": 0.141624789974508
+            },
+            "kriging": {
+              "predicted_proportion": 0.7053165859716142,
+              "abs_error": 0.32937673634755404
+            },
+            "spire": {
+              "predicted_proportion": 0.47647826833636464,
+              "abs_error": 0.10053841871230451,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.9006451612903226
+            },
+            "gcn": {
+              "predicted_proportion": 0.6463328126565855,
+              "abs_error": 0.27039296303252536,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.8006544659908553,
+              "abs_error": 0.4247146163667952,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        }
+      }
+    },
+    "8": {
+      "aggregated_metrics": {
+        "xgboost": {
+          "mae": 0.14579742684938313,
+          "rmse": 0.1787880212383146,
+          "n_regions": 10
+        },
+        "lightgbm": {
+          "mae": 0.1525478967695988,
+          "rmse": 0.18526456268314243,
+          "n_regions": 10
+        },
+        "catboost": {
+          "mae": 0.14377600671074914,
+          "rmse": 0.17757998659579202,
+          "n_regions": 10
+        },
+        "random_forest": {
+          "mae": 0.13686473185005268,
+          "rmse": 0.1693376152096923,
+          "n_regions": 10
+        },
+        "svm": {
+          "mae": 0.1412572669155639,
+          "rmse": 0.17297196821181648,
+          "n_regions": 10
+        },
+        "mlp": {
+          "mae": 0.1401935866067239,
+          "rmse": 0.18047797540048496,
+          "n_regions": 10
+        },
+        "autoencoder": {
+          "mae": 0.14155175097820125,
+          "rmse": 0.1685278728121788,
+          "n_regions": 10
+        },
+        "spatial_knn": {
+          "mae": 0.16244797591844745,
+          "rmse": 0.19599857012255892,
+          "n_regions": 10
+        },
+        "kriging": {
+          "mae": 0.1682283424771159,
+          "rmse": 0.18302267838882072,
+          "n_regions": 10
+        },
+        "spire": {
+          "mae": 0.11200132454506276,
+          "rmse": 0.1375517335514776,
+          "n_regions": 10
+        },
+        "gcn": {
+          "mae": 0.14699527412268115,
+          "rmse": 0.17095083154650206,
+          "n_regions": 10
+        },
+        "gat": {
+          "mae": 0.19754554744565572,
+          "rmse": 0.24637776974657286,
+          "n_regions": 10
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_test": 235,
+          "actual_proportion": 0.7574468085106383,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8569620251655579,
+              "abs_error": 0.09951521665491958
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.866289347765736,
+              "abs_error": 0.10884253925509768
+            },
+            "catboost": {
+              "predicted_proportion": 0.8748783115034714,
+              "abs_error": 0.11743150299283311
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8748936170212767,
+              "abs_error": 0.11744680851063838
+            },
+            "svm": {
+              "predicted_proportion": 0.8772712969056261,
+              "abs_error": 0.11982448839498783
+            },
+            "mlp": {
+              "predicted_proportion": 0.8740428824193781,
+              "abs_error": 0.11659607390873983
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.899696829472703,
+              "abs_error": 0.14225002096206474
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.9581568087893773,
+              "abs_error": 0.20071000027873898
+            },
+            "kriging": {
+              "predicted_proportion": 0.639466809894506,
+              "abs_error": 0.11797999861613229
+            },
+            "spire": {
+              "predicted_proportion": 0.7492019475774562,
+              "abs_error": 0.008244860933182108,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.918075422626788
+            },
+            "gcn": {
+              "predicted_proportion": 0.6967431527502993,
+              "abs_error": 0.06070365576033898,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.9322619717171852,
+              "abs_error": 0.1748151632065469,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "China": {
+          "n_test": 214,
+          "actual_proportion": 0.4719626168224299,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7991951107978821,
+              "abs_error": 0.3272324939754522
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8043769863271911,
+              "abs_error": 0.3324143695047612
+            },
+            "catboost": {
+              "predicted_proportion": 0.7851498505935618,
+              "abs_error": 0.3131872337711319
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7960591900311526,
+              "abs_error": 0.32409657320872265
+            },
+            "svm": {
+              "predicted_proportion": 0.7946532642608647,
+              "abs_error": 0.3226906474384348
+            },
+            "mlp": {
+              "predicted_proportion": 0.8151273590593563,
+              "abs_error": 0.3431647422369264
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7645012742227113,
+              "abs_error": 0.2925386574002814
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7186434672825334,
+              "abs_error": 0.24668085046010346
+            },
+            "kriging": {
+              "predicted_proportion": 0.6692489176872549,
+              "abs_error": 0.19728630086482501
+            },
+            "spire": {
+              "predicted_proportion": 0.6375558960717171,
+              "abs_error": 0.16559327924928724,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.9041450777202072
+            },
+            "gcn": {
+              "predicted_proportion": 0.6721530698727225,
+              "abs_error": 0.2001904530502926,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6738430375807754,
+              "abs_error": 0.20188042075834545,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "East Asia": {
+          "n_test": 358,
+          "actual_proportion": 0.7178770949720671,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7243406176567078,
+              "abs_error": 0.006463522684640677
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7286425800446471,
+              "abs_error": 0.010765485072580017
+            },
+            "catboost": {
+              "predicted_proportion": 0.7184319380390787,
+              "abs_error": 0.00055484306701159
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7155121042830539,
+              "abs_error": 0.002364990689013191
+            },
+            "svm": {
+              "predicted_proportion": 0.7035192531199219,
+              "abs_error": 0.01435784185214517
+            },
+            "mlp": {
+              "predicted_proportion": 0.721434147675736,
+              "abs_error": 0.003557052703668906
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6952524187852007,
+              "abs_error": 0.022624676186866366
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7394224979513679,
+              "abs_error": 0.021545402979300854
+            },
+            "kriging": {
+              "predicted_proportion": 0.6419272539293579,
+              "abs_error": 0.07594984104270919
+            },
+            "spire": {
+              "predicted_proportion": 0.7209589104324204,
+              "abs_error": 0.0030818154603533543,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8997214484679665
+            },
+            "gcn": {
+              "predicted_proportion": 0.6944525058709043,
+              "abs_error": 0.02342458910116274,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7611296020406585,
+              "abs_error": 0.043252507068591406,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Europe": {
+          "n_test": 383,
+          "actual_proportion": 0.8093994778067886,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7466037273406982,
+              "abs_error": 0.06279575046609032
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.739843524065744,
+              "abs_error": 0.06955595374104451
+            },
+            "catboost": {
+              "predicted_proportion": 0.7506273396853249,
+              "abs_error": 0.058772138121463646
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7544473455178418,
+              "abs_error": 0.0549521322889468
+            },
+            "svm": {
+              "predicted_proportion": 0.7742964129277905,
+              "abs_error": 0.03510306487899806
+            },
+            "mlp": {
+              "predicted_proportion": 0.7970269735888438,
+              "abs_error": 0.01237250421794478
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7914170188963897,
+              "abs_error": 0.017982458910398846
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.8990173418332341,
+              "abs_error": 0.08961786402644556
+            },
+            "kriging": {
+              "predicted_proportion": 0.6276858546487076,
+              "abs_error": 0.18171362315808093
+            },
+            "spire": {
+              "predicted_proportion": 0.8332322043641507,
+              "abs_error": 0.023832726557362127,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9078404401650619
+            },
+            "gcn": {
+              "predicted_proportion": 0.6099366734762416,
+              "abs_error": 0.19946280433054697,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6306257989870351,
+              "abs_error": 0.17877367881975348,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "Middle East": {
+          "n_test": 63,
+          "actual_proportion": 0.873015873015873,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7393677234649658,
+              "abs_error": 0.1336481495509072
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7120987450075028,
+              "abs_error": 0.1609171280083702
+            },
+            "catboost": {
+              "predicted_proportion": 0.7322880486619919,
+              "abs_error": 0.1407278243538811
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7120105820105821,
+              "abs_error": 0.16100529100529093
+            },
+            "svm": {
+              "predicted_proportion": 0.6783185503976659,
+              "abs_error": 0.19469732261820716
+            },
+            "mlp": {
+              "predicted_proportion": 0.7057424510809354,
+              "abs_error": 0.16727342193493766
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7094624944513667,
+              "abs_error": 0.16355337856450636
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5678745836998055,
+              "abs_error": 0.30514128931606754
+            },
+            "kriging": {
+              "predicted_proportion": 0.6442622871928347,
+              "abs_error": 0.22875358582303829
+            },
+            "spire": {
+              "predicted_proportion": 0.7310772038523167,
+              "abs_error": 0.14193866916355635,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9084423305588585
+            },
+            "gcn": {
+              "predicted_proportion": 0.5904628970320263,
+              "abs_error": 0.28255297598384677,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7059759800396268,
+              "abs_error": 0.16703989297624622,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "North America": {
+          "n_test": 423,
+          "actual_proportion": 0.5791962174940898,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.6005635857582092,
+              "abs_error": 0.021367368264119446
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.5893233160043028,
+              "abs_error": 0.010127098510212984
+            },
+            "catboost": {
+              "predicted_proportion": 0.5706004633788623,
+              "abs_error": 0.008595754115227505
+            },
+            "random_forest": {
+              "predicted_proportion": 0.564428684003152,
+              "abs_error": 0.014767533490937734
+            },
+            "svm": {
+              "predicted_proportion": 0.5478004131163866,
+              "abs_error": 0.031395804377703174
+            },
+            "mlp": {
+              "predicted_proportion": 0.5764320828605384,
+              "abs_error": 0.002764134633551407
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.5284574803474763,
+              "abs_error": 0.05073873714661348
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.539352691507039,
+              "abs_error": 0.039843525987050765
+            },
+            "kriging": {
+              "predicted_proportion": 0.6649658252096949,
+              "abs_error": 0.08576960771560516
+            },
+            "spire": {
+              "predicted_proportion": 0.7463400477354126,
+              "abs_error": 0.16714383024132284,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9146853146853147
+            },
+            "gcn": {
+              "predicted_proportion": 0.47939105377693264,
+              "abs_error": 0.09980516371715714,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6262601124338506,
+              "abs_error": 0.04706389493976082,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Oceania": {
+          "n_test": 504,
+          "actual_proportion": 0.7718253968253969,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.9491785168647766,
+              "abs_error": 0.17735312003937975
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.96589746055427,
+              "abs_error": 0.1940720637288731
+            },
+            "catboost": {
+              "predicted_proportion": 0.9284495143225504,
+              "abs_error": 0.15662411749715355
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8908928571428572,
+              "abs_error": 0.1190674603174603
+            },
+            "svm": {
+              "predicted_proportion": 0.9002890000391883,
+              "abs_error": 0.12846360321379147
+            },
+            "mlp": {
+              "predicted_proportion": 0.9133025775088343,
+              "abs_error": 0.1414771806834374
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.9295405842061708,
+              "abs_error": 0.15771518738077395
+            },
+            "spatial_knn": {
+              "predicted_proportion": 1.0,
+              "abs_error": 0.22817460317460314
+            },
+            "kriging": {
+              "predicted_proportion": 0.6301255839940709,
+              "abs_error": 0.14169981283132593
+            },
+            "spire": {
+              "predicted_proportion": 0.956012279135249,
+              "abs_error": 0.18418688230985214,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8905547226386806
+            },
+            "gcn": {
+              "predicted_proportion": 0.6750086380375756,
+              "abs_error": 0.09681675878782126,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.23547973924331247,
+              "abs_error": 0.5363456575820844,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_test": 147,
+          "actual_proportion": 0.5374149659863946,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8441287279129028,
+              "abs_error": 0.30671376192650823
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8393880683302097,
+              "abs_error": 0.30197310234381514
+            },
+            "catboost": {
+              "predicted_proportion": 0.8452145238806434,
+              "abs_error": 0.30779955789424884
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8163492063492064,
+              "abs_error": 0.2789342403628118
+            },
+            "svm": {
+              "predicted_proportion": 0.823305941671714,
+              "abs_error": 0.2858909756853194
+            },
+            "mlp": {
+              "predicted_proportion": 0.8455749132978679,
+              "abs_error": 0.30815994731147334
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8207584840950546,
+              "abs_error": 0.28334351810866
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5135887487421043,
+              "abs_error": 0.02382621724429035
+            },
+            "kriging": {
+              "predicted_proportion": 0.6626666306371635,
+              "abs_error": 0.12525166465076887
+            },
+            "spire": {
+              "predicted_proportion": 0.7770077051455472,
+              "abs_error": 0.23959273915915258,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9142857142857143
+            },
+            "gcn": {
+              "predicted_proportion": 0.6885220649696532,
+              "abs_error": 0.15110709898325858,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7174929871040137,
+              "abs_error": 0.18007802111761906,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "South America": {
+          "n_test": 253,
+          "actual_proportion": 0.83399209486166,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.6357466578483582,
+              "abs_error": 0.19824543701330188
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.6188952510738936,
+              "abs_error": 0.2150968437877664
+            },
+            "catboost": {
+              "predicted_proportion": 0.6166329007012016,
+              "abs_error": 0.21735919416045846
+            },
+            "random_forest": {
+              "predicted_proportion": 0.6475098814229249,
+              "abs_error": 0.18648221343873517
+            },
+            "svm": {
+              "predicted_proportion": 0.65586186661301,
+              "abs_error": 0.17813022824865
+            },
+            "mlp": {
+              "predicted_proportion": 0.634655818791755,
+              "abs_error": 0.199336276069905
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6574139864704777,
+              "abs_error": 0.17657810839118238
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5066768791182943,
+              "abs_error": 0.32731521574336575
+            },
+            "kriging": {
+              "predicted_proportion": 0.6354898411405403,
+              "abs_error": 0.19850225372111974
+            },
+            "spire": {
+              "predicted_proportion": 0.7874451083436668,
+              "abs_error": 0.04654698651799327,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9145860709592641
+            },
+            "gcn": {
+              "predicted_proportion": 0.7628508538832306,
+              "abs_error": 0.07114124097842944,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.8956778921157476,
+              "abs_error": 0.061685797254087515,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_test": 532,
+          "actual_proportion": 0.37593984962406013,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.500579297542572,
+              "abs_error": 0.12463944791851189
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.4976542333675268,
+              "abs_error": 0.12171438374346666
+            },
+            "catboost": {
+              "predicted_proportion": 0.492647750758142,
+              "abs_error": 0.11670790113408186
+            },
+            "random_forest": {
+              "predicted_proportion": 0.48546992481203005,
+              "abs_error": 0.10953007518796992
+            },
+            "svm": {
+              "predicted_proportion": 0.47795854207146216,
+              "abs_error": 0.10201869244740203
+            },
+            "mlp": {
+              "predicted_proportion": 0.4831743819907142,
+              "abs_error": 0.10723453236665409
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.48413261635472526,
+              "abs_error": 0.10819276673066514
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5175646395985681,
+              "abs_error": 0.141624789974508
+            },
+            "kriging": {
+              "predicted_proportion": 0.7053165859716142,
+              "abs_error": 0.32937673634755404
+            },
+            "spire": {
+              "predicted_proportion": 0.5157913054826256,
+              "abs_error": 0.1398514558585655,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9027431421446384
+            },
+            "gcn": {
+              "predicted_proportion": 0.6606878501580173,
+              "abs_error": 0.2847480005339572,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7604602903575826,
+              "abs_error": 0.38452044073352243,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        }
+      }
+    },
+    "9": {
+      "aggregated_metrics": {
+        "xgboost": {
+          "mae": 0.1490038229522884,
+          "rmse": 0.1800620781657773,
+          "n_regions": 10
+        },
+        "lightgbm": {
+          "mae": 0.1516479242269328,
+          "rmse": 0.18187929924119217,
+          "n_regions": 10
+        },
+        "catboost": {
+          "mae": 0.14482308720536313,
+          "rmse": 0.1782931446251004,
+          "n_regions": 10
+        },
+        "random_forest": {
+          "mae": 0.1380583725827022,
+          "rmse": 0.16969978942753142,
+          "n_regions": 10
+        },
+        "svm": {
+          "mae": 0.14088252736786738,
+          "rmse": 0.17272508812502388,
+          "n_regions": 10
+        },
+        "mlp": {
+          "mae": 0.14806414806635337,
+          "rmse": 0.1870441751378805,
+          "n_regions": 10
+        },
+        "autoencoder": {
+          "mae": 0.14793166390341303,
+          "rmse": 0.1768446946595492,
+          "n_regions": 10
+        },
+        "spatial_knn": {
+          "mae": 0.16244797591844745,
+          "rmse": 0.19599857012255892,
+          "n_regions": 10
+        },
+        "kriging": {
+          "mae": 0.1682283424771159,
+          "rmse": 0.18302267838882072,
+          "n_regions": 10
+        },
+        "spire": {
+          "mae": 0.103668855967222,
+          "rmse": 0.116967242352775,
+          "n_regions": 10
+        },
+        "gcn": {
+          "mae": 0.1542846068362719,
+          "rmse": 0.17473296428042534,
+          "n_regions": 10
+        },
+        "gat": {
+          "mae": 0.19563800993905475,
+          "rmse": 0.2304899503111079,
+          "n_regions": 10
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_test": 235,
+          "actual_proportion": 0.7574468085106383,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8647815585136414,
+              "abs_error": 0.10733475000300308
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8731854168896725,
+              "abs_error": 0.11573860837903427
+            },
+            "catboost": {
+              "predicted_proportion": 0.8801044421793459,
+              "abs_error": 0.12265763366870763
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8798156028368794,
+              "abs_error": 0.12236879432624115
+            },
+            "svm": {
+              "predicted_proportion": 0.8781955744390016,
+              "abs_error": 0.12074876592836337
+            },
+            "mlp": {
+              "predicted_proportion": 0.8835654529238464,
+              "abs_error": 0.12611864441320808
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8873789409404841,
+              "abs_error": 0.1299321324298458
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.9581568087893773,
+              "abs_error": 0.20071000027873898
+            },
+            "kriging": {
+              "predicted_proportion": 0.639466809894506,
+              "abs_error": 0.11797999861613229
+            },
+            "spire": {
+              "predicted_proportion": 0.7475869115362777,
+              "abs_error": 0.009859896974360627,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.918848167539267
+            },
+            "gcn": {
+              "predicted_proportion": 0.6600272840641914,
+              "abs_error": 0.09741952444644686,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.730442920136959,
+              "abs_error": 0.027003888373679286,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "China": {
+          "n_test": 214,
+          "actual_proportion": 0.4719626168224299,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8040338754653931,
+              "abs_error": 0.33207125864296316
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7987459667499258,
+              "abs_error": 0.3267833499274959
+            },
+            "catboost": {
+              "predicted_proportion": 0.7836593817320701,
+              "abs_error": 0.31169676490964016
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7971495327102804,
+              "abs_error": 0.32518691588785054
+            },
+            "svm": {
+              "predicted_proportion": 0.7952690710340087,
+              "abs_error": 0.3233064542115788
+            },
+            "mlp": {
+              "predicted_proportion": 0.8061425584744206,
+              "abs_error": 0.3341799416519907
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7813634972300634,
+              "abs_error": 0.30940088040763347
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7186434672825334,
+              "abs_error": 0.24668085046010346
+            },
+            "kriging": {
+              "predicted_proportion": 0.6692489176872549,
+              "abs_error": 0.19728630086482501
+            },
+            "spire": {
+              "predicted_proportion": 0.6041830474636997,
+              "abs_error": 0.13222043064126976,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.9012987012987013
+            },
+            "gcn": {
+              "predicted_proportion": 0.6524635588175782,
+              "abs_error": 0.18050094199514832,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7423085564764861,
+              "abs_error": 0.2703459396540562,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "East Asia": {
+          "n_test": 358,
+          "actual_proportion": 0.7178770949720671,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.732372522354126,
+              "abs_error": 0.01449542738205889
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7314343273007944,
+              "abs_error": 0.013557232328727298
+            },
+            "catboost": {
+              "predicted_proportion": 0.7205287544548561,
+              "abs_error": 0.002651659482789004
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7169925512104283,
+              "abs_error": 0.000884543761638823
+            },
+            "svm": {
+              "predicted_proportion": 0.7046451618965787,
+              "abs_error": 0.013231933075488422
+            },
+            "mlp": {
+              "predicted_proportion": 0.7051527563070623,
+              "abs_error": 0.012724338665004775
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7008868854267757,
+              "abs_error": 0.0169902095452914
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7394224979513679,
+              "abs_error": 0.021545402979300854
+            },
+            "kriging": {
+              "predicted_proportion": 0.6419272539293579,
+              "abs_error": 0.07594984104270919
+            },
+            "spire": {
+              "predicted_proportion": 0.6731317624600615,
+              "abs_error": 0.04474533251200563,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.898186889818689
+            },
+            "gcn": {
+              "predicted_proportion": 0.7128277263661337,
+              "abs_error": 0.005049368605933413,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.735406037898703,
+              "abs_error": 0.01752894292663587,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Europe": {
+          "n_test": 383,
+          "actual_proportion": 0.8093994778067886,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.729295551776886,
+              "abs_error": 0.08010392602990257
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7298510810009267,
+              "abs_error": 0.0795483968058619
+            },
+            "catboost": {
+              "predicted_proportion": 0.7479729510310291,
+              "abs_error": 0.06142652677575944
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7522280243690166,
+              "abs_error": 0.05717145343777197
+            },
+            "svm": {
+              "predicted_proportion": 0.7744878760044953,
+              "abs_error": 0.034911601802293246
+            },
+            "mlp": {
+              "predicted_proportion": 0.7873668048952692,
+              "abs_error": 0.022032672911519335
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7938749678450483,
+              "abs_error": 0.015524509961740263
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.8990173418332341,
+              "abs_error": 0.08961786402644556
+            },
+            "kriging": {
+              "predicted_proportion": 0.6276858546487076,
+              "abs_error": 0.18171362315808093
+            },
+            "spire": {
+              "predicted_proportion": 0.7341581827695859,
+              "abs_error": 0.07524129503720267,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.906030855539972
+            },
+            "gcn": {
+              "predicted_proportion": 0.5596536046997996,
+              "abs_error": 0.24974587310698892,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.538268032802303,
+              "abs_error": 0.2711314450044856,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Middle East": {
+          "n_test": 63,
+          "actual_proportion": 0.873015873015873,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7338095903396606,
+              "abs_error": 0.13920628267621238
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7132277875234091,
+              "abs_error": 0.15978808549246393
+            },
+            "catboost": {
+              "predicted_proportion": 0.731748513615399,
+              "abs_error": 0.14126735940047397
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7146560846560847,
+              "abs_error": 0.15835978835978837
+            },
+            "svm": {
+              "predicted_proportion": 0.6786903135366432,
+              "abs_error": 0.1943255594792298
+            },
+            "mlp": {
+              "predicted_proportion": 0.7194112601586417,
+              "abs_error": 0.15360461285723137
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6967016764524774,
+              "abs_error": 0.17631419656339564
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5678745836998055,
+              "abs_error": 0.30514128931606754
+            },
+            "kriging": {
+              "predicted_proportion": 0.6442622871928347,
+              "abs_error": 0.22875358582303829
+            },
+            "spire": {
+              "predicted_proportion": 0.8277333207310192,
+              "abs_error": 0.04528255228485378,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9106280193236715
+            },
+            "gcn": {
+              "predicted_proportion": 0.607835536911374,
+              "abs_error": 0.265180336104499,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6526491334514012,
+              "abs_error": 0.22036673956447184,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "North America": {
+          "n_test": 423,
+          "actual_proportion": 0.5791962174940898,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.5964478254318237,
+              "abs_error": 0.017251607937733948
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.5663844391890457,
+              "abs_error": 0.012811778305044097
+            },
+            "catboost": {
+              "predicted_proportion": 0.5771509915045666,
+              "abs_error": 0.0020452259895231695
+            },
+            "random_forest": {
+              "predicted_proportion": 0.5625059101654847,
+              "abs_error": 0.016690307328605103
+            },
+            "svm": {
+              "predicted_proportion": 0.5491413260842217,
+              "abs_error": 0.030054891409868056
+            },
+            "mlp": {
+              "predicted_proportion": 0.5780975015676627,
+              "abs_error": 0.001098715926427074
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.5111024300312422,
+              "abs_error": 0.06809378746284755
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.539352691507039,
+              "abs_error": 0.039843525987050765
+            },
+            "kriging": {
+              "predicted_proportion": 0.6649658252096949,
+              "abs_error": 0.08576960771560516
+            },
+            "spire": {
+              "predicted_proportion": 0.7354911341030265,
+              "abs_error": 0.15629491660893668,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.919889502762431
+            },
+            "gcn": {
+              "predicted_proportion": 0.49982797750767244,
+              "abs_error": 0.07936823998641734,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6705933548245869,
+              "abs_error": 0.09139713733049715,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Oceania": {
+          "n_test": 504,
+          "actual_proportion": 0.7718253968253969,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.9509610533714294,
+              "abs_error": 0.17913565654603258
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.9681031758702632,
+              "abs_error": 0.19627777904486632
+            },
+            "catboost": {
+              "predicted_proportion": 0.9412199707764755,
+              "abs_error": 0.1693945739510786
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8990873015873015,
+              "abs_error": 0.1272619047619047
+            },
+            "svm": {
+              "predicted_proportion": 0.9010685594555525,
+              "abs_error": 0.12924316263015567
+            },
+            "mlp": {
+              "predicted_proportion": 0.9338181065038319,
+              "abs_error": 0.16199270967843504
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.927475644896078,
+              "abs_error": 0.15565024807068117
+            },
+            "spatial_knn": {
+              "predicted_proportion": 1.0,
+              "abs_error": 0.22817460317460314
+            },
+            "kriging": {
+              "predicted_proportion": 0.6301255839940709,
+              "abs_error": 0.14169981283132593
+            },
+            "spire": {
+              "predicted_proportion": 0.936206557423695,
+              "abs_error": 0.1643811605982981,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8918518518518519
+            },
+            "gcn": {
+              "predicted_proportion": 0.6333008954331042,
+              "abs_error": 0.13852450139229266,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.3845195402169511,
+              "abs_error": 0.38730585660844574,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_test": 147,
+          "actual_proportion": 0.5374149659863946,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8379279971122742,
+              "abs_error": 0.30051303112587957
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8318154084879613,
+              "abs_error": 0.2944004425015667
+            },
+            "catboost": {
+              "predicted_proportion": 0.842562682711884,
+              "abs_error": 0.30514771672548935
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8128117913832199,
+              "abs_error": 0.2753968253968253
+            },
+            "svm": {
+              "predicted_proportion": 0.8220088813906182,
+              "abs_error": 0.28459391540422363
+            },
+            "mlp": {
+              "predicted_proportion": 0.8518458645270226,
+              "abs_error": 0.314430898540628
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8267191052450064,
+              "abs_error": 0.28930413925861176
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5135887487421043,
+              "abs_error": 0.02382621724429035
+            },
+            "kriging": {
+              "predicted_proportion": 0.6626666306371635,
+              "abs_error": 0.12525166465076887
+            },
+            "spire": {
+              "predicted_proportion": 0.7132253159268372,
+              "abs_error": 0.17581034994044265,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.001
+              ],
+              "best_val_f1": 0.9138381201044387
+            },
+            "gcn": {
+              "predicted_proportion": 0.6878960840150613,
+              "abs_error": 0.1504811180286667,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.001
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.72409495163937,
+              "abs_error": 0.1866799856529754,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.001
+              ]
+            }
+          }
+        },
+        "South America": {
+          "n_test": 253,
+          "actual_proportion": 0.83399209486166,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.6382895708084106,
+              "abs_error": 0.1957025240532494
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.637876911784988,
+              "abs_error": 0.19611518307667208
+            },
+            "catboost": {
+              "predicted_proportion": 0.6178161973809265,
+              "abs_error": 0.21617589748073351
+            },
+            "random_forest": {
+              "predicted_proportion": 0.6506324110671937,
+              "abs_error": 0.18335968379446632
+            },
+            "svm": {
+              "predicted_proportion": 0.6579139321734331,
+              "abs_error": 0.17607816268822696
+            },
+            "mlp": {
+              "predicted_proportion": 0.5856952004529857,
+              "abs_error": 0.2482968944086743
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.623188028171937,
+              "abs_error": 0.21080406668972307
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5066768791182943,
+              "abs_error": 0.32731521574336575
+            },
+            "kriging": {
+              "predicted_proportion": 0.6354898411405403,
+              "abs_error": 0.19850225372111974
+            },
+            "spire": {
+              "predicted_proportion": 0.7226290135633333,
+              "abs_error": 0.11136308129832673,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9146666666666666
+            },
+            "gcn": {
+              "predicted_proportion": 0.7214935254673713,
+              "abs_error": 0.1124985693942887,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.9657988319755072,
+              "abs_error": 0.13180673711384716,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_test": 532,
+          "actual_proportion": 0.37593984962406013,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.5001636147499084,
+              "abs_error": 0.12422376512584832
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.4973982360316556,
+              "abs_error": 0.12145838640759549
+            },
+            "catboost": {
+              "predicted_proportion": 0.49170736329349646,
+              "abs_error": 0.11576751366943633
+            },
+            "random_forest": {
+              "predicted_proportion": 0.48984335839599,
+              "abs_error": 0.1139035087719299
+            },
+            "svm": {
+              "predicted_proportion": 0.47827067667330597,
+              "abs_error": 0.10233082704924584
+            },
+            "mlp": {
+              "predicted_proportion": 0.48210190123447516,
+              "abs_error": 0.10616205161041503
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.48324231826842035,
+              "abs_error": 0.10730246864436022
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5175646395985681,
+              "abs_error": 0.141624789974508
+            },
+            "kriging": {
+              "predicted_proportion": 0.7053165859716142,
+              "abs_error": 0.32937673634755404
+            },
+            "spire": {
+              "predicted_proportion": 0.49742939340058345,
+              "abs_error": 0.12148954377652332,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9040404040404041
+            },
+            "gcn": {
+              "predicted_proportion": 0.640017444926097,
+              "abs_error": 0.2640775953020369,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7287532767855135,
+              "abs_error": 0.35281342716145336,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        }
+      }
+    },
+    "10": {
+      "aggregated_metrics": {
+        "xgboost": {
+          "mae": 0.14684573546029928,
+          "rmse": 0.18032765112168705,
+          "n_regions": 10
+        },
+        "lightgbm": {
+          "mae": 0.15105865661703236,
+          "rmse": 0.18338736561659377,
+          "n_regions": 10
+        },
+        "catboost": {
+          "mae": 0.14620721174759238,
+          "rmse": 0.17802178498818402,
+          "n_regions": 10
+        },
+        "random_forest": {
+          "mae": 0.13773284931531773,
+          "rmse": 0.17035789331743548,
+          "n_regions": 10
+        },
+        "svm": {
+          "mae": 0.1410783729754605,
+          "rmse": 0.17312878448819233,
+          "n_regions": 10
+        },
+        "mlp": {
+          "mae": 0.15303932843456242,
+          "rmse": 0.19188034926993353,
+          "n_regions": 10
+        },
+        "autoencoder": {
+          "mae": 0.13825278684068726,
+          "rmse": 0.16845741524999455,
+          "n_regions": 10
+        },
+        "spatial_knn": {
+          "mae": 0.16244797591844745,
+          "rmse": 0.19599857012255892,
+          "n_regions": 10
+        },
+        "kriging": {
+          "mae": 0.1682283424771159,
+          "rmse": 0.18302267838882072,
+          "n_regions": 10
+        },
+        "spire": {
+          "mae": 0.07495262386926632,
+          "rmse": 0.09139728964315118,
+          "n_regions": 10
+        },
+        "gcn": {
+          "mae": 0.15828113439785876,
+          "rmse": 0.18725920178321903,
+          "n_regions": 10
+        },
+        "gat": {
+          "mae": 0.13644778057177612,
+          "rmse": 0.16617403119317484,
+          "n_regions": 10
+        }
+      },
+      "per_region": {
+        "Africa": {
+          "n_test": 235,
+          "actual_proportion": 0.7574468085106383,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8641283512115479,
+              "abs_error": 0.10668154270090957
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.863929113115327,
+              "abs_error": 0.10648230460468877
+            },
+            "catboost": {
+              "predicted_proportion": 0.8821018942818427,
+              "abs_error": 0.12465508577120443
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8809503546099292,
+              "abs_error": 0.12350354609929093
+            },
+            "svm": {
+              "predicted_proportion": 0.8770327667614279,
+              "abs_error": 0.11958595825078966
+            },
+            "mlp": {
+              "predicted_proportion": 0.8822994470778814,
+              "abs_error": 0.12485263856724316
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8969751986675407,
+              "abs_error": 0.13952839015690244
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.9581568087893773,
+              "abs_error": 0.20071000027873898
+            },
+            "kriging": {
+              "predicted_proportion": 0.639466809894506,
+              "abs_error": 0.11797999861613229
+            },
+            "spire": {
+              "predicted_proportion": 0.8705184313845127,
+              "abs_error": 0.1130716228738744,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9159120310478654
+            },
+            "gcn": {
+              "predicted_proportion": 0.7052460543652799,
+              "abs_error": 0.05220075414535841,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.9188452634405583,
+              "abs_error": 0.16139845492992,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "China": {
+          "n_test": 214,
+          "actual_proportion": 0.4719626168224299,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8011450171470642,
+              "abs_error": 0.3291824003246343
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7952452859805323,
+              "abs_error": 0.32328266915810244
+            },
+            "catboost": {
+              "predicted_proportion": 0.7830163131823806,
+              "abs_error": 0.3110536963599507
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8004361370716512,
+              "abs_error": 0.3284735202492213
+            },
+            "svm": {
+              "predicted_proportion": 0.7957373066389667,
+              "abs_error": 0.3237746898165368
+            },
+            "mlp": {
+              "predicted_proportion": 0.822359445612919,
+              "abs_error": 0.35039682879048906
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7671260768274283,
+              "abs_error": 0.2951634600049984
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7186434672825334,
+              "abs_error": 0.24668085046010346
+            },
+            "kriging": {
+              "predicted_proportion": 0.6692489176872549,
+              "abs_error": 0.19728630086482501
+            },
+            "spire": {
+              "predicted_proportion": 0.5786225062389162,
+              "abs_error": 0.1066598894164863,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.9018087855297158
+            },
+            "gcn": {
+              "predicted_proportion": 0.6066758067251365,
+              "abs_error": 0.13471318990270664,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6852072807394456,
+              "abs_error": 0.2132446639170157,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "East Asia": {
+          "n_test": 358,
+          "actual_proportion": 0.7178770949720671,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7262796759605408,
+              "abs_error": 0.008402580988473685
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.73132626408259,
+              "abs_error": 0.013449169110522963
+            },
+            "catboost": {
+              "predicted_proportion": 0.7158989860500594,
+              "abs_error": 0.001978108922007671
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7156331471135942,
+              "abs_error": 0.0022439478584729278
+            },
+            "svm": {
+              "predicted_proportion": 0.7048099866631757,
+              "abs_error": 0.013067108308891351
+            },
+            "mlp": {
+              "predicted_proportion": 0.7034136803034367,
+              "abs_error": 0.014463414668630437
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.702698412563369,
+              "abs_error": 0.01517868240869813
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.7394224979513679,
+              "abs_error": 0.021545402979300854
+            },
+            "kriging": {
+              "predicted_proportion": 0.6419272539293579,
+              "abs_error": 0.07594984104270919
+            },
+            "spire": {
+              "predicted_proportion": 0.695035663674008,
+              "abs_error": 0.022841431298059045,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8993103448275862
+            },
+            "gcn": {
+              "predicted_proportion": 0.7118748282420568,
+              "abs_error": 0.006002266730010253,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7445396358074423,
+              "abs_error": 0.026662540835375226,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Europe": {
+          "n_test": 383,
+          "actual_proportion": 0.8093994778067886,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7508367896080017,
+              "abs_error": 0.05856268819878685
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.736702379983472,
+              "abs_error": 0.07269709782331657
+            },
+            "catboost": {
+              "predicted_proportion": 0.7445528319178812,
+              "abs_error": 0.06484664588890732
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7489469103568321,
+              "abs_error": 0.06045256744995642
+            },
+            "svm": {
+              "predicted_proportion": 0.773735250382882,
+              "abs_error": 0.035664227423906514
+            },
+            "mlp": {
+              "predicted_proportion": 0.7825505302985832,
+              "abs_error": 0.026848947508205323
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.7743025166273508,
+              "abs_error": 0.035096961179437725
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.8990173418332341,
+              "abs_error": 0.08961786402644556
+            },
+            "kriging": {
+              "predicted_proportion": 0.6276858546487076,
+              "abs_error": 0.18171362315808093
+            },
+            "spire": {
+              "predicted_proportion": 0.7951671233371522,
+              "abs_error": 0.014232354469636332,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9085872576177285
+            },
+            "gcn": {
+              "predicted_proportion": 0.5631909752483467,
+              "abs_error": 0.24620850255844184,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6839117084097301,
+              "abs_error": 0.1254877693970584,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "Middle East": {
+          "n_test": 63,
+          "actual_proportion": 0.873015873015873,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.7282882928848267,
+              "abs_error": 0.14472758013104636
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.7213204010762664,
+              "abs_error": 0.15169547193960664
+            },
+            "catboost": {
+              "predicted_proportion": 0.7229281030583866,
+              "abs_error": 0.1500877699574864
+            },
+            "random_forest": {
+              "predicted_proportion": 0.7186243386243386,
+              "abs_error": 0.1543915343915344
+            },
+            "svm": {
+              "predicted_proportion": 0.6782519263749783,
+              "abs_error": 0.1947639466408947
+            },
+            "mlp": {
+              "predicted_proportion": 0.704737228574587,
+              "abs_error": 0.16827864444128604
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6917248245755098,
+              "abs_error": 0.18129104844036326
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5678745836998055,
+              "abs_error": 0.30514128931606754
+            },
+            "kriging": {
+              "predicted_proportion": 0.6442622871928347,
+              "abs_error": 0.22875358582303829
+            },
+            "spire": {
+              "predicted_proportion": 0.7792770791621435,
+              "abs_error": 0.09373879385372952,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9106078665077473
+            },
+            "gcn": {
+              "predicted_proportion": 0.5716979456326318,
+              "abs_error": 0.30131792738324126,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7280989677186996,
+              "abs_error": 0.14491690529717338,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "North America": {
+          "n_test": 423,
+          "actual_proportion": 0.5791962174940898,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.592185378074646,
+              "abs_error": 0.012989160580556214
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.5727232538321598,
+              "abs_error": 0.0064729636619299535
+            },
+            "catboost": {
+              "predicted_proportion": 0.5682186310230195,
+              "abs_error": 0.010977586471070278
+            },
+            "random_forest": {
+              "predicted_proportion": 0.5650354609929078,
+              "abs_error": 0.014160756501181981
+            },
+            "svm": {
+              "predicted_proportion": 0.5501371839912877,
+              "abs_error": 0.029059033502802034
+            },
+            "mlp": {
+              "predicted_proportion": 0.564561538719964,
+              "abs_error": 0.014634678774125831
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.5715004319885352,
+              "abs_error": 0.007695785505554609
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.539352691507039,
+              "abs_error": 0.039843525987050765
+            },
+            "kriging": {
+              "predicted_proportion": 0.6649658252096949,
+              "abs_error": 0.08576960771560516
+            },
+            "spire": {
+              "predicted_proportion": 0.5876980437930172,
+              "abs_error": 0.008501826298927373,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.9159891598915989
+            },
+            "gcn": {
+              "predicted_proportion": 0.5387725959362432,
+              "abs_error": 0.04042362155784662,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.6269708538590876,
+              "abs_error": 0.04777463636499779,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ]
+            }
+          }
+        },
+        "Oceania": {
+          "n_test": 504,
+          "actual_proportion": 0.7718253968253969,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.9491572380065918,
+              "abs_error": 0.17733184118119494
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.9642178410899193,
+              "abs_error": 0.1923924442645224
+            },
+            "catboost": {
+              "predicted_proportion": 0.9412186653743764,
+              "abs_error": 0.16939326854897951
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8899140211640211,
+              "abs_error": 0.11808862433862422
+            },
+            "svm": {
+              "predicted_proportion": 0.9007491788251016,
+              "abs_error": 0.12892378199970478
+            },
+            "mlp": {
+              "predicted_proportion": 0.9184241428467235,
+              "abs_error": 0.1465987460213266
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.9199472070541582,
+              "abs_error": 0.14812181022876136
+            },
+            "spatial_knn": {
+              "predicted_proportion": 1.0,
+              "abs_error": 0.22817460317460314
+            },
+            "kriging": {
+              "predicted_proportion": 0.6301255839940709,
+              "abs_error": 0.14169981283132593
+            },
+            "spire": {
+              "predicted_proportion": 0.7099170336859681,
+              "abs_error": 0.06190836313942871,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8888888888888888
+            },
+            "gcn": {
+              "predicted_proportion": 0.5961543271347644,
+              "abs_error": 0.1756710696906325,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7108298398966398,
+              "abs_error": 0.06099555692875702,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        },
+        "Russian Federation": {
+          "n_test": 147,
+          "actual_proportion": 0.5374149659863946,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.8460819721221924,
+              "abs_error": 0.3086670061357978
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.8403264995640641,
+              "abs_error": 0.30291153357766953
+            },
+            "catboost": {
+              "predicted_proportion": 0.8394316208073371,
+              "abs_error": 0.30201665482094253
+            },
+            "random_forest": {
+              "predicted_proportion": 0.8199773242630385,
+              "abs_error": 0.2825623582766439
+            },
+            "svm": {
+              "predicted_proportion": 0.8231042976707472,
+              "abs_error": 0.2856893316843526
+            },
+            "mlp": {
+              "predicted_proportion": 0.8478835772754107,
+              "abs_error": 0.31046861128901615
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.8239383862627735,
+              "abs_error": 0.2865234202763789
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5135887487421043,
+              "abs_error": 0.02382621724429035
+            },
+            "kriging": {
+              "predicted_proportion": 0.6626666306371635,
+              "abs_error": 0.12525166465076887
+            },
+            "spire": {
+              "predicted_proportion": 0.6267594183180608,
+              "abs_error": 0.08934445233166621,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ],
+              "best_val_f1": 0.9156939040207522
+            },
+            "gcn": {
+              "predicted_proportion": 0.734316440666614,
+              "abs_error": 0.19690147468021935,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7521273631627868,
+              "abs_error": 0.21471239717639223,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.005
+              ]
+            }
+          }
+        },
+        "South America": {
+          "n_test": 253,
+          "actual_proportion": 0.83399209486166,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.6392136216163635,
+              "abs_error": 0.1947784732452965
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.6135912097060352,
+              "abs_error": 0.22040088515562484
+            },
+            "catboost": {
+              "predicted_proportion": 0.6236893005075924,
+              "abs_error": 0.21030279435406762
+            },
+            "random_forest": {
+              "predicted_proportion": 0.651699604743083,
+              "abs_error": 0.18229249011857707
+            },
+            "svm": {
+              "predicted_proportion": 0.6559601189421609,
+              "abs_error": 0.17803197591949915
+            },
+            "mlp": {
+              "predicted_proportion": 0.5677304569118474,
+              "abs_error": 0.2662616379498126
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.6720538661630688,
+              "abs_error": 0.1619382286985912
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5066768791182943,
+              "abs_error": 0.32731521574336575
+            },
+            "kriging": {
+              "predicted_proportion": 0.6354898411405403,
+              "abs_error": 0.19850225372111974
+            },
+            "spire": {
+              "predicted_proportion": 0.8851967396236691,
+              "abs_error": 0.05120464476200903,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.9152086137281292
+            },
+            "gcn": {
+              "predicted_proportion": 0.70560589691867,
+              "abs_error": 0.12838619794299,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.8655554565045203,
+              "abs_error": 0.03156336164286022,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ]
+            }
+          }
+        },
+        "South and Central Asia": {
+          "n_test": 532,
+          "actual_proportion": 0.37593984962406013,
+          "per_model": {
+            "xgboost": {
+              "predicted_proportion": 0.5030739307403564,
+              "abs_error": 0.12713408111629632
+            },
+            "lightgbm": {
+              "predicted_proportion": 0.4967418764983996,
+              "abs_error": 0.1208020268743395
+            },
+            "catboost": {
+              "predicted_proportion": 0.4927003560053674,
+              "abs_error": 0.11676050638130725
+            },
+            "random_forest": {
+              "predicted_proportion": 0.4870989974937343,
+              "abs_error": 0.11115914786967418
+            },
+            "svm": {
+              "predicted_proportion": 0.47816352583128746,
+              "abs_error": 0.10222367620722733
+            },
+            "mlp": {
+              "predicted_proportion": 0.48352898595954885,
+              "abs_error": 0.10758913633548872
+            },
+            "autoencoder": {
+              "predicted_proportion": 0.4879299311312468,
+              "abs_error": 0.11199008150718665
+            },
+            "spatial_knn": {
+              "predicted_proportion": 0.5175646395985681,
+              "abs_error": 0.141624789974508
+            },
+            "kriging": {
+              "predicted_proportion": 0.7053165859716142,
+              "abs_error": 0.32937673634755404
+            },
+            "spire": {
+              "predicted_proportion": 0.5639627098729064,
+              "abs_error": 0.1880228602488463,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.9020100502512562
+            },
+            "gcn": {
+              "predicted_proportion": 0.6769261890112009,
+              "abs_error": 0.3009863393871408,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            },
+            "gat": {
+              "predicted_proportion": 0.7136613688522712,
+              "abs_error": 0.33772151922821103,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.DS_Store
+.ipynb_checkpoints
+__pycache__/
+*.pyc
+.venv/*
+*.tsv
+*.tfevents
+catboost_info/
+data/has_dash_records.xlsx
+data/host_lith_stats.xlsx

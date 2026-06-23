@@ -1,0 +1,6337 @@
+{
+  "experiment": "inductive_sample",
+  "description": "5 nodes sampled from each region as test; all remaining nodes (including rest of same region) are in train+val. GCN and GAT use the same hyperparameters tuned for SPIRE.",
+  "n_sample": 5,
+  "regions": [
+    "Africa",
+    "China",
+    "East Asia",
+    "Europe",
+    "Middle East",
+    "North America",
+    "Oceania",
+    "Russian Federation",
+    "South America",
+    "South and Central Asia"
+  ],
+  "runs": [
+    {
+      "run_id": "orig",
+      "seed": 42,
+      "spire": {
+        "avg_metrics": {
+          "accuracy": 0.96,
+          "f1": 0.9555555555555555,
+          "pr_auc": 1.0,
+          "precision": 1.0,
+          "recall": 0.9375,
+          "roc_auc": 1.0
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              20,
+              101,
+              102,
+              152,
+              179
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              229,
+              321,
+              366,
+              372,
+              416
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              483,
+              550,
+              577,
+              596,
+              715
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              857,
+              938,
+              942,
+              977,
+              2994
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1014,
+              1020,
+              1043,
+              1053,
+              1054
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1252,
+              1351,
+              1394,
+              1441,
+              2942
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1475,
+              1531,
+              1702,
+              1728,
+              1828
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1985,
+              1992,
+              1997,
+              2070,
+              2076
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2116,
+              2167,
+              2199,
+              2203,
+              2256
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2412,
+              2557,
+              2661,
+              2699,
+              2768
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "gcn": {
+        "avg_metrics": {
+          "accuracy": 0.7,
+          "f1": 0.7126984126984126,
+          "pr_auc": 0.8645833333333333,
+          "precision": 0.5437500000000001,
+          "recall": 0.8125,
+          "roc_auc": 0.65625
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              20,
+              101,
+              102,
+              152,
+              179
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              229,
+              321,
+              366,
+              372,
+              416
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              483,
+              550,
+              577,
+              596,
+              715
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "precision": 0.25,
+              "recall": 0.5,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              857,
+              938,
+              942,
+              977,
+              2994
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1014,
+              1020,
+              1043,
+              1053,
+              1054
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1252,
+              1351,
+              1394,
+              1441,
+              2942
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1475,
+              1531,
+              1702,
+              1728,
+              1828
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1985,
+              1992,
+              1997,
+              2070,
+              2076
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2116,
+              2167,
+              2199,
+              2203,
+              2256
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2412,
+              2557,
+              2661,
+              2699,
+              2768
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "gat": {
+        "avg_metrics": {
+          "accuracy": 0.6799999999999999,
+          "f1": 0.7031746031746031,
+          "pr_auc": 0.8255208333333334,
+          "precision": 0.53125,
+          "recall": 0.8125,
+          "roc_auc": 0.6041666666666666
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              20,
+              101,
+              102,
+              152,
+              179
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              229,
+              321,
+              366,
+              372,
+              416
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              483,
+              550,
+              577,
+              596,
+              715
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "precision": 0.25,
+              "recall": 0.5,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.33333333333333337,
+              "pr_auc": 0.45
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              857,
+              938,
+              942,
+              977,
+              2994
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1014,
+              1020,
+              1043,
+              1053,
+              1054
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1252,
+              1351,
+              1394,
+              1441,
+              2942
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1475,
+              1531,
+              1702,
+              1728,
+              1828
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1985,
+              1992,
+              1997,
+              2070,
+              2076
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2116,
+              2167,
+              2199,
+              2203,
+              2256
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2412,
+              2557,
+              2661,
+              2699,
+              2768
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "baselines": {
+        "avg_metrics": {
+          "xgboost": {
+            "accuracy": 0.9,
+            "f1": 0.919047619047619,
+            "pr_auc": 1.0,
+            "precision": 0.95,
+            "recall": 0.90625,
+            "roc_auc": 1.0
+          },
+          "lightgbm": {
+            "accuracy": 0.9,
+            "f1": 0.919047619047619,
+            "pr_auc": 1.0,
+            "precision": 0.975,
+            "recall": 0.90625,
+            "roc_auc": 1.0
+          },
+          "catboost": {
+            "accuracy": 0.9400000000000001,
+            "f1": 0.9444444444444444,
+            "pr_auc": 1.0,
+            "precision": 0.975,
+            "recall": 0.9375,
+            "roc_auc": 1.0
+          },
+          "random_forest": {
+            "accuracy": 0.9199999999999999,
+            "f1": 0.9111111111111111,
+            "pr_auc": 1.0,
+            "precision": 0.975,
+            "recall": 0.875,
+            "roc_auc": 1.0
+          },
+          "svm": {
+            "accuracy": 0.9199999999999999,
+            "f1": 0.9111111111111111,
+            "pr_auc": 1.0,
+            "precision": 0.975,
+            "recall": 0.875,
+            "roc_auc": 1.0
+          },
+          "mlp": {
+            "accuracy": 0.9400000000000001,
+            "f1": 0.9444444444444444,
+            "pr_auc": 1.0,
+            "precision": 0.975,
+            "recall": 0.9375,
+            "roc_auc": 1.0
+          },
+          "autoencoder_predictor": {
+            "accuracy": 0.9400000000000001,
+            "f1": 0.9444444444444444,
+            "pr_auc": 1.0,
+            "precision": 0.975,
+            "recall": 0.9375,
+            "roc_auc": 1.0
+          },
+          "spatial_knn_regression": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.799047619047619,
+            "pr_auc": 0.9791666666666666,
+            "precision": 0.7833333333333333,
+            "recall": 0.78125,
+            "roc_auc": 0.9791666666666666
+          },
+          "kriging": {
+            "accuracy": 0.68,
+            "f1": 0.7841269841269841,
+            "pr_auc": 0.8770833333333333,
+            "precision": 0.6000000000000001,
+            "recall": 1.0,
+            "roc_auc": 0.7916666666666666
+          }
+        },
+        "per_region": {
+          "Africa": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.16666666666666669,
+              "pr_auc": 0.3666666666666667
+            }
+          },
+          "East Asia": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "North America": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Oceania": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            }
+          },
+          "South America": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 23,
+      "seed": 23,
+      "spire": {
+        "avg_metrics": {
+          "accuracy": 0.96,
+          "f1": 0.9666666666666666,
+          "pr_auc": 1.0,
+          "precision": 0.9166666666666666,
+          "recall": 1.0,
+          "roc_auc": 1.0
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              8,
+              61,
+              98,
+              150,
+              160
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              253,
+              303,
+              347,
+              349,
+              390
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              566,
+              585,
+              661,
+              680,
+              687
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              776,
+              827,
+              884,
+              919,
+              942
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1006,
+              1008,
+              1022,
+              1041,
+              1050
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1111,
+              1292,
+              1423,
+              2879,
+              2881
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1541,
+              1580,
+              1683,
+              1768,
+              1842
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1943,
+              1951,
+              2030,
+              2064,
+              2072
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2124,
+              2209,
+              2223,
+              2225,
+              2283
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2393,
+              2465,
+              2510,
+              2686,
+              2843
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "gcn": {
+        "avg_metrics": {
+          "accuracy": 0.62,
+          "f1": 0.692063492063492,
+          "pr_auc": 0.7601851851851852,
+          "precision": 0.5499999999999999,
+          "recall": 0.9166666666666666,
+          "roc_auc": 0.6944444444444445
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              8,
+              61,
+              98,
+              150,
+              160
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              253,
+              303,
+              347,
+              349,
+              390
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              566,
+              585,
+              661,
+              680,
+              687
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              776,
+              827,
+              884,
+              919,
+              942
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1006,
+              1008,
+              1022,
+              1041,
+              1050
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1111,
+              1292,
+              1423,
+              2879,
+              2881
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1541,
+              1580,
+              1683,
+              1768,
+              1842
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1943,
+              1951,
+              2030,
+              2064,
+              2072
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 0.5,
+              "f1": 0.5,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2124,
+              2209,
+              2223,
+              2225,
+              2283
+            ],
+            "test_metrics": {
+              "accuracy": 0.0,
+              "f1": 0.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2393,
+              2465,
+              2510,
+              2686,
+              2843
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7
+            }
+          }
+        }
+      },
+      "gat": {
+        "avg_metrics": {
+          "accuracy": 0.62,
+          "f1": 0.7126984126984126,
+          "pr_auc": 0.7925925925925926,
+          "precision": 0.5666666666666667,
+          "recall": 0.9166666666666666,
+          "roc_auc": 0.7083333333333334
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              8,
+              61,
+              98,
+              150,
+              160
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              253,
+              303,
+              347,
+              349,
+              390
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              566,
+              585,
+              661,
+              680,
+              687
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              776,
+              827,
+              884,
+              919,
+              942
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1006,
+              1008,
+              1022,
+              1041,
+              1050
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1111,
+              1292,
+              1423,
+              2879,
+              2881
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.5,
+              "pr_auc": 0.5
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1541,
+              1580,
+              1683,
+              1768,
+              1842
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1943,
+              1951,
+              2030,
+              2064,
+              2072
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 0.5,
+              "f1": 0.5,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2124,
+              2209,
+              2223,
+              2225,
+              2283
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "f1": 0.3333333333333333
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2393,
+              2465,
+              2510,
+              2686,
+              2843
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            }
+          }
+        }
+      },
+      "baselines": {
+        "avg_metrics": {
+          "xgboost": {
+            "accuracy": 0.9400000000000001,
+            "f1": 0.9555555555555555,
+            "pr_auc": 1.0,
+            "precision": 0.9166666666666666,
+            "recall": 1.0,
+            "roc_auc": 1.0
+          },
+          "lightgbm": {
+            "accuracy": 0.9199999999999999,
+            "f1": 0.9416666666666667,
+            "pr_auc": 1.0,
+            "precision": 0.9166666666666666,
+            "recall": 1.0,
+            "roc_auc": 1.0
+          },
+          "catboost": {
+            "accuracy": 0.9400000000000001,
+            "f1": 0.9555555555555555,
+            "pr_auc": 0.9722222222222222,
+            "precision": 0.9166666666666666,
+            "recall": 1.0,
+            "roc_auc": 0.9722222222222222
+          },
+          "random_forest": {
+            "accuracy": 0.9400000000000001,
+            "f1": 0.9550000000000001,
+            "pr_auc": 1.0,
+            "precision": 0.9444444444444445,
+            "recall": 1.0,
+            "roc_auc": 1.0
+          },
+          "svm": {
+            "accuracy": 0.9400000000000001,
+            "f1": 0.9555555555555555,
+            "pr_auc": 0.9305555555555555,
+            "precision": 0.9166666666666666,
+            "recall": 1.0,
+            "roc_auc": 0.9444444444444445
+          },
+          "mlp": {
+            "accuracy": 0.96,
+            "f1": 0.9688888888888888,
+            "pr_auc": 0.9305555555555555,
+            "precision": 0.9444444444444445,
+            "recall": 1.0,
+            "roc_auc": 0.9444444444444445
+          },
+          "autoencoder_predictor": {
+            "accuracy": 0.96,
+            "f1": 0.9688888888888888,
+            "pr_auc": 0.9305555555555555,
+            "precision": 0.9444444444444445,
+            "recall": 1.0,
+            "roc_auc": 0.9444444444444445
+          },
+          "spatial_knn_regression": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.8522222222222222,
+            "pr_auc": 0.9,
+            "precision": 0.75,
+            "recall": 0.8055555555555555,
+            "roc_auc": 0.8055555555555555
+          },
+          "kriging": {
+            "accuracy": 0.72,
+            "f1": 0.8103174603174603,
+            "pr_auc": 0.8666666666666667,
+            "precision": 0.5333333333333333,
+            "recall": 1.0,
+            "roc_auc": 0.8333333333333334
+          }
+        },
+        "per_region": {
+          "Africa": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.2,
+              "precision": 0.3333333333333333,
+              "recall": 0.3333333333333333,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.3333333333333333,
+              "pr_auc": 0.7
+            },
+            "kriging": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8666666666666667
+            }
+          },
+          "East Asia": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "North America": {
+            "xgboost": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            }
+          },
+          "Oceania": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 0.5,
+              "f1": 0.5,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            }
+          },
+          "South America": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "lightgbm": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "random_forest": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 10,
+      "seed": 10,
+      "spire": {
+        "avg_metrics": {
+          "accuracy": 0.8800000000000001,
+          "f1": 0.9130952380952382,
+          "pr_auc": 0.9571428571428571,
+          "precision": 0.8714285714285713,
+          "recall": 0.9285714285714286,
+          "roc_auc": 0.9166666666666667
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              48,
+              61,
+              179,
+              186,
+              2964
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              238,
+              242,
+              297,
+              317,
+              357
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              443,
+              501,
+              603,
+              712,
+              757
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              821,
+              2946,
+              2999,
+              3060,
+              3071
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1012,
+              1022,
+              1027,
+              1053,
+              1060
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1112,
+              1163,
+              1193,
+              1284,
+              2965
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1542,
+              1621,
+              1757,
+              1800,
+              1872
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1973,
+              1988,
+              2026,
+              2051,
+              2064
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2089,
+              2118,
+              2145,
+              2146,
+              2205
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2359,
+              2387,
+              2507,
+              2738,
+              2769
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "gcn": {
+        "avg_metrics": {
+          "accuracy": 0.58,
+          "f1": 0.6984126984126984,
+          "pr_auc": 0.7521825396825397,
+          "precision": 0.6214285714285713,
+          "recall": 0.9285714285714286,
+          "roc_auc": 0.5714285714285714
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              48,
+              61,
+              179,
+              186,
+              2964
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              238,
+              242,
+              297,
+              317,
+              357
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              443,
+              501,
+              603,
+              712,
+              757
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              821,
+              2946,
+              2999,
+              3060,
+              3071
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1012,
+              1022,
+              1027,
+              1053,
+              1060
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1112,
+              1163,
+              1193,
+              1284,
+              2965
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "precision": 0.2,
+              "recall": 1.0,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.25,
+              "pr_auc": 0.25
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1542,
+              1621,
+              1757,
+              1800,
+              1872
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8666666666666667
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1973,
+              1988,
+              2026,
+              2051,
+              2064
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2089,
+              2118,
+              2145,
+              2146,
+              2205
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "f1": 0.3333333333333333
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2359,
+              2387,
+              2507,
+              2738,
+              2769
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.0,
+              "pr_auc": 0.4777777777777778
+            }
+          }
+        }
+      },
+      "gat": {
+        "avg_metrics": {
+          "accuracy": 0.52,
+          "f1": 0.6218253968253968,
+          "pr_auc": 0.7251984126984127,
+          "precision": 0.6357142857142858,
+          "recall": 0.9285714285714286,
+          "roc_auc": 0.5476190476190477
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              48,
+              61,
+              179,
+              186,
+              2964
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              238,
+              242,
+              297,
+              317,
+              357
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.5833333333333333
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              443,
+              501,
+              603,
+              712,
+              757
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              821,
+              2946,
+              2999,
+              3060,
+              3071
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1012,
+              1022,
+              1027,
+              1053,
+              1060
+            ],
+            "test_metrics": {
+              "accuracy": 0.0,
+              "f1": 0.0
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1112,
+              1163,
+              1193,
+              1284,
+              2965
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "precision": 0.2,
+              "recall": 1.0,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.0,
+              "pr_auc": 0.2
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1542,
+              1621,
+              1757,
+              1800,
+              1872
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8666666666666667
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1973,
+              1988,
+              2026,
+              2051,
+              2064
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2089,
+              2118,
+              2145,
+              2146,
+              2205
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "f1": 0.3333333333333333
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2359,
+              2387,
+              2507,
+              2738,
+              2769
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            }
+          }
+        }
+      },
+      "baselines": {
+        "avg_metrics": {
+          "xgboost": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.8607142857142858,
+            "pr_auc": 0.9761904761904762,
+            "precision": 0.7999999999999999,
+            "recall": 0.8928571428571429,
+            "roc_auc": 0.9761904761904762
+          },
+          "lightgbm": {
+            "accuracy": 0.86,
+            "f1": 0.8714285714285713,
+            "pr_auc": 0.9761904761904762,
+            "precision": 0.8214285714285714,
+            "recall": 0.8928571428571429,
+            "roc_auc": 0.9761904761904762
+          },
+          "catboost": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.8607142857142858,
+            "pr_auc": 0.9761904761904762,
+            "precision": 0.7999999999999999,
+            "recall": 0.8928571428571429,
+            "roc_auc": 0.9761904761904762
+          },
+          "random_forest": {
+            "accuracy": 0.86,
+            "f1": 0.8797619047619047,
+            "pr_auc": 0.8928571428571429,
+            "precision": 0.7999999999999999,
+            "recall": 0.9285714285714286,
+            "roc_auc": 0.9166666666666667
+          },
+          "svm": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.8607142857142858,
+            "pr_auc": 0.9214285714285715,
+            "precision": 0.7999999999999999,
+            "recall": 0.8928571428571429,
+            "roc_auc": 0.8928571428571429
+          },
+          "mlp": {
+            "accuracy": 0.86,
+            "f1": 0.8797619047619047,
+            "pr_auc": 0.9642857142857143,
+            "precision": 0.7999999999999999,
+            "recall": 0.9285714285714286,
+            "roc_auc": 0.9523809523809524
+          },
+          "autoencoder_predictor": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.8607142857142858,
+            "pr_auc": 0.9761904761904762,
+            "precision": 0.7999999999999999,
+            "recall": 0.8928571428571429,
+            "roc_auc": 0.9761904761904762
+          },
+          "spatial_knn_regression": {
+            "accuracy": 0.82,
+            "f1": 0.8327777777777777,
+            "pr_auc": 0.8150793650793651,
+            "precision": 0.7476190476190476,
+            "recall": 0.880952380952381,
+            "roc_auc": 0.7976190476190476
+          },
+          "kriging": {
+            "accuracy": 0.72,
+            "f1": 0.8071428571428572,
+            "pr_auc": 0.710515873015873,
+            "precision": 0.6,
+            "recall": 1.0,
+            "roc_auc": 0.5357142857142857
+          }
+        },
+        "per_region": {
+          "Africa": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "China": {
+            "xgboost": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "lightgbm": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "catboost": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "random_forest": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            },
+            "svm": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.5,
+              "pr_auc": 0.5
+            },
+            "mlp": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.6666666666666667,
+              "pr_auc": 0.75
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.5,
+              "recall": 0.5,
+              "f1": 0.5,
+              "roc_auc": 0.33333333333333337,
+              "pr_auc": 0.45
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.0,
+              "pr_auc": 0.325
+            }
+          },
+          "East Asia": {
+            "xgboost": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.6,
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "North America": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.75,
+              "pr_auc": 0.5
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.3333333333333333,
+              "recall": 1.0,
+              "f1": 0.5,
+              "roc_auc": 0.75,
+              "pr_auc": 0.5
+            },
+            "kriging": {
+              "accuracy": 0.2,
+              "precision": 0.2,
+              "recall": 1.0,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.5,
+              "pr_auc": 0.3333333333333333
+            }
+          },
+          "Oceania": {
+            "xgboost": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.7555555555555555
+            },
+            "kriging": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.0,
+              "pr_auc": 0.4777777777777778
+            }
+          },
+          "Russian Federation": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "South America": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 16,
+      "seed": 16,
+      "spire": {
+        "avg_metrics": {
+          "accuracy": 0.86,
+          "f1": 0.9130952380952382,
+          "pr_auc": 0.9418209876543209,
+          "precision": 0.8500000000000001,
+          "recall": 0.9722222222222222,
+          "roc_auc": 0.8611111111111112
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              100,
+              124,
+              131,
+              180,
+              191
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              214,
+              273,
+              308,
+              340,
+              397
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              434,
+              465,
+              483,
+              702,
+              706
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              869,
+              936,
+              2907,
+              3084,
+              3100
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1004,
+              1021,
+              1027,
+              1050,
+              1056
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1123,
+              1235,
+              1236,
+              1300,
+              1378
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1661,
+              1757,
+              1795,
+              1932,
+              2868
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1994,
+              2015,
+              2035,
+              2042,
+              2055
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2111,
+              2120,
+              2133,
+              2300,
+              2311
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2357,
+              2522,
+              2574,
+              2698,
+              2847
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "gcn": {
+        "avg_metrics": {
+          "accuracy": 0.58,
+          "f1": 0.6510317460317461,
+          "pr_auc": 0.745216049382716,
+          "precision": 0.5981481481481482,
+          "recall": 0.7407407407407408,
+          "roc_auc": 0.49074074074074076
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              100,
+              124,
+              131,
+              180,
+              191
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              214,
+              273,
+              308,
+              340,
+              397
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.3333333333333333,
+              "recall": 1.0,
+              "f1": 0.5,
+              "roc_auc": 0.75,
+              "pr_auc": 0.5
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              434,
+              465,
+              483,
+              702,
+              706
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "precision": 0.5,
+              "recall": 0.25,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              869,
+              936,
+              2907,
+              3084,
+              3100
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1004,
+              1021,
+              1027,
+              1050,
+              1056
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1123,
+              1235,
+              1236,
+              1300,
+              1378
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1661,
+              1757,
+              1795,
+              1932,
+              2868
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1994,
+              2015,
+              2035,
+              2042,
+              2055
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1": 0.8,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2111,
+              2120,
+              2133,
+              2300,
+              2311
+            ],
+            "test_metrics": {
+              "accuracy": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "roc_auc": 0.0,
+              "pr_auc": 0.4777777777777778
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2357,
+              2522,
+              2574,
+              2698,
+              2847
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.33333333333333337,
+              "pr_auc": 0.41666666666666663
+            }
+          }
+        }
+      },
+      "gat": {
+        "avg_metrics": {
+          "accuracy": 0.68,
+          "f1": 0.745079365079365,
+          "pr_auc": 0.8209876543209877,
+          "precision": 0.7185185185185186,
+          "recall": 0.8148148148148148,
+          "roc_auc": 0.5185185185185186
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              100,
+              124,
+              131,
+              180,
+              191
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              214,
+              273,
+              308,
+              340,
+              397
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              434,
+              465,
+              483,
+              702,
+              706
+            ],
+            "test_metrics": {
+              "accuracy": 0.2,
+              "precision": 0.5,
+              "recall": 0.25,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              869,
+              936,
+              2907,
+              3084,
+              3100
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1004,
+              1021,
+              1027,
+              1050,
+              1056
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1123,
+              1235,
+              1236,
+              1300,
+              1378
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1661,
+              1757,
+              1795,
+              1932,
+              2868
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1994,
+              2015,
+              2035,
+              2042,
+              2055
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2111,
+              2120,
+              2133,
+              2300,
+              2311
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.3333333333333333,
+              "pr_auc": 0.5888888888888889
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2357,
+              2522,
+              2574,
+              2698,
+              2847
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          }
+        }
+      },
+      "baselines": {
+        "avg_metrics": {
+          "xgboost": {
+            "accuracy": 0.8,
+            "f1": 0.8496031746031745,
+            "pr_auc": 0.8987654320987654,
+            "precision": 0.8129629629629629,
+            "recall": 0.9074074074074073,
+            "roc_auc": 0.8888888888888888
+          },
+          "lightgbm": {
+            "accuracy": 0.8800000000000001,
+            "f1": 0.90515873015873,
+            "pr_auc": 0.9418209876543211,
+            "precision": 0.8444444444444444,
+            "recall": 0.9722222222222222,
+            "roc_auc": 0.8240740740740741
+          },
+          "catboost": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.875,
+            "pr_auc": 0.9186728395061728,
+            "precision": 0.8129629629629629,
+            "recall": 0.9351851851851851,
+            "roc_auc": 0.8055555555555556
+          },
+          "random_forest": {
+            "accuracy": 0.86,
+            "f1": 0.8908730158730158,
+            "pr_auc": 0.9685185185185186,
+            "precision": 0.8444444444444444,
+            "recall": 0.9444444444444444,
+            "roc_auc": 0.8703703703703703
+          },
+          "svm": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.8797619047619047,
+            "pr_auc": 0.9455246913580247,
+            "precision": 0.8222222222222223,
+            "recall": 0.9444444444444444,
+            "roc_auc": 0.8240740740740741
+          },
+          "mlp": {
+            "accuracy": 0.8400000000000001,
+            "f1": 0.8988095238095237,
+            "pr_auc": 0.9246913580246914,
+            "precision": 0.8500000000000001,
+            "recall": 0.9444444444444444,
+            "roc_auc": 0.7685185185185186
+          },
+          "autoencoder_predictor": {
+            "accuracy": 0.8200000000000001,
+            "f1": 0.8654761904761905,
+            "pr_auc": 0.9547839506172839,
+            "precision": 0.7944444444444445,
+            "recall": 0.9444444444444444,
+            "roc_auc": 0.8518518518518519
+          },
+          "spatial_knn_regression": {
+            "accuracy": 0.76,
+            "f1": 0.7853174603174603,
+            "pr_auc": 0.8189814814814815,
+            "precision": 0.7388888888888889,
+            "recall": 0.8055555555555556,
+            "roc_auc": 0.6203703703703703
+          },
+          "kriging": {
+            "accuracy": 0.6799999999999999,
+            "f1": 0.7849206349206349,
+            "pr_auc": 0.7935185185185185,
+            "precision": 0.6444444444444444,
+            "recall": 1.0,
+            "roc_auc": 0.48148148148148145
+          }
+        },
+        "per_region": {
+          "Africa": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "China": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.75,
+              "pr_auc": 0.5
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.4,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "roc_auc": 0.25,
+              "pr_auc": 0.25
+            },
+            "kriging": {
+              "accuracy": 0.2,
+              "precision": 0.2,
+              "recall": 1.0,
+              "f1": 0.3333333333333333,
+              "roc_auc": 0.0,
+              "pr_auc": 0.2
+            }
+          },
+          "East Asia": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Europe": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Middle East": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.7208333333333333
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.9
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "North America": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Oceania": {
+            "xgboost": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "lightgbm": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "catboost": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "random_forest": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "svm": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "mlp": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.25,
+              "pr_auc": 0.7208333333333333
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "Russian Federation": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            },
+            "kriging": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8666666666666667
+            }
+          },
+          "South America": {
+            "xgboost": {
+              "accuracy": 0.6,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            },
+            "catboost": {
+              "accuracy": 0.6,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "f1": 0.6666666666666666,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666666
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8666666666666667
+            }
+          },
+          "South and Central Asia": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "run_id": 19,
+      "seed": 49,
+      "spire": {
+        "avg_metrics": {
+          "accuracy": 0.9199999999999999,
+          "f1": 0.9466666666666667,
+          "pr_auc": 0.9916666666666667,
+          "precision": 0.8444444444444444,
+          "recall": 1.0,
+          "roc_auc": 0.9583333333333334
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              9,
+              10,
+              84,
+              138,
+              198
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              212,
+              312,
+              335,
+              347,
+              376
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              439,
+              457,
+              475,
+              508,
+              736
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              858,
+              884,
+              987,
+              2922,
+              3069
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1006,
+              1016,
+              1042,
+              1046,
+              1051
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1078,
+              1107,
+              1149,
+              1209,
+              1420
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1629,
+              1675,
+              1794,
+              1878,
+              1919
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1947,
+              1963,
+              1967,
+              2003,
+              2019
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2128,
+              2134,
+              2195,
+              2220,
+              2304
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2425,
+              2479,
+              2527,
+              2688,
+              2795
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          }
+        }
+      },
+      "gcn": {
+        "avg_metrics": {
+          "accuracy": 0.74,
+          "f1": 0.834920634920635,
+          "pr_auc": 0.7655092592592593,
+          "precision": 0.725,
+          "recall": 0.9583333333333334,
+          "roc_auc": 0.4583333333333333
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              9,
+              10,
+              84,
+              138,
+              198
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              212,
+              312,
+              335,
+              347,
+              376
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.33333333333333337,
+              "pr_auc": 0.41666666666666663
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              439,
+              457,
+              475,
+              508,
+              736
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              858,
+              884,
+              987,
+              2922,
+              3069
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1006,
+              1016,
+              1042,
+              1046,
+              1051
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1078,
+              1107,
+              1149,
+              1209,
+              1420
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1629,
+              1675,
+              1794,
+              1878,
+              1919
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1947,
+              1963,
+              1967,
+              2003,
+              2019
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2128,
+              2134,
+              2195,
+              2220,
+              2304
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2425,
+              2479,
+              2527,
+              2688,
+              2795
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.6666666666666666,
+              "pr_auc": 0.8055555555555556
+            }
+          }
+        }
+      },
+      "gat": {
+        "avg_metrics": {
+          "accuracy": 0.76,
+          "f1": 0.8484126984126984,
+          "pr_auc": 0.8050925925925926,
+          "precision": 0.725,
+          "recall": 0.9166666666666666,
+          "roc_auc": 0.5555555555555556
+        },
+        "per_region": {
+          "Africa": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              9,
+              10,
+              84,
+              138,
+              198
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              212,
+              312,
+              335,
+              347,
+              376
+            ],
+            "test_metrics": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            }
+          },
+          "East Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              439,
+              457,
+              475,
+              508,
+              736
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "Europe": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              858,
+              884,
+              987,
+              2922,
+              3069
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "Middle East": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1006,
+              1016,
+              1042,
+              1046,
+              1051
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "North America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1078,
+              1107,
+              1149,
+              1209,
+              1420
+            ],
+            "test_metrics": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Oceania": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1629,
+              1675,
+              1794,
+              1878,
+              1919
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              1947,
+              1963,
+              1967,
+              2003,
+              2019
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "South America": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2128,
+              2134,
+              2195,
+              2220,
+              2304
+            ],
+            "test_metrics": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            }
+          },
+          "South and Central Asia": {
+            "n_test_sample": 5,
+            "sample_idx": [
+              2425,
+              2479,
+              2527,
+              2688,
+              2795
+            ],
+            "test_metrics": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.6388888888888888
+            }
+          }
+        }
+      },
+      "baselines": {
+        "avg_metrics": {
+          "xgboost": {
+            "accuracy": 0.8800000000000001,
+            "f1": 0.9216666666666666,
+            "pr_auc": 0.9645833333333332,
+            "precision": 0.8361111111111111,
+            "recall": 0.9583333333333334,
+            "roc_auc": 0.8333333333333334
+          },
+          "lightgbm": {
+            "accuracy": 0.9,
+            "f1": 0.9327777777777777,
+            "pr_auc": 0.9833333333333334,
+            "precision": 0.8361111111111111,
+            "recall": 0.9583333333333334,
+            "roc_auc": 0.9166666666666666
+          },
+          "catboost": {
+            "accuracy": 0.86,
+            "f1": 0.9105555555555556,
+            "pr_auc": 0.9833333333333334,
+            "precision": 0.8361111111111111,
+            "recall": 0.9583333333333334,
+            "roc_auc": 0.9166666666666666
+          },
+          "random_forest": {
+            "accuracy": 0.8800000000000001,
+            "f1": 0.9216666666666666,
+            "pr_auc": 0.8951388888888889,
+            "precision": 0.8361111111111111,
+            "recall": 0.9583333333333334,
+            "roc_auc": 0.625
+          },
+          "svm": {
+            "accuracy": 0.9,
+            "f1": 0.9416666666666667,
+            "pr_auc": 0.9055555555555556,
+            "precision": 0.8916666666666666,
+            "recall": 0.9583333333333334,
+            "roc_auc": 0.6666666666666666
+          },
+          "mlp": {
+            "accuracy": 0.8800000000000001,
+            "f1": 0.9216666666666666,
+            "pr_auc": 0.9729166666666668,
+            "precision": 0.8361111111111111,
+            "recall": 0.9583333333333334,
+            "roc_auc": 0.875
+          },
+          "autoencoder_predictor": {
+            "accuracy": 0.9,
+            "f1": 0.9416666666666667,
+            "pr_auc": 0.9833333333333334,
+            "precision": 0.8916666666666666,
+            "recall": 0.9583333333333334,
+            "roc_auc": 0.9166666666666666
+          },
+          "spatial_knn_regression": {
+            "accuracy": 0.78,
+            "f1": 0.8512698412698413,
+            "pr_auc": 0.8673611111111111,
+            "precision": 0.8361111111111111,
+            "recall": 0.8611111111111112,
+            "roc_auc": 0.6319444444444444
+          },
+          "kriging": {
+            "accuracy": 0.82,
+            "f1": 0.8876984126984127,
+            "pr_auc": 0.88125,
+            "precision": 0.7000000000000001,
+            "recall": 1.0,
+            "roc_auc": 0.5972222222222222
+          }
+        },
+        "per_region": {
+          "Africa": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "China": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.6666666666666666,
+              "recall": 1.0,
+              "f1": 0.8,
+              "roc_auc": 0.8333333333333334,
+              "pr_auc": 0.8333333333333333
+            },
+            "kriging": {
+              "accuracy": 0.4,
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285714,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "East Asia": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "f1": 0.8888888888888888
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Europe": {
+            "xgboost": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "lightgbm": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "catboost": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "random_forest": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            },
+            "svm": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "mlp": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "precision": 0.75,
+              "recall": 0.75,
+              "f1": 0.75,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            }
+          },
+          "Middle East": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.375,
+              "pr_auc": 0.7625
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            }
+          },
+          "North America": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.6,
+              "f1": 0.75
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "Oceania": {
+            "xgboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "lightgbm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "catboost": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "random_forest": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "svm": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.0,
+              "pr_auc": 0.6791666666666667
+            },
+            "mlp": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            },
+            "autoencoder_predictor": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.75,
+              "pr_auc": 0.95
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.25,
+              "pr_auc": 0.8041666666666667
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            }
+          },
+          "Russian Federation": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "kriging": {
+              "accuracy": 0.8,
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.8888888888888888,
+              "roc_auc": 0.5,
+              "pr_auc": 0.8875
+            }
+          },
+          "South America": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            },
+            "kriging": {
+              "accuracy": 1.0,
+              "f1": 1.0
+            }
+          },
+          "South and Central Asia": {
+            "xgboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "lightgbm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "catboost": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "random_forest": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "svm": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "mlp": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "autoencoder_predictor": {
+              "accuracy": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "roc_auc": 1.0,
+              "pr_auc": 1.0
+            },
+            "spatial_knn_regression": {
+              "accuracy": 0.8,
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1": 0.8,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            },
+            "kriging": {
+              "accuracy": 0.6,
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.75,
+              "roc_auc": 0.8333333333333333,
+              "pr_auc": 0.9166666666666665
+            }
+          }
+        }
+      }
+    }
+  ]
+}
