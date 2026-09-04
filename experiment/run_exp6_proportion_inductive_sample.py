@@ -43,9 +43,11 @@ from baseline import (
 )
 from config import OUTPUT_PATH
 from feature_engineering import (
-    build_baseline_features,
+    _make_single_xgb_model,
     build_node_features,
+    compute_ensemble_scores_no_leakage,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import GAT, GCN, GraphSAGE
@@ -102,12 +104,25 @@ def _run_region(
 ) -> dict:
     """Run all baselines + GNNs for one region and return proportion metrics."""
     train_idx = split["train_idx"]
+    val_idx   = split["val_idx"]
     test_idx  = split["test_idx"]
 
     # ── Shared feature pipeline (fitted on train only) ────────────────────────
     _, X, y = prepare_xgboost_inputs(processed_df, fit_idx=train_idx)
-    xgb_model, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
-    X_bl = build_baseline_features(X_selected, X, xgb_model)
+    _, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
+    # Leakage-free xgb_score (Comment 17 fairness fix, same OOF machinery as
+    # Comment 12-A): train rows get a K-fold out-of-fold score, val/test
+    # rows get the score from the model refit on the full train_idx.
+    other_idx = np.concatenate([val_idx, test_idx])
+    train_scores, other_scores, _ = compute_ensemble_scores_no_leakage(
+        X, y, train_idx, other_idx, random_state=seed,
+        models_factory=_make_single_xgb_model,
+    )
+    xgb_score = np.empty(len(X), dtype=float)
+    xgb_score[train_idx] = train_scores
+    xgb_score[other_idx] = other_scores
+    X_bl = X_selected.copy()
+    X_bl["xgb_score"] = xgb_score
 
     X_train = X_bl.iloc[train_idx].astype(float)
     y_train = y.iloc[train_idx]
@@ -122,7 +137,11 @@ def _run_region(
             y_prob = model.predict_proba(X_test)[:, 1]
             pred_prop = float(np.mean(y_prob))
             abs_err   = float(abs(pred_prop - actual_proportion))
-            per_model[name] = {"predicted_proportion": pred_prop, "abs_error": abs_err}
+            per_model[name] = {
+                "predicted_proportion": pred_prop,
+                "abs_error":            abs_err,
+                "y_prob":               y_prob.tolist(),  # Comment 18-B
+            }
         except Exception as exc:
             per_model[name] = {"error": str(exc)}
         info = per_model[name]
@@ -148,7 +167,11 @@ def _run_region(
             y_prob    = fn(**kwargs)
             pred_prop = float(np.mean(y_prob))
             abs_err   = float(abs(pred_prop - actual_proportion))
-            per_model[name] = {"predicted_proportion": pred_prop, "abs_error": abs_err}
+            per_model[name] = {
+                "predicted_proportion": pred_prop,
+                "abs_error":            abs_err,
+                "y_prob":               np.asarray(y_prob).tolist(),  # Comment 18-B
+            }
         except Exception as exc:
             per_model[name] = {"error": str(exc)}
         info = per_model[name]
@@ -181,14 +204,22 @@ def _run_region(
             x_sel = torch.tensor(
                 X_selected_test.iloc[i].astype(float).values, dtype=torch.float
             ).unsqueeze(0)
+            x_new_geo = torch.tensor(
+                select_geo_similarity_columns(X_selected_test.iloc[[i]]).astype(float).values,
+                dtype=torch.float,
+            )
             x_ens = torch.tensor([[ens_score]], dtype=torch.float)
             x_new_base = torch.cat([x_sel, x_ens], dim=1)
             lat, lon = test_coords[i]
-            y_probs.append(_predict_node_aug(arts, lat, lon, x_new_base))
+            y_probs.append(_predict_node_aug(arts, lat, lon, x_new_base, x_new_geo))
 
         pred_prop = float(np.mean(y_probs))
         abs_err   = float(abs(pred_prop - actual_proportion))
-        per_model[name] = {"predicted_proportion": pred_prop, "abs_error": abs_err}
+        per_model[name] = {
+            "predicted_proportion": pred_prop,
+            "abs_error":            abs_err,
+            "y_prob":               [float(p) for p in y_probs],  # Comment 18-B
+        }
         print(f"    [{name}]  pred={pred_prop:.3f}  |err|={abs_err:.3f}")
 
     return per_model
@@ -222,11 +253,13 @@ def run_exp6(
     processed_df: pd.DataFrame,
     n_sample: int = N_SAMPLE,
     results_path: str = _RESULTS_PATH,
+    seeds: list[int] | None = None,
 ) -> dict:
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
 
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: list = []
@@ -254,6 +287,7 @@ def run_exp6(
                 "n_test":            int(n),
                 "actual_proportion": actual_proportion,
                 "sample_idx":        split["test_idx"].tolist(),
+                "y_true":            processed_df["has_ree"].values[split["test_idx"]].astype(int).tolist(),  # Comment 18-B
                 "per_model":         per_model,
             }
 
@@ -263,6 +297,17 @@ def run_exp6(
             if v:
                 print(f"    {m:20s}  MAE={v['mae']:.4f}  RMSE={v['rmse']:.4f}")
         runs.append({"seed": seed, "aggregated_metrics": agg, "per_region": per_region})
+
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(results_path).exists():
+        with open(results_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", [])
+        by_seed = {r["seed"]: r for r in existing_runs}
+        for r in runs:
+            by_seed[r["seed"]] = r  # new runs overwrite same-seed old ones
+        runs = [by_seed[s] for s in sorted(by_seed.keys())]
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(by_seed.keys())}")
 
     payload = {
         "experiment": "exp6_proportion_inductive_sample",
@@ -296,11 +341,13 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--n-sample", type=int, default=N_SAMPLE)
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
     args = parser.parse_args()
 
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
-    run_exp6(processed_df, n_sample=args.n_sample)
+    run_exp6(processed_df, n_sample=args.n_sample, seeds=args.seeds)
 
 
 if __name__ == "__main__":

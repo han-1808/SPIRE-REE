@@ -32,8 +32,6 @@ import json
 import numpy as np
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score,
     average_precision_score,
@@ -45,9 +43,10 @@ from torch_geometric.data import Data
 
 from config import OUTPUT_PATH
 from feature_engineering import (
-    build_node_features,
+    build_node_features_no_leakage,
     build_weighted_graph,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import (
@@ -110,20 +109,7 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, split: dict, mode: str) -
     test_idx  = split["test_idx"]
 
     graph_df, X, y = prepare_xgboost_inputs(processed_df, fit_idx=train_idx)
-    xgb_model, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
-
-    X_tr = X.iloc[train_idx].astype(float)
-    y_tr = y.iloc[train_idx]
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=42, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-    rf_model = RandomForestClassifier(
-        n_estimators=300, max_depth=None, random_state=42, n_jobs=-1,
-    )
-    rf_model.fit(X_tr, y_tr)
-    ensemble_models = [xgb_model, cat_model, rf_model]
+    _, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
 
     tv_pos     = np.sort(np.concatenate([train_idx, val_idx]))
     old_to_new = {int(old): new for new, old in enumerate(tv_pos)}
@@ -136,10 +122,21 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, split: dict, mode: str) -
         X_node_base = torch.tensor(
             X_selected.iloc[tv_pos].astype(float).values, dtype=torch.float32
         )
+        ensemble_models = None
     else:
-        X_node_base = build_node_features(
-            X_selected.iloc[tv_pos], X.iloc[tv_pos], ensemble_models
+        # Leakage-free (Comment 12): train nodes get K-fold OOF scores, val
+        # nodes get scores from the ensemble refit on the full train_idx.
+        X_node_base, ensemble_models = build_node_features_no_leakage(
+            X_selected.iloc[tv_pos], X, y, train_idx, val_idx, new_train, new_val,
         )
+
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_pos]).astype(float).values,
+        dtype=torch.float32,
+    )
 
     edge_index, edge_weight, sigma = build_weighted_graph(
         coords_tv, X_node_base,
@@ -147,9 +144,12 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, split: dict, mode: str) -
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train,
         return_sigma=True,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
 
     X_node_tv_base = X_node_base.clone().cpu()
+    X_geo_tv_base = X_geo_tv.clone().cpu()
 
     if mode == "full":
         X_node_base = augment_with_edge_stats(X_node_base, edge_index, edge_weight)
@@ -179,6 +179,7 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, split: dict, mode: str) -
         "device":          device,
         "coords_tv":       coords_tv,
         "X_node_tv_base":  X_node_tv_base,
+        "X_geo_tv_base":   X_geo_tv_base,
         "edge_index_tv":   tv_data.edge_index,
         "edge_weight_tv":  tv_data.edge_weight,
         "graph_sigma":     sigma,
@@ -222,13 +223,19 @@ def _train_gnn(graph_artifacts: dict) -> tuple[object, list, float]:
 # ── Inductive prediction ──────────────────────────────────────────────────────
 
 def _predict_node(
-    artifacts: dict, lat: float, lon: float, x_new_base: torch.Tensor, mode: str
+    artifacts: dict,
+    lat: float,
+    lon: float,
+    x_new_base: torch.Tensor,
+    mode: str,
+    x_new_geo: torch.Tensor,
 ) -> float:
     device         = artifacts["device"]
     model          = artifacts["model"]
     coords_tv      = artifacts["coords_tv"]
     X_node_tv      = artifacts["X_node_tv"]
     X_node_tv_base = artifacts["X_node_tv_base"]
+    X_geo_tv_base  = artifacts["X_geo_tv_base"]
     edge_index_tv  = artifacts["edge_index_tv"]
     edge_weight_tv = artifacts["edge_weight_tv"]
     sigma          = artifacts["graph_sigma"]
@@ -246,10 +253,14 @@ def _predict_node(
     mini_X_base = torch.cat(
         [x_new_base.cpu(), X_node_tv_base[neighbour_idx].cpu()], dim=0
     )
+    mini_X_geo = torch.cat(
+        [x_new_geo.cpu(), X_geo_tv_base[neighbour_idx].cpu()], dim=0
+    )
     ei_mini, ew_mini = build_weighted_graph(
         mini_coords, mini_X_base,
         alpha=_GRAPH_ALPHA, k=len(neighbour_idx),
         weighting_strategy="mixed", sigma=sigma,
+        X_geo=mini_X_geo,
     )
 
     mask0    = (ei_mini[0] == 0) | (ei_mini[1] == 0)
@@ -304,6 +315,10 @@ def _predict_test_nodes(
         x_sel = torch.tensor(
             X_selected_test.iloc[i].astype(float).values, dtype=torch.float
         ).unsqueeze(0)
+        x_new_geo = torch.tensor(
+            select_geo_similarity_columns(X_selected_test.iloc[[i]]).astype(float).values,
+            dtype=torch.float,
+        )
 
         if mode == "no_ensemble":
             x_new_base = x_sel                                       # (1, 10)
@@ -315,7 +330,7 @@ def _predict_test_nodes(
             x_new_base = torch.cat([x_sel, x_ens], dim=1)           # (1, 11)
 
         lat, lon = test_coords[i]
-        prob = _predict_node(artifacts, lat, lon, x_new_base, mode)
+        prob = _predict_node(artifacts, lat, lon, x_new_base, mode, x_new_geo)
         y_probs.append(prob)
 
     y_prob = np.array(y_probs)

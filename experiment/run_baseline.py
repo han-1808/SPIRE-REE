@@ -29,7 +29,8 @@ import pandas as pd
 
 from config import BASELINE_METRICS_PATH, OUTPUT_PATH
 from feature_engineering import (
-    build_baseline_features,
+    _make_single_xgb_model,
+    compute_ensemble_scores_no_leakage,
     create_spatial_split_indices,
     prepare_xgboost_inputs,
     train_xgboost_and_select_features,
@@ -57,19 +58,47 @@ N_RUNS = 5
 
 # ── Feature building (per region, leakage-safe) ───────────────────────────────
 
-def _build_region_inputs(processed_df: pd.DataFrame, regions: list[str]) -> dict:
-    """Build baseline features for every region, fitting pipeline on train_idx only."""
+def _build_region_inputs(processed_df: pd.DataFrame, regions: list[str], seed: int = 42) -> dict:
+    """
+    Build baseline features for every region, fitting pipeline on train_idx only.
+
+    seed : (Comment 17 fairness fixes)
+      1. Threaded into `create_spatial_split_indices` so the train/val split
+         is re-randomized per seed, like SPIRE's `_build_graph_artifacts`
+         already does — previously this always used the default seed=42
+         regardless of which "seed run" was in progress, so all 5 baseline
+         runs silently shared one split and only the downstream models'
+         own randomness varied (not a fair comparison to SPIRE's 5 runs).
+      2. `xgb_score` is now computed leakage-free via
+         `compute_ensemble_scores_no_leakage(..., models_factory=_make_single_xgb_model)`
+         — train rows get a K-fold out-of-fold score, val/test rows get the
+         score from the model refit on the full train set. Previously
+         `xgb_model.predict_proba(X)` scored train rows in-sample (the same
+         bug Comment 12 fixed for SPIRE's `ensemble_score`, but never
+         patched here since `build_baseline_features` was outside that fix's
+         scope).
+    """
     region_inputs = {}
     for region in regions:
         print(f"  [build] {region}")
-        split = create_spatial_split_indices(processed_df, test_region=region, val_ratio=0.2)
+        split = create_spatial_split_indices(processed_df, test_region=region, val_ratio=0.2, random_seed=seed)
         train_idx = split["train_idx"]
+        val_idx = split["val_idx"]
+        test_idx = split["test_idx"]
+        other_idx = np.concatenate([val_idx, test_idx])
 
         graph_df, X, y = prepare_xgboost_inputs(processed_df, fit_idx=train_idx)
-        xgb_model, _, X_selected = train_xgboost_and_select_features(
-            X, y, fit_idx=train_idx
+        _, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
+
+        train_scores, other_scores, _ = compute_ensemble_scores_no_leakage(
+            X, y, train_idx, other_idx, random_state=seed,
+            models_factory=_make_single_xgb_model,
         )
-        X_baseline = build_baseline_features(X_selected, X, xgb_model)
+        xgb_score = np.empty(len(X), dtype=float)
+        xgb_score[train_idx] = train_scores
+        xgb_score[other_idx] = other_scores
+        X_baseline = X_selected.copy()
+        X_baseline["xgb_score"] = xgb_score
 
         region_inputs[region] = {
             "graph_df": graph_df,
@@ -136,11 +165,17 @@ def _avg_metrics(metrics_per_region: dict) -> dict:
 def _run_one_seed(
     processed_df: pd.DataFrame,
     regions: list,
-    region_inputs: dict,
     seed: int,
     skip_kriging: bool = False,
 ) -> dict:
-    """Run all baseline models for one seed. Returns {avg_metrics, per_region}."""
+    """
+    Run all baseline models for one seed. Returns {avg_metrics, per_region}.
+
+    Rebuilds region_inputs (features + split) fresh for this seed — see
+    `_build_region_inputs` docstring (Comment 17 fairness fix).
+    """
+    print(f"\nBuilding per-region inputs for seed={seed}...")
+    region_inputs = _build_region_inputs(processed_df, regions, seed=seed)
     runners = _make_runners(processed_df, region_inputs, seed=seed)
     per_region: dict = {r: {} for r in regions}
     models_to_run = [m for m in MODELS if not (skip_kriging and m == "kriging")]
@@ -169,14 +204,13 @@ def run_baseline_sweep(
     processed_df: pd.DataFrame,
     metrics_path: str = BASELINE_METRICS_PATH,
     skip_kriging: bool = False,
+    seeds: list[int] | None = None,
 ) -> dict:
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
 
-    print("\nBuilding per-region inputs...")
-    region_inputs = _build_region_inputs(processed_df, regions)
-
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: dict = {}
@@ -184,7 +218,15 @@ def run_baseline_sweep(
         print(f"\n{'#'*60}")
         print(f"  RUN seed={seed}")
         print(f"{'#'*60}")
-        runs[str(seed)] = _run_one_seed(processed_df, regions, region_inputs, seed, skip_kriging)
+        runs[str(seed)] = _run_one_seed(processed_df, regions, seed, skip_kriging)
+
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(metrics_path).exists():
+        with open(metrics_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", {})
+        runs = {**existing_runs, **runs}
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(runs.keys(), key=int)}")
 
     # Cross-seed average metrics
     models_to_run = [m for m in MODELS if not (skip_kriging and m == "kriging")]
@@ -219,12 +261,14 @@ def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--skip-kriging", action="store_true", help="Skip Kriging (slow)")
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
     args = parser.parse_args()
 
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
 
-    run_baseline_sweep(processed_df, skip_kriging=args.skip_kriging)
+    run_baseline_sweep(processed_df, skip_kriging=args.skip_kriging, seeds=args.seeds)
 
 
 

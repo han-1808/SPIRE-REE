@@ -43,10 +43,14 @@ from baseline import (
 )
 from config import OUTPUT_PATH
 from feature_engineering import (
-    build_baseline_features,
+    _make_single_xgb_model,
     build_node_features,
+    build_node_features_no_leakage,
     build_weighted_graph,
+    compute_ensemble_scores_no_leakage,
+    create_buffered_region_split_indices,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import (
@@ -62,28 +66,13 @@ from gnn_training import (
 from run_gnn_per_region import _predict_node_aug
 
 _GNN_MODELS = [("spire", GraphSAGE), ("gcn", GCN), ("gat", GAT)]
-_N_TEST = 5
+_TEST_RATIO = 0.15  # Comment (4)-A: was a fixed n=5, now 10-20%/region (mid-point)
+_MIN_REGION_NODES = 20
 _GRAPH_K = 10
 _GRAPH_ALPHA = 0.5
 _GRAPH_MAX_DIST_KM = 2000.0
 _RESULTS_PATH = "result/exp5_proportion_per_region.json"
 N_RUNS = 5
-
-
-def _split_region_indices(
-    region_local_idx: np.ndarray,
-    n_test: int = _N_TEST,
-    val_ratio: float = 0.2,
-    random_seed: int = 42,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    rng = np.random.default_rng(random_seed)
-    perm = rng.permutation(len(region_local_idx))
-    test_local = perm[:n_test]
-    rest = perm[n_test:]
-    n_val = max(1, int(len(rest) * val_ratio))
-    val_local = rest[:n_val]
-    train_local = rest[n_val:]
-    return train_local, val_local, test_local
 
 
 def _make_baseline_models(seed: int = 42) -> dict:
@@ -122,21 +111,42 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     n_nodes = len(region_global_idx)
     print(f"  Region '{region}': {n_nodes} nodes total")
 
-    if n_nodes < _N_TEST + 5:
+    if n_nodes < _MIN_REGION_NODES:
         print(f"  Skipping — too few nodes ({n_nodes})")
         return {}
 
-    train_local, val_local, test_local = _split_region_indices(region_global_idx, random_seed=random_seed)
+    coords_region = processed_df[["Latitude", "Longitude"]].values[region_global_idx]
+    split = create_buffered_region_split_indices(
+        region_global_idx, coords_region, test_ratio=_TEST_RATIO,
+        k_for_buffer=_GRAPH_K, random_seed=random_seed,
+    )
+    train_local, val_local, test_local = split["train_local"], split["val_local"], split["test_local"]
+    split_info = split["split_info"]
+    print(f"  Split: n_test={split_info['n_test']} buffer_km={split_info['buffer_km']:.1f} "
+          f"excluded_by_buffer={split_info['n_excluded_by_buffer']}"
+          + (" (buffer fallback)" if split_info["buffer_fallback"] else ""))
     train_global = region_global_idx[train_local]
 
     _, X_full, y_full = prepare_xgboost_inputs(processed_df, fit_idx=train_global)
     X_region = X_full.iloc[region_global_idx].reset_index(drop=True)
     y_region = y_full.iloc[region_global_idx].reset_index(drop=True)
 
-    xgb_model, _, X_selected = train_xgboost_and_select_features(
+    _, _, X_selected = train_xgboost_and_select_features(
         X_region, y_region, fit_idx=train_local
     )
-    X_bl = build_baseline_features(X_selected, X_region, xgb_model)
+    # Leakage-free xgb_score (Comment 17 fairness fix, same OOF machinery as
+    # Comment 12-A): train rows get a K-fold out-of-fold score, val/test
+    # rows get the score from the model refit on the full train_local.
+    other_local = np.concatenate([val_local, test_local])
+    train_scores, other_scores, _ = compute_ensemble_scores_no_leakage(
+        X_region, y_region, train_local, other_local, random_state=random_seed,
+        models_factory=_make_single_xgb_model,
+    )
+    xgb_score = np.empty(len(X_region), dtype=float)
+    xgb_score[train_local] = train_scores
+    xgb_score[other_local] = other_scores
+    X_bl = X_selected.copy()
+    X_bl["xgb_score"] = xgb_score
 
     X_train = X_bl.iloc[train_local].astype(float)
     y_train = y_region.iloc[train_local]
@@ -154,7 +164,11 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
             y_prob = model.predict_proba(X_test)[:, 1]
             pred_prop = float(np.mean(y_prob))
             abs_err = float(abs(pred_prop - actual_proportion))
-            per_model[name] = {"predicted_proportion": pred_prop, "abs_error": abs_err}
+            per_model[name] = {
+                "predicted_proportion": pred_prop,
+                "abs_error":            abs_err,
+                "y_prob":               y_prob.tolist(),  # Comment 18-B
+            }
         except Exception as exc:
             per_model[name] = {"error": str(exc)}
         info = per_model[name]
@@ -181,7 +195,11 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
             y_prob    = fn(**kwargs)
             pred_prop = float(np.mean(y_prob))
             abs_err   = float(abs(pred_prop - actual_proportion))
-            per_model[name] = {"predicted_proportion": pred_prop, "abs_error": abs_err}
+            per_model[name] = {
+                "predicted_proportion": pred_prop,
+                "abs_error":            abs_err,
+                "y_prob":               np.asarray(y_prob).tolist(),  # Comment 18-B
+            }
         except Exception as exc:
             per_model[name] = {"error": str(exc)}
         info = per_model[name]
@@ -190,19 +208,9 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         else:
             print(f"    [{name}]  ERROR: {info.get('error')}")
 
-    # ── GNN ensemble ─────────────────────────────────────────────────────────
-    X_tr = X_region.iloc[train_local].astype(float)
-    y_tr = y_region.iloc[train_local]
-
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=random_seed, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-    rf_model = RandomForestClassifier(n_estimators=300, random_state=random_seed, n_jobs=-1)
-    rf_model.fit(X_tr, y_tr)
-    ensemble_models = [xgb_model, cat_model, rf_model]
-
+    # ── GNN ensemble, leakage-free (Comment 12): train nodes get K-fold OOF
+    # scores, val nodes get scores from the ensemble refit on the full
+    # train_local (also reused for test-time inference below). ─────────────
     tv_local = np.sort(np.concatenate([train_local, val_local]))
     old_to_new = {int(old): new for new, old in enumerate(tv_local)}
     new_train = np.array([old_to_new[i] for i in train_local], dtype=np.int64)
@@ -210,17 +218,28 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
 
     coords_tv = coords_region[tv_local]
 
-    X_node_tv = build_node_features(
-        X_selected.iloc[tv_local], X_region.iloc[tv_local], ensemble_models,
+    X_node_tv, ensemble_models = build_node_features_no_leakage(
+        X_selected.iloc[tv_local], X_region, y_region, train_local, val_local, new_train, new_val,
+        random_state=random_seed,
+    )
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_local]).astype(float).values,
+        dtype=torch.float32,
     )
     edge_index, edge_weight, sigma = build_weighted_graph(
         coords_tv, X_node_tv,
         alpha=_GRAPH_ALPHA, k=min(_GRAPH_K, len(tv_local) - 1),
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train, return_sigma=True,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
 
     X_node_tv_base = X_node_tv.clone().cpu()
+    X_geo_tv_base = X_geo_tv.clone().cpu()
     X_node_tv = augment_with_edge_stats(X_node_tv, edge_index, edge_weight)
 
     N_tv = len(tv_local)
@@ -246,6 +265,7 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         "coords_tv":       coords_tv,
         "X_node_tv":       tv_data.x,
         "X_node_tv_base":  X_node_tv_base,
+        "X_geo_tv_base":   X_geo_tv_base,
         "edge_index_tv":   tv_data.edge_index,
         "edge_weight_tv":  tv_data.edge_weight,
         "graph_sigma":     sigma,
@@ -278,12 +298,20 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
             x_new_base = build_node_features(
                 X_selected.iloc[[local_i]], X_region.iloc[[local_i]], ensemble_models,
             )
+            x_new_geo = torch.tensor(
+                select_geo_similarity_columns(X_selected.iloc[[local_i]]).astype(float).values,
+                dtype=torch.float,
+            )
             lat, lon = coords_region[local_i]
-            y_probs.append(_predict_node_aug(artifacts, lat, lon, x_new_base))
+            y_probs.append(_predict_node_aug(artifacts, lat, lon, x_new_base, x_new_geo))
 
         pred_prop = float(np.mean(y_probs))
         abs_err   = float(abs(pred_prop - actual_proportion))
-        per_model[name] = {"predicted_proportion": pred_prop, "abs_error": abs_err}
+        per_model[name] = {
+            "predicted_proportion": pred_prop,
+            "abs_error":            abs_err,
+            "y_prob":               [float(p) for p in y_probs],  # Comment 18-B
+        }
         print(f"    [{name}]  pred={pred_prop:.3f}  |err|={abs_err:.3f}")
 
     return {
@@ -291,7 +319,9 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         "n_train":           int(len(train_local)),
         "n_val":             int(len(val_local)),
         "n_test":            int(n_test),
+        "split_info":        split_info,  # Comment (4)-B
         "actual_proportion": actual_proportion,
+        "y_true":            y_region.iloc[test_local].to_numpy(dtype=int).tolist(),  # Comment 18-B
         "best_config":       list(best_config) if best_config is not None else None,
         "best_val_f1":       float(best_val_f1) if best_val_f1 is not None else None,
         "per_model":         per_model,
@@ -325,11 +355,13 @@ def _aggregate_metrics(per_region: dict) -> dict:
 def run_exp5(
     processed_df: pd.DataFrame,
     results_path: str = _RESULTS_PATH,
+    seeds: list[int] | None = None,
 ) -> dict:
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
 
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: list = []
@@ -354,15 +386,29 @@ def run_exp5(
                 print(f"    {m:20s}  MAE={v['mae']:.4f}  RMSE={v['rmse']:.4f}")
         runs.append({"seed": seed, "aggregated_metrics": agg, "per_region": per_region})
 
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(results_path).exists():
+        with open(results_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", [])
+        by_seed = {r["seed"]: r for r in existing_runs}
+        for r in runs:
+            by_seed[r["seed"]] = r  # new runs overwrite same-seed old ones
+        runs = [by_seed[s] for s in sorted(by_seed.keys())]
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(by_seed.keys())}")
+
     payload = {
         "experiment": "exp5_proportion_per_region",
         "description": (
             "Per-region proportion prediction, random split (same as Exp 2). "
-            f"Each region uses its own isolated graph; {_N_TEST} nodes randomly "
-            "held out per run. predicted_proportion = mean(y_prob) over test nodes. "
+            f"Each region uses its own isolated graph; ~{_TEST_RATIO:.0%} of each "
+            "region's nodes randomly held out per run (Comment (4)-A: was a fixed "
+            "n=5), train/val candidates within the region's own mean k-NN distance "
+            "of a test node excluded (Comment (4)-B spatial buffering). "
+            "predicted_proportion = mean(y_prob) over test nodes. "
             "Metric: MAE and RMSE of |predicted − actual| across 10 regions."
         ),
-        "n_test_per_region": _N_TEST,
+        "test_ratio_per_region": _TEST_RATIO,
         "sampling":  "random",
         "models": [
             "xgboost", "lightgbm", "catboost", "random_forest", "svm", "mlp",
@@ -381,9 +427,15 @@ def run_exp5(
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
+    args = parser.parse_args()
+
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
-    run_exp5(processed_df)
+    run_exp5(processed_df, seeds=args.seeds)
 
 
 if __name__ == "__main__":

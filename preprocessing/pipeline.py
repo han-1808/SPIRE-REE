@@ -1,4 +1,5 @@
 import pandas as pd
+import torch
 from time import perf_counter
 
 from cleaning import drop_unused_columns
@@ -15,6 +16,7 @@ from feature_engineering import (
     create_spatial_split_indices,
     prepare_xgboost_inputs,
     save_gnn_artifacts,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from host_lith import compute_host_lith_stats, create_lith_group_features, fill_host_lith
@@ -99,7 +101,15 @@ def main():
     # Step 9: build the weighted spatial graph
     print(f"Building weighted spatial graph (k={KNN_K}, haversine + cosine similarity)...")
     graph_start = perf_counter()
-    edge_index, edge_weight = build_weighted_graph(df[["Latitude", "Longitude"]].values, X_node, k=KNN_K)
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo = torch.tensor(
+        select_geo_similarity_columns(X_selected).astype(float).values, dtype=torch.float32,
+    )
+    edge_index, edge_weight = build_weighted_graph(
+        df[["Latitude", "Longitude"]].values, X_node, k=KNN_K, X_geo=X_geo,
+    )
     print(f"Weighted graph step finished in {perf_counter() - graph_start:.2f}s")
 
     # Step 10: save node, target, and graph artifacts for downstream GNN runs

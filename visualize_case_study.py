@@ -25,6 +25,7 @@ import matplotlib.patches as mpatches
 from matplotlib.lines import Line2D
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+import cartopy.io.shapereader as shpreader
 
 from config import OUTPUT_PATH
 from feature_engineering import create_spatial_split_indices
@@ -55,6 +56,43 @@ ANNOT_OFFSETS = {
     "Oceania":            (  60,  -40),
     "South and Central Asia": (60, -30),
 }
+
+
+def build_country_to_region(df):
+    """Majority-vote Country -> Region, from the same `Region` field used
+    everywhere else. A few countries (China, Canada, Russian Federation)
+    have a handful of records assigned to a neighboring region; the
+    country as a whole is shaded by whichever region holds most of its
+    records (e.g. Canada: 251 North America vs 3 Europe)."""
+    counts = df.assign(Country=df["Country"].str.strip()).groupby(
+        ["Country", "Region"]
+    ).size()
+    return counts.groupby(level=0).idxmax().apply(lambda t: t[1]).to_dict()
+
+
+def add_region_country_shading(ax, country_to_region):
+    """Fill each country polygon with its assigned region's color, giving
+    a country-outline/legend-by-region view (Comment 5-B) instead of only
+    scatter points. Natural Earth's `NAME` field matches our `Country`
+    values directly for nearly every country; `NAME_LONG` is used as a
+    fallback for the handful that don't (e.g. long-form country names)."""
+    shp_path = shpreader.natural_earth(
+        resolution="50m", category="cultural", name="admin_0_countries"
+    )
+    matched, unmatched = 0, []
+    for record in shpreader.Reader(shp_path).records():
+        name = record.attributes.get("NAME", "").strip()
+        name_long = record.attributes.get("NAME_LONG", "").strip()
+        region = country_to_region.get(name) or country_to_region.get(name_long)
+        if region is None:
+            continue
+        matched += 1
+        ax.add_geometries(
+            [record.geometry], crs=ccrs.PlateCarree(),
+            facecolor=REGION_COLORS.get(region, "#999999"),
+            edgecolor="white", linewidth=0.3, alpha=0.30, zorder=0.5,
+        )
+    print(f"  Country shading: {matched}/{len(country_to_region)} countries matched to a region")
 
 
 def get_test_coords(df, n_sample=5, seed=42):
@@ -101,6 +139,7 @@ def make_world_overview(df, test_coords, metrics, save_path):
     ax.set_extent([-180, 180, -75, 85], crs=ccrs.PlateCarree())
     ax.add_feature(cfeature.OCEAN,     facecolor="#AED6EF", zorder=0)
     ax.add_feature(cfeature.LAND,      facecolor="#F5F0E8", zorder=0)
+    add_region_country_shading(ax, build_country_to_region(df))
     ax.add_feature(cfeature.COASTLINE, linewidth=0.4, edgecolor="#999999", zorder=1)
     ax.add_feature(cfeature.BORDERS,   linewidth=0.3, edgecolor="#BBBBBB", zorder=1)
     ax.gridlines(draw_labels=True, linewidth=0.4, color="gray",

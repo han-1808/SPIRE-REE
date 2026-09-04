@@ -42,10 +42,13 @@ from xgboost import XGBClassifier
 
 from config import OUTPUT_PATH, SAMPLE_INDUCTIVE_METRICS_PATH
 from feature_engineering import (
-    build_baseline_features,
-    build_node_features,
+    _make_single_xgb_model,
+    build_node_features_no_leakage,
     build_weighted_graph,
+    compute_ensemble_scores_no_leakage,
+    create_buffered_sample_split_indices,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import (
@@ -61,7 +64,8 @@ from gnn_training import (
 from baseline import SimpleAutoencoder
 from run_gnn_per_region import _predict_node_aug
 
-N_SAMPLE = 5
+N_SAMPLE = 5  # kept for backward-compat with existing --n-sample CLI default; unused by the split itself now
+_TEST_RATIO = 0.15  # Comment (4)-A: was a fixed n_sample=5, now 10-20%/region (mid-point)
 SEED     = 42
 VAL_RATIO = 0.2
 N_RUNS = 5
@@ -81,24 +85,19 @@ def _make_sample_split(
     val_seed: int,
 ) -> dict:
     """
-    Sample n_sample nodes from `region` → test.
-    ALL other nodes (including the remaining nodes in the same region) → train+val.
+    Comment (4)-A/B: thin wrapper around
+    `feature_engineering.create_buffered_sample_split_indices` -- test =
+    `_TEST_RATIO` of `region`'s own nodes (was a fixed n_sample, the
+    `n_sample` parameter is kept only for call-site/CLI backward
+    compatibility and is no longer used to size the split), train+val =
+    every other node in the entire dataset, with train/val candidates
+    within the region's own mean k-NN distance of a test node excluded
+    (spatial buffering).
     """
-    region_idx = np.where(processed_df["Region"].values == region)[0]
-    n = min(n_sample, len(region_idx))
-    test_idx = np.sort(rng.choice(region_idx, size=n, replace=False))
-
-    all_idx = np.arange(len(processed_df))
-    tv_idx  = np.setdiff1d(all_idx, test_idx)
-
-    local_rng   = np.random.default_rng(val_seed)
-    tv_shuffled = tv_idx.copy()
-    local_rng.shuffle(tv_shuffled)
-    n_val    = int(len(tv_shuffled) * VAL_RATIO)
-    val_idx  = np.sort(tv_shuffled[:n_val])
-    train_idx = np.sort(tv_shuffled[n_val:])
-
-    return {"train_idx": train_idx, "val_idx": val_idx, "test_idx": test_idx, "n": int(n)}
+    return create_buffered_sample_split_indices(
+        processed_df, region, rng, test_ratio=_TEST_RATIO, val_ratio=VAL_RATIO,
+        k_for_buffer=_GRAPH_K, val_seed=val_seed,
+    )
 
 
 # ── Metrics ───────────────────────────────────────────────────────────────────
@@ -147,11 +146,24 @@ def _run_baseline_for_region(
     train_idx includes all non-test nodes — even the rest of the same region.
     """
     train_idx = split["train_idx"]
+    val_idx   = split["val_idx"]
     test_idx  = split["test_idx"]
 
     _, X, y = prepare_xgboost_inputs(processed_df, fit_idx=train_idx)
-    xgb_model, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
-    X_bl = build_baseline_features(X_selected, X, xgb_model)
+    _, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
+    # Leakage-free xgb_score (Comment 17 fairness fix, same OOF machinery as
+    # Comment 12-A): train rows get a K-fold out-of-fold score, val/test
+    # rows get the score from the model refit on the full train_idx.
+    other_idx = np.concatenate([val_idx, test_idx])
+    train_scores, other_scores, _ = compute_ensemble_scores_no_leakage(
+        X, y, train_idx, other_idx, random_state=seed,
+        models_factory=_make_single_xgb_model,
+    )
+    xgb_score = np.empty(len(X), dtype=float)
+    xgb_score[train_idx] = train_scores
+    xgb_score[other_idx] = other_scores
+    X_bl = X_selected.copy()
+    X_bl["xgb_score"] = xgb_score
 
     X_train = X_bl.iloc[train_idx].astype(float)
     y_train = y.iloc[train_idx]
@@ -162,6 +174,7 @@ def _run_baseline_for_region(
     coords_test  = processed_df[["Latitude", "Longitude"]].values[test_idx]
 
     results: dict = {}
+    predictions: dict = {}  # Comment (4)-D: kept separate, see _avg_metrics
 
     # ── Tabular models ────────────────────────────────────────────────────────
     from lightgbm import LGBMClassifier
@@ -208,6 +221,7 @@ def _run_baseline_for_region(
             y_prob = np.clip(model.predict_proba(X_test)[:, 1], 0.0, 1.0)
             y_pred = (y_prob >= 0.5).astype(int)
             results[name] = _compute_metrics(y_true, y_pred, y_prob)
+            predictions[name] = {"y_true": y_true.tolist(), "y_prob": y_prob.tolist(), "y_pred": y_pred.tolist()}
         except Exception as e:
             print(f"    [WARN] {name}: {e}")
             results[name] = None
@@ -245,6 +259,7 @@ def _run_baseline_for_region(
         y_prob = pred.predict_proba(te_lat)[:, 1]
         y_pred = (y_prob >= 0.5).astype(int)
         results["autoencoder_predictor"] = _compute_metrics(y_true, y_pred, y_prob)
+        predictions["autoencoder_predictor"] = {"y_true": y_true.tolist(), "y_prob": y_prob.tolist(), "y_pred": y_pred.tolist()}
     except Exception as e:
         print(f"    [WARN] autoencoder_predictor: {e}")
         results["autoencoder_predictor"] = None
@@ -256,6 +271,7 @@ def _run_baseline_for_region(
         y_prob = np.clip(knn_inner.predict(np.radians(coords_test)), 0.0, 1.0)
         y_pred = (y_prob >= 0.5).astype(int)
         results["spatial_knn_regression"] = _compute_metrics(y_true, y_pred, y_prob)
+        predictions["spatial_knn_regression"] = {"y_true": y_true.tolist(), "y_prob": y_prob.tolist(), "y_pred": y_pred.tolist()}
     except Exception as e:
         print(f"    [WARN] spatial_knn_regression: {e}")
         results["spatial_knn_regression"] = None
@@ -274,11 +290,12 @@ def _run_baseline_for_region(
             y_prob = np.clip(np.asarray(raw, dtype=float), 0.0, 1.0)
             y_pred = (y_prob >= 0.5).astype(int)
             results["kriging"] = _compute_metrics(y_true, y_pred, y_prob)
+            predictions["kriging"] = {"y_true": y_true.tolist(), "y_prob": y_prob.tolist(), "y_pred": y_pred.tolist()}
         except Exception as e:
             print(f"    [WARN] kriging: {e}")
             results["kriging"] = None
 
-    return results
+    return results, predictions
 
 
 # ── GNN inductive prediction ──────────────────────────────────────────────────
@@ -293,20 +310,7 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, split: dict, seed: int = 
     test_idx  = split["test_idx"]
 
     _, X, y = prepare_xgboost_inputs(processed_df, fit_idx=train_idx)
-    xgb_model, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
-
-    X_tr = X.iloc[train_idx].astype(float)
-    y_tr = y.iloc[train_idx]
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=seed, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-    rf_model = RandomForestClassifier(
-        n_estimators=300, max_depth=None, random_state=seed, n_jobs=-1,
-    )
-    rf_model.fit(X_tr, y_tr)
-    ensemble_models = [xgb_model, cat_model, rf_model]
+    _, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
 
     tv_pos    = np.sort(np.concatenate([train_idx, val_idx]))
     old_to_new = {int(old): new for new, old in enumerate(tv_pos)}
@@ -314,16 +318,32 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, split: dict, seed: int = 
     new_val    = np.array([old_to_new[i] for i in val_idx],   dtype=np.int64)
 
     coords_tv   = processed_df[["Latitude", "Longitude"]].values[tv_pos]
-    X_node_base = build_node_features(X_selected.iloc[tv_pos], X.iloc[tv_pos], ensemble_models)
+    # Leakage-free (Comment 12): train nodes get K-fold OOF scores, val nodes
+    # get scores from the ensemble refit on the full train_idx (also reused
+    # for test-time inference below).
+    X_node_base, ensemble_models = build_node_features_no_leakage(
+        X_selected.iloc[tv_pos], X, y, train_idx, val_idx, new_train, new_val,
+        random_state=seed,
+    )
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_pos]).astype(float).values,
+        dtype=torch.float32,
+    )
     edge_index, edge_weight, sigma = build_weighted_graph(
         coords_tv, X_node_base,
         alpha=_GRAPH_ALPHA, k=_GRAPH_K,
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train,
         return_sigma=True,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
 
     X_node_tv_base = X_node_base.clone().cpu()
+    X_geo_tv_base = X_geo_tv.clone().cpu()
     X_node_base = augment_with_edge_stats(X_node_base, edge_index, edge_weight)
 
     N_tv = len(tv_pos)
@@ -354,11 +374,11 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, split: dict, seed: int = 
         "coords_tv":       coords_tv,
         "X_node_tv":       tv_data.x,
         "X_node_tv_base":  X_node_tv_base,
+        "X_geo_tv_base":   X_geo_tv_base,
         "edge_index_tv":   tv_data.edge_index,
         "edge_weight_tv":  tv_data.edge_weight,
         "graph_sigma":     sigma,
         # For test node feature construction
-        "xgb_model":       xgb_model,
         "ensemble_models": ensemble_models,
         "test_idx":        test_idx,
         "X_test":          X.iloc[test_idx].reset_index(drop=True),
@@ -426,17 +446,23 @@ def _predict_with_artifacts(
         x_sel = torch.tensor(
             X_selected_test.iloc[i].astype(float).values, dtype=torch.float
         ).unsqueeze(0)
+        x_new_geo = torch.tensor(
+            select_geo_similarity_columns(X_selected_test.iloc[[i]]).astype(float).values,
+            dtype=torch.float,
+        )
         x_ens = torch.tensor([[ens_score]], dtype=torch.float)
         x_new_base = torch.cat([x_sel, x_ens], dim=1)
 
         lat, lon = test_coords[i]
-        prob = _predict_node_aug(artifacts, lat, lon, x_new_base)
+        prob = _predict_node_aug(artifacts, lat, lon, x_new_base, x_new_geo)
         y_probs.append(prob)
 
     y_prob = np.array(y_probs)
     y_pred = (y_prob >= 0.5).astype(int)
     y_true = artifacts["y_test"].to_numpy()
-    return _compute_metrics(y_true, y_pred, y_prob)
+    metrics = _compute_metrics(y_true, y_pred, y_prob)
+    predictions = {"y_true": y_true.tolist(), "y_prob": y_prob.tolist(), "y_pred": y_pred.tolist()}
+    return metrics, predictions  # Comment (4)-D: predictions kept separate, see _avg_metrics
 
 
 def _run_gnn_for_region(processed_df: pd.DataFrame, split: dict, seed: int = 42) -> dict:
@@ -450,6 +476,7 @@ def _run_gnn_for_region(processed_df: pd.DataFrame, split: dict, seed: int = 42)
 
     best_config = None
     metrics = {}
+    predictions = {}  # Comment (4)-D
 
     for name, model_class in [("spire", GraphSAGE), ("gcn", GCN), ("gat", GAT)]:
         label = "Tuning+Training" if best_config is None else f"Training (config from SPIRE={best_config})"
@@ -457,10 +484,10 @@ def _run_gnn_for_region(processed_df: pd.DataFrame, split: dict, seed: int = 42)
         arts, found_config = _train_gnn_model_on_artifacts(model_class, graph_artifacts, best_config)
         if best_config is None:
             best_config = found_config
-        metrics[name] = _predict_with_artifacts(arts, test_idx, test_coords)
+        metrics[name], predictions[name] = _predict_with_artifacts(arts, test_idx, test_coords)
         print(f"    {name:<12}: {metrics[name]}")
 
-    return metrics
+    return metrics, predictions
 
 
 # ── Main sweep ─────────────────────────────────────────────────────────────────
@@ -479,6 +506,7 @@ def _run_one_seed(
     rng = np.random.default_rng(seed)
     gnn_model_names = ["spire", "gcn", "gat"]
     baseline_per_region: dict = {}
+    baseline_predictions_per_region: dict = {}  # Comment (4)-D
     gnn_per_region: dict = {name: {} for name in gnn_model_names}
 
     for i, region in enumerate(regions):
@@ -490,16 +518,20 @@ def _run_one_seed(
         print(f"  Sampled {n} test nodes (train size={len(split['train_idx'])})")
 
         print("  [Baseline]")
-        bl_results = _run_baseline_for_region(processed_df, split, skip_kriging=skip_kriging, seed=seed)
+        bl_results, bl_predictions = _run_baseline_for_region(
+            processed_df, split, skip_kriging=skip_kriging, seed=seed
+        )
         baseline_per_region[region] = bl_results
+        baseline_predictions_per_region[region] = bl_predictions
 
         print("  [GNN]")
-        gnn_metrics_dict = _run_gnn_for_region(processed_df, split, seed=seed)
+        gnn_metrics_dict, gnn_predictions_dict = _run_gnn_for_region(processed_df, split, seed=seed)
         for name in gnn_model_names:
             gnn_per_region[name][region] = {
                 "n_test_sample": n,
                 "sample_idx":    split["test_idx"].tolist(),
                 "test_metrics":  gnn_metrics_dict[name],
+                "predictions":   gnn_predictions_dict[name],  # Comment (4)-D
             }
 
     all_bl_models = (
@@ -521,7 +553,11 @@ def _run_one_seed(
 
     return {
         **gnn_sections,
-        "baselines": {"avg_metrics": baseline_avg, "per_region": baseline_per_region},
+        "baselines": {
+            "avg_metrics": baseline_avg,
+            "per_region": baseline_per_region,
+            "predictions_per_region": baseline_predictions_per_region,  # Comment (4)-D
+        },
     }
 
 
@@ -530,6 +566,7 @@ def run_inductive_sample_sweep(
     n_sample: int = N_SAMPLE,
     metrics_path: str = SAMPLE_INDUCTIVE_METRICS_PATH,
     skip_kriging: bool = False,
+    seeds: list[int] | None = None,
 ) -> dict:
     """
     For each region: sample n_sample nodes → test; all others → train+val.
@@ -538,7 +575,8 @@ def run_inductive_sample_sweep(
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
 
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: list = []
@@ -548,6 +586,19 @@ def run_inductive_sample_sweep(
         print(f"{'#'*60}")
         run_result = _run_one_seed(processed_df, regions, n_sample, seed, skip_kriging)
         runs.append({"run_id": run_id, "seed": seed, **run_result})
+
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(metrics_path).exists():
+        with open(metrics_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", [])
+        by_seed = {r["seed"]: r for r in existing_runs}
+        for r in runs:
+            by_seed[r["seed"]] = r  # new runs overwrite same-seed old ones
+        runs = [by_seed[s] for s in sorted(by_seed.keys())]
+        for i, r in enumerate(runs):
+            r["run_id"] = i
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(by_seed.keys())}")
 
     payload = {
         "experiment": "inductive_sample",
@@ -575,6 +626,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--n-sample",     type=int,  default=N_SAMPLE)
     parser.add_argument("--skip-kriging", action="store_true")
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
     args = parser.parse_args()
 
     print("Loading processed data...")
@@ -584,6 +637,7 @@ def main():
         processed_df,
         n_sample=args.n_sample,
         skip_kriging=args.skip_kriging,
+        seeds=args.seeds,
     )
 
 

@@ -25,8 +25,6 @@ import json
 import numpy as np
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score,
     average_precision_score,
@@ -41,8 +39,11 @@ from torch_geometric.data import Data
 from config import OUTPUT_PATH
 from feature_engineering import (
     build_node_features,
+    build_node_features_no_leakage,
     build_weighted_graph,
+    create_buffered_region_split_indices,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import (
@@ -58,7 +59,8 @@ from gnn_training import (
 
 _GNN_MODELS = [("spire", GraphSAGE), ("gcn", GCN), ("gat", GAT)]
 
-_N_TEST = 5
+_TEST_RATIO = 0.15  # Comment (4)-A: was a fixed n=5, now 10-20%/region (mid-point)
+_MIN_REGION_NODES = 20  # need enough nodes for a ~15% test split + buffer margin
 _GRAPH_K = 10
 _GRAPH_ALPHA = 0.5
 _GRAPH_MAX_DIST_KM = 2000.0
@@ -73,6 +75,7 @@ def _predict_node_aug(
     lat: float,
     lon: float,
     x_new_base: torch.Tensor,   # (1, 11) base features, no edge stats
+    x_new_geo: torch.Tensor,
 ) -> float:
     """
     Inductive prediction when the TV graph uses augmented (13-dim) node features.
@@ -84,6 +87,7 @@ def _predict_node_aug(
     coords_tv      = artifacts["coords_tv"]
     X_node_tv      = artifacts["X_node_tv"]        # (N, 13) on device
     X_node_tv_base = artifacts["X_node_tv_base"]   # (N, 11) on CPU, tv_local order
+    X_geo_tv_base  = artifacts["X_geo_tv_base"]
     edge_index_tv  = artifacts["edge_index_tv"]
     edge_weight_tv = artifacts["edge_weight_tv"]
     sigma          = artifacts["graph_sigma"]
@@ -101,10 +105,14 @@ def _predict_node_aug(
     mini_X_base = torch.cat(
         [x_new_base.cpu(), X_node_tv_base[neighbour_idx].cpu()], dim=0
     )
+    mini_X_geo = torch.cat(
+        [x_new_geo.cpu(), X_geo_tv_base[neighbour_idx].cpu()], dim=0
+    )
     ei_mini, ew_mini = build_weighted_graph(
         mini_coords, mini_X_base,
         alpha=_GRAPH_ALPHA, k=len(neighbour_idx),
         weighting_strategy="mixed", sigma=sigma,
+        X_geo=mini_X_geo,
     )
 
     mask0    = (ei_mini[0] == 0) | (ei_mini[1] == 0)
@@ -142,31 +150,6 @@ def _predict_node_aug(
     return prob
 
 
-def _split_region_indices(
-    region_local_idx: np.ndarray,
-    n_test: int = _N_TEST,
-    val_ratio: float = 0.2,
-    random_seed: int = 42,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """
-    Given local indices of all nodes in a region, randomly sample `n_test` as
-    test and split the rest into train / val.
-
-    Returns (train_local, val_local, test_local) — all in local (region) space.
-    """
-    rng = np.random.default_rng(random_seed)
-    perm = rng.permutation(len(region_local_idx))
-
-    test_local = perm[:n_test]
-    rest = perm[n_test:]
-
-    n_val = max(1, int(len(rest) * val_ratio))
-    val_local = rest[:n_val]
-    train_local = rest[n_val:]
-
-    return train_local, val_local, test_local
-
-
 def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) -> dict:
     region_mask = processed_df["Region"] == region
     region_global_idx = np.where(region_mask)[0]
@@ -174,11 +157,21 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     n_nodes = len(region_global_idx)
     print(f"  Region '{region}': {n_nodes} nodes total")
 
-    if n_nodes < _N_TEST + 5:
+    if n_nodes < _MIN_REGION_NODES:
         print(f"  Skipping — too few nodes ({n_nodes})")
         return {}
 
-    train_local, val_local, test_local = _split_region_indices(region_global_idx, random_seed=random_seed)
+    coords_region = processed_df[["Latitude", "Longitude"]].values[region_global_idx]
+    split = create_buffered_region_split_indices(
+        region_global_idx, coords_region, test_ratio=_TEST_RATIO,
+        k_for_buffer=_GRAPH_K, random_seed=random_seed,
+    )
+    train_local, val_local, test_local = split["train_local"], split["val_local"], split["test_local"]
+    split_info = split["split_info"]
+    print(f"  Split: n_test={split_info['n_test']} buffer_km={split_info['buffer_km']:.1f} "
+          f"excluded_by_buffer={split_info['n_excluded_by_buffer']}"
+          + (" (buffer fallback: too few nodes remained, buffering skipped for this region)"
+             if split_info["buffer_fallback"] else ""))
 
     train_global = region_global_idx[train_local]
     val_global   = region_global_idx[val_local]
@@ -192,26 +185,9 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     X_region = X_region.iloc[region_global_idx].reset_index(drop=True)
     y_region = y_region.iloc[region_global_idx].reset_index(drop=True)
 
-    xgb_model, _, X_selected = train_xgboost_and_select_features(
+    _, _, X_selected = train_xgboost_and_select_features(
         X_region, y_region, fit_idx=train_local
     )
-
-    # Ensemble: CatBoost + RandomForest for richer node score
-    X_tr = X_region.iloc[train_local].astype(float)
-    y_tr = y_region.iloc[train_local]
-
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=random_seed, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-
-    rf_model = RandomForestClassifier(
-        n_estimators=300, max_depth=None, random_state=random_seed, n_jobs=-1,
-    )
-    rf_model.fit(X_tr, y_tr)
-
-    ensemble_models = [xgb_model, cat_model, rf_model]
 
     # Build graph from train+val nodes only (test nodes excluded)
     tv_local = np.sort(np.concatenate([train_local, val_local]))
@@ -222,10 +198,21 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     coords_region = processed_df[["Latitude", "Longitude"]].values[region_global_idx]
     coords_tv = coords_region[tv_local]
 
-    X_node_tv = build_node_features(
-        X_selected.iloc[tv_local],
-        X_region.iloc[tv_local],
-        ensemble_models,
+    # Ensemble (XGBoost + CatBoost + RandomForest) for the node score,
+    # leakage-free (Comment 12): train nodes get K-fold OOF scores, val
+    # nodes get scores from the ensemble refit on the full train_local
+    # (also reused below for held-out test-node inference).
+    X_node_tv, ensemble_models = build_node_features_no_leakage(
+        X_selected.iloc[tv_local], X_region, y_region, train_local, val_local, new_train, new_val,
+        random_state=random_seed,
+    )
+
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_local]).astype(float).values,
+        dtype=torch.float32,
     )
 
     edge_index, edge_weight, sigma = build_weighted_graph(
@@ -234,9 +221,12 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train,
         return_sigma=True,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
 
     X_node_tv_base = X_node_tv.clone().cpu()
+    X_geo_tv_base = X_geo_tv.clone().cpu()
     X_node_tv = augment_with_edge_stats(X_node_tv, edge_index, edge_weight)
 
     N_tv = len(tv_local)
@@ -263,6 +253,7 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         "coords_tv":       coords_tv,
         "X_node_tv":       tv_data.x,
         "X_node_tv_base":  X_node_tv_base,
+        "X_geo_tv_base":   X_geo_tv_base,
         "edge_index_tv":   tv_data.edge_index,
         "edge_weight_tv":  tv_data.edge_weight,
         "graph_sigma":     sigma,
@@ -271,6 +262,10 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     best_config = None
     best_val_f1 = None
     model_metrics: dict = {}
+    model_predictions: dict = {}  # Comment (4)-D: kept separate from
+    # model_metrics since _avg_model_metrics below sums every key of
+    # test_metrics[name] across regions -- mixing in list-valued keys
+    # there breaks that aggregation (same issue hit and fixed in run_gnn.py).
 
     for name, model_class in _GNN_MODELS:
         if best_config is None:
@@ -307,8 +302,12 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
                 X_region.iloc[[local_i]],
                 ensemble_models,
             )
+            x_new_geo = torch.tensor(
+                select_geo_similarity_columns(X_selected.iloc[[local_i]]).astype(float).values,
+                dtype=torch.float,
+            )
             lat, lon = coords_region[local_i]
-            y_probs.append(_predict_node_aug(artifacts, lat, lon, x_new_base))
+            y_probs.append(_predict_node_aug(artifacts, lat, lon, x_new_base, x_new_geo))
 
         y_true = y_region.iloc[test_local].to_numpy()
         y_prob = np.array(y_probs)
@@ -328,15 +327,20 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
 
         print(f"  [{name}] Test metrics: {metrics}")
         model_metrics[name] = metrics
+        model_predictions[name] = {
+            "y_true": y_true.tolist(), "y_prob": y_prob.tolist(), "y_pred": y_pred.tolist(),
+        }  # Comment (4)-D
 
     return {
         "n_total":     int(n_nodes),
         "n_train":     int(len(train_local)),
         "n_val":       int(len(val_local)),
         "n_test":      int(len(test_local)),
+        "split_info":  split_info,  # Comment (4)-B: buffer_km, n_excluded_by_buffer, etc.
         "best_config": list(best_config),
         "best_val_f1": float(best_val_f1),
         "test_metrics": model_metrics,
+        "predictions": model_predictions,  # Comment (4)-D
     }
 
 
@@ -354,12 +358,17 @@ def _avg_model_metrics(per_region: dict, model_name: str) -> dict:
     return {k: float(np.mean([v[k] for v in valid.values() if v.get(k) is not None])) for k in scalar_keys}
 
 
-def run_gnn_per_region(processed_df: pd.DataFrame, results_path: str = _RESULTS_PATH) -> dict:
+def run_gnn_per_region(
+    processed_df: pd.DataFrame,
+    results_path: str = _RESULTS_PATH,
+    seeds: list[int] | None = None,
+) -> dict:
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
     model_names = [name for name, _ in _GNN_MODELS]
 
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: list = []
@@ -381,16 +390,32 @@ def run_gnn_per_region(processed_df: pd.DataFrame, results_path: str = _RESULTS_
         print(f"\n  Avg metrics (seed={seed}): {avg}")
         runs.append({"run_id": run_id, "seed": seed, "avg_metrics": avg, "per_region": per_region})
 
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(results_path).exists():
+        with open(results_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", [])
+        by_seed = {r["seed"]: r for r in existing_runs}
+        for r in runs:
+            by_seed[r["seed"]] = r  # new runs overwrite same-seed old ones
+        runs = [by_seed[s] for s in sorted(by_seed.keys())]
+        for i, r in enumerate(runs):
+            r["run_id"] = i
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(by_seed.keys())}")
+
     payload = {
         "experiment": "gnn_per_region_inductive",
         "description": (
             f"SPIRE / GCN / GAT trained per-region. Each region forms its own graph. "
-            f"{_N_TEST} nodes randomly held out as test (strictly inductive: "
-            f"each test node augmented one-by-one into the train+val graph). "
+            f"~{_TEST_RATIO:.0%} of each region's nodes randomly held out as test "
+            f"(strictly inductive: each test node augmented one-by-one into the "
+            f"train+val graph), Comment (4)-A (was a fixed n=5); train/val candidates "
+            f"within each region's own mean k-NN distance of a test node are excluded "
+            f"(Comment (4)-B spatial buffering), see each region's own `split_info`. "
             f"SPIRE tuned; GCN and GAT reuse the same best config."
         ),
         "models": model_names,
-        "n_test_per_region": _N_TEST,
+        "test_ratio_per_region": _TEST_RATIO,
         "regions": regions,
         "runs": runs,
     }
@@ -403,9 +428,15 @@ def run_gnn_per_region(processed_df: pd.DataFrame, results_path: str = _RESULTS_
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
+    args = parser.parse_args()
+
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
-    run_gnn_per_region(processed_df)
+    run_gnn_per_region(processed_df, seeds=args.seeds)
 
 
 if __name__ == "__main__":

@@ -29,8 +29,6 @@ import json
 import numpy as np
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score, average_precision_score,
     f1_score, precision_score, recall_score, roc_auc_score,
@@ -40,10 +38,11 @@ from torch_geometric.data import Data
 
 from config import GNN_INDUCTIVE_METRICS_PATH, OUTPUT_PATH
 from feature_engineering import (
-    build_node_features,
+    build_node_features_no_leakage,
     build_weighted_graph,
     create_spatial_split_indices,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import (
@@ -78,20 +77,7 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, region: str, random_seed:
     test_idx  = split["test_idx"]
 
     graph_df, X, y = prepare_xgboost_inputs(processed_df, fit_idx=train_idx)
-    xgb_model, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
-
-    X_tr = X.iloc[train_idx].astype(float)
-    y_tr = y.iloc[train_idx]
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=random_seed, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-    rf_model = RandomForestClassifier(
-        n_estimators=300, max_depth=None, random_state=random_seed, n_jobs=-1,
-    )
-    rf_model.fit(X_tr, y_tr)
-    ensemble_models = [xgb_model, cat_model, rf_model]
+    _, _, X_selected = train_xgboost_and_select_features(X, y, fit_idx=train_idx)
 
     tv_pos = np.sort(np.concatenate([train_idx, val_idx]))
     old_to_new = {int(old): new for new, old in enumerate(tv_pos)}
@@ -99,16 +85,33 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, region: str, random_seed:
     new_val    = np.array([old_to_new[i] for i in val_idx],   dtype=np.int64)
 
     coords_tv   = processed_df[["Latitude", "Longitude"]].values[tv_pos]
-    X_node_base = build_node_features(X_selected.iloc[tv_pos], X.iloc[tv_pos], ensemble_models)
+    # Leakage-free (Comment 12): train nodes get K-fold OOF scores, val nodes
+    # get scores from the ensemble refit on the full train_idx (also reused
+    # for test-time inference below).
+    X_node_base, ensemble_models = build_node_features_no_leakage(
+        X_selected.iloc[tv_pos], X, y, train_idx, val_idx, new_train, new_val,
+        random_state=random_seed,
+    )
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_pos]).astype(float).values,
+        dtype=torch.float32,
+    )
+
     edge_index, edge_weight, sigma = build_weighted_graph(
         coords_tv, X_node_base,
         alpha=_GRAPH_ALPHA, k=_GRAPH_K,
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train,
         return_sigma=True,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
 
     X_node_tv_base = X_node_base.clone().cpu()
+    X_geo_tv_base = X_geo_tv.clone().cpu()
     X_node_base = augment_with_edge_stats(X_node_base, edge_index, edge_weight)
 
     N_tv = len(tv_pos)
@@ -139,11 +142,11 @@ def _build_graph_artifacts(processed_df: pd.DataFrame, region: str, random_seed:
         "coords_tv":      coords_tv,
         "X_node_tv":      tv_data.x,
         "X_node_tv_base": X_node_tv_base,
+        "X_geo_tv_base":  X_geo_tv_base,
         "edge_index_tv":  tv_data.edge_index,
         "edge_weight_tv": tv_data.edge_weight,
         "graph_sigma":    sigma,
         # For test node feature construction
-        "xgb_model":       xgb_model,
         "ensemble_models": ensemble_models,
         "X_selected_cols": X_selected.columns.tolist(),
         "X_full_cols":     X.columns.tolist(),
@@ -198,7 +201,13 @@ def _train_model_on_artifacts(
 
 # ── Inductive prediction ──────────────────────────────────────────────────────
 
-def _predict_node(artifacts: dict, lat: float, lon: float, x_new_base: torch.Tensor) -> float:
+def _predict_node(
+    artifacts: dict,
+    lat: float,
+    lon: float,
+    x_new_base: torch.Tensor,
+    x_new_geo: torch.Tensor,
+) -> float:
     """
     Augment one new node to the train+val graph and return its REE probability.
     x_new_base : (1, 11) base feature tensor on CPU (no edge stats).
@@ -209,6 +218,7 @@ def _predict_node(artifacts: dict, lat: float, lon: float, x_new_base: torch.Ten
     coords_tv      = artifacts["coords_tv"]
     X_node_tv      = artifacts["X_node_tv"]        # (N, 13) augmented, on device
     X_node_tv_base = artifacts["X_node_tv_base"]   # (N, 11) base, on CPU
+    X_geo_tv_base  = artifacts["X_geo_tv_base"]
     edge_index_tv  = artifacts["edge_index_tv"]
     edge_weight_tv = artifacts["edge_weight_tv"]
     sigma          = artifacts["graph_sigma"]
@@ -225,11 +235,13 @@ def _predict_node(artifacts: dict, lat: float, lon: float, x_new_base: torch.Ten
 
     mini_coords  = np.vstack([[lat, lon], coords_tv[neighbour_idx]])
     mini_X_base  = torch.cat([x_new_base.cpu(), X_node_tv_base[neighbour_idx].cpu()], dim=0)
+    mini_X_geo   = torch.cat([x_new_geo.cpu(), X_geo_tv_base[neighbour_idx].cpu()], dim=0)
 
     ei_mini, ew_mini = build_weighted_graph(
         mini_coords, mini_X_base,
         alpha=_GRAPH_ALPHA, k=len(neighbour_idx),
         weighting_strategy="mixed", sigma=sigma,
+        X_geo=mini_X_geo,
     )
 
     mask0    = (ei_mini[0] == 0) | (ei_mini[1] == 0)
@@ -285,11 +297,15 @@ def _predict_test_nodes(artifacts: dict, processed_df: pd.DataFrame) -> tuple[np
         x_sel = torch.tensor(
             X_selected_test.iloc[i].astype(float).values, dtype=torch.float
         ).unsqueeze(0)
+        x_new_geo = torch.tensor(
+            select_geo_similarity_columns(X_selected_test.iloc[[i]]).astype(float).values,
+            dtype=torch.float,
+        )
         x_ens = torch.tensor([[ens_score]], dtype=torch.float)
         x_new_base = torch.cat([x_sel, x_ens], dim=1)
 
         lat, lon = test_coords[i]
-        prob = _predict_node(artifacts, lat, lon, x_new_base)
+        prob = _predict_node(artifacts, lat, lon, x_new_base, x_new_geo)
         y_probs.append(prob)
 
     y_prob = np.array(y_probs)
@@ -347,6 +363,7 @@ def _run_one_seed(processed_df: pd.DataFrame, regions: list, random_seed: int) -
         best_config = None
         best_val_f1 = None
         model_results: dict = {}
+        model_predictions: dict = {}  # Comment 7-A
 
         for name, model_class in _GNN_MODELS:
             print(f"  Training {name.upper()}...")
@@ -362,12 +379,22 @@ def _run_one_seed(processed_df: pd.DataFrame, regions: list, random_seed: int) -
             metrics = _compute_metrics(y_true, y_pred, y_prob)
             print(f"  [{name}] Metrics: {metrics}")
             model_results[name] = metrics
+            # Comment 7-A: per-node predictions, needed for the region-specific
+            # error decomposition (TP/FP/FN/TN by deposit-type/documentation
+            # completeness/kNN distance). Kept in a separate `predictions`
+            # dict (not inside `test_metrics[name]`) since `_avg_metrics`
+            # below sums every key of `test_metrics[name]` across regions --
+            # mixing in list-valued keys there breaks that aggregation.
+            model_predictions[name] = {"y_prob": y_prob.tolist(), "y_pred": y_pred.tolist()}
 
         per_region[region] = {
             "n_test": n_test,
             "best_config": list(best_config),
             "best_val_f1": best_val_f1,
+            "test_idx": graph_artifacts["test_idx"].tolist(),  # Comment 7-A
+            "y_true": y_true.tolist(),  # Comment 7-A
             "test_metrics": model_results,
+            "predictions": model_predictions,  # Comment 7-A
         }
 
     avg: dict = {}
@@ -379,6 +406,7 @@ def _run_one_seed(processed_df: pd.DataFrame, regions: list, random_seed: int) -
 def run_gnn_sweep(
     processed_df: pd.DataFrame,
     metrics_path: str = GNN_INDUCTIVE_METRICS_PATH,
+    seeds: list[int] | None = None,
 ) -> dict:
     """
     Leave-one-region-out inductive sweep with SPIRE, GCN, and GAT.
@@ -388,7 +416,8 @@ def run_gnn_sweep(
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
 
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: dict = {}
@@ -397,6 +426,14 @@ def run_gnn_sweep(
         print(f"  RUN seed={seed}")
         print(f"{'#'*60}")
         runs[str(seed)] = _run_one_seed(processed_df, regions, seed)
+
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(metrics_path).exists():
+        with open(metrics_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", {})
+        runs = {**existing_runs, **runs}
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(runs.keys(), key=int)}")
 
     # Cross-seed average metrics
     avg: dict = {}
@@ -437,10 +474,16 @@ def run_gnn_sweep(
 # ── Entry point ────────────────────────────────────────────────────────────────
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
+    args = parser.parse_args()
+
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
 
-    run_gnn_sweep(processed_df)
+    run_gnn_sweep(processed_df, seeds=args.seeds)
 
 
 if __name__ == "__main__":

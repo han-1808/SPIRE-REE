@@ -83,6 +83,241 @@ def create_spatial_split_indices(
     }
 
 
+def create_deposit_type_split_indices(
+    df: pd.DataFrame,
+    held_out_group: str,
+    val_ratio: float = 0.2,
+    random_seed: int = 42,
+) -> dict[str, np.ndarray]:
+    """
+    Leave-one-deposit-type-out split (Comment (1)-C / LODTO), analogous to
+    `create_spatial_split_indices` but held out by one of the 9 `is_*`
+    deposit-type group columns instead of `Region`.
+
+    The 9 groups are NOT mutually exclusive (a record can carry more than
+    one `is_*` flag -- 300 records carry 2, 55 carry 3, ... out of 3112).
+    So test_idx = every record with `held_out_group == 1`, regardless of
+    its other group memberships, and train pool = every record with
+    `held_out_group == 0` (a record belonging to the held-out group AND
+    another group is still excluded from training entirely, since it does
+    carry the held-out type). This means test sets across different calls
+    (one per held-out group) can overlap -- expected given the underlying
+    labels are multi-label, not a bug.
+    """
+    if held_out_group not in df.columns:
+        raise ValueError(f"{held_out_group} not in df.columns")
+
+    test_idx_bool = df[held_out_group] == 1
+    if test_idx_bool.sum() == 0:
+        raise ValueError(f"{held_out_group} has no positive records to hold out")
+    train_idx_bool = ~test_idx_bool
+
+    candidate_idx = np.where(train_idx_bool)[0]
+    test_idx = np.where(test_idx_bool)[0]
+
+    val_size = int(len(candidate_idx) * val_ratio)
+
+    np.random.seed(random_seed)
+    perm = np.random.permutation(candidate_idx)
+
+    val_idx = perm[:val_size]
+    train_idx = perm[val_size:]
+
+    return {
+        "train_idx": train_idx,
+        "val_idx": val_idx,
+        "test_idx": test_idx,
+    }
+
+
+_EARTH_RADIUS_KM = 6371.0
+
+
+def compute_mean_knn_distance_km(coords: np.ndarray, k: int = KNN_K) -> float:
+    """
+    Comment (4)-B: mean haversine distance (km) from every point to its k
+    nearest neighbours, averaged over all points -- used as the default
+    spatial-buffer radius for `apply_spatial_buffer` (no fixed radius is
+    specified anywhere else in the pipeline, so this mirrors the graph's
+    own k rather than picking an arbitrary number).
+    """
+    n_neighbors = min(k + 1, len(coords))
+    nbrs = NearestNeighbors(n_neighbors=n_neighbors, metric="haversine")
+    nbrs.fit(np.radians(coords))
+    dist_rad, _ = nbrs.kneighbors(np.radians(coords))
+    dist_km = dist_rad[:, 1:] * _EARTH_RADIUS_KM  # drop self (column 0)
+    return float(dist_km.mean())
+
+
+def create_buffered_region_split_indices(
+    region_global_idx: np.ndarray,
+    coords_region: np.ndarray,
+    test_ratio: float = 0.15,
+    val_ratio: float = 0.2,
+    buffer_km: float | None = None,
+    k_for_buffer: int = KNN_K,
+    random_seed: int = 42,
+) -> dict:
+    """
+    Comment (4)-A/B: per-region split with a percentage-based test holdout
+    (was a fixed n=5 in run_gnn_per_region.py / run_baseline_per_region.py)
+    and spatial block / buffered CV (train/val candidates within `buffer_km`
+    of any test node are excluded from the split entirely, not just
+    re-labelled). Default `buffer_km` is the region's own mean k-NN distance
+    (`compute_mean_knn_distance_km`), so no region uses an arbitrary fixed
+    radius.
+
+    Shared by run_gnn_per_region.py and run_baseline_per_region.py (which
+    must produce the *same* split for a given seed -- the baseline script's
+    own docstring says so -- so this is one function, not two independently
+    maintained copies that could silently drift apart).
+
+    If buffering would leave too few nodes for a usable train/val split
+    (can happen in small/dense regions), falls back to no buffering for
+    this region rather than crashing or training on 1-2 nodes -- reported
+    in the returned `split_info["buffer_fallback"]`.
+
+    Returns {"train_local", "val_local", "test_local", "split_info"} --
+    indices all in local (region) space; `coords_region` must be in the
+    same order as `region_global_idx` (i.e. `coords_region[i]` is the
+    coordinate of `region_global_idx[i]`).
+    """
+    n = len(region_global_idx)
+    rng = np.random.default_rng(random_seed)
+    perm = rng.permutation(n)
+
+    n_test = max(1, int(round(n * test_ratio)))
+    test_local = perm[:n_test]
+    rest = perm[n_test:]
+
+    if buffer_km is None:
+        buffer_km = compute_mean_knn_distance_km(coords_region, k=min(k_for_buffer, n - 1))
+
+    keep_mask = apply_spatial_buffer(coords_region[rest], coords_region[test_local], buffer_km)
+    rest_kept = rest[keep_mask]
+    n_excluded = int(len(rest) - len(rest_kept))
+
+    buffer_fallback = False
+    min_needed = max(4, n_test)  # need at least a few train + a few val nodes
+    if len(rest_kept) < min_needed:
+        buffer_fallback = True
+        rest_kept = rest
+
+    n_val = max(1, int(len(rest_kept) * val_ratio))
+    val_local = rest_kept[:n_val]
+    train_local = rest_kept[n_val:]
+
+    split_info = {
+        "test_ratio": test_ratio,
+        "n_test": int(n_test),
+        "buffer_km": float(buffer_km),
+        "n_excluded_by_buffer": 0 if buffer_fallback else n_excluded,
+        "buffer_fallback": buffer_fallback,
+    }
+    return {
+        "train_local": train_local,
+        "val_local": val_local,
+        "test_local": test_local,
+        "split_info": split_info,
+    }
+
+
+def create_buffered_sample_split_indices(
+    processed_df: pd.DataFrame,
+    region: str,
+    rng: np.random.Generator,
+    test_ratio: float = 0.15,
+    val_ratio: float = 0.2,
+    buffer_km: float | None = None,
+    k_for_buffer: int = KNN_K,
+    val_seed: int = 42,
+) -> dict:
+    """
+    Comment (4)-A/B: global-inductive-sample split (run_inductive_sample.py /
+    run_exp6_proportion_inductive_sample.py's `_make_sample_split`) -- test
+    = `test_ratio` of one region's own nodes (was a fixed n_sample=5),
+    train+val = every OTHER node in the ENTIRE dataset (all regions, unlike
+    `create_buffered_region_split_indices`'s per-region-only train pool).
+    Train/val candidates within `buffer_km` of a test node are excluded
+    (Comment 4-B) -- since test nodes all come from one region but
+    candidates span the whole dataset, only nodes from that region (or a
+    geographically adjacent one) can realistically fall within a
+    few-hundred-km buffer; distant regions' candidates pass trivially.
+
+    `rng` is a shared `np.random.Generator` the caller advances across
+    regions within one seed (matching the existing call pattern in
+    run_inductive_sample.py/run_exp6, which builds one `rng` per seed and
+    calls this once per region in a loop) -- not re-seeded here.
+
+    Returns {"train_idx", "val_idx", "test_idx", "n", "split_info"}.
+    """
+    region_idx = np.where(processed_df["Region"].values == region)[0]
+    n = len(region_idx)
+    n_test = max(1, min(n, int(round(n * test_ratio))))
+    test_idx = np.sort(rng.choice(region_idx, size=n_test, replace=False))
+
+    all_idx = np.arange(len(processed_df))
+    tv_idx = np.setdiff1d(all_idx, test_idx)
+
+    coords_all = processed_df[["Latitude", "Longitude"]].to_numpy()
+    if buffer_km is None:
+        buffer_km = compute_mean_knn_distance_km(
+            coords_all[region_idx], k=min(k_for_buffer, n - 1)
+        )
+
+    keep_mask = apply_spatial_buffer(coords_all[tv_idx], coords_all[test_idx], buffer_km)
+    tv_kept = tv_idx[keep_mask]
+    n_excluded = int(len(tv_idx) - len(tv_kept))
+
+    buffer_fallback = False
+    min_needed = max(4, n_test)
+    if len(tv_kept) < min_needed:
+        buffer_fallback = True
+        tv_kept = tv_idx
+
+    local_rng = np.random.default_rng(val_seed)
+    tv_shuffled = tv_kept.copy()
+    local_rng.shuffle(tv_shuffled)
+    n_val = int(len(tv_shuffled) * val_ratio)
+    val_idx = np.sort(tv_shuffled[:n_val])
+    train_idx = np.sort(tv_shuffled[n_val:])
+
+    split_info = {
+        "test_ratio": test_ratio,
+        "n_test": int(len(test_idx)),
+        "buffer_km": float(buffer_km),
+        "n_excluded_by_buffer": 0 if buffer_fallback else n_excluded,
+        "buffer_fallback": buffer_fallback,
+    }
+    return {
+        "train_idx": train_idx,
+        "val_idx": val_idx,
+        "test_idx": test_idx,
+        "n": int(len(test_idx)),
+        "split_info": split_info,
+    }
+
+
+def apply_spatial_buffer(
+    coords_candidates: np.ndarray,
+    coords_test: np.ndarray,
+    buffer_km: float,
+) -> np.ndarray:
+    """
+    Comment (4)-B: spatial block / buffered CV. Returns a boolean mask
+    (len(coords_candidates),) -- True for candidates whose nearest test-node
+    distance exceeds `buffer_km` (safe to keep in train/val), False for
+    candidates within the buffer of any test node (excluded entirely, not
+    just re-labelled -- the point of buffered CV is that these nodes are too
+    spatially close to a test node to give an honest measure of extrapolation).
+    """
+    nbrs = NearestNeighbors(n_neighbors=1, metric="haversine")
+    nbrs.fit(np.radians(coords_test))
+    dist_rad, _ = nbrs.kneighbors(np.radians(coords_candidates))
+    dist_km = dist_rad[:, 0] * _EARTH_RADIUS_KM
+    return dist_km > buffer_km
+
+
 # ── Private helpers ──────────────────────────────────────────────────────────
 
 def _classify_system_row(row: pd.Series) -> str:
@@ -448,6 +683,204 @@ def train_xgboost_and_select_features(
     return model, shap_values, X_selected
 
 
+def _make_ensemble_models(random_state: int = 42):
+    """XGBoost + CatBoost + RandomForest, same hyperparameters used throughout."""
+    try:
+        from xgboost import XGBClassifier
+    except ImportError as exc:
+        raise ImportError("Missing dependency 'xgboost'.") from exc
+    try:
+        from catboost import CatBoostClassifier
+    except ImportError as exc:
+        raise ImportError("Missing dependency 'catboost'.") from exc
+    try:
+        from sklearn.ensemble import RandomForestClassifier
+    except ImportError as exc:
+        raise ImportError("Missing dependency 'scikit-learn'.") from exc
+
+    return [
+        XGBClassifier(
+            n_estimators=300,
+            max_depth=6,
+            learning_rate=0.05,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            objective="binary:logistic",
+            eval_metric="logloss",
+            random_state=random_state,
+        ),
+        CatBoostClassifier(
+            iterations=300,
+            depth=6,
+            learning_rate=0.05,
+            loss_function="Logloss",
+            random_seed=random_state,
+            verbose=False,
+        ),
+        RandomForestClassifier(
+            n_estimators=300,
+            max_depth=None,
+            random_state=random_state,
+            n_jobs=-1,
+        ),
+    ]
+
+
+def _make_single_xgb_model(random_state: int = 42):
+    """
+    Single XGBoost model, same hyperparameters as the XGBoost member of
+    `_make_ensemble_models`. Used as a `models_factory` for
+    `compute_ensemble_scores_no_leakage` when only one model's score is
+    wanted (e.g. the tabular baselines' `xgb_score` feature — see
+    `build_baseline_features_no_leakage`).
+    """
+    try:
+        from xgboost import XGBClassifier
+    except ImportError as exc:
+        raise ImportError("Missing dependency 'xgboost'.") from exc
+
+    return [
+        XGBClassifier(
+            n_estimators=300,
+            max_depth=6,
+            learning_rate=0.05,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            objective="binary:logistic",
+            eval_metric="logloss",
+            random_state=random_state,
+        ),
+    ]
+
+
+def compute_ensemble_scores_no_leakage(
+    X: pd.DataFrame,
+    y: pd.Series,
+    train_idx: np.ndarray,
+    other_idx: np.ndarray,
+    n_folds: int = 5,
+    random_state: int = 42,
+    train_scoring: str = "oof",
+    models_factory=_make_ensemble_models,
+) -> tuple[np.ndarray, np.ndarray, list]:
+    """
+    Model probability score with no train-node leakage (Comment 12 fix).
+    Defaults to the 3-model (XGBoost+CatBoost+RandomForest) ensemble; pass
+    `models_factory=_make_single_xgb_model` for a leakage-free single-model
+    score instead (Comment 17: the tabular baselines' `xgb_score`).
+
+    Fitting the ensemble on `train_idx` and then calling `predict_proba` on
+    those same rows gives training nodes an in-sample, overfit score — this
+    is what `build_node_features` does when called directly on `train_idx`.
+    Here, training-node scores instead come from K-fold out-of-fold
+    prediction: each fold's nodes are scored by models fit only on the
+    other folds. `other_idx` (val/test) scores come from the 3 models
+    refit on the FULL `train_idx` — that path was already leakage-free
+    (validation/test nodes never appear in any training fold), so it is
+    kept unchanged and the refit models are returned for reuse at
+    downstream held-out inference time.
+
+    Parameters
+    ----------
+    X, y       : full feature matrix / target (same ones passed to
+                 train_xgboost_and_select_features).
+    train_idx  : indices used for fitting.
+    other_idx  : indices to score with the full-train-refit models
+                 (typically val_idx, or val_idx + test_idx).
+    n_folds    : number of OOF folds for the training-node scores.
+    train_scoring : "oof" (default, leakage-free) or "in_sample" — reproduces
+                 the pre-fix behaviour (train-node scores from the same
+                 models fit on train_idx) so the two can be compared
+                 side by side (Comment 12-C: OOF vs in-sample vs no-ensemble).
+                 Only affects `train_scores`; `other_scores` is identical
+                 either way (always the full-train refit).
+    models_factory : callable(random_state) -> list[model]. Defaults to the
+                 3-model (XGBoost+CatBoost+RandomForest) ensemble; pass
+                 `_make_single_xgb_model` to reuse this same OOF machinery
+                 for a single-model score — e.g. the tabular baselines'
+                 `xgb_score` feature (Comment 17 fairness finding: baselines
+                 had the same in-sample leak Comment 12 fixed for SPIRE,
+                 just never patched).
+
+    Returns
+    -------
+    train_scores  : np.ndarray, shape (len(train_idx),) — aligned to train_idx order.
+    other_scores  : np.ndarray, shape (len(other_idx),) — aligned to other_idx order.
+    fitted_models : [xgb_model, cat_model, rf_model] refit on the full train_idx.
+    """
+    if train_scoring not in ("oof", "in_sample"):
+        raise ValueError(f"train_scoring must be 'oof' or 'in_sample', got {train_scoring!r}")
+
+    from sklearn.model_selection import StratifiedKFold
+
+    train_idx = np.asarray(train_idx, dtype=int)
+    other_idx = np.asarray(other_idx, dtype=int)
+    X_train = X.iloc[train_idx]
+    y_train = y.iloc[train_idx]
+
+    oof_scores = None
+    if train_scoring == "oof":
+        # Small/imbalanced regions (more likely now that Comment (4)-B's
+        # spatial buffer can shrink an already-small region's train pool
+        # further) can leave a minority class with very few examples in
+        # `train_idx`. `n_folds=5` StratifiedKFold on e.g. 1 minority
+        # example puts it in exactly one fold's holdout, leaving that
+        # fold's *training* set with zero examples of that class --
+        # XGBoost's sklearn API raises `ValueError: Invalid classes
+        # inferred...` when fit on a y containing only one class label
+        # that isn't 0 (a real crash hit in practice, not hypothetical).
+        # Guard by capping n_folds to the minority class count, and -- if
+        # there are fewer than 2 minority examples, genuine OOF is
+        # impossible (can't hold out a fold without emptying that class
+        # from training) -- fall back to in-sample scoring for train
+        # nodes only in that specific region/split, clearly logged.
+        class_counts = y_train.value_counts()
+        min_class_count = int(class_counts.min()) if len(class_counts) > 0 else 0
+
+        if min_class_count < 2:
+            print(f"    [WARN] compute_ensemble_scores_no_leakage: minority class has "
+                  f"only {min_class_count} example(s) among {len(train_idx)} train nodes -- "
+                  f"{n_folds}-fold OOF is not possible here, falling back to in-sample "
+                  f"scoring for train nodes only (other_idx stays leakage-free as always).")
+            oof_scores = None  # filled by the in-sample fallback below
+            train_scoring = "in_sample"
+        else:
+            effective_n_folds = min(n_folds, min_class_count)
+            if effective_n_folds < n_folds:
+                print(f"    [WARN] compute_ensemble_scores_no_leakage: reducing OOF folds "
+                      f"from {n_folds} to {effective_n_folds} (minority class has only "
+                      f"{min_class_count} examples among {len(train_idx)} train nodes).")
+            oof_scores = np.zeros(len(train_idx), dtype=float)
+            kf = StratifiedKFold(n_splits=effective_n_folds, shuffle=True, random_state=random_state)
+            for fold_train_pos, fold_holdout_pos in kf.split(X_train, y_train):
+                fold_models = models_factory(random_state=random_state)
+                X_fold_train = X_train.iloc[fold_train_pos]
+                y_fold_train = y_train.iloc[fold_train_pos]
+                X_fold_holdout = X_train.iloc[fold_holdout_pos]
+                fold_probs = [
+                    m.fit(X_fold_train, y_fold_train).predict_proba(X_fold_holdout)[:, 1]
+                    for m in fold_models
+                ]
+                oof_scores[fold_holdout_pos] = np.mean(fold_probs, axis=0)
+
+    fitted_models = models_factory(random_state=random_state)
+    for m in fitted_models:
+        m.fit(X_train, y_train)
+
+    if train_scoring == "in_sample":
+        # Pre-fix behaviour: score train_idx with the same models fit on
+        # train_idx — reproduced here only for the Comment 12-C comparison.
+        oof_scores = np.mean(
+            [m.predict_proba(X_train)[:, 1] for m in fitted_models], axis=0
+        )
+
+    other_scores = np.mean(
+        [m.predict_proba(X.iloc[other_idx])[:, 1] for m in fitted_models], axis=0
+    )
+
+    return oof_scores, other_scores, fitted_models
+
+
 def build_node_features(X_selected: pd.DataFrame, X_full: pd.DataFrame, models):
     """
     Build GNN node features: SHAP-selected features + ensemble probability score.
@@ -467,6 +900,92 @@ def build_node_features(X_selected: pd.DataFrame, X_full: pd.DataFrame, models):
     X_num = torch.tensor(X_selected.astype(float).values, dtype=torch.float)
     score_t = torch.tensor(scores, dtype=torch.float).unsqueeze(1)
     return torch.cat([X_num, score_t], dim=1)
+
+
+def build_node_features_from_scores(X_selected: pd.DataFrame, scores: np.ndarray):
+    """
+    Like `build_node_features`, but takes an already-computed score array
+    instead of models to call `predict_proba` on — used with
+    `compute_ensemble_scores_no_leakage` (Comment 12), where training-node
+    and val/test-node scores come from two different (both leakage-free)
+    procedures and are assembled by the caller before reaching here.
+    """
+    try:
+        import torch
+    except ImportError as exc:
+        raise ImportError("Missing dependency 'torch'. Install it to create GNN node features.") from exc
+
+    X_num = torch.tensor(X_selected.astype(float).values, dtype=torch.float)
+    score_t = torch.tensor(np.asarray(scores, dtype=float), dtype=torch.float).unsqueeze(1)
+    return torch.cat([X_num, score_t], dim=1)
+
+
+def build_node_features_no_leakage(
+    X_selected_tv: pd.DataFrame,
+    X: pd.DataFrame,
+    y: pd.Series,
+    train_idx: np.ndarray,
+    val_idx: np.ndarray,
+    new_train: np.ndarray,
+    new_val: np.ndarray,
+    n_folds: int = 5,
+    random_state: int = 42,
+    train_scoring: str = "oof",
+):
+    """
+    Drop-in, leakage-free replacement for the common call-site pattern
+    `build_node_features(X_selected.iloc[tv_pos], X.iloc[tv_pos], ensemble_models)`
+    where `ensemble_models` was fit on `train_idx` alone (Comment 12).
+
+    Parameters
+    ----------
+    X_selected_tv : SHAP-selected feature columns, already sliced to `tv_pos`
+                     order (i.e. `X_selected.iloc[tv_pos]`).
+    X, y          : full feature matrix / target (original index space).
+    train_idx, val_idx : original indices (not tv-local positions).
+    new_train, new_val  : positions of train_idx / val_idx within tv_pos
+                     (the `old_to_new` remapping every caller already builds).
+    train_scoring : "oof" (default) or "in_sample" — see
+                     `compute_ensemble_scores_no_leakage` (Comment 12-C).
+
+    Returns
+    -------
+    X_node        : torch.Tensor, shape (len(tv_pos), X_selected_tv.shape[1] + 1).
+    fitted_models  : [xgb_model, cat_model, rf_model] refit on the full
+                     train_idx — reuse this (not a fresh fit) for any
+                     downstream held-out (test) node inference.
+    """
+    train_scores, val_scores, fitted_models = compute_ensemble_scores_no_leakage(
+        X, y, train_idx, val_idx, n_folds=n_folds, random_state=random_state,
+        train_scoring=train_scoring,
+    )
+    scores_tv = np.empty(len(X_selected_tv), dtype=float)
+    scores_tv[np.asarray(new_train, dtype=int)] = train_scores
+    scores_tv[np.asarray(new_val, dtype=int)] = val_scores
+    X_node = build_node_features_from_scores(X_selected_tv, scores_tv)
+    return X_node, fitted_models
+
+
+_GRAPH_SIM_EXCLUDE_COLS = {"Latitude", "Longitude"}
+
+
+def select_geo_similarity_columns(X_selected: pd.DataFrame) -> pd.DataFrame:
+    """
+    Columns of a SHAP-selected node feature table to use for the
+    cosine-similarity ("geological similarity") term in `build_weighted_graph`
+    (Comment 13 fix).
+
+    Drops Latitude/Longitude — SHAP top-k selection sometimes keeps them, but
+    they're already used directly as the spatial edge-weight term (haversine
+    distance on `coords`), so reusing them here would double-count spatial
+    information into the "geological" edge weight. The ensemble_score column
+    is never part of `X_selected` in the first place (it's appended
+    separately by `build_node_features*`), so no extra handling is needed
+    for it here — callers must build `X_geo` from `X_selected` (pre-score),
+    never from the already-scored `X_node`.
+    """
+    geo_cols = [c for c in X_selected.columns if c not in _GRAPH_SIM_EXCLUDE_COLS]
+    return X_selected[geo_cols]
 
 
 def build_baseline_features(X_selected: pd.DataFrame, X_full: pd.DataFrame, model) -> pd.DataFrame:
@@ -492,6 +1011,8 @@ def build_weighted_graph(
     return_sigma: bool = False,
     max_distance_km: float | None = None,
     fit_idx: np.ndarray | None = None,
+    X_geo=None,
+    unify_edge_rule: bool = False,
 ):
     """
     Weighted k-NN spatial graph with optional adaptive-k filtering.
@@ -499,7 +1020,8 @@ def build_weighted_graph(
     Parameters
     ----------
     coords : np.ndarray  (N, 2)  Real [Latitude, Longitude] decimal degrees.
-    X_node : torch.Tensor  (N, F)  node feature matrix (used for cosine sim).
+    X_node : torch.Tensor  (N, F)  node feature matrix (the actual GNN input;
+             not used for cosine similarity when `X_geo` is given).
     alpha  : float  weight for spatial component in "mixed" strategy.
     k      : int    maximum number of spatial neighbours per node.
     weighting_strategy : "distance" | "feature_similarity" | "mixed"
@@ -509,11 +1031,33 @@ def build_weighted_graph(
     max_distance_km : float | None  adaptive-k threshold — edges to neighbours
              farther than this are dropped.  The single closest neighbour is
              always kept as a fallback so no node becomes isolated.
+    X_geo  : torch.Tensor | None  (N, F_geo)  node vector used ONLY for the
+             cosine-similarity ("geological similarity") term (Comment 13
+             fix). Coordinates are already used directly for the spatial
+             term (`coords`), and `X_node` typically also carries the
+             ensemble_score and (when SHAP selects them) Latitude/Longitude
+             — reusing `X_node` for cosine similarity would double-count
+             that information into the edge weight. Falls back to `X_node`
+             (reproducing the pre-fix double-counting) when omitted, for
+             backward compatibility with callers not yet updated.
+    unify_edge_rule : bool  (Comment 14) when `fit_idx` is given, the default
+             (False) applies the full feature_similarity/mixed formula only
+             to edges where BOTH endpoints are in `fit_idx` (train-train);
+             edges touching a non-fit (val) node fall back to spatial-only —
+             the asymmetric "current" rule Comment 14 flags, kept as the
+             default only for backward compatibility with callers not yet
+             updated. `unify_edge_rule=True` applies the same formula to
+             every edge regardless of `fit_idx` (Comment 14 Solution A,
+             recommended) — safe because `w_geo` depends only on observable
+             node features (x), never the target (y), so there is no
+             leakage risk in using it on non-fit (val) edges too.
     """
     try:
         import torch
     except ImportError as exc:
         raise ImportError("Missing dependency 'torch'. Install it to build the weighted graph.") from exc
+
+    X_sim_source = X_geo if X_geo is not None else X_node
 
     start_time = perf_counter()
     n_nodes = len(coords)
@@ -563,7 +1107,7 @@ def build_weighted_graph(
 
     # Cosine similarity in pure NumPy — avoids PyTorch/OpenBLAS thread deadlock
     # that occurs when torch ops (F.normalize, torch.tensor) follow heavy numpy ops.
-    X_node_np = X_node.detach().to(dtype=torch.float32, device="cpu").numpy()
+    X_node_np = X_sim_source.detach().to(dtype=torch.float32, device="cpu").numpy()
     norms = np.linalg.norm(X_node_np, axis=1, keepdims=True)
     np.maximum(norms, 1e-12, out=norms)   # in-place, avoids division by zero
     X_node_norm = X_node_np / norms
@@ -571,9 +1115,14 @@ def build_weighted_graph(
     n_edges = len(src)
     w_geo = (X_node_norm[src] * X_node_norm[dst]).sum(axis=1).clip(min=0.0)
 
-    # Restrict feature-similarity to edges where both endpoints are fit (non-test) nodes.
-    # For edges involving test nodes, fall back to spatial-only weighting.
-    if fit_idx is not None:
+    # Restrict feature-similarity to edges where both endpoints are fit
+    # (train) nodes; edges touching a non-fit (val) node fall back to
+    # spatial-only weighting — the asymmetric "current" rule (Comment 14),
+    # applied only when `unify_edge_rule=False` (the backward-compatible
+    # default). `unify_edge_rule=True` (Comment 14 Solution A) skips this
+    # gating entirely and applies the same formula to every edge.
+    apply_asymmetric_gate = fit_idx is not None and not unify_edge_rule
+    if apply_asymmetric_gate:
         fit_set = np.zeros(n_nodes, dtype=bool)
         fit_set[np.asarray(fit_idx, dtype=int)] = True
         both_fit = fit_set[src] & fit_set[dst]
@@ -581,12 +1130,12 @@ def build_weighted_graph(
     if weighting_strategy == "distance":
         edge_weight = w_spatial
     elif weighting_strategy == "feature_similarity":
-        if fit_idx is not None:
+        if apply_asymmetric_gate:
             edge_weight = np.where(both_fit, w_geo, w_spatial)
         else:
             edge_weight = w_geo
     elif weighting_strategy == "mixed":
-        if fit_idx is not None:
+        if apply_asymmetric_gate:
             edge_weight = np.where(both_fit, alpha * w_spatial + (1 - alpha) * w_geo, w_spatial)
         else:
             edge_weight = alpha * w_spatial + (1 - alpha) * w_geo

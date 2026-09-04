@@ -42,11 +42,13 @@ from xgboost import XGBClassifier
 
 from config import OUTPUT_PATH
 from feature_engineering import (
-    build_baseline_features,
-    build_node_features,
+    _make_single_xgb_model,
+    build_node_features_no_leakage,
     build_weighted_graph,
+    compute_ensemble_scores_no_leakage,
     create_spatial_split_indices,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from baseline import (
@@ -105,7 +107,10 @@ def _make_baseline_models(seed: int = 42) -> dict:
 
 
 def _run_region(processed_df: pd.DataFrame, region: str, seed: int = 42) -> dict:
-    split = create_spatial_split_indices(processed_df, test_region=region)
+    # random_seed=seed (Comment 17 fairness fix): previously this split was
+    # always seed=42 regardless of which "seed run" was in progress, so all
+    # 5 runs (baselines AND SPIRE/GCN/GAT) silently shared one split.
+    split = create_spatial_split_indices(processed_df, test_region=region, random_seed=seed)
     train_idx = split["train_idx"]
     val_idx   = split["val_idx"]
     test_idx  = split["test_idx"]
@@ -116,10 +121,22 @@ def _run_region(processed_df: pd.DataFrame, region: str, seed: int = 42) -> dict
     actual_proportion = float(y_full.iloc[test_idx].mean())
     print(f"  n_test={n_test}  actual_proportion={actual_proportion:.3f}")
 
-    xgb_model, _, X_selected = train_xgboost_and_select_features(
+    _, _, X_selected = train_xgboost_and_select_features(
         X_full, y_full, fit_idx=train_idx
     )
-    X_bl = build_baseline_features(X_selected, X_full, xgb_model)
+    # Leakage-free xgb_score (Comment 17 fairness fix, same OOF machinery as
+    # Comment 12-A): train rows get a K-fold out-of-fold score, val/test
+    # rows get the score from the model refit on the full train_idx.
+    other_idx = np.concatenate([val_idx, test_idx])
+    train_scores, other_scores, _ = compute_ensemble_scores_no_leakage(
+        X_full, y_full, train_idx, other_idx, random_state=seed,
+        models_factory=_make_single_xgb_model,
+    )
+    xgb_score = np.empty(len(X_full), dtype=float)
+    xgb_score[train_idx] = train_scores
+    xgb_score[other_idx] = other_scores
+    X_bl = X_selected.copy()
+    X_bl["xgb_score"] = xgb_score
 
     X_train = X_bl.iloc[train_idx].astype(float)
     y_train = y_full.iloc[train_idx]
@@ -136,6 +153,7 @@ def _run_region(processed_df: pd.DataFrame, region: str, seed: int = 42) -> dict
             per_model[name] = {
                 "predicted_proportion": pred_prop,
                 "abs_error":            abs_err,
+                "y_prob":               y_prob.tolist(),  # Comment 18-B: Brier/calibration
             }
         except Exception as exc:
             per_model[name] = {"error": str(exc)}
@@ -162,7 +180,11 @@ def _run_region(processed_df: pd.DataFrame, region: str, seed: int = 42) -> dict
             y_prob    = fn(**kwargs)
             pred_prop = float(np.mean(y_prob))
             abs_err   = float(abs(pred_prop - actual_proportion))
-            per_model[name] = {"predicted_proportion": pred_prop, "abs_error": abs_err}
+            per_model[name] = {
+                "predicted_proportion": pred_prop,
+                "abs_error":            abs_err,
+                "y_prob":               np.asarray(y_prob).tolist(),  # Comment 18-B
+            }
         except Exception as exc:
             per_model[name] = {"error": str(exc)}
         info = per_model[name]
@@ -171,37 +193,38 @@ def _run_region(processed_df: pd.DataFrame, region: str, seed: int = 42) -> dict
         else:
             print(f"    [{name}]  ERROR: {info.get('error')}")
 
-    # ── GNN ensemble (fitted on full X for node features) ────────────────────
-    X_tr = X_full.iloc[train_idx].astype(float)
-    y_tr = y_full.iloc[train_idx]
-
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=seed, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-    rf_model = RandomForestClassifier(
-        n_estimators=300, max_depth=None, random_state=seed, n_jobs=-1,
-    )
-    rf_model.fit(X_tr, y_tr)
-    ensemble_models = [xgb_model, cat_model, rf_model]
-
     tv_pos    = np.sort(np.concatenate([train_idx, val_idx]))
     old_to_new = {int(old): new for new, old in enumerate(tv_pos)}
     new_train  = np.array([old_to_new[i] for i in train_idx], dtype=np.int64)
     new_val    = np.array([old_to_new[i] for i in val_idx],   dtype=np.int64)
 
     coords_tv   = processed_df[["Latitude", "Longitude"]].values[tv_pos]
-    X_node_base = build_node_features(X_selected.iloc[tv_pos], X_full.iloc[tv_pos], ensemble_models)
+    # GNN ensemble node score, leakage-free (Comment 12): train nodes get
+    # K-fold OOF scores, val nodes get scores from the ensemble refit on the
+    # full train_idx (also reused for test-time inference below).
+    X_node_base, ensemble_models = build_node_features_no_leakage(
+        X_selected.iloc[tv_pos], X_full, y_full, train_idx, val_idx, new_train, new_val,
+        random_state=seed,
+    )
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_pos]).astype(float).values,
+        dtype=torch.float32,
+    )
     edge_index, edge_weight, sigma = build_weighted_graph(
         coords_tv, X_node_base,
         alpha=_GRAPH_ALPHA, k=_GRAPH_K,
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train,
         return_sigma=True,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
 
     X_node_tv_base = X_node_base.clone().cpu()
+    X_geo_tv_base = X_geo_tv.clone().cpu()
     X_node_base = augment_with_edge_stats(X_node_base, edge_index, edge_weight)
 
     N_tv = len(tv_pos)
@@ -232,6 +255,7 @@ def _run_region(processed_df: pd.DataFrame, region: str, seed: int = 42) -> dict
         "coords_tv":       coords_tv,
         "X_node_tv":       tv_data.x,
         "X_node_tv_base":  X_node_tv_base,
+        "X_geo_tv_base":   X_geo_tv_base,
         "edge_index_tv":   tv_data.edge_index,
         "edge_weight_tv":  tv_data.edge_weight,
         "graph_sigma":     sigma,
@@ -269,12 +293,14 @@ def _run_region(processed_df: pd.DataFrame, region: str, seed: int = 42) -> dict
             "abs_error":            abs_err_gnn,
             "best_config":          list(best_config),
             "best_val_f1":          float(best_val_f1),
+            "y_prob":               np.asarray(y_prob_gnn).tolist(),  # Comment 18-B
         }
         print(f"    [{model_key}]  pred={pred_prop_gnn:.3f}  |err|={abs_err_gnn:.3f}")
 
     return {
         "n_test":            int(n_test),
         "actual_proportion": actual_proportion,
+        "y_true":            y_full.iloc[test_idx].to_numpy(dtype=int).tolist(),  # Comment 18-B
         "per_model":         per_model,
     }
 
@@ -293,22 +319,9 @@ def _run_gcn_gat(
     n_test    = len(test_idx)
 
     _, X_full, y_full = prepare_xgboost_inputs(processed_df, fit_idx=train_idx)
-    xgb_model, _, X_selected = train_xgboost_and_select_features(
+    _, _, X_selected = train_xgboost_and_select_features(
         X_full, y_full, fit_idx=train_idx
     )
-
-    X_tr = X_full.iloc[train_idx].astype(float)
-    y_tr = y_full.iloc[train_idx]
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=42, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-    rf_model = RandomForestClassifier(
-        n_estimators=300, max_depth=None, random_state=42, n_jobs=-1,
-    )
-    rf_model.fit(X_tr, y_tr)
-    ensemble_models = [xgb_model, cat_model, rf_model]
 
     tv_pos     = np.sort(np.concatenate([train_idx, val_idx]))
     old_to_new = {int(old): new for new, old in enumerate(tv_pos)}
@@ -316,15 +329,27 @@ def _run_gcn_gat(
     new_val    = np.array([old_to_new[i] for i in val_idx],   dtype=np.int64)
 
     coords_tv   = processed_df[["Latitude", "Longitude"]].values[tv_pos]
-    X_node_base = build_node_features(X_selected.iloc[tv_pos], X_full.iloc[tv_pos], ensemble_models)
+    # Leakage-free (Comment 12): train nodes get K-fold OOF scores, val nodes
+    # get scores from the ensemble refit on the full train_idx.
+    X_node_base, ensemble_models = build_node_features_no_leakage(
+        X_selected.iloc[tv_pos], X_full, y_full, train_idx, val_idx, new_train, new_val,
+    )
+    # Geo-only vector for cosine similarity (Comment 13).
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_pos]).astype(float).values,
+        dtype=torch.float32,
+    )
     edge_index, edge_weight, sigma = build_weighted_graph(
         coords_tv, X_node_base,
         alpha=_GRAPH_ALPHA, k=_GRAPH_K,
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train,
         return_sigma=True,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
     X_node_tv_base = X_node_base.clone().cpu()
+    X_geo_tv_base = X_geo_tv.clone().cpu()
     X_node_base    = augment_with_edge_stats(X_node_base, edge_index, edge_weight)
 
     N_tv = len(tv_pos)
@@ -351,6 +376,7 @@ def _run_gcn_gat(
         "coords_tv":       coords_tv,
         "X_node_tv":       tv_data.x,
         "X_node_tv_base":  X_node_tv_base,
+        "X_geo_tv_base":   X_geo_tv_base,
         "edge_index_tv":   tv_data.edge_index,
         "edge_weight_tv":  tv_data.edge_weight,
         "graph_sigma":     sigma,
@@ -419,11 +445,13 @@ def _aggregate_metrics(per_region: dict) -> dict:
 def run_exp4_proportion(
     processed_df: pd.DataFrame,
     results_path: str = _RESULTS_PATH,
+    seeds: list[int] | None = None,
 ) -> dict:
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
 
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: dict = {}
@@ -447,6 +475,14 @@ def run_exp4_proportion(
             if v:
                 print(f"    {m:20s}  MAE={v['mae']:.4f}  RMSE={v['rmse']:.4f}")
         runs[str(seed)] = {"aggregated_metrics": agg, "per_region": per_region}
+
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(results_path).exists():
+        with open(results_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", {})
+        runs = {**existing_runs, **runs}
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(runs.keys(), key=int)}")
 
     # Top-level aggregated_metrics and per_region from first run for convenience
     first = next(iter(runs.values()))
@@ -480,9 +516,15 @@ def run_exp4_proportion(
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
+    args = parser.parse_args()
+
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
-    run_exp4_proportion(processed_df)
+    run_exp4_proportion(processed_df, seeds=args.seeds)
 
 
 if __name__ == "__main__":

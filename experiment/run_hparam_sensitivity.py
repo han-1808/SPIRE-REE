@@ -33,14 +33,13 @@ import json
 import numpy as np
 import pandas as pd
 import torch
-from catboost import CatBoostClassifier
-from sklearn.ensemble import RandomForestClassifier
 
 from config import OUTPUT_PATH
 from feature_engineering import (
-    build_node_features,
+    build_node_features_no_leakage,
     build_weighted_graph,
     prepare_xgboost_inputs,
+    select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import (
@@ -84,25 +83,9 @@ def _build_region_graph(processed_df: pd.DataFrame, region: str, seed: int):
     X_region = X_region.iloc[region_global_idx].reset_index(drop=True)
     y_region = y_region.iloc[region_global_idx].reset_index(drop=True)
 
-    xgb_model, _, X_selected = train_xgboost_and_select_features(
+    _, _, X_selected = train_xgboost_and_select_features(
         X_region, y_region, fit_idx=train_local
     )
-
-    X_tr = X_region.iloc[train_local].astype(float)
-    y_tr = y_region.iloc[train_local]
-
-    cat_model = CatBoostClassifier(
-        iterations=300, depth=6, learning_rate=0.05,
-        loss_function="Logloss", random_seed=42, verbose=False,
-    )
-    cat_model.fit(X_tr, y_tr)
-
-    rf_model = RandomForestClassifier(
-        n_estimators=300, max_depth=None, random_state=42, n_jobs=-1,
-    )
-    rf_model.fit(X_tr, y_tr)
-
-    ensemble_models = [xgb_model, cat_model, rf_model]
 
     tv_local = np.sort(np.concatenate([train_local, val_local]))
     old_to_new = {int(old): new for new, old in enumerate(tv_local)}
@@ -112,10 +95,17 @@ def _build_region_graph(processed_df: pd.DataFrame, region: str, seed: int):
     coords_region = processed_df[["Latitude", "Longitude"]].values[region_global_idx]
     coords_tv = coords_region[tv_local]
 
-    X_node_tv = build_node_features(
-        X_selected.iloc[tv_local],
-        X_region.iloc[tv_local],
-        ensemble_models,
+    # Leakage-free (Comment 12): train nodes get K-fold OOF scores, val nodes
+    # get scores from the ensemble refit on the full train_local.
+    X_node_tv, ensemble_models = build_node_features_no_leakage(
+        X_selected.iloc[tv_local], X_region, y_region, train_local, val_local, new_train, new_val,
+    )
+    # Geo-only vector for cosine similarity (Comment 13): excludes
+    # Latitude/Longitude and ensemble_score to avoid double-counting them
+    # into the "geological similarity" edge weight.
+    X_geo_tv = torch.tensor(
+        select_geo_similarity_columns(X_selected.iloc[tv_local]).astype(float).values,
+        dtype=torch.float32,
     )
 
     edge_index, edge_weight = build_weighted_graph(
@@ -123,6 +113,8 @@ def _build_region_graph(processed_df: pd.DataFrame, region: str, seed: int):
         alpha=_GRAPH_ALPHA, k=min(_GRAPH_K, len(tv_local) - 1),
         max_distance_km=_GRAPH_MAX_DIST_KM,
         fit_idx=new_train,
+        X_geo=X_geo_tv,
+        unify_edge_rule=True,  # Comment 14 Solution A (decided)
     )
 
     X_node_tv = augment_with_edge_stats(X_node_tv, edge_index, edge_weight)

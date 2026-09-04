@@ -4,6 +4,39 @@ Spatially-augmented inductive graph representation learning for Rare Earth Eleme
 
 ---
 
+## Getting Started
+
+### Prerequisites
+
+- Python 3.10+
+- `pip` and (recommended) a virtual environment tool
+
+### Installation
+
+```bash
+git clone <repository-url>
+cd SPIRE-REE
+python -m venv venv
+source venv/bin/activate    # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### Quick Start
+
+```bash
+# 1. Preprocess raw data — generates data/gnn_features.parquet,
+#    data/gnn_target.npy, data/gnn_edge_index.npy, data/gnn_edge_weight.npy
+python preprocessing/pipeline.py
+
+# 2. Run any experiment, e.g. Exp 1 (leave-one-region-out)
+python experiment/run_baseline.py
+python experiment/run_gnn.py
+```
+
+Results are written as JSON to `result/`. See [Running Order](#running-order) for the full experiment sequence, [Project Structure](#project-structure) for what each script does, and [Preprocessing Pipeline](#preprocessing-pipeline) / [GNN Architecture](#gnn-architecture) / [Experiments](#experiments) for methodology documentation.
+
+---
+
 ## Data
 
 **Source:** `data/Global_REE_occurrence_database.xlsx` — 3,114 REE deposit records with ~60 raw columns.

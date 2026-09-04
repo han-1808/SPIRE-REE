@@ -48,33 +48,22 @@ from xgboost import XGBClassifier
 from baseline import SimpleAutoencoder
 from config import OUTPUT_PATH
 from feature_engineering import (
-    build_baseline_features,
+    _make_single_xgb_model,
+    compute_ensemble_scores_no_leakage,
+    create_buffered_region_split_indices,
     prepare_xgboost_inputs,
     train_xgboost_and_select_features,
 )
 
-_N_TEST = 5
+_TEST_RATIO = 0.15  # Comment (4)-A: was a fixed n=5, now 10-20%/region (mid-point)
+_MIN_REGION_NODES = 20
+# Must match run_gnn_per_region.py's own `_GRAPH_K` exactly -- this file's
+# docstring promises "the same 5 test nodes (same seed) as run_gnn_per_region.py",
+# and buffer_km depends on k, so a mismatched k here would silently break
+# that invariant even with the same test_ratio/seed.
+_GRAPH_K_FOR_BUFFER = 10
 _RESULTS_PATH = "result/baseline_per_region.json"
 N_RUNS = 5
-
-
-def _split_region_indices(
-    region_local_idx: np.ndarray,
-    n_test: int = _N_TEST,
-    val_ratio: float = 0.2,
-    random_seed: int = 42,
-) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    rng = np.random.default_rng(random_seed)
-    perm = rng.permutation(len(region_local_idx))
-
-    test_local = perm[:n_test]
-    rest = perm[n_test:]
-
-    n_val = max(1, int(len(rest) * val_ratio))
-    val_local = rest[:n_val]
-    train_local = rest[n_val:]
-
-    return train_local, val_local, test_local
 
 
 def _compute_metrics(y_true: np.ndarray, y_prob: np.ndarray) -> dict:
@@ -127,11 +116,20 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     n_nodes = len(region_global_idx)
     print(f"  Region '{region}': {n_nodes} nodes total")
 
-    if n_nodes < _N_TEST + 5:
+    if n_nodes < _MIN_REGION_NODES:
         print(f"  Skipping — too few nodes ({n_nodes})")
         return {}
 
-    train_local, val_local, test_local = _split_region_indices(region_global_idx, random_seed=random_seed)
+    coords_region = processed_df[["Latitude", "Longitude"]].values[region_global_idx]
+    split = create_buffered_region_split_indices(
+        region_global_idx, coords_region, test_ratio=_TEST_RATIO,
+        k_for_buffer=_GRAPH_K_FOR_BUFFER, random_seed=random_seed,
+    )
+    train_local, val_local, test_local = split["train_local"], split["val_local"], split["test_local"]
+    split_info = split["split_info"]
+    print(f"  Split: n_test={split_info['n_test']} buffer_km={split_info['buffer_km']:.1f} "
+          f"excluded_by_buffer={split_info['n_excluded_by_buffer']}"
+          + (" (buffer fallback)" if split_info["buffer_fallback"] else ""))
     train_global = region_global_idx[train_local]
 
     # Feature engineering fitted on train only (11 features: 10 SHAP + xgb_score)
@@ -139,10 +137,22 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     X_region = X_full.iloc[region_global_idx].reset_index(drop=True)
     y_region = y_full.iloc[region_global_idx].reset_index(drop=True)
 
-    xgb_model, _, X_selected = train_xgboost_and_select_features(
+    _, _, X_selected = train_xgboost_and_select_features(
         X_region, y_region, fit_idx=train_local
     )
-    X_bl = build_baseline_features(X_selected, X_region, xgb_model)
+    # Leakage-free xgb_score (Comment 17 fairness fix, same OOF machinery as
+    # Comment 12-A): train rows get a K-fold out-of-fold score, val/test
+    # rows get the score from the model refit on the full train_local.
+    other_local = np.concatenate([val_local, test_local])
+    train_scores, other_scores, _ = compute_ensemble_scores_no_leakage(
+        X_region, y_region, train_local, other_local, random_state=random_seed,
+        models_factory=_make_single_xgb_model,
+    )
+    xgb_score = np.empty(len(X_region), dtype=float)
+    xgb_score[train_local] = train_scores
+    xgb_score[other_local] = other_scores
+    X_bl = X_selected.copy()
+    X_bl["xgb_score"] = xgb_score
 
     X_train = X_bl.iloc[train_local].astype(float)
     y_train = y_region.iloc[train_local]
@@ -154,11 +164,16 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
     coords_test   = coords_region[test_local]
 
     per_model: dict = {}
+    model_predictions: dict = {}  # Comment (4)-D: kept separate from
+    # per_model since _avg_metrics only reads 4 named scalar keys from it --
+    # safe either way here, but kept separate for consistency with the
+    # other 3 scripts where mixing list-valued keys in would break aggregation.
     for name, model in _make_models(seed=random_seed).items():
         try:
             model.fit(X_train, y_train)
             y_prob = model.predict_proba(X_test)[:, 1]
             metrics = _compute_metrics(y_test, y_prob)
+            model_predictions[name] = {"y_true": y_test.tolist(), "y_prob": y_prob.tolist()}
         except Exception as exc:
             metrics = {"error": str(exc)}
         print(f"    [{name}] {metrics}")
@@ -196,6 +211,7 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         pred.fit(tr_lat, y_train)
         y_prob   = pred.predict_proba(te_lat)[:, 1]
         metrics  = _compute_metrics(y_test, y_prob)
+        model_predictions["autoencoder_predictor"] = {"y_true": y_test.tolist(), "y_prob": y_prob.tolist()}
     except Exception as exc:
         print(f"    [WARN] autoencoder_predictor: {exc}")
         metrics = {"error": str(exc)}
@@ -208,6 +224,7 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         knn.fit(np.radians(coords_train), y_train.to_numpy())
         y_prob  = np.clip(knn.predict(np.radians(coords_test)), 0.0, 1.0)
         metrics = _compute_metrics(y_test, y_prob)
+        model_predictions["spatial_knn_regression"] = {"y_true": y_test.tolist(), "y_prob": y_prob.tolist()}
     except Exception as exc:
         print(f"    [WARN] spatial_knn_regression: {exc}")
         metrics = {"error": str(exc)}
@@ -226,6 +243,7 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         raw, _ = kriging.execute("points", coords_test[:, 1], coords_test[:, 0])
         y_prob  = np.clip(np.asarray(raw, dtype=float), 0.0, 1.0)
         metrics = _compute_metrics(y_test, y_prob)
+        model_predictions["kriging"] = {"y_true": y_test.tolist(), "y_prob": y_prob.tolist()}
     except Exception as exc:
         print(f"    [WARN] kriging: {exc}")
         metrics = {"error": str(exc)}
@@ -237,7 +255,9 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         "n_train": int(len(train_local)),
         "n_val":   int(len(val_local)),
         "n_test":  int(len(test_local)),
+        "split_info": split_info,  # Comment (4)-B
         "per_model": per_model,
+        "predictions": model_predictions,  # Comment (4)-D
     }
 
 
@@ -263,11 +283,13 @@ def _avg_metrics(per_region: dict) -> dict:
 def run_baseline_per_region(
     processed_df: pd.DataFrame,
     results_path: str = _RESULTS_PATH,
+    seeds: list[int] | None = None,
 ) -> dict:
     regions = sorted(processed_df["Region"].dropna().unique().tolist())
     print(f"Regions ({len(regions)}): {regions}")
 
-    seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+    if seeds is None:
+        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
     print(f"Seeds for this run: {seeds}")
 
     runs: list = []
@@ -289,14 +311,30 @@ def run_baseline_per_region(
             print(f"    {m:20s} Acc={v.get('accuracy', 0) or 0:.3f}  F1={v.get('f1', 0) or 0:.3f}")
         runs.append({"run_id": run_id, "seed": seed, "avg_metrics": avg, "per_region": per_region})
 
+    # Merge with any existing results file so a partial re-run (e.g. a
+    # single seed) doesn't discard other seeds already saved there.
+    if Path(results_path).exists():
+        with open(results_path, encoding="utf-8") as f:
+            existing_runs = json.load(f).get("runs", [])
+        by_seed = {r["seed"]: r for r in existing_runs}
+        for r in runs:
+            by_seed[r["seed"]] = r  # new runs overwrite same-seed old ones
+        runs = [by_seed[s] for s in sorted(by_seed.keys())]
+        for i, r in enumerate(runs):
+            r["run_id"] = i
+        print(f"Merged with existing results → {len(runs)} seed(s) total: {sorted(by_seed.keys())}")
+
     payload = {
         "experiment": "baseline_per_region",
         "description": (
             f"Tabular baselines trained per-region. "
-            f"{_N_TEST} nodes randomly held out as test (same split as gnn_per_region). "
+            f"~{_TEST_RATIO:.0%} of each region's nodes randomly held out as test "
+            f"(same split as gnn_per_region, Comment (4)-A: was a fixed n=5), "
+            f"train/val candidates within each region's own mean k-NN distance "
+            f"of a test node excluded (Comment (4)-B spatial buffering). "
             f"Features: 10 SHAP-selected + xgb_score (11 total, same as GNN)."
         ),
-        "n_test_per_region": _N_TEST,
+        "test_ratio_per_region": _TEST_RATIO,
         "models": ["xgboost", "lightgbm", "catboost", "random_forest", "svm", "mlp",
                    "autoencoder_predictor", "spatial_knn_regression", "kriging"],
         "regions": regions,
@@ -311,9 +349,15 @@ def run_baseline_per_region(
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--seeds", nargs="+", type=int, default=None,
+                         help="Explicit seed list (default: 42 + 4 random)")
+    args = parser.parse_args()
+
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
-    run_baseline_per_region(processed_df)
+    run_baseline_per_region(processed_df, seeds=args.seeds)
 
 
 if __name__ == "__main__":

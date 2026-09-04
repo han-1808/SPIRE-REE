@@ -27,20 +27,15 @@ def infer_host_lith(row) -> str:
         return row["Host_Lith"]
 
     deps = extract_primary_dep(row["Dep_Type"])
-    ree = row["REE_Mins"].lower() if isinstance(row["REE_Mins"], str) else ""
     sig = row["Sig_Mins"].lower() if isinstance(row["Sig_Mins"], str) else ""
 
     # ========= Dep_Type lost after cleaning → treat as unclassified =========
+    # NOTE: REE_Mins is deliberately not used here (Comment 11 fix) — it is the
+    # exact field that defines the target `has_ree`, so using it to infer
+    # Host_Lith (which feeds is_group / node features / graph edges) leaks the
+    # target into the input. Records only inferable via REE_Mins fall through
+    # to the sig-based or final "unclassified" fallback below.
     if len(deps) == 0:
-        if ree:
-            if "pyrochlore" in ree:
-                return "carbonatite / alkaline igneous (inferred, medium confidence)"
-            if any(k in ree for k in ["bastnäsite", "monazite"]):
-                return "alkaline igneous / carbonatite (inferred, medium confidence)"
-            if "xenotime" in ree:
-                return "felsic igneous or metamorphic rock (inferred, medium confidence)"
-            if "ion-adsorption" in ree or "clay" in ree:
-                return "weathered felsic rock (inferred, medium confidence)"
         if sig:
             if "apatite" in sig and "magnetite" in sig:
                 return "igneous rock (inferred, low confidence)"
@@ -73,10 +68,6 @@ def infer_host_lith(row) -> str:
     # ========= 4. OTHER IGNEOUS =========
     for d in deps:
         if "other igneous" in d:
-            if "pyrochlore" in ree:
-                return "carbonatite / alkaline igneous"
-            if any(k in ree for k in ["bastnäsite", "monazite"]):
-                return "alkaline igneous rock"
             if "apatite" in sig or "magnetite" in sig:
                 return "igneous rock (inferred, low confidence)"
             return "igneous rock"
@@ -114,8 +105,6 @@ def infer_host_lith(row) -> str:
     # ========= 10. FLUORITE DEPOSIT =========
     for d in deps:
         if "fluorite deposit" in d:
-            if any(k in ree for k in ["bastnäsite", "monazite"]):
-                return "alkaline igneous or carbonatite (inferred, medium confidence)"
             if "apatite" in sig or "magnetite" in sig:
                 return "igneous-related hydrothermal rock (inferred, low confidence)"
             return "unclassified"
@@ -132,15 +121,6 @@ def infer_host_lith(row) -> str:
 
     # ========= 13. FINAL FALLBACK: unclassified =========
     if "unclassified" in deps:
-        if ree:
-            if "pyrochlore" in ree:
-                return "carbonatite / alkaline igneous (inferred, medium confidence)"
-            if any(k in ree for k in ["bastnäsite", "monazite"]):
-                return "alkaline igneous / carbonatite (inferred, medium confidence)"
-            if "xenotime" in ree:
-                return "felsic igneous or metamorphic rock (inferred, medium confidence)"
-            if "ion-adsorption" in ree or "clay" in ree:
-                return "weathered felsic rock (inferred, medium confidence)"
         if sig:
             if "apatite" in sig and "magnetite" in sig:
                 return "igneous rock (inferred, low confidence)"
@@ -157,6 +137,41 @@ def infer_host_lith(row) -> str:
         return "unclassified"
 
     return "unclassified"
+
+
+def classify_host_lith_confidence(row) -> str:
+    """
+    Comment (2)-D: confidence tier for `infer_host_lith(row)`'s result,
+    determined purely from the raw inputs + the function's own output --
+    does not duplicate or alter `infer_host_lith`'s branching logic, so
+    there is zero risk of this changing any `Host_Lith`/`is_group` value
+    downstream (a real concern raised earlier, since `is_group` also
+    drives LODTO's splits and the graph's cosine-similarity term).
+
+    Tiers
+    -----
+    Direct       : `Host_Lith` was reported directly in the raw record,
+                   no inference needed at all.
+    Tier1        : inferred from `Dep_Type` deposit-type keywords (the
+                   function's main keyword-matched branches).
+    Tier2        : inferred from `Sig_Mins` alone, a weaker signal --
+                   `infer_host_lith` marks every such case with the
+                   literal substring "(inferred, low confidence)" itself,
+                   regardless of which branch produced it (the `deps==0`
+                   block, the "OTHER IGNEOUS"/"FLUORITE DEPOSIT"
+                   sub-branches, or the final fallback), so checking for
+                   that marker captures all of them uniformly and matches
+                   the function's own self-labeling.
+    Unclassified : no `Dep_Type` or `Sig_Mins` signal at all.
+    """
+    if not pd.isna(row["Host_Lith"]):
+        return "Direct"
+    inferred = infer_host_lith(row)
+    if inferred == "unclassified":
+        return "Unclassified"
+    if "(inferred, low confidence)" in inferred:
+        return "Tier2"
+    return "Tier1"
 
 
 def fill_host_lith(df: pd.DataFrame) -> pd.DataFrame:

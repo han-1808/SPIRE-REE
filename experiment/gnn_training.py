@@ -103,6 +103,38 @@ class GAT(torch.nn.Module):
         return self.convs[-1](x, edge_index)
 
 
+class MLP(torch.nn.Module):
+    """
+    Comment (6)-C / (17)-B no-message-passing control: same __init__/forward
+    interface as GraphSAGE/GCN/GAT (drop-in via `model_class=MLP`), but
+    `forward` only ever reads `data.x` -- `edge_index`/`edge_weight` are
+    never touched, so this is a genuine no-graph baseline on the exact same
+    node-feature vector SPIRE receives (isolates the contribution of
+    message passing, independent of the ensemble/edge-stat input features
+    themselves, which is what (6)-A's ablation modes vary separately).
+    """
+    def __init__(self, in_dim, hidden_dim, out_dim, num_layers=2, dropout=0.5):
+        super().__init__()
+        self.dropout = dropout
+        self.lins = torch.nn.ModuleList()
+        self.bns = torch.nn.ModuleList()
+
+        dims = [in_dim] + [hidden_dim] * (num_layers - 1) + [out_dim]
+        for i in range(num_layers - 1):
+            self.lins.append(Linear(dims[i], dims[i + 1]))
+            self.bns.append(torch.nn.BatchNorm1d(dims[i + 1]))
+        self.lins.append(Linear(dims[-2], dims[-1]))
+
+    def forward(self, data):
+        x = data.x
+        for i, lin in enumerate(self.lins[:-1]):
+            h = lin(x)
+            h = self.bns[i](h)
+            x = F.relu(h)
+            x = F.dropout(x, p=self.dropout, training=self.training)
+        return self.lins[-1](x)
+
+
 def augment_with_edge_stats(
     X_node: torch.Tensor,
     edge_index: torch.Tensor,
