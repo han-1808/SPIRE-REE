@@ -1,0 +1,1508 @@
+{
+  "config": {
+    "test_ratio": 0.15,
+    "k_for_buffer": 10,
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "strategies": [
+      "block",
+      "buffer"
+    ],
+    "readout_model": "XGBoost+CatBoost+RandomForest ensemble"
+  },
+  "per_seed": {
+    "42": {
+      "Africa": {
+        "n_nodes": 235,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 41,
+          "n_test_frac": 0.17446808510638298,
+          "n_blocks_held_out": 3,
+          "n_train": 140,
+          "n_val": 34,
+          "buffer_km": 346.009104259681,
+          "n_excluded_by_buffer": 20,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 359.9301658064424,
+            "mean_km": 1078.7217535380848,
+            "median_km": 926.9843697825943
+          },
+          "n_test_positive": 32,
+          "ensemble_metrics": {
+            "f1": 0.8852459016393442,
+            "roc_auc": 0.9097222222222222,
+            "pr_auc": 0.9752444291139144
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 35,
+          "n_test_frac": 0.14893617021276595,
+          "n_blocks_held_out": 0,
+          "n_train": 52,
+          "n_val": 12,
+          "buffer_km": 346.009104259681,
+          "n_excluded_by_buffer": 136,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 360.60156372912513,
+            "mean_km": 701.2310263478557,
+            "median_km": 696.9372770910276
+          },
+          "n_test_positive": 25,
+          "ensemble_metrics": {
+            "f1": 0.8620689655172413,
+            "roc_auc": 0.632,
+            "pr_auc": 0.8067591868626931
+          }
+        }
+      },
+      "China": {
+        "n_nodes": 214,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 42,
+          "n_test_frac": 0.19626168224299065,
+          "n_blocks_held_out": 2,
+          "n_train": 128,
+          "n_val": 31,
+          "buffer_km": 187.6665036976472,
+          "n_excluded_by_buffer": 13,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 201.57990691611104,
+            "mean_km": 363.9091184523729,
+            "median_km": 330.6518971909228
+          },
+          "n_test_positive": 31,
+          "ensemble_metrics": {
+            "f1": 0.8928571428571429,
+            "roc_auc": 0.9824046920821115,
+            "pr_auc": 0.994062302340291
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 32,
+          "n_test_frac": 0.14953271028037382,
+          "n_blocks_held_out": 0,
+          "n_train": 52,
+          "n_val": 12,
+          "buffer_km": 187.6665036976472,
+          "n_excluded_by_buffer": 118,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 187.88647097461038,
+            "mean_km": 264.0973964894519,
+            "median_km": 238.87817129079485
+          },
+          "n_test_positive": 18,
+          "ensemble_metrics": {
+            "f1": 0.7647058823529411,
+            "roc_auc": 0.8134920634920634,
+            "pr_auc": 0.8858468246838367
+          }
+        }
+      },
+      "East Asia": {
+        "n_nodes": 358,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 67,
+          "n_test_frac": 0.1871508379888268,
+          "n_blocks_held_out": 1,
+          "n_train": 228,
+          "n_val": 57,
+          "buffer_km": 143.25344782361208,
+          "n_excluded_by_buffer": 6,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 159.53004805775183,
+            "mean_km": 447.8909766289765,
+            "median_km": 481.83553427151037
+          },
+          "n_test_positive": 47,
+          "ensemble_metrics": {
+            "f1": 0.8245614035087719,
+            "roc_auc": 0.8106382978723403,
+            "pr_auc": 0.913478461735266
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 54,
+          "n_test_frac": 0.15083798882681565,
+          "n_blocks_held_out": 0,
+          "n_train": 88,
+          "n_val": 21,
+          "buffer_km": 143.25344782361208,
+          "n_excluded_by_buffer": 195,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 143.70855251638557,
+            "mean_km": 248.17424363278562,
+            "median_km": 201.50494946085456
+          },
+          "n_test_positive": 39,
+          "ensemble_metrics": {
+            "f1": 0.9,
+            "roc_auc": 0.9247863247863247,
+            "pr_auc": 0.9716207986972375
+          }
+        }
+      },
+      "Europe": {
+        "n_nodes": 383,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 71,
+          "n_test_frac": 0.185378590078329,
+          "n_blocks_held_out": 1,
+          "n_train": 248,
+          "n_val": 61,
+          "buffer_km": 154.72660106043642,
+          "n_excluded_by_buffer": 3,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 158.41065070719557,
+            "mean_km": 491.9980464027989,
+            "median_km": 515.4061360938329
+          },
+          "n_test_positive": 65,
+          "ensemble_metrics": {
+            "f1": 0.9047619047619048,
+            "roc_auc": 0.7512820512820513,
+            "pr_auc": 0.9705678100325283
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 57,
+          "n_test_frac": 0.14882506527415143,
+          "n_blocks_held_out": 0,
+          "n_train": 101,
+          "n_val": 25,
+          "buffer_km": 154.72660106043642,
+          "n_excluded_by_buffer": 200,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 155.60366962034237,
+            "mean_km": 375.4144643584392,
+            "median_km": 294.6920353773425
+          },
+          "n_test_positive": 48,
+          "ensemble_metrics": {
+            "f1": 0.8333333333333334,
+            "roc_auc": 0.5868055555555556,
+            "pr_auc": 0.8885023212510933
+          }
+        }
+      },
+      "Middle East": {
+        "n_nodes": 63,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 13,
+          "n_test_frac": 0.20634920634920634,
+          "n_blocks_held_out": 2,
+          "n_train": 37,
+          "n_val": 9,
+          "buffer_km": 254.06971388282162,
+          "n_excluded_by_buffer": 4,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 262.0199376502583,
+            "mean_km": 356.68917072615534,
+            "median_km": 324.86082694085263
+          },
+          "n_test_positive": 11,
+          "ensemble_metrics": {
+            "f1": 0.9166666666666666,
+            "roc_auc": 0.5454545454545454,
+            "pr_auc": 0.8839085157266976
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 9,
+          "n_test_frac": 0.14285714285714285,
+          "n_blocks_held_out": 0,
+          "n_train": 27,
+          "n_val": 6,
+          "buffer_km": 254.06971388282162,
+          "n_excluded_by_buffer": 21,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 265.98194728506235,
+            "mean_km": 472.2020453183667,
+            "median_km": 529.2839292382514
+          },
+          "n_test_positive": 9,
+          "ensemble_metrics": null
+        }
+      },
+      "North America": {
+        "n_nodes": 423,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 91,
+          "n_test_frac": 0.21513002364066194,
+          "n_blocks_held_out": 2,
+          "n_train": 264,
+          "n_val": 66,
+          "buffer_km": 172.56708328561587,
+          "n_excluded_by_buffer": 2,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 185.81685203199967,
+            "mean_km": 853.1459463285191,
+            "median_km": 839.7638397625763
+          },
+          "n_test_positive": 59,
+          "ensemble_metrics": {
+            "f1": 0.5227272727272727,
+            "roc_auc": 0.6901483050847458,
+            "pr_auc": 0.8114802677305999
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 63,
+          "n_test_frac": 0.14893617021276595,
+          "n_blocks_held_out": 0,
+          "n_train": 108,
+          "n_val": 26,
+          "buffer_km": 172.56708328561587,
+          "n_excluded_by_buffer": 226,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 173.16011168615373,
+            "mean_km": 314.6062436124019,
+            "median_km": 268.929643382152
+          },
+          "n_test_positive": 36,
+          "ensemble_metrics": {
+            "f1": 0.6885245901639344,
+            "roc_auc": 0.8189300411522634,
+            "pr_auc": 0.837820394615842
+          }
+        }
+      },
+      "Oceania": {
+        "n_nodes": 504,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 95,
+          "n_test_frac": 0.1884920634920635,
+          "n_blocks_held_out": 3,
+          "n_train": 325,
+          "n_val": 81,
+          "buffer_km": 83.25270180366239,
+          "n_excluded_by_buffer": 3,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 139.00973021947908,
+            "mean_km": 404.2330657792598,
+            "median_km": 367.60885738183475
+          },
+          "n_test_positive": 75,
+          "ensemble_metrics": {
+            "f1": 0.87248322147651,
+            "roc_auc": 0.797,
+            "pr_auc": 0.9192518547321615
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 76,
+          "n_test_frac": 0.15079365079365079,
+          "n_blocks_held_out": 0,
+          "n_train": 99,
+          "n_val": 24,
+          "buffer_km": 83.25270180366239,
+          "n_excluded_by_buffer": 305,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 83.75059578819126,
+            "mean_km": 188.83375341527423,
+            "median_km": 176.3294090225985
+          },
+          "n_test_positive": 55,
+          "ensemble_metrics": {
+            "f1": 0.8235294117647058,
+            "roc_auc": 0.8285714285714285,
+            "pr_auc": 0.9296403728435251
+          }
+        }
+      },
+      "Russian Federation": {
+        "n_nodes": 147,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 33,
+          "n_test_frac": 0.22448979591836735,
+          "n_blocks_held_out": 1,
+          "n_train": 92,
+          "n_val": 22,
+          "buffer_km": 262.78426751915924,
+          "n_excluded_by_buffer": 0,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 423.3279858567255,
+            "mean_km": 642.6965131105757,
+            "median_km": 634.5535129482303
+          },
+          "n_test_positive": 16,
+          "ensemble_metrics": {
+            "f1": 0.72,
+            "roc_auc": 0.9595588235294118,
+            "pr_auc": 0.9636333661809205
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 22,
+          "n_test_frac": 0.14965986394557823,
+          "n_blocks_held_out": 0,
+          "n_train": 33,
+          "n_val": 8,
+          "buffer_km": 262.78426751915924,
+          "n_excluded_by_buffer": 84,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 280.1409625729112,
+            "mean_km": 617.4360643354858,
+            "median_km": 513.4610958317844
+          },
+          "n_test_positive": 13,
+          "ensemble_metrics": {
+            "f1": 0.6,
+            "roc_auc": 0.9230769230769231,
+            "pr_auc": 0.9335794547333007
+          }
+        }
+      },
+      "South America": {
+        "n_nodes": 253,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 40,
+          "n_test_frac": 0.15810276679841898,
+          "n_blocks_held_out": 3,
+          "n_train": 168,
+          "n_val": 42,
+          "buffer_km": 205.8043212685313,
+          "n_excluded_by_buffer": 3,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 213.5711799584971,
+            "mean_km": 492.57766847880396,
+            "median_km": 382.1355256046909
+          },
+          "n_test_positive": 36,
+          "ensemble_metrics": {
+            "f1": 0.972972972972973,
+            "roc_auc": 0.7013888888888888,
+            "pr_auc": 0.9081652564593453
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 38,
+          "n_test_frac": 0.15019762845849802,
+          "n_blocks_held_out": 0,
+          "n_train": 64,
+          "n_val": 15,
+          "buffer_km": 205.8043212685313,
+          "n_excluded_by_buffer": 136,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 219.11751577586259,
+            "mean_km": 458.5885637695809,
+            "median_km": 422.909878817236
+          },
+          "n_test_positive": 30,
+          "ensemble_metrics": {
+            "f1": 0.9032258064516129,
+            "roc_auc": 0.6166666666666667,
+            "pr_auc": 0.8493575131368535
+          }
+        }
+      },
+      "South and Central Asia": {
+        "n_nodes": 532,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 81,
+          "n_test_frac": 0.15225563909774437,
+          "n_blocks_held_out": 2,
+          "n_train": 360,
+          "n_val": 90,
+          "buffer_km": 90.69683120071882,
+          "n_excluded_by_buffer": 1,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 104.26610139922589,
+            "mean_km": 325.10507975904704,
+            "median_km": 324.17615132008086
+          },
+          "n_test_positive": 72,
+          "ensemble_metrics": {
+            "f1": 0.9411764705882353,
+            "roc_auc": 0.7021604938271605,
+            "pr_auc": 0.9541021625877818
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 80,
+          "n_test_frac": 0.15037593984962405,
+          "n_blocks_held_out": 0,
+          "n_train": 120,
+          "n_val": 30,
+          "buffer_km": 90.69683120071882,
+          "n_excluded_by_buffer": 302,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 90.97855792616475,
+            "mean_km": 177.22913619672497,
+            "median_km": 147.25930964559225
+          },
+          "n_test_positive": 32,
+          "ensemble_metrics": {
+            "f1": 0.9180327868852459,
+            "roc_auc": 0.9765625,
+            "pr_auc": 0.9716241338325479
+          }
+        }
+      }
+    },
+    "1": {
+      "Africa": {
+        "n_nodes": 235,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 54,
+          "n_test_frac": 0.2297872340425532,
+          "n_blocks_held_out": 1,
+          "n_train": 138,
+          "n_val": 34,
+          "buffer_km": 346.009104259681,
+          "n_excluded_by_buffer": 9,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 348.83987435294074,
+            "mean_km": 583.9506802094062,
+            "median_km": 620.9058778441874
+          },
+          "n_test_positive": 43,
+          "ensemble_metrics": {
+            "f1": 0.875,
+            "roc_auc": 0.8742071881606766,
+            "pr_auc": 0.9652011519774936
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 35,
+          "n_test_frac": 0.14893617021276595,
+          "n_blocks_held_out": 0,
+          "n_train": 53,
+          "n_val": 13,
+          "buffer_km": 346.009104259681,
+          "n_excluded_by_buffer": 134,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 350.4347764184358,
+            "mean_km": 646.4206817195408,
+            "median_km": 657.3243507638081
+          },
+          "n_test_positive": 25,
+          "ensemble_metrics": {
+            "f1": 0.7719298245614035,
+            "roc_auc": 0.248,
+            "pr_auc": 0.673885884165082
+          }
+        }
+      },
+      "China": {
+        "n_nodes": 214,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 49,
+          "n_test_frac": 0.22897196261682243,
+          "n_blocks_held_out": 3,
+          "n_train": 126,
+          "n_val": 31,
+          "buffer_km": 187.6665036976472,
+          "n_excluded_by_buffer": 8,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 187.6940899343414,
+            "mean_km": 448.7597110605352,
+            "median_km": 406.6038616447402
+          },
+          "n_test_positive": 29,
+          "ensemble_metrics": {
+            "f1": 0.8771929824561403,
+            "roc_auc": 0.9120689655172414,
+            "pr_auc": 0.947617808472761
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 32,
+          "n_test_frac": 0.14953271028037382,
+          "n_blocks_held_out": 0,
+          "n_train": 63,
+          "n_val": 15,
+          "buffer_km": 187.6665036976472,
+          "n_excluded_by_buffer": 104,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 193.35634081341897,
+            "mean_km": 286.35801333179677,
+            "median_km": 244.20102864118104
+          },
+          "n_test_positive": 12,
+          "ensemble_metrics": {
+            "f1": 0.7368421052631579,
+            "roc_auc": 0.9625,
+            "pr_auc": 0.9433774014656366
+          }
+        }
+      },
+      "East Asia": {
+        "n_nodes": 358,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 60,
+          "n_test_frac": 0.16759776536312848,
+          "n_blocks_held_out": 2,
+          "n_train": 239,
+          "n_val": 59,
+          "buffer_km": 143.25344782361208,
+          "n_excluded_by_buffer": 0,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 193.4255443453582,
+            "mean_km": 673.8506356106489,
+            "median_km": 713.5781788254681
+          },
+          "n_test_positive": 29,
+          "ensemble_metrics": {
+            "f1": 0.8421052631578947,
+            "roc_auc": 0.8921023359288098,
+            "pr_auc": 0.8573543405136449
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 54,
+          "n_test_frac": 0.15083798882681565,
+          "n_blocks_held_out": 0,
+          "n_train": 92,
+          "n_val": 22,
+          "buffer_km": 143.25344782361208,
+          "n_excluded_by_buffer": 190,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 145.56985061993967,
+            "mean_km": 281.774694582975,
+            "median_km": 261.09375316277976
+          },
+          "n_test_positive": 37,
+          "ensemble_metrics": {
+            "f1": 0.9,
+            "roc_auc": 0.8577106518282989,
+            "pr_auc": 0.9164090879389919
+          }
+        }
+      },
+      "Europe": {
+        "n_nodes": 383,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 63,
+          "n_test_frac": 0.16449086161879894,
+          "n_blocks_held_out": 1,
+          "n_train": 255,
+          "n_val": 63,
+          "buffer_km": 154.72660106043642,
+          "n_excluded_by_buffer": 2,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 158.41065070719557,
+            "mean_km": 429.70674031679624,
+            "median_km": 457.42778485575826
+          },
+          "n_test_positive": 57,
+          "ensemble_metrics": {
+            "f1": 0.95,
+            "roc_auc": 0.7222222222222223,
+            "pr_auc": 0.9496386832406456
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 57,
+          "n_test_frac": 0.14882506527415143,
+          "n_blocks_held_out": 0,
+          "n_train": 92,
+          "n_val": 22,
+          "buffer_km": 154.72660106043642,
+          "n_excluded_by_buffer": 212,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 156.07270188607262,
+            "mean_km": 376.0695007211658,
+            "median_km": 259.7291116758669
+          },
+          "n_test_positive": 47,
+          "ensemble_metrics": {
+            "f1": 0.9052631578947369,
+            "roc_auc": 0.7000000000000001,
+            "pr_auc": 0.9037984968142734
+          }
+        }
+      },
+      "Middle East": {
+        "n_nodes": 63,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 11,
+          "n_test_frac": 0.1746031746031746,
+          "n_blocks_held_out": 3,
+          "n_train": 41,
+          "n_val": 10,
+          "buffer_km": 254.06971388282162,
+          "n_excluded_by_buffer": 1,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 341.39379487788614,
+            "mean_km": 484.62873807167966,
+            "median_km": 509.31863887568613
+          },
+          "n_test_positive": 9,
+          "ensemble_metrics": {
+            "f1": 0.9,
+            "roc_auc": 1.0,
+            "pr_auc": 1.0000000000000002
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 9,
+          "n_test_frac": 0.14285714285714285,
+          "n_blocks_held_out": 0,
+          "n_train": 19,
+          "n_val": 4,
+          "buffer_km": 254.06971388282162,
+          "n_excluded_by_buffer": 31,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 308.1099590934779,
+            "mean_km": 578.4503063098256,
+            "median_km": 475.7248159253347
+          },
+          "n_test_positive": 7,
+          "ensemble_metrics": {
+            "f1": 0.8571428571428571,
+            "roc_auc": 0.42857142857142855,
+            "pr_auc": 0.7407029478458049
+          }
+        }
+      },
+      "North America": {
+        "n_nodes": 423,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 78,
+          "n_test_frac": 0.18439716312056736,
+          "n_blocks_held_out": 2,
+          "n_train": 273,
+          "n_val": 68,
+          "buffer_km": 172.56708328561587,
+          "n_excluded_by_buffer": 4,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 182.6529748640757,
+            "mean_km": 634.7276638684208,
+            "median_km": 640.6342998098537
+          },
+          "n_test_positive": 49,
+          "ensemble_metrics": {
+            "f1": 0.8131868131868132,
+            "roc_auc": 0.8585503166783955,
+            "pr_auc": 0.9154021288855185
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 63,
+          "n_test_frac": 0.14893617021276595,
+          "n_blocks_held_out": 0,
+          "n_train": 108,
+          "n_val": 26,
+          "buffer_km": 172.56708328561587,
+          "n_excluded_by_buffer": 226,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 173.06847075229936,
+            "mean_km": 309.1574876469696,
+            "median_km": 250.93286124418853
+          },
+          "n_test_positive": 37,
+          "ensemble_metrics": {
+            "f1": 0.8,
+            "roc_auc": 0.7952182952182952,
+            "pr_auc": 0.8438920626674695
+          }
+        }
+      },
+      "Oceania": {
+        "n_nodes": 504,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 81,
+          "n_test_frac": 0.16071428571428573,
+          "n_blocks_held_out": 1,
+          "n_train": 338,
+          "n_val": 84,
+          "buffer_km": 83.25270180366239,
+          "n_excluded_by_buffer": 1,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 97.20220412789234,
+            "mean_km": 371.7413679903328,
+            "median_km": 390.56774429367044
+          },
+          "n_test_positive": 61,
+          "ensemble_metrics": {
+            "f1": 0.8840579710144928,
+            "roc_auc": 0.7000000000000001,
+            "pr_auc": 0.8811691164236775
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 76,
+          "n_test_frac": 0.15079365079365079,
+          "n_blocks_held_out": 0,
+          "n_train": 89,
+          "n_val": 22,
+          "buffer_km": 83.25270180366239,
+          "n_excluded_by_buffer": 317,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 83.54145832836886,
+            "mean_km": 219.0036827841302,
+            "median_km": 195.22185703650706
+          },
+          "n_test_positive": 57,
+          "ensemble_metrics": {
+            "f1": 0.864,
+            "roc_auc": 0.8402585410895661,
+            "pr_auc": 0.9418505052914914
+          }
+        }
+      },
+      "Russian Federation": {
+        "n_nodes": 147,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 35,
+          "n_test_frac": 0.23809523809523808,
+          "n_blocks_held_out": 1,
+          "n_train": 90,
+          "n_val": 22,
+          "buffer_km": 262.78426751915924,
+          "n_excluded_by_buffer": 0,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 332.7242446221789,
+            "mean_km": 606.2695802079676,
+            "median_km": 626.8496591935369
+          },
+          "n_test_positive": 30,
+          "ensemble_metrics": {
+            "f1": 0.9230769230769231,
+            "roc_auc": 0.7366666666666668,
+            "pr_auc": 0.9303900222925435
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 22,
+          "n_test_frac": 0.14965986394557823,
+          "n_blocks_held_out": 0,
+          "n_train": 34,
+          "n_val": 8,
+          "buffer_km": 262.78426751915924,
+          "n_excluded_by_buffer": 83,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 263.8250460450822,
+            "mean_km": 640.1798048716449,
+            "median_km": 518.9890610977766
+          },
+          "n_test_positive": 13,
+          "ensemble_metrics": {
+            "f1": 0.72,
+            "roc_auc": 0.7777777777777778,
+            "pr_auc": 0.8137216227713964
+          }
+        }
+      },
+      "South America": {
+        "n_nodes": 253,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 60,
+          "n_test_frac": 0.23715415019762845,
+          "n_blocks_held_out": 2,
+          "n_train": 155,
+          "n_val": 38,
+          "buffer_km": 205.8043212685313,
+          "n_excluded_by_buffer": 0,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 297.10961295492746,
+            "mean_km": 583.5923830519625,
+            "median_km": 533.6861641543768
+          },
+          "n_test_positive": 48,
+          "ensemble_metrics": {
+            "f1": 0.8888888888888888,
+            "roc_auc": 0.670138888888889,
+            "pr_auc": 0.8818575028233488
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 38,
+          "n_test_frac": 0.15019762845849802,
+          "n_blocks_held_out": 0,
+          "n_train": 61,
+          "n_val": 15,
+          "buffer_km": 205.8043212685313,
+          "n_excluded_by_buffer": 139,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 209.9638356316045,
+            "mean_km": 442.40842567034366,
+            "median_km": 410.22425471122153
+          },
+          "n_test_positive": 30,
+          "ensemble_metrics": {
+            "f1": 0.8888888888888888,
+            "roc_auc": 0.675,
+            "pr_auc": 0.8126238074537553
+          }
+        }
+      },
+      "South and Central Asia": {
+        "n_nodes": 532,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 83,
+          "n_test_frac": 0.15601503759398497,
+          "n_blocks_held_out": 1,
+          "n_train": 360,
+          "n_val": 89,
+          "buffer_km": 90.69683120071882,
+          "n_excluded_by_buffer": 0,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 226.80919708555973,
+            "mean_km": 722.1733513398806,
+            "median_km": 746.7964573311085
+          },
+          "n_test_positive": 81,
+          "ensemble_metrics": {
+            "f1": 0.9878048780487805,
+            "roc_auc": 0.8641975308641975,
+            "pr_auc": 0.996102408440817
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 80,
+          "n_test_frac": 0.15037593984962405,
+          "n_blocks_held_out": 0,
+          "n_train": 117,
+          "n_val": 29,
+          "buffer_km": 90.69683120071882,
+          "n_excluded_by_buffer": 306,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 91.31272470111965,
+            "mean_km": 143.99934053078942,
+            "median_km": 129.22292289780796
+          },
+          "n_test_positive": 32,
+          "ensemble_metrics": {
+            "f1": 0.9523809523809523,
+            "roc_auc": 0.9895833333333334,
+            "pr_auc": 0.9813603179997774
+          }
+        }
+      }
+    },
+    "2": {
+      "Africa": {
+        "n_nodes": 235,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 54,
+          "n_test_frac": 0.2297872340425532,
+          "n_blocks_held_out": 4,
+          "n_train": 122,
+          "n_val": 30,
+          "buffer_km": 346.009104259681,
+          "n_excluded_by_buffer": 29,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 359.9301658064424,
+            "mean_km": 928.1623122276492,
+            "median_km": 697.8695706754958
+          },
+          "n_test_positive": 41,
+          "ensemble_metrics": {
+            "f1": 0.8780487804878049,
+            "roc_auc": 0.8086303939962476,
+            "pr_auc": 0.9271170844748622
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 35,
+          "n_test_frac": 0.14893617021276595,
+          "n_blocks_held_out": 0,
+          "n_train": 76,
+          "n_val": 19,
+          "buffer_km": 346.009104259681,
+          "n_excluded_by_buffer": 105,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 348.48866274885415,
+            "mean_km": 536.6269523929046,
+            "median_km": 510.0513081676285
+          },
+          "n_test_positive": 24,
+          "ensemble_metrics": {
+            "f1": 0.7857142857142857,
+            "roc_auc": 0.7765151515151515,
+            "pr_auc": 0.917315705996484
+          }
+        }
+      },
+      "China": {
+        "n_nodes": 214,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 40,
+          "n_test_frac": 0.18691588785046728,
+          "n_blocks_held_out": 4,
+          "n_train": 140,
+          "n_val": 34,
+          "buffer_km": 187.6665036976472,
+          "n_excluded_by_buffer": 0,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 341.3145051714353,
+            "mean_km": 597.0072735133328,
+            "median_km": 605.7355595228391
+          },
+          "n_test_positive": 18,
+          "ensemble_metrics": {
+            "f1": 0.6206896551724138,
+            "roc_auc": 0.8573232323232323,
+            "pr_auc": 0.8339067099436368
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 32,
+          "n_test_frac": 0.14953271028037382,
+          "n_blocks_held_out": 0,
+          "n_train": 45,
+          "n_val": 11,
+          "buffer_km": 187.6665036976472,
+          "n_excluded_by_buffer": 126,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 201.57249028439605,
+            "mean_km": 399.35255884683545,
+            "median_km": 392.63544713020576
+          },
+          "n_test_positive": 16,
+          "ensemble_metrics": {
+            "f1": 0.6666666666666666,
+            "roc_auc": 0.765625,
+            "pr_auc": 0.8103349526822992
+          }
+        }
+      },
+      "East Asia": {
+        "n_nodes": 358,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 70,
+          "n_test_frac": 0.19553072625698323,
+          "n_blocks_held_out": 2,
+          "n_train": 229,
+          "n_val": 57,
+          "buffer_km": 143.25344782361208,
+          "n_excluded_by_buffer": 2,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 190.59088980767038,
+            "mean_km": 586.0337531583667,
+            "median_km": 576.2838908545882
+          },
+          "n_test_positive": 38,
+          "ensemble_metrics": {
+            "f1": 0.7608695652173914,
+            "roc_auc": 0.8980263157894737,
+            "pr_auc": 0.9239345832371448
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 54,
+          "n_test_frac": 0.15083798882681565,
+          "n_blocks_held_out": 0,
+          "n_train": 91,
+          "n_val": 22,
+          "buffer_km": 143.25344782361208,
+          "n_excluded_by_buffer": 191,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 146.94481158905782,
+            "mean_km": 386.74068763733817,
+            "median_km": 208.06513119787763
+          },
+          "n_test_positive": 40,
+          "ensemble_metrics": {
+            "f1": 0.891566265060241,
+            "roc_auc": 0.7125,
+            "pr_auc": 0.8223784952871106
+          }
+        }
+      },
+      "Europe": {
+        "n_nodes": 383,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 86,
+          "n_test_frac": 0.2245430809399478,
+          "n_blocks_held_out": 3,
+          "n_train": 235,
+          "n_val": 58,
+          "buffer_km": 154.72660106043642,
+          "n_excluded_by_buffer": 4,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 162.5275556065432,
+            "mean_km": 531.3655748586208,
+            "median_km": 386.6327962409225
+          },
+          "n_test_positive": 72,
+          "ensemble_metrics": {
+            "f1": 0.8591549295774648,
+            "roc_auc": 0.7187500000000001,
+            "pr_auc": 0.9338063257367917
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 57,
+          "n_test_frac": 0.14882506527415143,
+          "n_blocks_held_out": 0,
+          "n_train": 93,
+          "n_val": 23,
+          "buffer_km": 154.72660106043642,
+          "n_excluded_by_buffer": 210,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 155.60366962034237,
+            "mean_km": 284.92913127292263,
+            "median_km": 231.057288102876
+          },
+          "n_test_positive": 47,
+          "ensemble_metrics": {
+            "f1": 0.92,
+            "roc_auc": 0.7957446808510638,
+            "pr_auc": 0.9503203374783286
+          }
+        }
+      },
+      "Middle East": {
+        "n_nodes": 63,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 14,
+          "n_test_frac": 0.2222222222222222,
+          "n_blocks_held_out": 1,
+          "n_train": 39,
+          "n_val": 9,
+          "buffer_km": 254.06971388282162,
+          "n_excluded_by_buffer": 1,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 297.21998016753327,
+            "mean_km": 342.1362722543909,
+            "median_km": 339.9445719075733
+          },
+          "n_test_positive": 14,
+          "ensemble_metrics": null
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 9,
+          "n_test_frac": 0.14285714285714285,
+          "n_blocks_held_out": 0,
+          "n_train": 16,
+          "n_val": 3,
+          "buffer_km": 254.06971388282162,
+          "n_excluded_by_buffer": 35,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 262.0199376502583,
+            "mean_km": 424.1456003507612,
+            "median_km": 373.0365938883096
+          },
+          "n_test_positive": 9,
+          "ensemble_metrics": null
+        }
+      },
+      "North America": {
+        "n_nodes": 423,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 84,
+          "n_test_frac": 0.19858156028368795,
+          "n_blocks_held_out": 2,
+          "n_train": 269,
+          "n_val": 67,
+          "buffer_km": 172.56708328561587,
+          "n_excluded_by_buffer": 3,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 256.8638894872463,
+            "mean_km": 604.0218082976733,
+            "median_km": 597.5683912376414
+          },
+          "n_test_positive": 61,
+          "ensemble_metrics": {
+            "f1": 0.7966101694915254,
+            "roc_auc": 0.8225231646471847,
+            "pr_auc": 0.9253980975726421
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 63,
+          "n_test_frac": 0.14893617021276595,
+          "n_blocks_held_out": 0,
+          "n_train": 106,
+          "n_val": 26,
+          "buffer_km": 172.56708328561587,
+          "n_excluded_by_buffer": 228,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 172.94231399956274,
+            "mean_km": 299.1621392806288,
+            "median_km": 273.9605475701623
+          },
+          "n_test_positive": 29,
+          "ensemble_metrics": {
+            "f1": 0.7142857142857143,
+            "roc_auc": 0.7342799188640974,
+            "pr_auc": 0.6430450596351228
+          }
+        }
+      },
+      "Oceania": {
+        "n_nodes": 504,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 111,
+          "n_test_frac": 0.22023809523809523,
+          "n_blocks_held_out": 3,
+          "n_train": 312,
+          "n_val": 77,
+          "buffer_km": 83.25270180366239,
+          "n_excluded_by_buffer": 4,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 85.8780692164772,
+            "mean_km": 857.3277545522875,
+            "median_km": 409.7655773852013
+          },
+          "n_test_positive": 97,
+          "ensemble_metrics": {
+            "f1": 0.9238578680203046,
+            "roc_auc": 0.8067010309278351,
+            "pr_auc": 0.9658891898761388
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 76,
+          "n_test_frac": 0.15079365079365079,
+          "n_blocks_held_out": 0,
+          "n_train": 106,
+          "n_val": 26,
+          "buffer_km": 83.25270180366239,
+          "n_excluded_by_buffer": 296,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 83.72159367141698,
+            "mean_km": 212.09010602421296,
+            "median_km": 208.73595660970759
+          },
+          "n_test_positive": 53,
+          "ensemble_metrics": {
+            "f1": 0.8888888888888888,
+            "roc_auc": 0.8506972928630024,
+            "pr_auc": 0.8842594256706068
+          }
+        }
+      },
+      "Russian Federation": {
+        "n_nodes": 147,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 22,
+          "n_test_frac": 0.14965986394557823,
+          "n_blocks_held_out": 3,
+          "n_train": 100,
+          "n_val": 24,
+          "buffer_km": 262.78426751915924,
+          "n_excluded_by_buffer": 1,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 329.70522518106964,
+            "mean_km": 625.8486974029373,
+            "median_km": 573.5484565439716
+          },
+          "n_test_positive": 12,
+          "ensemble_metrics": {
+            "f1": 0.6666666666666666,
+            "roc_auc": 0.7916666666666666,
+            "pr_auc": 0.8572128103378104
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 22,
+          "n_test_frac": 0.14965986394557823,
+          "n_blocks_held_out": 0,
+          "n_train": 33,
+          "n_val": 8,
+          "buffer_km": 262.78426751915924,
+          "n_excluded_by_buffer": 84,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 263.8250460450822,
+            "mean_km": 529.457240561605,
+            "median_km": 549.9896194735328
+          },
+          "n_test_positive": 14,
+          "ensemble_metrics": {
+            "f1": 0.9655172413793104,
+            "roc_auc": 1.0,
+            "pr_auc": 0.9999999999999998
+          }
+        }
+      },
+      "South America": {
+        "n_nodes": 253,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 50,
+          "n_test_frac": 0.1976284584980237,
+          "n_blocks_held_out": 3,
+          "n_train": 163,
+          "n_val": 40,
+          "buffer_km": 205.8043212685313,
+          "n_excluded_by_buffer": 0,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 525.5429433691833,
+            "mean_km": 984.4680486173676,
+            "median_km": 1031.7708649451986
+          },
+          "n_test_positive": 37,
+          "ensemble_metrics": {
+            "f1": 0.8470588235294118,
+            "roc_auc": 0.7941787941787941,
+            "pr_auc": 0.9248657670498255
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 38,
+          "n_test_frac": 0.15019762845849802,
+          "n_blocks_held_out": 0,
+          "n_train": 50,
+          "n_val": 12,
+          "buffer_km": 205.8043212685313,
+          "n_excluded_by_buffer": 153,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 214.96986903047116,
+            "mean_km": 443.415138925907,
+            "median_km": 434.1833238014403
+          },
+          "n_test_positive": 27,
+          "ensemble_metrics": {
+            "f1": 0.8275862068965517,
+            "roc_auc": 0.8114478114478114,
+            "pr_auc": 0.929465814618732
+          }
+        }
+      },
+      "South and Central Asia": {
+        "n_nodes": 532,
+        "block": {
+          "split_strategy": "block",
+          "test_ratio": 0.15,
+          "n_test": 119,
+          "n_test_frac": 0.2236842105263158,
+          "n_blocks_held_out": 3,
+          "n_train": 326,
+          "n_val": 81,
+          "buffer_km": 90.69683120071882,
+          "n_excluded_by_buffer": 6,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 93.41773223091276,
+            "mean_km": 752.2463656627925,
+            "median_km": 650.5060288215358
+          },
+          "n_test_positive": 72,
+          "ensemble_metrics": {
+            "f1": 0.918918918918919,
+            "roc_auc": 0.9472517730496454,
+            "pr_auc": 0.9613106768429893
+          }
+        },
+        "buffer": {
+          "split_strategy": "buffer",
+          "test_ratio": 0.15,
+          "n_test": 80,
+          "n_test_frac": 0.15037593984962405,
+          "n_blocks_held_out": 0,
+          "n_train": 116,
+          "n_val": 28,
+          "buffer_km": 90.69683120071882,
+          "n_excluded_by_buffer": 308,
+          "buffer_fallback": false,
+          "test_to_train_distance": {
+            "min_km": 91.8780821000361,
+            "mean_km": 162.4786469489427,
+            "median_km": 139.40014763248948
+          },
+          "n_test_positive": 26,
+          "ensemble_metrics": {
+            "f1": 0.9019607843137255,
+            "roc_auc": 0.9750712250712251,
+            "pr_auc": 0.9115970876128314
+          }
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "block": {
+      "mean_n_train": 198.0,
+      "mean_n_test": 59.93333333333333,
+      "mean_n_excluded_by_buffer": 4.333333333333333,
+      "mean_min_test_to_train_km": 240.55719008401854,
+      "ensemble_metrics": {
+        "f1": 0.8505738639348503,
+        "roc_auc": 0.811205648508609,
+        "pr_auc": 0.9266230632683379
+      },
+      "n_folds": 30
+    },
+    "buffer": {
+      "mean_n_train": 73.46666666666667,
+      "mean_n_test": 46.6,
+      "mean_n_excluded_by_buffer": 173.36666666666667,
+      "mean_min_test_to_train_km": 195.93838629680354,
+      "ensemble_metrics": {
+        "f1": 0.8304305219930855,
+        "roc_auc": 0.7791925932761529,
+        "pr_auc": 0.87553892907329
+      },
+      "n_folds": 30
+    }
+  }
+}

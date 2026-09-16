@@ -1,0 +1,463 @@
+{
+  "overall_top": [
+    {
+      "feature": "has_zircon",
+      "mean_abs_shap": 0.7494152188301086
+    },
+    {
+      "feature": "is_placer",
+      "mean_abs_shap": 0.403583288192749
+    },
+    {
+      "feature": "Region_South and Central Asia",
+      "mean_abs_shap": 0.38034912943840027
+    },
+    {
+      "feature": "has_ilmenite",
+      "mean_abs_shap": 0.2837345600128174
+    },
+    {
+      "feature": "has_magnetite",
+      "mean_abs_shap": 0.15072762966156006
+    },
+    {
+      "feature": "has_thorite",
+      "mean_abs_shap": 0.12718935310840607
+    },
+    {
+      "feature": "Region_Europe",
+      "mean_abs_shap": 0.11865393072366714
+    },
+    {
+      "feature": "has_pyrite",
+      "mean_abs_shap": 0.11062885075807571
+    },
+    {
+      "feature": "has_rutile",
+      "mean_abs_shap": 0.10904932022094727
+    },
+    {
+      "feature": "has_fluorite",
+      "mean_abs_shap": 0.099312923848629
+    }
+  ],
+  "current_top10_selected": [
+    "has_fluorite",
+    "has_rutile",
+    "has_pyrite",
+    "Region_Europe",
+    "has_thorite",
+    "has_magnetite",
+    "has_ilmenite",
+    "Region_South and Central Asia",
+    "is_placer",
+    "has_zircon"
+  ],
+  "by_group": {
+    "is_carbonatite_system": {
+      "n": 377,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.5258193016052246
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.3386323153972626
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.21892127394676208
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.20815761387348175
+        },
+        {
+          "feature": "has_pyrochlore",
+          "mean_abs_shap": 0.2043844312429428
+        },
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.20146606862545013
+        },
+        {
+          "feature": "has_barite",
+          "mean_abs_shap": 0.19779826700687408
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.1955295205116272
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.19447533786296844
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.18887096643447876
+        }
+      ]
+    },
+    "is_alkaline_intrusive": {
+      "n": 353,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.7599368095397949
+        },
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.3469298481941223
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.26130059361457825
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.2233598232269287
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.1899017095565796
+        },
+        {
+          "feature": "has_fluorite",
+          "mean_abs_shap": 0.18937255442142487
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.18322712182998657
+        },
+        {
+          "feature": "is_alkaline_intrusive",
+          "mean_abs_shap": 0.16674014925956726
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.16650573909282684
+        },
+        {
+          "feature": "has_pyrochlore",
+          "mean_abs_shap": 0.15946011245250702
+        }
+      ]
+    },
+    "is_mafic_ultramafic": {
+      "n": 124,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.6767581105232239
+        },
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.42661112546920776
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.2750759422779083
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.21681930124759674
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.21568168699741364
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.1912798285484314
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.18422874808311462
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.18124403059482574
+        },
+        {
+          "feature": "has_titanite",
+          "mean_abs_shap": 0.13862909376621246
+        },
+        {
+          "feature": "is_mafic_ultramafic",
+          "mean_abs_shap": 0.116085946559906
+        }
+      ]
+    },
+    "is_felsic_pegmatite": {
+      "n": 401,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.8250124454498291
+        },
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.4736191928386688
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.23425889015197754
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.21832144260406494
+        },
+        {
+          "feature": "is_felsic_pegmatite",
+          "mean_abs_shap": 0.20364078879356384
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.1849619597196579
+        },
+        {
+          "feature": "Country_Russian Federation",
+          "mean_abs_shap": 0.17852379381656647
+        },
+        {
+          "feature": "has_fluorite",
+          "mean_abs_shap": 0.162669837474823
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.15343306958675385
+        },
+        {
+          "feature": "Region_Europe",
+          "mean_abs_shap": 0.13789434731006622
+        }
+      ]
+    },
+    "is_metamorphic_metasomatic": {
+      "n": 218,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.6311364769935608
+        },
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.3184206187725067
+        },
+        {
+          "feature": "is_metamorphic_metasomatic",
+          "mean_abs_shap": 0.2532985806465149
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.1937723010778427
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.19165489077568054
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.18078431487083435
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.17241080105304718
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.17057600617408752
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.16721895337104797
+        },
+        {
+          "feature": "Region_Europe",
+          "mean_abs_shap": 0.16347000002861023
+        }
+      ]
+    },
+    "is_sedimentary": {
+      "n": 283,
+      "top_features": [
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.7052440047264099
+        },
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.7010751962661743
+        },
+        {
+          "feature": "is_sedimentary",
+          "mean_abs_shap": 0.31576770544052124
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.21438604593276978
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.190778449177742
+        },
+        {
+          "feature": "Country_Kazakhstan",
+          "mean_abs_shap": 0.18497860431671143
+        },
+        {
+          "feature": "Region_Europe",
+          "mean_abs_shap": 0.1659029871225357
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.1434250771999359
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.1355462521314621
+        },
+        {
+          "feature": "has_uraninite",
+          "mean_abs_shap": 0.10416632890701294
+        }
+      ]
+    },
+    "is_placer": {
+      "n": 1015,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.8181570768356323
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.7944541573524475
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.44963252544403076
+        },
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.22705015540122986
+        },
+        {
+          "feature": "has_rutile",
+          "mean_abs_shap": 0.18120823800563812
+        },
+        {
+          "feature": "Country_Australia",
+          "mean_abs_shap": 0.17404700815677643
+        },
+        {
+          "feature": "has_garnet",
+          "mean_abs_shap": 0.15976975858211517
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.11118629574775696
+        },
+        {
+          "feature": "Region_North America",
+          "mean_abs_shap": 0.1003764420747757
+        },
+        {
+          "feature": "Country_Malaysia",
+          "mean_abs_shap": 0.08662988245487213
+        }
+      ]
+    },
+    "is_supergene_lateritic": {
+      "n": 116,
+      "top_features": [
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.9359211325645447
+        },
+        {
+          "feature": "is_supergene_lateritic",
+          "mean_abs_shap": 0.7739968299865723
+        },
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.7383208870887756
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.33577239513397217
+        },
+        {
+          "feature": "Country_Kazakhstan",
+          "mean_abs_shap": 0.28835004568099976
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.27344071865081787
+        },
+        {
+          "feature": "has_rutile",
+          "mean_abs_shap": 0.15079869329929352
+        },
+        {
+          "feature": "is_sedimentary",
+          "mean_abs_shap": 0.13331162929534912
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.12370488047599792
+        },
+        {
+          "feature": "Region_Europe",
+          "mean_abs_shap": 0.11655675619840622
+        }
+      ]
+    },
+    "is_unclassified": {
+      "n": 173,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.734456479549408
+        },
+        {
+          "feature": "is_unclassified",
+          "mean_abs_shap": 0.5662280321121216
+        },
+        {
+          "feature": "Region_South and Central Asia",
+          "mean_abs_shap": 0.4328140616416931
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.2687720060348511
+        },
+        {
+          "feature": "Country_China",
+          "mean_abs_shap": 0.21404527127742767
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.18906447291374207
+        },
+        {
+          "feature": "Country_Mongolia",
+          "mean_abs_shap": 0.16523206233978271
+        },
+        {
+          "feature": "Region_China",
+          "mean_abs_shap": 0.13492286205291748
+        },
+        {
+          "feature": "Region_Europe",
+          "mean_abs_shap": 0.1251845359802246
+        },
+        {
+          "feature": "Region_North America",
+          "mean_abs_shap": 0.11240258067846298
+        }
+      ]
+    }
+  }
+}

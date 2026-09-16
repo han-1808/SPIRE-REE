@@ -1,0 +1,732 @@
+{
+  "exp2_gnn": {
+    "spire": {
+      "n": 2981,
+      "roc_auc": {
+        "point": 0.7640297550498267,
+        "ci_lower": 0.7456099630097069,
+        "ci_upper": 0.7819607047971304,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8545375352376905,
+        "ci_lower": 0.8381442163986739,
+        "ci_upper": 0.8714560171508167,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gcn": {
+      "n": 2981,
+      "roc_auc": {
+        "point": 0.6393293690122233,
+        "ci_lower": 0.6167159869238201,
+        "ci_upper": 0.658473517314019,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.7587832178992918,
+        "ci_lower": 0.7371681632943146,
+        "ci_upper": 0.7795981969152187,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gat": {
+      "n": 2981,
+      "roc_auc": {
+        "point": 0.5617644728080711,
+        "ci_lower": 0.5395374690093071,
+        "ci_upper": 0.5844868569286074,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.7299275990990196,
+        "ci_lower": 0.7084116619721605,
+        "ci_upper": 0.7516966453131944,
+        "n_bootstrap_valid": 1000
+      }
+    }
+  },
+  "exp2_baseline": {
+    "xgboost": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8162654289448923,
+        "ci_lower": 0.7991510230978255,
+        "ci_upper": 0.832626153854909,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8852609372342379,
+        "ci_lower": 0.8695974956341667,
+        "ci_upper": 0.900390717251641,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "lightgbm": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8090408614236994,
+        "ci_lower": 0.790921212592541,
+        "ci_upper": 0.8257630092502405,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8697411992729912,
+        "ci_lower": 0.8520241155345412,
+        "ci_upper": 0.8874371073781494,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "catboost": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8175102824151541,
+        "ci_lower": 0.8006627323773369,
+        "ci_upper": 0.8335648466355894,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8876434766067164,
+        "ci_lower": 0.873397423699498,
+        "ci_upper": 0.9024561704774267,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "random_forest": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8161584535077299,
+        "ci_lower": 0.7982353348807197,
+        "ci_upper": 0.8330181862786661,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8758500096649312,
+        "ci_lower": 0.8587049245714655,
+        "ci_upper": 0.8931446181674111,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "svm": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8015637573605487,
+        "ci_lower": 0.7827025509843653,
+        "ci_upper": 0.8200391574337732,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8546145156375636,
+        "ci_lower": 0.8352740646459277,
+        "ci_upper": 0.8742744021768368,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "mlp": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8019940540816718,
+        "ci_lower": 0.7834995306917919,
+        "ci_upper": 0.8194741486743657,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8715059993475239,
+        "ci_lower": 0.8551839917333128,
+        "ci_upper": 0.8888596936822447,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "autoencoder_predictor": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8305099268947957,
+        "ci_lower": 0.8141963236770153,
+        "ci_upper": 0.8458491065859207,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8931988038147771,
+        "ci_lower": 0.8783464439517709,
+        "ci_upper": 0.9086165640533178,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "spatial_knn_regression": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.737611871825331,
+        "ci_lower": 0.7190588988517994,
+        "ci_upper": 0.7568826867519672,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8296779472869067,
+        "ci_lower": 0.8108220340822387,
+        "ci_upper": 0.8487717470248196,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "kriging": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.7190042662442999,
+        "ci_lower": 0.6979197764934018,
+        "ci_upper": 0.7399038599646633,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8123720106612206,
+        "ci_lower": 0.7916961458016876,
+        "ci_upper": 0.8333246954415403,
+        "n_bootstrap_valid": 1000
+      }
+    }
+  },
+  "exp3": {
+    "spire": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.8380656092886309,
+        "ci_lower": 0.8219358499331216,
+        "ci_upper": 0.8532539913911904,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9050912681440183,
+        "ci_lower": 0.8913009980818323,
+        "ci_upper": 0.9173718500081948,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gcn": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.6364371191709322,
+        "ci_lower": 0.6140811110918283,
+        "ci_upper": 0.6593031734298214,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.7764654328115076,
+        "ci_lower": 0.7547643996341437,
+        "ci_upper": 0.7972266694269188,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gat": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.5535262909363629,
+        "ci_lower": 0.5321358405161373,
+        "ci_upper": 0.574455811706586,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.7400000144210268,
+        "ci_lower": 0.7169673076798001,
+        "ci_upper": 0.7613437118956345,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "xgboost": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.8532422079184669,
+        "ci_lower": 0.8384381708243633,
+        "ci_upper": 0.868947897493831,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9024213658367001,
+        "ci_lower": 0.8877756732221033,
+        "ci_upper": 0.9175587587387858,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "lightgbm": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.8482539626424519,
+        "ci_lower": 0.8333525410086876,
+        "ci_upper": 0.8632831887440052,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9030053145002522,
+        "ci_lower": 0.8893310086037245,
+        "ci_upper": 0.9170389113978928,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "catboost": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.8594243594243594,
+        "ci_lower": 0.8456328583965282,
+        "ci_upper": 0.8745128997523843,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9141034106481412,
+        "ci_lower": 0.9018960031664948,
+        "ci_upper": 0.9265684394284528,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "random_forest": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.8441757930966562,
+        "ci_lower": 0.8287667903965799,
+        "ci_upper": 0.8609781276494218,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8880707721503457,
+        "ci_lower": 0.8712965162469549,
+        "ci_upper": 0.9059424912348064,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "svm": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.8264050746065135,
+        "ci_lower": 0.8088229128230222,
+        "ci_upper": 0.8437216448786568,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8713290566390494,
+        "ci_lower": 0.8525555008919482,
+        "ci_upper": 0.890913376048257,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "mlp": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.8581241430162294,
+        "ci_lower": 0.8429959991583853,
+        "ci_upper": 0.8727584351983688,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9121931218457778,
+        "ci_lower": 0.8992225780306058,
+        "ci_upper": 0.9245001496584296,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "autoencoder_predictor": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.864520935024532,
+        "ci_lower": 0.8501243949190272,
+        "ci_upper": 0.8782184818127038,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9166767559078938,
+        "ci_lower": 0.9044214598925673,
+        "ci_upper": 0.928264089479073,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "spatial_knn_regression": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.7274497425576562,
+        "ci_lower": 0.7083216681998684,
+        "ci_upper": 0.7476192706631309,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8136638214172289,
+        "ci_lower": 0.7932646630896231,
+        "ci_upper": 0.8341713221244076,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "kriging": {
+      "n": 3008,
+      "roc_auc": {
+        "point": 0.34687622313521593,
+        "ci_lower": 0.326925203434969,
+        "ci_upper": 0.3666360610324616,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.5835414405855119,
+        "ci_lower": 0.5619452488815804,
+        "ci_upper": 0.6055540041026265,
+        "n_bootstrap_valid": 1000
+      }
+    }
+  },
+  "exp5": {
+    "xgboost": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.8123678525173691,
+        "ci_lower": 0.7956497546293201,
+        "ci_upper": 0.8293304927976837,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.892007902832368,
+        "ci_lower": 0.8772369435086439,
+        "ci_upper": 0.9071419230589652,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "lightgbm": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.8094772536360749,
+        "ci_lower": 0.7915073690748627,
+        "ci_upper": 0.8256910078249664,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8876773128983925,
+        "ci_lower": 0.8710842415539293,
+        "ci_upper": 0.9029648290965943,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "catboost": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.8128471373547185,
+        "ci_lower": 0.7960140342342588,
+        "ci_upper": 0.8292609817907605,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8950266088973529,
+        "ci_lower": 0.8799560132140195,
+        "ci_upper": 0.9090865012020686,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "random_forest": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.8170935560631218,
+        "ci_lower": 0.8005339079525456,
+        "ci_upper": 0.8327999330125105,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.890034164301887,
+        "ci_lower": 0.8735813364614325,
+        "ci_upper": 0.9056906432468755,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "svm": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.8062026088153574,
+        "ci_lower": 0.7880479331482091,
+        "ci_upper": 0.8245961894733231,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8742706761710207,
+        "ci_lower": 0.8553447696922132,
+        "ci_upper": 0.89140818142946,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "mlp": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.8030209553669507,
+        "ci_lower": 0.78529337424273,
+        "ci_upper": 0.8205686842664598,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8868281533615623,
+        "ci_lower": 0.870371519281957,
+        "ci_upper": 0.9017445730937041,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "autoencoder": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.8256605618252156,
+        "ci_lower": 0.8092867758839697,
+        "ci_upper": 0.8414336337222327,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.906542992193436,
+        "ci_lower": 0.893590946363227,
+        "ci_upper": 0.9192938773680914,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "spatial_knn": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.7350549379542459,
+        "ci_lower": 0.7156081330272741,
+        "ci_upper": 0.7547150635081947,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8456687149190567,
+        "ci_lower": 0.826712880564386,
+        "ci_upper": 0.8638603870004297,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "kriging": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.7236257083217446,
+        "ci_lower": 0.7023652540040217,
+        "ci_upper": 0.7441599133139601,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8367137010929513,
+        "ci_lower": 0.8178128996172579,
+        "ci_upper": 0.8547204328367748,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "spire": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.7427729409153611,
+        "ci_lower": 0.7229402010307254,
+        "ci_upper": 0.761321543435389,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8565721875828476,
+        "ci_lower": 0.8401640714233288,
+        "ci_upper": 0.8735578640925045,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gcn": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.6641019589995141,
+        "ci_lower": 0.6436833732816966,
+        "ci_upper": 0.684326130849671,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.7987107977265087,
+        "ci_lower": 0.7755734542109424,
+        "ci_upper": 0.8187569610535834,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gat": {
+      "n": 2896,
+      "roc_auc": {
+        "point": 0.5684441784872467,
+        "ci_lower": 0.5455345839215078,
+        "ci_upper": 0.5939960451156374,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.7327018986760065,
+        "ci_lower": 0.7098515207988255,
+        "ci_upper": 0.7540575327027268,
+        "n_bootstrap_valid": 1000
+      }
+    }
+  },
+  "exp6": {
+    "xgboost": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.866492993649184,
+        "ci_lower": 0.8524879836245026,
+        "ci_upper": 0.8815049841064335,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9103869253859049,
+        "ci_lower": 0.8955355400687223,
+        "ci_upper": 0.9256930817916507,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "lightgbm": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8610295713077529,
+        "ci_lower": 0.8457755032937915,
+        "ci_upper": 0.8761608106330864,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9049757282537632,
+        "ci_lower": 0.8885767939224068,
+        "ci_upper": 0.9209173715485643,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "catboost": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8742217044557437,
+        "ci_lower": 0.8603876916437002,
+        "ci_upper": 0.8884842833407695,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.925195489569206,
+        "ci_lower": 0.9129459492357614,
+        "ci_upper": 0.9375200262229726,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "random_forest": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8461089145715972,
+        "ci_lower": 0.8290196131358664,
+        "ci_upper": 0.862777513744975,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8916496103963784,
+        "ci_lower": 0.8744181984057626,
+        "ci_upper": 0.9079562712769554,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "svm": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.842785517520882,
+        "ci_lower": 0.8248843666899263,
+        "ci_upper": 0.8607350993143857,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8708078381120177,
+        "ci_lower": 0.8509394354030672,
+        "ci_upper": 0.8917188129435732,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "mlp": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8677929710855798,
+        "ci_lower": 0.8538516225273706,
+        "ci_upper": 0.8824411320175066,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9192902782326708,
+        "ci_lower": 0.9068264002698448,
+        "ci_upper": 0.9313255324058203,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "autoencoder": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8780845718515521,
+        "ci_lower": 0.8644245112723522,
+        "ci_upper": 0.8918307754170153,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9286493669292715,
+        "ci_lower": 0.9176939577795188,
+        "ci_upper": 0.9399646082019878,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "spatial_knn": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.7397120516160032,
+        "ci_lower": 0.7205349129276846,
+        "ci_upper": 0.7598411382407821,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.828456805047326,
+        "ci_lower": 0.8082431068323771,
+        "ci_upper": 0.8475382532012219,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "kriging": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.27406933249067017,
+        "ci_lower": 0.2540816876641012,
+        "ci_upper": 0.292641251135179,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.546619244936986,
+        "ci_lower": 0.5269027266379827,
+        "ci_upper": 0.5664176498281551,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "spire": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.8520898929662698,
+        "ci_lower": 0.8366857805697102,
+        "ci_upper": 0.8677034913712144,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.9179546106978019,
+        "ci_lower": 0.9057376952992223,
+        "ci_upper": 0.9304770625662507,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gcn": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.6659342062616437,
+        "ci_lower": 0.6482257084935856,
+        "ci_upper": 0.685816473569796,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.8162153192319372,
+        "ci_lower": 0.7985705210393795,
+        "ci_upper": 0.834660369399778,
+        "n_bootstrap_valid": 1000
+      }
+    },
+    "gat": {
+      "n": 2930,
+      "roc_auc": {
+        "point": 0.4781963617946777,
+        "ci_lower": 0.45848516052232074,
+        "ci_upper": 0.4995089251792767,
+        "n_bootstrap_valid": 1000
+      },
+      "pr_auc": {
+        "point": 0.7039067637452971,
+        "ci_lower": 0.6820076406416729,
+        "ci_upper": 0.7265437450629169,
+        "n_bootstrap_valid": 1000
+      }
+    }
+  }
+}

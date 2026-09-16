@@ -1,0 +1,1098 @@
+{
+  "exp2": {
+    "seeds": [
+      42,
+      50,
+      32,
+      17,
+      21
+    ],
+    "k_for_buffer": 10,
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 41,
+          "n_positive": 32,
+          "n_negative": 9
+        },
+        "China": {
+          "n_test": 42,
+          "n_positive": 31,
+          "n_negative": 11
+        },
+        "East Asia": {
+          "n_test": 67,
+          "n_positive": 47,
+          "n_negative": 20
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_positive": 65,
+          "n_negative": 6
+        },
+        "Middle East": {
+          "n_test": 13,
+          "n_positive": 11,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 91,
+          "n_positive": 59,
+          "n_negative": 32
+        },
+        "Oceania": {
+          "n_test": 95,
+          "n_positive": 75,
+          "n_negative": 20
+        },
+        "Russian Federation": {
+          "n_test": 33,
+          "n_positive": 16,
+          "n_negative": 17
+        },
+        "South America": {
+          "n_test": 40,
+          "n_positive": 36,
+          "n_negative": 4
+        },
+        "South and Central Asia": {
+          "n_test": 81,
+          "n_positive": 72,
+          "n_negative": 9
+        }
+      },
+      "50": {
+        "Africa": {
+          "n_test": 56,
+          "n_positive": 45,
+          "n_negative": 11
+        },
+        "China": {
+          "n_test": 49,
+          "n_positive": 23,
+          "n_negative": 26
+        },
+        "East Asia": {
+          "n_test": 84,
+          "n_positive": 77,
+          "n_negative": 7
+        },
+        "Europe": {
+          "n_test": 79,
+          "n_positive": 75,
+          "n_negative": 4
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_positive": 8,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 85,
+          "n_positive": 52,
+          "n_negative": 33
+        },
+        "Oceania": {
+          "n_test": 83,
+          "n_positive": 65,
+          "n_negative": 18
+        },
+        "Russian Federation": {
+          "n_test": 23,
+          "n_positive": 7,
+          "n_negative": 16
+        },
+        "South America": {
+          "n_test": 43,
+          "n_positive": 39,
+          "n_negative": 4
+        },
+        "South and Central Asia": {
+          "n_test": 117,
+          "n_positive": 10,
+          "n_negative": 107
+        }
+      },
+      "32": {
+        "Africa": {
+          "n_test": 37,
+          "n_positive": 32,
+          "n_negative": 5
+        },
+        "China": {
+          "n_test": 50,
+          "n_positive": 33,
+          "n_negative": 17
+        },
+        "East Asia": {
+          "n_test": 68,
+          "n_positive": 40,
+          "n_negative": 28
+        },
+        "Europe": {
+          "n_test": 59,
+          "n_positive": 39,
+          "n_negative": 20
+        },
+        "Middle East": {
+          "n_test": 12,
+          "n_positive": 10,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 64,
+          "n_positive": 41,
+          "n_negative": 23
+        },
+        "Oceania": {
+          "n_test": 99,
+          "n_positive": 72,
+          "n_negative": 27
+        },
+        "Russian Federation": {
+          "n_test": 29,
+          "n_positive": 16,
+          "n_negative": 13
+        },
+        "South America": {
+          "n_test": 43,
+          "n_positive": 39,
+          "n_negative": 4
+        },
+        "South and Central Asia": {
+          "n_test": 97,
+          "n_positive": 86,
+          "n_negative": 11
+        }
+      },
+      "17": {
+        "Africa": {
+          "n_test": 35,
+          "n_positive": 26,
+          "n_negative": 9
+        },
+        "China": {
+          "n_test": 52,
+          "n_positive": 15,
+          "n_negative": 37
+        },
+        "East Asia": {
+          "n_test": 85,
+          "n_positive": 49,
+          "n_negative": 36
+        },
+        "Europe": {
+          "n_test": 64,
+          "n_positive": 58,
+          "n_negative": 6
+        },
+        "Middle East": {
+          "n_test": 12,
+          "n_positive": 9,
+          "n_negative": 3
+        },
+        "North America": {
+          "n_test": 88,
+          "n_positive": 57,
+          "n_negative": 31
+        },
+        "Oceania": {
+          "n_test": 80,
+          "n_positive": 48,
+          "n_negative": 32
+        },
+        "Russian Federation": {
+          "n_test": 23,
+          "n_positive": 14,
+          "n_negative": 9
+        },
+        "South America": {
+          "n_test": 44,
+          "n_positive": 40,
+          "n_negative": 4
+        },
+        "South and Central Asia": {
+          "n_test": 128,
+          "n_positive": 78,
+          "n_negative": 50
+        }
+      },
+      "21": {
+        "Africa": {
+          "n_test": 43,
+          "n_positive": 34,
+          "n_negative": 9
+        },
+        "China": {
+          "n_test": 42,
+          "n_positive": 22,
+          "n_negative": 20
+        },
+        "East Asia": {
+          "n_test": 66,
+          "n_positive": 58,
+          "n_negative": 8
+        },
+        "Europe": {
+          "n_test": 68,
+          "n_positive": 58,
+          "n_negative": 10
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_positive": 8,
+          "n_negative": 1
+        },
+        "North America": {
+          "n_test": 90,
+          "n_positive": 67,
+          "n_negative": 23
+        },
+        "Oceania": {
+          "n_test": 112,
+          "n_positive": 81,
+          "n_negative": 31
+        },
+        "Russian Federation": {
+          "n_test": 27,
+          "n_positive": 13,
+          "n_negative": 14
+        },
+        "South America": {
+          "n_test": 38,
+          "n_positive": 32,
+          "n_negative": 6
+        },
+        "South and Central Asia": {
+          "n_test": 108,
+          "n_positive": 32,
+          "n_negative": 76
+        }
+      }
+    },
+    "n_folds_with_minority_leq_1": 1,
+    "n_folds_total": 50
+  },
+  "exp3": {
+    "seeds": [
+      42,
+      23,
+      10,
+      16,
+      49
+    ],
+    "k_for_buffer": 15,
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 45,
+          "n_positive": 28,
+          "n_negative": 17
+        },
+        "China": {
+          "n_test": 47,
+          "n_positive": 29,
+          "n_negative": 18
+        },
+        "East Asia": {
+          "n_test": 77,
+          "n_positive": 56,
+          "n_negative": 21
+        },
+        "Europe": {
+          "n_test": 101,
+          "n_positive": 93,
+          "n_negative": 8
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_positive": 8,
+          "n_negative": 1
+        },
+        "North America": {
+          "n_test": 63,
+          "n_positive": 45,
+          "n_negative": 18
+        },
+        "Oceania": {
+          "n_test": 112,
+          "n_positive": 81,
+          "n_negative": 31
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_positive": 30,
+          "n_negative": 5
+        },
+        "South America": {
+          "n_test": 54,
+          "n_positive": 54,
+          "n_negative": 0
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_positive": 54,
+          "n_negative": 29
+        }
+      },
+      "23": {
+        "Africa": {
+          "n_test": 39,
+          "n_positive": 26,
+          "n_negative": 13
+        },
+        "China": {
+          "n_test": 39,
+          "n_positive": 17,
+          "n_negative": 22
+        },
+        "East Asia": {
+          "n_test": 61,
+          "n_positive": 42,
+          "n_negative": 19
+        },
+        "Europe": {
+          "n_test": 90,
+          "n_positive": 75,
+          "n_negative": 15
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_positive": 5,
+          "n_negative": 4
+        },
+        "North America": {
+          "n_test": 85,
+          "n_positive": 60,
+          "n_negative": 25
+        },
+        "Oceania": {
+          "n_test": 109,
+          "n_positive": 99,
+          "n_negative": 10
+        },
+        "Russian Federation": {
+          "n_test": 22,
+          "n_positive": 10,
+          "n_negative": 12
+        },
+        "South America": {
+          "n_test": 46,
+          "n_positive": 31,
+          "n_negative": 15
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_positive": 47,
+          "n_negative": 36
+        }
+      },
+      "10": {
+        "Africa": {
+          "n_test": 42,
+          "n_positive": 30,
+          "n_negative": 12
+        },
+        "China": {
+          "n_test": 42,
+          "n_positive": 24,
+          "n_negative": 18
+        },
+        "East Asia": {
+          "n_test": 77,
+          "n_positive": 56,
+          "n_negative": 21
+        },
+        "Europe": {
+          "n_test": 67,
+          "n_positive": 47,
+          "n_negative": 20
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_positive": 8,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 63,
+          "n_positive": 36,
+          "n_negative": 27
+        },
+        "Oceania": {
+          "n_test": 93,
+          "n_positive": 77,
+          "n_negative": 16
+        },
+        "Russian Federation": {
+          "n_test": 31,
+          "n_positive": 12,
+          "n_negative": 19
+        },
+        "South America": {
+          "n_test": 47,
+          "n_positive": 34,
+          "n_negative": 13
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_positive": 56,
+          "n_negative": 27
+        }
+      },
+      "16": {
+        "Africa": {
+          "n_test": 52,
+          "n_positive": 39,
+          "n_negative": 13
+        },
+        "China": {
+          "n_test": 37,
+          "n_positive": 21,
+          "n_negative": 16
+        },
+        "East Asia": {
+          "n_test": 74,
+          "n_positive": 42,
+          "n_negative": 32
+        },
+        "Europe": {
+          "n_test": 80,
+          "n_positive": 71,
+          "n_negative": 9
+        },
+        "Middle East": {
+          "n_test": 14,
+          "n_positive": 12,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 77,
+          "n_positive": 35,
+          "n_negative": 42
+        },
+        "Oceania": {
+          "n_test": 95,
+          "n_positive": 94,
+          "n_negative": 1
+        },
+        "Russian Federation": {
+          "n_test": 28,
+          "n_positive": 16,
+          "n_negative": 12
+        },
+        "South America": {
+          "n_test": 47,
+          "n_positive": 40,
+          "n_negative": 7
+        },
+        "South and Central Asia": {
+          "n_test": 91,
+          "n_positive": 19,
+          "n_negative": 72
+        }
+      },
+      "49": {
+        "Africa": {
+          "n_test": 36,
+          "n_positive": 29,
+          "n_negative": 7
+        },
+        "China": {
+          "n_test": 33,
+          "n_positive": 17,
+          "n_negative": 16
+        },
+        "East Asia": {
+          "n_test": 64,
+          "n_positive": 57,
+          "n_negative": 7
+        },
+        "Europe": {
+          "n_test": 90,
+          "n_positive": 80,
+          "n_negative": 10
+        },
+        "Middle East": {
+          "n_test": 12,
+          "n_positive": 11,
+          "n_negative": 1
+        },
+        "North America": {
+          "n_test": 76,
+          "n_positive": 52,
+          "n_negative": 24
+        },
+        "Oceania": {
+          "n_test": 88,
+          "n_positive": 64,
+          "n_negative": 24
+        },
+        "Russian Federation": {
+          "n_test": 23,
+          "n_positive": 11,
+          "n_negative": 12
+        },
+        "South America": {
+          "n_test": 50,
+          "n_positive": 36,
+          "n_negative": 14
+        },
+        "South and Central Asia": {
+          "n_test": 88,
+          "n_positive": 54,
+          "n_negative": 34
+        }
+      }
+    },
+    "n_folds_with_minority_leq_1": 4,
+    "n_folds_total": 50
+  },
+  "exp5": {
+    "seeds": [
+      42,
+      18,
+      20,
+      48,
+      50
+    ],
+    "k_for_buffer": 10,
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 41,
+          "n_positive": 32,
+          "n_negative": 9
+        },
+        "China": {
+          "n_test": 42,
+          "n_positive": 31,
+          "n_negative": 11
+        },
+        "East Asia": {
+          "n_test": 67,
+          "n_positive": 47,
+          "n_negative": 20
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_positive": 65,
+          "n_negative": 6
+        },
+        "Middle East": {
+          "n_test": 13,
+          "n_positive": 11,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 91,
+          "n_positive": 59,
+          "n_negative": 32
+        },
+        "Oceania": {
+          "n_test": 95,
+          "n_positive": 75,
+          "n_negative": 20
+        },
+        "Russian Federation": {
+          "n_test": 33,
+          "n_positive": 16,
+          "n_negative": 17
+        },
+        "South America": {
+          "n_test": 40,
+          "n_positive": 36,
+          "n_negative": 4
+        },
+        "South and Central Asia": {
+          "n_test": 81,
+          "n_positive": 72,
+          "n_negative": 9
+        }
+      },
+      "18": {
+        "Africa": {
+          "n_test": 38,
+          "n_positive": 30,
+          "n_negative": 8
+        },
+        "China": {
+          "n_test": 47,
+          "n_positive": 31,
+          "n_negative": 16
+        },
+        "East Asia": {
+          "n_test": 64,
+          "n_positive": 58,
+          "n_negative": 6
+        },
+        "Europe": {
+          "n_test": 84,
+          "n_positive": 70,
+          "n_negative": 14
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_positive": 8,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 78,
+          "n_positive": 55,
+          "n_negative": 23
+        },
+        "Oceania": {
+          "n_test": 99,
+          "n_positive": 67,
+          "n_negative": 32
+        },
+        "Russian Federation": {
+          "n_test": 33,
+          "n_positive": 16,
+          "n_negative": 17
+        },
+        "South America": {
+          "n_test": 52,
+          "n_positive": 52,
+          "n_negative": 0
+        },
+        "South and Central Asia": {
+          "n_test": 89,
+          "n_positive": 16,
+          "n_negative": 73
+        }
+      },
+      "20": {
+        "Africa": {
+          "n_test": 37,
+          "n_positive": 28,
+          "n_negative": 9
+        },
+        "China": {
+          "n_test": 32,
+          "n_positive": 16,
+          "n_negative": 16
+        },
+        "East Asia": {
+          "n_test": 65,
+          "n_positive": 61,
+          "n_negative": 4
+        },
+        "Europe": {
+          "n_test": 67,
+          "n_positive": 45,
+          "n_negative": 22
+        },
+        "Middle East": {
+          "n_test": 11,
+          "n_positive": 7,
+          "n_negative": 4
+        },
+        "North America": {
+          "n_test": 77,
+          "n_positive": 17,
+          "n_negative": 60
+        },
+        "Oceania": {
+          "n_test": 83,
+          "n_positive": 65,
+          "n_negative": 18
+        },
+        "Russian Federation": {
+          "n_test": 26,
+          "n_positive": 9,
+          "n_negative": 17
+        },
+        "South America": {
+          "n_test": 47,
+          "n_positive": 38,
+          "n_negative": 9
+        },
+        "South and Central Asia": {
+          "n_test": 101,
+          "n_positive": 46,
+          "n_negative": 55
+        }
+      },
+      "48": {
+        "Africa": {
+          "n_test": 42,
+          "n_positive": 23,
+          "n_negative": 19
+        },
+        "China": {
+          "n_test": 41,
+          "n_positive": 19,
+          "n_negative": 22
+        },
+        "East Asia": {
+          "n_test": 81,
+          "n_positive": 46,
+          "n_negative": 35
+        },
+        "Europe": {
+          "n_test": 66,
+          "n_positive": 56,
+          "n_negative": 10
+        },
+        "Middle East": {
+          "n_test": 14,
+          "n_positive": 11,
+          "n_negative": 3
+        },
+        "North America": {
+          "n_test": 72,
+          "n_positive": 47,
+          "n_negative": 25
+        },
+        "Oceania": {
+          "n_test": 86,
+          "n_positive": 63,
+          "n_negative": 23
+        },
+        "Russian Federation": {
+          "n_test": 22,
+          "n_positive": 12,
+          "n_negative": 10
+        },
+        "South America": {
+          "n_test": 54,
+          "n_positive": 42,
+          "n_negative": 12
+        },
+        "South and Central Asia": {
+          "n_test": 109,
+          "n_positive": 32,
+          "n_negative": 77
+        }
+      },
+      "50": {
+        "Africa": {
+          "n_test": 56,
+          "n_positive": 45,
+          "n_negative": 11
+        },
+        "China": {
+          "n_test": 49,
+          "n_positive": 23,
+          "n_negative": 26
+        },
+        "East Asia": {
+          "n_test": 84,
+          "n_positive": 77,
+          "n_negative": 7
+        },
+        "Europe": {
+          "n_test": 79,
+          "n_positive": 75,
+          "n_negative": 4
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_positive": 8,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 85,
+          "n_positive": 52,
+          "n_negative": 33
+        },
+        "Oceania": {
+          "n_test": 83,
+          "n_positive": 65,
+          "n_negative": 18
+        },
+        "Russian Federation": {
+          "n_test": 23,
+          "n_positive": 7,
+          "n_negative": 16
+        },
+        "South America": {
+          "n_test": 43,
+          "n_positive": 39,
+          "n_negative": 4
+        },
+        "South and Central Asia": {
+          "n_test": 117,
+          "n_positive": 10,
+          "n_negative": 107
+        }
+      }
+    },
+    "n_folds_with_minority_leq_1": 1,
+    "n_folds_total": 50
+  },
+  "exp6": {
+    "seeds": [
+      42,
+      20,
+      11,
+      60,
+      48
+    ],
+    "k_for_buffer": 15,
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 45,
+          "n_positive": 28,
+          "n_negative": 17
+        },
+        "China": {
+          "n_test": 47,
+          "n_positive": 29,
+          "n_negative": 18
+        },
+        "East Asia": {
+          "n_test": 77,
+          "n_positive": 56,
+          "n_negative": 21
+        },
+        "Europe": {
+          "n_test": 101,
+          "n_positive": 93,
+          "n_negative": 8
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_positive": 8,
+          "n_negative": 1
+        },
+        "North America": {
+          "n_test": 63,
+          "n_positive": 45,
+          "n_negative": 18
+        },
+        "Oceania": {
+          "n_test": 112,
+          "n_positive": 81,
+          "n_negative": 31
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_positive": 30,
+          "n_negative": 5
+        },
+        "South America": {
+          "n_test": 54,
+          "n_positive": 54,
+          "n_negative": 0
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_positive": 54,
+          "n_negative": 29
+        }
+      },
+      "20": {
+        "Africa": {
+          "n_test": 35,
+          "n_positive": 29,
+          "n_negative": 6
+        },
+        "China": {
+          "n_test": 39,
+          "n_positive": 17,
+          "n_negative": 22
+        },
+        "East Asia": {
+          "n_test": 65,
+          "n_positive": 43,
+          "n_negative": 22
+        },
+        "Europe": {
+          "n_test": 79,
+          "n_positive": 62,
+          "n_negative": 17
+        },
+        "Middle East": {
+          "n_test": 12,
+          "n_positive": 10,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 72,
+          "n_positive": 17,
+          "n_negative": 55
+        },
+        "Oceania": {
+          "n_test": 115,
+          "n_positive": 79,
+          "n_negative": 36
+        },
+        "Russian Federation": {
+          "n_test": 22,
+          "n_positive": 13,
+          "n_negative": 9
+        },
+        "South America": {
+          "n_test": 38,
+          "n_positive": 25,
+          "n_negative": 13
+        },
+        "South and Central Asia": {
+          "n_test": 112,
+          "n_positive": 103,
+          "n_negative": 9
+        }
+      },
+      "11": {
+        "Africa": {
+          "n_test": 40,
+          "n_positive": 28,
+          "n_negative": 12
+        },
+        "China": {
+          "n_test": 40,
+          "n_positive": 20,
+          "n_negative": 20
+        },
+        "East Asia": {
+          "n_test": 70,
+          "n_positive": 50,
+          "n_negative": 20
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_positive": 65,
+          "n_negative": 6
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_positive": 6,
+          "n_negative": 3
+        },
+        "North America": {
+          "n_test": 68,
+          "n_positive": 28,
+          "n_negative": 40
+        },
+        "Oceania": {
+          "n_test": 105,
+          "n_positive": 66,
+          "n_negative": 39
+        },
+        "Russian Federation": {
+          "n_test": 31,
+          "n_positive": 17,
+          "n_negative": 14
+        },
+        "South America": {
+          "n_test": 45,
+          "n_positive": 38,
+          "n_negative": 7
+        },
+        "South and Central Asia": {
+          "n_test": 95,
+          "n_positive": 17,
+          "n_negative": 78
+        }
+      },
+      "60": {
+        "Africa": {
+          "n_test": 37,
+          "n_positive": 31,
+          "n_negative": 6
+        },
+        "China": {
+          "n_test": 39,
+          "n_positive": 18,
+          "n_negative": 21
+        },
+        "East Asia": {
+          "n_test": 63,
+          "n_positive": 59,
+          "n_negative": 4
+        },
+        "Europe": {
+          "n_test": 66,
+          "n_positive": 60,
+          "n_negative": 6
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_positive": 8,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 77,
+          "n_positive": 48,
+          "n_negative": 29
+        },
+        "Oceania": {
+          "n_test": 95,
+          "n_positive": 94,
+          "n_negative": 1
+        },
+        "Russian Federation": {
+          "n_test": 24,
+          "n_positive": 12,
+          "n_negative": 12
+        },
+        "South America": {
+          "n_test": 38,
+          "n_positive": 29,
+          "n_negative": 9
+        },
+        "South and Central Asia": {
+          "n_test": 97,
+          "n_positive": 43,
+          "n_negative": 54
+        }
+      },
+      "48": {
+        "Africa": {
+          "n_test": 38,
+          "n_positive": 30,
+          "n_negative": 8
+        },
+        "China": {
+          "n_test": 43,
+          "n_positive": 36,
+          "n_negative": 7
+        },
+        "East Asia": {
+          "n_test": 85,
+          "n_positive": 49,
+          "n_negative": 36
+        },
+        "Europe": {
+          "n_test": 72,
+          "n_positive": 51,
+          "n_negative": 21
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_positive": 7,
+          "n_negative": 2
+        },
+        "North America": {
+          "n_test": 63,
+          "n_positive": 45,
+          "n_negative": 18
+        },
+        "Oceania": {
+          "n_test": 101,
+          "n_positive": 60,
+          "n_negative": 41
+        },
+        "Russian Federation": {
+          "n_test": 23,
+          "n_positive": 10,
+          "n_negative": 13
+        },
+        "South America": {
+          "n_test": 52,
+          "n_positive": 52,
+          "n_negative": 0
+        },
+        "South and Central Asia": {
+          "n_test": 108,
+          "n_positive": 106,
+          "n_negative": 2
+        }
+      }
+    },
+    "n_folds_with_minority_leq_1": 4,
+    "n_folds_total": 50
+  }
+}

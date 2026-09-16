@@ -1,0 +1,118 @@
+{
+  "c_b_probe": {
+    "feature_cols": [
+      "n_nonempty_fields",
+      "comments_len",
+      "loc_note_len",
+      "ref_list_len"
+    ],
+    "cv_auc_mean": 0.7532257229396423,
+    "cv_auc_std": 0.013424075538806752,
+    "cv_auc_per_fold": [
+      0.7417034771774832,
+      0.7330784913353721,
+      0.7630653695169823,
+      0.7678329635318882,
+      0.7604483131364853
+    ],
+    "n": 3112,
+    "positive_rate": 0.650706940874036
+  },
+  "c_b_specificity_check": {
+    "has_rutile": {
+      "feature_cols": [
+        "n_nonempty_fields",
+        "comments_len",
+        "loc_note_len",
+        "ref_list_len"
+      ],
+      "cv_auc_mean": 0.7159865537501237,
+      "cv_auc_std": 0.023164128342521538,
+      "cv_auc_per_fold": [
+        0.7354166666666668,
+        0.6987067965669218,
+        0.7212432661284436,
+        0.6810444253032979,
+        0.7435216140852884
+      ],
+      "n": 3112,
+      "positive_rate": 0.2300771208226221
+    },
+    "has_apatite": {
+      "feature_cols": [
+        "n_nonempty_fields",
+        "comments_len",
+        "loc_note_len",
+        "ref_list_len"
+      ],
+      "cv_auc_mean": 0.7217284105453369,
+      "cv_auc_std": 0.023133524855547507,
+      "cv_auc_per_fold": [
+        0.7230562200956938,
+        0.7081638755980861,
+        0.6931415215989684,
+        0.721651852591631,
+        0.7626285828423051
+      ],
+      "n": 3112,
+      "positive_rate": 0.15231362467866325
+    },
+    "has_pyrite": {
+      "feature_cols": [
+        "n_nonempty_fields",
+        "comments_len",
+        "loc_note_len",
+        "ref_list_len"
+      ],
+      "cv_auc_mean": 0.701215129999406,
+      "cv_auc_std": 0.02599141197388538,
+      "cv_auc_per_fold": [
+        0.7127824736932896,
+        0.7285664999137486,
+        0.6519242570351538,
+        0.7088997695852535,
+        0.7039026497695853
+      ],
+      "n": 3112,
+      "positive_rate": 0.099293059125964
+    },
+    "has_leucoxene": {
+      "feature_cols": [
+        "n_nonempty_fields",
+        "comments_len",
+        "loc_note_len",
+        "ref_list_len"
+      ],
+      "cv_auc_mean": 0.8262897218302984,
+      "cv_auc_std": 0.03412754672526649,
+      "cv_auc_per_fold": [
+        0.7696250732278852,
+        0.8175649287248584,
+        0.8736795774647887,
+        0.8272691705790297,
+        0.8433098591549297
+      ],
+      "n": 3112,
+      "positive_rate": 0.08676092544987146
+    },
+    "has_cassiterite": {
+      "feature_cols": [
+        "n_nonempty_fields",
+        "comments_len",
+        "loc_note_len",
+        "ref_list_len"
+      ],
+      "cv_auc_mean": 0.7069895015728733,
+      "cv_auc_std": 0.012693470852597644,
+      "cv_auc_per_fold": [
+        0.683264852485518,
+        0.7043479725178499,
+        0.7153846153846154,
+        0.7173582995951417,
+        0.7145917678812415
+      ],
+      "n": 3112,
+      "positive_rate": 0.08354755784061697
+    }
+  }
+}

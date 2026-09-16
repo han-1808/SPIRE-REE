@@ -1,0 +1,1560 @@
+{
+  "model": "spire",
+  "runs": {
+    "1": {
+      "Africa": {
+        "n_test": 235,
+        "confusion_counts": {
+          "TP": 160,
+          "FP": 47,
+          "FN": 18,
+          "TN": 10
+        },
+        "misclassified": {
+          "n": 65,
+          "by_deposit_type": {
+            "is_carbonatite_system": 19,
+            "is_alkaline_intrusive": 16,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 7,
+            "is_metamorphic_metasomatic": 10,
+            "is_sedimentary": 6,
+            "is_placer": 3,
+            "is_supergene_lateritic": 2,
+            "is_unclassified": 7
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 40,
+            "well_documented": 25
+          },
+          "mean_knn_dist_km": 545.7242813518476
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 433.63625834726264
+        }
+      },
+      "China": {
+        "n_test": 214,
+        "confusion_counts": {
+          "TN": 99,
+          "TP": 78,
+          "FN": 23,
+          "FP": 14
+        },
+        "misclassified": {
+          "n": 37,
+          "by_deposit_type": {
+            "is_carbonatite_system": 8,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 7,
+            "is_metamorphic_metasomatic": 1,
+            "is_sedimentary": 7,
+            "is_placer": 3,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 2
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 23,
+            "well_documented": 14
+          },
+          "mean_knn_dist_km": 275.62871540110024
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 236.94015631865355
+        }
+      },
+      "East Asia": {
+        "n_test": 358,
+        "confusion_counts": {
+          "TP": 231,
+          "TN": 66,
+          "FP": 35,
+          "FN": 26
+        },
+        "misclassified": {
+          "n": 61,
+          "by_deposit_type": {
+            "is_carbonatite_system": 4,
+            "is_alkaline_intrusive": 3,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 9,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 0,
+            "is_placer": 26,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 42,
+            "well_documented": 19
+          },
+          "mean_knn_dist_km": 181.40149079372455
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 199.6762848255746
+        }
+      },
+      "Europe": {
+        "n_test": 383,
+        "confusion_counts": {
+          "TP": 261,
+          "FN": 49,
+          "TN": 43,
+          "FP": 30
+        },
+        "misclassified": {
+          "n": 79,
+          "by_deposit_type": {
+            "is_carbonatite_system": 8,
+            "is_alkaline_intrusive": 7,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 10,
+            "is_metamorphic_metasomatic": 8,
+            "is_sedimentary": 21,
+            "is_placer": 0,
+            "is_supergene_lateritic": 5,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 70,
+            "well_documented": 9
+          },
+          "mean_knn_dist_km": 251.244793583255
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 188.3644743685363
+        }
+      },
+      "Middle East": {
+        "n_test": 63,
+        "confusion_counts": {
+          "TP": 41,
+          "FN": 14,
+          "FP": 4,
+          "TN": 4
+        },
+        "misclassified": {
+          "n": 18,
+          "by_deposit_type": {
+            "is_carbonatite_system": 1,
+            "is_alkaline_intrusive": 2,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 5,
+            "is_metamorphic_metasomatic": 1,
+            "is_sedimentary": 8,
+            "is_placer": 0,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "well_documented": 12,
+            "poorly_documented": 6
+          },
+          "mean_knn_dist_km": 429.6881565842627
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 347.73884054484813
+        }
+      },
+      "North America": {
+        "n_test": 423,
+        "confusion_counts": {
+          "TP": 198,
+          "TN": 127,
+          "FP": 51,
+          "FN": 47
+        },
+        "misclassified": {
+          "n": 98,
+          "by_deposit_type": {
+            "is_carbonatite_system": 17,
+            "is_alkaline_intrusive": 14,
+            "is_mafic_ultramafic": 8,
+            "is_felsic_pegmatite": 7,
+            "is_metamorphic_metasomatic": 17,
+            "is_sedimentary": 19,
+            "is_placer": 14,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 74,
+            "well_documented": 24
+          },
+          "mean_knn_dist_km": 208.9720042998542
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 231.7084090394266
+        }
+      },
+      "Oceania": {
+        "n_test": 504,
+        "confusion_counts": {
+          "TP": 370,
+          "FP": 92,
+          "TN": 23,
+          "FN": 19
+        },
+        "misclassified": {
+          "n": 111,
+          "by_deposit_type": {
+            "is_carbonatite_system": 16,
+            "is_alkaline_intrusive": 3,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 6,
+            "is_metamorphic_metasomatic": 5,
+            "is_sedimentary": 18,
+            "is_placer": 30,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 81,
+            "well_documented": 30
+          },
+          "mean_knn_dist_km": 146.5155756029082
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 103.8422393107512
+        }
+      },
+      "Russian Federation": {
+        "n_test": 147,
+        "confusion_counts": {
+          "TP": 75,
+          "TN": 48,
+          "FP": 20,
+          "FN": 4
+        },
+        "misclassified": {
+          "n": 24,
+          "by_deposit_type": {
+            "is_carbonatite_system": 9,
+            "is_alkaline_intrusive": 10,
+            "is_mafic_ultramafic": 5,
+            "is_felsic_pegmatite": 3,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 1,
+            "is_placer": 1,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 14,
+            "well_documented": 10
+          },
+          "mean_knn_dist_km": 488.1433230519703
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 322.7944575667724
+        }
+      },
+      "South America": {
+        "n_test": 253,
+        "confusion_counts": {
+          "TP": 196,
+          "TN": 26,
+          "FP": 16,
+          "FN": 15
+        },
+        "misclassified": {
+          "n": 31,
+          "by_deposit_type": {
+            "is_carbonatite_system": 14,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 1,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 3,
+            "is_placer": 7,
+            "is_supergene_lateritic": 2,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 18,
+            "well_documented": 13
+          },
+          "mean_knn_dist_km": 333.25993278891434
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 258.86518673532055
+        }
+      },
+      "South and Central Asia": {
+        "n_test": 532,
+        "confusion_counts": {
+          "TP": 193,
+          "FP": 190,
+          "TN": 142,
+          "FN": 7
+        },
+        "misclassified": {
+          "n": 197,
+          "by_deposit_type": {
+            "is_carbonatite_system": 6,
+            "is_alkaline_intrusive": 8,
+            "is_mafic_ultramafic": 8,
+            "is_felsic_pegmatite": 30,
+            "is_metamorphic_metasomatic": 9,
+            "is_sedimentary": 57,
+            "is_placer": 25,
+            "is_supergene_lateritic": 33,
+            "is_unclassified": 9
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 109,
+            "well_documented": 88
+          },
+          "mean_knn_dist_km": 105.28783321162847
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 121.74432937302205
+        }
+      }
+    },
+    "2": {
+      "Africa": {
+        "n_test": 235,
+        "confusion_counts": {
+          "TP": 173,
+          "FP": 57,
+          "FN": 5
+        },
+        "misclassified": {
+          "n": 62,
+          "by_deposit_type": {
+            "is_carbonatite_system": 21,
+            "is_alkaline_intrusive": 12,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 4,
+            "is_metamorphic_metasomatic": 9,
+            "is_sedimentary": 3,
+            "is_placer": 3,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 7
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 40,
+            "well_documented": 22
+          },
+          "mean_knn_dist_km": 492.8785308566542
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 454.51892077336504
+        }
+      },
+      "China": {
+        "n_test": 214,
+        "confusion_counts": {
+          "TN": 99,
+          "TP": 79,
+          "FN": 22,
+          "FP": 14
+        },
+        "misclassified": {
+          "n": 36,
+          "by_deposit_type": {
+            "is_carbonatite_system": 8,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 7,
+            "is_metamorphic_metasomatic": 0,
+            "is_sedimentary": 6,
+            "is_placer": 3,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 24,
+            "well_documented": 12
+          },
+          "mean_knn_dist_km": 260.29117058246806
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 240.2594831307502
+        }
+      },
+      "East Asia": {
+        "n_test": 358,
+        "confusion_counts": {
+          "TP": 235,
+          "TN": 66,
+          "FP": 35,
+          "FN": 22
+        },
+        "misclassified": {
+          "n": 57,
+          "by_deposit_type": {
+            "is_carbonatite_system": 4,
+            "is_alkaline_intrusive": 3,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 6,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 0,
+            "is_placer": 26,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 39,
+            "well_documented": 18
+          },
+          "mean_knn_dist_km": 171.2340646554352
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 201.3588234094786
+        }
+      },
+      "Europe": {
+        "n_test": 383,
+        "confusion_counts": {
+          "TP": 261,
+          "FN": 49,
+          "TN": 38,
+          "FP": 35
+        },
+        "misclassified": {
+          "n": 84,
+          "by_deposit_type": {
+            "is_carbonatite_system": 8,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 8,
+            "is_metamorphic_metasomatic": 9,
+            "is_sedimentary": 23,
+            "is_placer": 1,
+            "is_supergene_lateritic": 5,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 75,
+            "well_documented": 9
+          },
+          "mean_knn_dist_km": 314.137995465008
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 169.64397084298164
+        }
+      },
+      "Middle East": {
+        "n_test": 63,
+        "confusion_counts": {
+          "TP": 41,
+          "FN": 14,
+          "FP": 5,
+          "TN": 3
+        },
+        "misclassified": {
+          "n": 19,
+          "by_deposit_type": {
+            "is_carbonatite_system": 1,
+            "is_alkaline_intrusive": 2,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 5,
+            "is_metamorphic_metasomatic": 1,
+            "is_sedimentary": 9,
+            "is_placer": 0,
+            "is_supergene_lateritic": 4,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "well_documented": 13,
+            "poorly_documented": 6
+          },
+          "mean_knn_dist_km": 431.6126776597805
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 345.045312897706
+        }
+      },
+      "North America": {
+        "n_test": 423,
+        "confusion_counts": {
+          "TP": 234,
+          "FP": 133,
+          "TN": 45,
+          "FN": 11
+        },
+        "misclassified": {
+          "n": 144,
+          "by_deposit_type": {
+            "is_carbonatite_system": 51,
+            "is_alkaline_intrusive": 20,
+            "is_mafic_ultramafic": 10,
+            "is_felsic_pegmatite": 13,
+            "is_metamorphic_metasomatic": 14,
+            "is_sedimentary": 13,
+            "is_placer": 14,
+            "is_supergene_lateritic": 5,
+            "is_unclassified": 10
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 120,
+            "well_documented": 24
+          },
+          "mean_knn_dist_km": 203.60829780146494
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 238.22542822863232
+        }
+      },
+      "Oceania": {
+        "n_test": 504,
+        "confusion_counts": {
+          "TP": 306,
+          "TN": 86,
+          "FN": 83,
+          "FP": 29
+        },
+        "misclassified": {
+          "n": 112,
+          "by_deposit_type": {
+            "is_carbonatite_system": 13,
+            "is_alkaline_intrusive": 1,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 8,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 14,
+            "is_placer": 53,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 76,
+            "well_documented": 36
+          },
+          "mean_knn_dist_km": 148.98275604731205
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 103.02847006058437
+        }
+      },
+      "Russian Federation": {
+        "n_test": 147,
+        "confusion_counts": {
+          "TP": 77,
+          "TN": 38,
+          "FP": 30,
+          "FN": 2
+        },
+        "misclassified": {
+          "n": 32,
+          "by_deposit_type": {
+            "is_carbonatite_system": 9,
+            "is_alkaline_intrusive": 12,
+            "is_mafic_ultramafic": 5,
+            "is_felsic_pegmatite": 8,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 4,
+            "is_placer": 1,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 20,
+            "well_documented": 12
+          },
+          "mean_knn_dist_km": 513.4751839295949
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 304.2430621583761
+        }
+      },
+      "South America": {
+        "n_test": 253,
+        "confusion_counts": {
+          "TP": 194,
+          "FP": 27,
+          "FN": 17,
+          "TN": 15
+        },
+        "misclassified": {
+          "n": 44,
+          "by_deposit_type": {
+            "is_carbonatite_system": 13,
+            "is_alkaline_intrusive": 7,
+            "is_mafic_ultramafic": 3,
+            "is_felsic_pegmatite": 2,
+            "is_metamorphic_metasomatic": 5,
+            "is_sedimentary": 2,
+            "is_placer": 10,
+            "is_supergene_lateritic": 2,
+            "is_unclassified": 1
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 26,
+            "well_documented": 18
+          },
+          "mean_knn_dist_km": 352.5022100814727
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 250.18675659384073
+        }
+      },
+      "South and Central Asia": {
+        "n_test": 532,
+        "confusion_counts": {
+          "TN": 254,
+          "TP": 190,
+          "FP": 78,
+          "FN": 10
+        },
+        "misclassified": {
+          "n": 88,
+          "by_deposit_type": {
+            "is_carbonatite_system": 4,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 4,
+            "is_felsic_pegmatite": 13,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 25,
+            "is_placer": 25,
+            "is_supergene_lateritic": 10,
+            "is_unclassified": 1
+          },
+          "by_completeness_bucket": {
+            "well_documented": 54,
+            "poorly_documented": 34
+          },
+          "mean_knn_dist_km": 129.6078524951595
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 112.88414969161973
+        }
+      }
+    },
+    "4": {
+      "Africa": {
+        "n_test": 235,
+        "confusion_counts": {
+          "TP": 175,
+          "FP": 52,
+          "TN": 5,
+          "FN": 3
+        },
+        "misclassified": {
+          "n": 55,
+          "by_deposit_type": {
+            "is_carbonatite_system": 21,
+            "is_alkaline_intrusive": 11,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 4,
+            "is_metamorphic_metasomatic": 9,
+            "is_sedimentary": 3,
+            "is_placer": 3,
+            "is_supergene_lateritic": 2,
+            "is_unclassified": 2
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 34,
+            "well_documented": 21
+          },
+          "mean_knn_dist_km": 453.8616011135968
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 467.9325230314272
+        }
+      },
+      "China": {
+        "n_test": 214,
+        "confusion_counts": {
+          "TP": 90,
+          "FP": 61,
+          "TN": 52,
+          "FN": 11
+        },
+        "misclassified": {
+          "n": 72,
+          "by_deposit_type": {
+            "is_carbonatite_system": 6,
+            "is_alkaline_intrusive": 4,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 8,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 8,
+            "is_placer": 3,
+            "is_supergene_lateritic": 4,
+            "is_unclassified": 34
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 58,
+            "well_documented": 14
+          },
+          "mean_knn_dist_km": 214.32048260023055
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 258.49010838750553
+        }
+      },
+      "East Asia": {
+        "n_test": 358,
+        "confusion_counts": {
+          "TP": 211,
+          "TN": 71,
+          "FN": 46,
+          "FP": 30
+        },
+        "misclassified": {
+          "n": 76,
+          "by_deposit_type": {
+            "is_carbonatite_system": 4,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 9,
+            "is_metamorphic_metasomatic": 3,
+            "is_sedimentary": 0,
+            "is_placer": 41,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 54,
+            "well_documented": 22
+          },
+          "mean_knn_dist_km": 170.26289592019774
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 203.65023915488592
+        }
+      },
+      "Europe": {
+        "n_test": 383,
+        "confusion_counts": {
+          "TP": 291,
+          "FP": 62,
+          "FN": 19,
+          "TN": 11
+        },
+        "misclassified": {
+          "n": 81,
+          "by_deposit_type": {
+            "is_carbonatite_system": 8,
+            "is_alkaline_intrusive": 14,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 9,
+            "is_metamorphic_metasomatic": 8,
+            "is_sedimentary": 16,
+            "is_placer": 0,
+            "is_supergene_lateritic": 5,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 75,
+            "well_documented": 6
+          },
+          "mean_knn_dist_km": 263.6699338414759
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 184.6154776819624
+        }
+      },
+      "Middle East": {
+        "n_test": 63,
+        "confusion_counts": {
+          "TP": 48,
+          "FN": 7,
+          "FP": 5,
+          "TN": 3
+        },
+        "misclassified": {
+          "n": 12,
+          "by_deposit_type": {
+            "is_carbonatite_system": 0,
+            "is_alkaline_intrusive": 2,
+            "is_mafic_ultramafic": 0,
+            "is_felsic_pegmatite": 1,
+            "is_metamorphic_metasomatic": 0,
+            "is_sedimentary": 5,
+            "is_placer": 0,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 8,
+            "well_documented": 4
+          },
+          "mean_knn_dist_km": 442.21309880640723
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 354.4328913207452
+        }
+      },
+      "North America": {
+        "n_test": 423,
+        "confusion_counts": {
+          "TP": 178,
+          "TN": 141,
+          "FN": 67,
+          "FP": 37
+        },
+        "misclassified": {
+          "n": 104,
+          "by_deposit_type": {
+            "is_carbonatite_system": 15,
+            "is_alkaline_intrusive": 14,
+            "is_mafic_ultramafic": 11,
+            "is_felsic_pegmatite": 10,
+            "is_metamorphic_metasomatic": 15,
+            "is_sedimentary": 17,
+            "is_placer": 17,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 72,
+            "well_documented": 32
+          },
+          "mean_knn_dist_km": 221.20630685292102
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 228.14744027114602
+        }
+      },
+      "Oceania": {
+        "n_test": 504,
+        "confusion_counts": {
+          "TP": 389,
+          "FP": 115
+        },
+        "misclassified": {
+          "n": 115,
+          "by_deposit_type": {
+            "is_carbonatite_system": 12,
+            "is_alkaline_intrusive": 4,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 2,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 15,
+            "is_placer": 31,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 8
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 92,
+            "well_documented": 23
+          },
+          "mean_knn_dist_km": 154.78703551345765
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 100.95814873264884
+        }
+      },
+      "Russian Federation": {
+        "n_test": 147,
+        "confusion_counts": {
+          "TP": 77,
+          "FP": 49,
+          "TN": 19,
+          "FN": 2
+        },
+        "misclassified": {
+          "n": 51,
+          "by_deposit_type": {
+            "is_carbonatite_system": 10,
+            "is_alkaline_intrusive": 18,
+            "is_mafic_ultramafic": 7,
+            "is_felsic_pegmatite": 21,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 3,
+            "is_placer": 1,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 36,
+            "well_documented": 15
+          },
+          "mean_knn_dist_km": 355.2440355523652
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 346.8928356332258
+        }
+      },
+      "South America": {
+        "n_test": 253,
+        "confusion_counts": {
+          "TP": 202,
+          "FP": 24,
+          "TN": 18,
+          "FN": 9
+        },
+        "misclassified": {
+          "n": 33,
+          "by_deposit_type": {
+            "is_carbonatite_system": 11,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 2,
+            "is_metamorphic_metasomatic": 5,
+            "is_sedimentary": 1,
+            "is_placer": 7,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 19,
+            "well_documented": 14
+          },
+          "mean_knn_dist_km": 291.3594505874181
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 264.47394319233047
+        }
+      },
+      "South and Central Asia": {
+        "n_test": 532,
+        "confusion_counts": {
+          "FP": 235,
+          "TP": 197,
+          "TN": 97,
+          "FN": 3
+        },
+        "misclassified": {
+          "n": 238,
+          "by_deposit_type": {
+            "is_carbonatite_system": 3,
+            "is_alkaline_intrusive": 19,
+            "is_mafic_ultramafic": 15,
+            "is_felsic_pegmatite": 48,
+            "is_metamorphic_metasomatic": 10,
+            "is_sedimentary": 70,
+            "is_placer": 25,
+            "is_supergene_lateritic": 37,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 132,
+            "well_documented": 106
+          },
+          "mean_knn_dist_km": 105.385572180238
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 123.96016089713113
+        }
+      }
+    },
+    "7": {
+      "Africa": {
+        "n_test": 235,
+        "confusion_counts": {
+          "TP": 173,
+          "FP": 49,
+          "TN": 8,
+          "FN": 5
+        },
+        "misclassified": {
+          "n": 54,
+          "by_deposit_type": {
+            "is_carbonatite_system": 20,
+            "is_alkaline_intrusive": 10,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 4,
+            "is_metamorphic_metasomatic": 10,
+            "is_sedimentary": 4,
+            "is_placer": 3,
+            "is_supergene_lateritic": 1,
+            "is_unclassified": 2
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 32,
+            "well_documented": 22
+          },
+          "mean_knn_dist_km": 466.55952642492946
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 464.0664518229753
+        }
+      },
+      "China": {
+        "n_test": 214,
+        "confusion_counts": {
+          "TP": 96,
+          "FP": 71,
+          "TN": 42,
+          "FN": 5
+        },
+        "misclassified": {
+          "n": 76,
+          "by_deposit_type": {
+            "is_carbonatite_system": 13,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 9,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 6,
+            "is_placer": 3,
+            "is_supergene_lateritic": 4,
+            "is_unclassified": 29
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 62,
+            "well_documented": 14
+          },
+          "mean_knn_dist_km": 215.4946206717452
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 259.1237606318097
+        }
+      },
+      "East Asia": {
+        "n_test": 358,
+        "confusion_counts": {
+          "TP": 231,
+          "TN": 65,
+          "FP": 36,
+          "FN": 26
+        },
+        "misclassified": {
+          "n": 62,
+          "by_deposit_type": {
+            "is_carbonatite_system": 4,
+            "is_alkaline_intrusive": 4,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 11,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 0,
+            "is_placer": 26,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 41,
+            "well_documented": 21
+          },
+          "mean_knn_dist_km": 186.3209762800793
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 198.7075912238106
+        }
+      },
+      "Europe": {
+        "n_test": 383,
+        "confusion_counts": {
+          "TP": 221,
+          "FN": 89,
+          "TN": 54,
+          "FP": 19
+        },
+        "misclassified": {
+          "n": 108,
+          "by_deposit_type": {
+            "is_carbonatite_system": 5,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 21,
+            "is_metamorphic_metasomatic": 13,
+            "is_sedimentary": 23,
+            "is_placer": 0,
+            "is_supergene_lateritic": 5,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 92,
+            "well_documented": 16
+          },
+          "mean_knn_dist_km": 212.7143199490517
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 196.86542671496218
+        }
+      },
+      "Middle East": {
+        "n_test": 63,
+        "confusion_counts": {
+          "TP": 46,
+          "FN": 9,
+          "FP": 4,
+          "TN": 4
+        },
+        "misclassified": {
+          "n": 13,
+          "by_deposit_type": {
+            "is_carbonatite_system": 0,
+            "is_alkaline_intrusive": 2,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 1,
+            "is_metamorphic_metasomatic": 0,
+            "is_sedimentary": 5,
+            "is_placer": 0,
+            "is_supergene_lateritic": 2,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 7,
+            "well_documented": 6
+          },
+          "mean_knn_dist_km": 412.37826851669985
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 360.43434304635593
+        }
+      },
+      "North America": {
+        "n_test": 423,
+        "confusion_counts": {
+          "TP": 180,
+          "TN": 133,
+          "FN": 65,
+          "FP": 45
+        },
+        "misclassified": {
+          "n": 110,
+          "by_deposit_type": {
+            "is_carbonatite_system": 16,
+            "is_alkaline_intrusive": 16,
+            "is_mafic_ultramafic": 12,
+            "is_felsic_pegmatite": 17,
+            "is_metamorphic_metasomatic": 16,
+            "is_sedimentary": 17,
+            "is_placer": 14,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 2
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 80,
+            "well_documented": 30
+          },
+          "mean_knn_dist_km": 237.65153663009846
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 222.50102341817427
+        }
+      },
+      "Oceania": {
+        "n_test": 504,
+        "confusion_counts": {
+          "TP": 389,
+          "FP": 115
+        },
+        "misclassified": {
+          "n": 115,
+          "by_deposit_type": {
+            "is_carbonatite_system": 12,
+            "is_alkaline_intrusive": 4,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 2,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 15,
+            "is_placer": 31,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 8
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 92,
+            "well_documented": 23
+          },
+          "mean_knn_dist_km": 154.78703551345765
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 100.95814873264884
+        }
+      },
+      "Russian Federation": {
+        "n_test": 147,
+        "confusion_counts": {
+          "TP": 75,
+          "FP": 48,
+          "TN": 20,
+          "FN": 4
+        },
+        "misclassified": {
+          "n": 52,
+          "by_deposit_type": {
+            "is_carbonatite_system": 7,
+            "is_alkaline_intrusive": 18,
+            "is_mafic_ultramafic": 5,
+            "is_felsic_pegmatite": 24,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 4,
+            "is_placer": 1,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 38,
+            "well_documented": 14
+          },
+          "mean_knn_dist_km": 371.7443600332847
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 337.77317170767896
+        }
+      },
+      "South America": {
+        "n_test": 253,
+        "confusion_counts": {
+          "TP": 185,
+          "FN": 26,
+          "TN": 22,
+          "FP": 20
+        },
+        "misclassified": {
+          "n": 46,
+          "by_deposit_type": {
+            "is_carbonatite_system": 13,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 2,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 1,
+            "is_placer": 19,
+            "is_supergene_lateritic": 2,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 30,
+            "well_documented": 16
+          },
+          "mean_knn_dist_km": 338.26872105774765
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 252.3611990485078
+        }
+      },
+      "South and Central Asia": {
+        "n_test": 532,
+        "confusion_counts": {
+          "TN": 276,
+          "TP": 192,
+          "FP": 56,
+          "FN": 8
+        },
+        "misclassified": {
+          "n": 64,
+          "by_deposit_type": {
+            "is_carbonatite_system": 3,
+            "is_alkaline_intrusive": 3,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 8,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 13,
+            "is_placer": 25,
+            "is_supergene_lateritic": 10,
+            "is_unclassified": 1
+          },
+          "by_completeness_bucket": {
+            "well_documented": 40,
+            "poorly_documented": 24
+          },
+          "mean_knn_dist_km": 132.62057046503634
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 113.32977985660443
+        }
+      }
+    },
+    "42": {
+      "Africa": {
+        "n_test": 235,
+        "confusion_counts": {
+          "TP": 163,
+          "FP": 31,
+          "TN": 26,
+          "FN": 15
+        },
+        "misclassified": {
+          "n": 46,
+          "by_deposit_type": {
+            "is_carbonatite_system": 15,
+            "is_alkaline_intrusive": 12,
+            "is_mafic_ultramafic": 0,
+            "is_felsic_pegmatite": 3,
+            "is_metamorphic_metasomatic": 8,
+            "is_sedimentary": 4,
+            "is_placer": 3,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 1
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 26,
+            "well_documented": 20
+          },
+          "mean_knn_dist_km": 476.39342667255306
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 461.77854275114964
+        }
+      },
+      "China": {
+        "n_test": 214,
+        "confusion_counts": {
+          "TP": 97,
+          "FP": 82,
+          "TN": 31,
+          "FN": 4
+        },
+        "misclassified": {
+          "n": 86,
+          "by_deposit_type": {
+            "is_carbonatite_system": 12,
+            "is_alkaline_intrusive": 6,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 9,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 6,
+            "is_placer": 3,
+            "is_supergene_lateritic": 3,
+            "is_unclassified": 44
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 69,
+            "well_documented": 17
+          },
+          "mean_knn_dist_km": 179.9746747263659
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 286.39725087324155
+        }
+      },
+      "East Asia": {
+        "n_test": 358,
+        "confusion_counts": {
+          "TP": 234,
+          "TN": 63,
+          "FP": 38,
+          "FN": 23
+        },
+        "misclassified": {
+          "n": 61,
+          "by_deposit_type": {
+            "is_carbonatite_system": 4,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 10,
+            "is_metamorphic_metasomatic": 4,
+            "is_sedimentary": 0,
+            "is_placer": 26,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 41,
+            "well_documented": 20
+          },
+          "mean_knn_dist_km": 173.93978850084866
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 201.2088230069397
+        }
+      },
+      "Europe": {
+        "n_test": 383,
+        "confusion_counts": {
+          "TP": 276,
+          "FP": 42,
+          "FN": 34,
+          "TN": 31
+        },
+        "misclassified": {
+          "n": 76,
+          "by_deposit_type": {
+            "is_carbonatite_system": 8,
+            "is_alkaline_intrusive": 6,
+            "is_mafic_ultramafic": 1,
+            "is_felsic_pegmatite": 6,
+            "is_metamorphic_metasomatic": 6,
+            "is_sedimentary": 22,
+            "is_placer": 0,
+            "is_supergene_lateritic": 5,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 69,
+            "well_documented": 7
+          },
+          "mean_knn_dist_km": 304.8003602599448
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 175.7208844343856
+        }
+      },
+      "Middle East": {
+        "n_test": 63,
+        "confusion_counts": {
+          "TP": 51,
+          "FP": 7,
+          "FN": 4,
+          "TN": 1
+        },
+        "misclassified": {
+          "n": 11,
+          "by_deposit_type": {
+            "is_carbonatite_system": 0,
+            "is_alkaline_intrusive": 2,
+            "is_mafic_ultramafic": 0,
+            "is_felsic_pegmatite": 1,
+            "is_metamorphic_metasomatic": 0,
+            "is_sedimentary": 3,
+            "is_placer": 0,
+            "is_supergene_lateritic": 2,
+            "is_unclassified": 4
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 8,
+            "well_documented": 3
+          },
+          "mean_knn_dist_km": 442.895000163092
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 355.9767238700169
+        }
+      },
+      "North America": {
+        "n_test": 423,
+        "confusion_counts": {
+          "TP": 206,
+          "TN": 102,
+          "FP": 76,
+          "FN": 39
+        },
+        "misclassified": {
+          "n": 115,
+          "by_deposit_type": {
+            "is_carbonatite_system": 26,
+            "is_alkaline_intrusive": 18,
+            "is_mafic_ultramafic": 9,
+            "is_felsic_pegmatite": 7,
+            "is_metamorphic_metasomatic": 17,
+            "is_sedimentary": 16,
+            "is_placer": 14,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 7
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 83,
+            "well_documented": 32
+          },
+          "mean_knn_dist_km": 209.10484017388637
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 232.91374265974815
+        }
+      },
+      "Oceania": {
+        "n_test": 504,
+        "confusion_counts": {
+          "TP": 323,
+          "TN": 84,
+          "FN": 66,
+          "FP": 31
+        },
+        "misclassified": {
+          "n": 97,
+          "by_deposit_type": {
+            "is_carbonatite_system": 12,
+            "is_alkaline_intrusive": 0,
+            "is_mafic_ultramafic": 0,
+            "is_felsic_pegmatite": 8,
+            "is_metamorphic_metasomatic": 5,
+            "is_sedimentary": 11,
+            "is_placer": 48,
+            "is_supergene_lateritic": 1,
+            "is_unclassified": 3
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 65,
+            "well_documented": 32
+          },
+          "mean_knn_dist_km": 134.2104388160807
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 108.24279207834938
+        }
+      },
+      "Russian Federation": {
+        "n_test": 147,
+        "confusion_counts": {
+          "TP": 77,
+          "FP": 47,
+          "TN": 21,
+          "FN": 2
+        },
+        "misclassified": {
+          "n": 49,
+          "by_deposit_type": {
+            "is_carbonatite_system": 9,
+            "is_alkaline_intrusive": 17,
+            "is_mafic_ultramafic": 6,
+            "is_felsic_pegmatite": 20,
+            "is_metamorphic_metasomatic": 2,
+            "is_sedimentary": 4,
+            "is_placer": 1,
+            "is_supergene_lateritic": 0,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 35,
+            "well_documented": 14
+          },
+          "mean_knn_dist_km": 375.2740719392292
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 337.0482500912047
+        }
+      },
+      "South America": {
+        "n_test": 253,
+        "confusion_counts": {
+          "TP": 198,
+          "FP": 27,
+          "TN": 15,
+          "FN": 13
+        },
+        "misclassified": {
+          "n": 40,
+          "by_deposit_type": {
+            "is_carbonatite_system": 12,
+            "is_alkaline_intrusive": 7,
+            "is_mafic_ultramafic": 2,
+            "is_felsic_pegmatite": 3,
+            "is_metamorphic_metasomatic": 5,
+            "is_sedimentary": 2,
+            "is_placer": 7,
+            "is_supergene_lateritic": 1,
+            "is_unclassified": 1
+          },
+          "by_completeness_bucket": {
+            "poorly_documented": 22,
+            "well_documented": 18
+          },
+          "mean_knn_dist_km": 348.1012343705241
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 252.93464787265987
+        }
+      },
+      "South and Central Asia": {
+        "n_test": 532,
+        "confusion_counts": {
+          "TN": 253,
+          "TP": 187,
+          "FP": 79,
+          "FN": 13
+        },
+        "misclassified": {
+          "n": 92,
+          "by_deposit_type": {
+            "is_carbonatite_system": 4,
+            "is_alkaline_intrusive": 5,
+            "is_mafic_ultramafic": 3,
+            "is_felsic_pegmatite": 15,
+            "is_metamorphic_metasomatic": 8,
+            "is_sedimentary": 24,
+            "is_placer": 25,
+            "is_supergene_lateritic": 8,
+            "is_unclassified": 0
+          },
+          "by_completeness_bucket": {
+            "well_documented": 56,
+            "poorly_documented": 36
+          },
+          "mean_knn_dist_km": 123.48257949820774
+        },
+        "correctly_classified": {
+          "mean_knn_dist_km": 114.012854929132
+        }
+      }
+    }
+  }
+}

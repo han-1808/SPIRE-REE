@@ -1,0 +1,122 @@
+{
+ "Africa": [
+  "has_thorite",
+  "has_rutile",
+  "has_pyrite",
+  "has_magnetite",
+  "Region_South and Central Asia",
+  "has_ilmenite",
+  "is_placer",
+  "Longitude",
+  "Latitude",
+  "has_zircon"
+ ],
+ "China": [
+  "has_thorite",
+  "has_fluorite",
+  "has_pyrite",
+  "has_rutile",
+  "Region_South and Central Asia",
+  "is_placer",
+  "has_ilmenite",
+  "Longitude",
+  "Latitude",
+  "has_zircon"
+ ],
+ "East Asia": [
+  "has_fluorite",
+  "has_rutile",
+  "has_thorite",
+  "Region_South and Central Asia",
+  "has_magnetite",
+  "is_placer",
+  "has_ilmenite",
+  "Latitude",
+  "Longitude",
+  "has_zircon"
+ ],
+ "Europe": [
+  "has_fluorite",
+  "has_thorite",
+  "has_pyrochlore",
+  "has_rutile",
+  "Region_South and Central Asia",
+  "has_ilmenite",
+  "is_placer",
+  "Longitude",
+  "Latitude",
+  "has_zircon"
+ ],
+ "Middle East": [
+  "has_thorite",
+  "has_magnetite",
+  "has_fluorite",
+  "Region_South and Central Asia",
+  "has_rutile",
+  "has_ilmenite",
+  "is_placer",
+  "Longitude",
+  "Latitude",
+  "has_zircon"
+ ],
+ "North America": [
+  "has_fluorite",
+  "has_magnetite",
+  "is_felsic_pegmatite",
+  "Region_South and Central Asia",
+  "has_rutile",
+  "has_ilmenite",
+  "is_placer",
+  "Latitude",
+  "Longitude",
+  "has_zircon"
+ ],
+ "Oceania": [
+  "has_rutile",
+  "has_thorite",
+  "has_fluorite",
+  "has_magnetite",
+  "Region_South and Central Asia",
+  "has_ilmenite",
+  "is_placer",
+  "Latitude",
+  "has_zircon",
+  "Longitude"
+ ],
+ "Russian Federation": [
+  "has_fluorite",
+  "has_magnetite",
+  "has_thorite",
+  "has_rutile",
+  "Region_South and Central Asia",
+  "has_ilmenite",
+  "is_placer",
+  "Latitude",
+  "Longitude",
+  "has_zircon"
+ ],
+ "South America": [
+  "has_magnetite",
+  "has_pyrochlore",
+  "has_thorite",
+  "has_rutile",
+  "Region_South and Central Asia",
+  "has_ilmenite",
+  "is_placer",
+  "Longitude",
+  "Latitude",
+  "has_zircon"
+ ],
+ "South and Central Asia": [
+  "has_uraninite",
+  "has_fluorite",
+  "has_thorite",
+  "has_magnetite",
+  "has_pyrochlore",
+  "has_ilmenite",
+  "Latitude",
+  "is_placer",
+  "Longitude",
+  "has_zircon"
+ ]
+}

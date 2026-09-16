@@ -1,0 +1,687 @@
+{
+  "experiment": "lodto",
+  "description": "Comment (1)-C: leave-one-deposit-type-out. Train on 8 groups, test on the held-out group's records (multi-label -- test sets for different held-out groups can overlap). SPIRE (mode=full, 13-dim) vs a non-graph baseline (ensemble_score thresholded at 0.5).",
+  "groups": [
+    "is_carbonatite_system",
+    "is_alkaline_intrusive",
+    "is_mafic_ultramafic",
+    "is_felsic_pegmatite",
+    "is_metamorphic_metasomatic",
+    "is_sedimentary",
+    "is_placer",
+    "is_supergene_lateritic",
+    "is_unclassified"
+  ],
+  "seeds": [
+    42,
+    1,
+    2
+  ],
+  "avg_across_seeds": {
+    "is_carbonatite_system": {
+      "spire_f1_mean": 0.8035856369160127,
+      "spire_f1_std": 0.021073715387946012,
+      "ensemble_baseline_f1_mean": 0.8371182213858696,
+      "ensemble_baseline_f1_std": 0.008480678609618243,
+      "n_test": 377
+    },
+    "is_alkaline_intrusive": {
+      "spire_f1_mean": 0.8545296931939914,
+      "spire_f1_std": 0.005143043022269541,
+      "ensemble_baseline_f1_mean": 0.8693973982375457,
+      "ensemble_baseline_f1_std": 0.004667533456926741,
+      "n_test": 353
+    },
+    "is_mafic_ultramafic": {
+      "spire_f1_mean": 0.8685105018438352,
+      "spire_f1_std": 0.012248702407336588,
+      "ensemble_baseline_f1_mean": 0.891566265060241,
+      "ensemble_baseline_f1_std": 0.0,
+      "n_test": 124
+    },
+    "is_felsic_pegmatite": {
+      "spire_f1_mean": 0.8564865689865689,
+      "spire_f1_std": 0.005198628681370315,
+      "ensemble_baseline_f1_mean": 0.85080086597719,
+      "ensemble_baseline_f1_std": 0.004488755498946149,
+      "n_test": 401
+    },
+    "is_metamorphic_metasomatic": {
+      "spire_f1_mean": 0.8797634324094713,
+      "spire_f1_std": 0.0238672631756342,
+      "ensemble_baseline_f1_mean": 0.8670520691784517,
+      "ensemble_baseline_f1_std": 0.004281878691154446,
+      "n_test": 218
+    },
+    "is_sedimentary": {
+      "spire_f1_mean": 0.7382466940264477,
+      "spire_f1_std": 0.027211629269640023,
+      "ensemble_baseline_f1_mean": 0.7666361528679045,
+      "ensemble_baseline_f1_std": 0.013979727126846303,
+      "n_test": 283
+    },
+    "is_placer": {
+      "spire_f1_mean": 0.9097112374609809,
+      "spire_f1_std": 0.012506652030260704,
+      "ensemble_baseline_f1_mean": 0.9098109051168848,
+      "ensemble_baseline_f1_std": 0.000658406136121586,
+      "n_test": 1015
+    },
+    "is_supergene_lateritic": {
+      "spire_f1_mean": 0.8105248734332405,
+      "spire_f1_std": 0.01784579111271443,
+      "ensemble_baseline_f1_mean": 0.8385598141695702,
+      "ensemble_baseline_f1_std": 0.013140195701492169,
+      "n_test": 116
+    },
+    "is_unclassified": {
+      "spire_f1_mean": 0.4092274476673237,
+      "spire_f1_std": 0.06716288353792356,
+      "ensemble_baseline_f1_mean": 0.49015283675103954,
+      "ensemble_baseline_f1_std": 0.04981513040593647,
+      "n_test": 173
+    }
+  },
+  "runs": {
+    "42": {
+      "is_carbonatite_system": {
+        "n_test": 377,
+        "best_config": [
+          32,
+          2,
+          0.5,
+          0.001
+        ],
+        "best_val_f1": 0.9138888888888889,
+        "spire": {
+          "accuracy": 0.6419098143236074,
+          "f1": 0.7738693467336684,
+          "roc_auc": 0.789163827625366,
+          "pr_auc": 0.8630346604662074
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.7984084880636605,
+          "f1": 0.8442622950819673,
+          "roc_auc": 0.8286414440260594,
+          "pr_auc": 0.8507439021711738
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test": 353,
+        "best_config": [
+          128,
+          2,
+          0.3,
+          0.001
+        ],
+        "best_val_f1": 0.9193548387096774,
+        "spire": {
+          "accuracy": 0.7818696883852692,
+          "f1": 0.8522072936660269,
+          "roc_auc": 0.866701244813278,
+          "pr_auc": 0.9164834580846358
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8130311614730878,
+          "f1": 0.8641975308641975,
+          "roc_auc": 0.8694798458802608,
+          "pr_auc": 0.916809555165693
+        }
+      },
+      "is_mafic_ultramafic": {
+        "n_test": 124,
+        "best_config": [
+          32,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.9106078665077473,
+        "spire": {
+          "accuracy": 0.8306451612903226,
+          "f1": 0.8727272727272727,
+          "roc_auc": 0.8736409050837497,
+          "pr_auc": 0.9255447866736046
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8548387096774194,
+          "f1": 0.891566265060241,
+          "roc_auc": 0.8945048486629444,
+          "pr_auc": 0.9234944717342817
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test": 401,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.005
+        ],
+        "best_val_f1": 0.905608755129959,
+        "spire": {
+          "accuracy": 0.8204488778054863,
+          "f1": 0.8571428571428571,
+          "roc_auc": 0.8963021243115658,
+          "pr_auc": 0.9320533034127177
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8104738154613467,
+          "f1": 0.8473895582329317,
+          "roc_auc": 0.9035405192761604,
+          "pr_auc": 0.9365654384242921
+        }
+      },
+      "is_metamorphic_metasomatic": {
+        "n_test": 218,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.9195402298850575,
+        "spire": {
+          "accuracy": 0.8394495412844036,
+          "f1": 0.9008498583569405,
+          "roc_auc": 0.8127155172413792,
+          "pr_auc": 0.9060541089303105
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8073394495412844,
+          "f1": 0.8727272727272727,
+          "roc_auc": 0.8135237068965517,
+          "pr_auc": 0.909433772983687
+        }
+      },
+      "is_sedimentary": {
+        "n_test": 283,
+        "best_config": [
+          32,
+          2,
+          0.5,
+          0.005
+        ],
+        "best_val_f1": 0.9272237196765498,
+        "spire": {
+          "accuracy": 0.7809187279151943,
+          "f1": 0.7720588235294118,
+          "roc_auc": 0.8621103117505995,
+          "pr_auc": 0.8510385196814851
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.7985865724381626,
+          "f1": 0.7849056603773585,
+          "roc_auc": 0.8931354916067147,
+          "pr_auc": 0.8770674222437272
+        }
+      },
+      "is_placer": {
+        "n_test": 1015,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.8809523809523809,
+        "spire": {
+          "accuracy": 0.8689655172413793,
+          "f1": 0.9258226436140546,
+          "roc_auc": 0.7547368206133367,
+          "pr_auc": 0.9564571778355496
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8453201970443349,
+          "f1": 0.9103369503141062,
+          "roc_auc": 0.789767854955286,
+          "pr_auc": 0.9653426203751475
+        }
+      },
+      "is_supergene_lateritic": {
+        "n_test": 116,
+        "best_config": [
+          32,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.9010989010989011,
+        "spire": {
+          "accuracy": 0.8362068965517241,
+          "f1": 0.7865168539325843,
+          "roc_auc": 0.9499118165784832,
+          "pr_auc": 0.8849020792554056
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.9051724137931034,
+          "f1": 0.8571428571428571,
+          "roc_auc": 0.9573192239858905,
+          "pr_auc": 0.8913501711672833
+        }
+      },
+      "is_unclassified": {
+        "n_test": 173,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.913151364764268,
+        "spire": {
+          "accuracy": 0.7976878612716763,
+          "f1": 0.33962264150943394,
+          "roc_auc": 0.8316554809843401,
+          "pr_auc": 0.4550142379195365
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8728323699421965,
+          "f1": 0.42105263157894735,
+          "roc_auc": 0.7992170022371364,
+          "pr_auc": 0.5154759104883233
+        }
+      }
+    },
+    "1": {
+      "is_carbonatite_system": {
+        "n_test": 377,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.001
+        ],
+        "best_val_f1": 0.9214659685863874,
+        "spire": {
+          "accuracy": 0.76657824933687,
+          "f1": 0.8204081632653061,
+          "roc_auc": 0.7990257605642221,
+          "pr_auc": 0.8473328926438335
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.7957559681697612,
+          "f1": 0.8418891170431212,
+          "roc_auc": 0.8261012491781724,
+          "pr_auc": 0.8484392253799617
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test": 353,
+        "best_config": [
+          32,
+          2,
+          0.3,
+          0.005
+        ],
+        "best_val_f1": 0.9085872576177285,
+        "spire": {
+          "accuracy": 0.7705382436260623,
+          "f1": 0.849721706864564,
+          "roc_auc": 0.8591064018968584,
+          "pr_auc": 0.9205235994240711
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8215297450424929,
+          "f1": 0.8684759916492694,
+          "roc_auc": 0.8739626556016598,
+          "pr_auc": 0.9074160542364066
+        }
+      },
+      "is_mafic_ultramafic": {
+        "n_test": 124,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.001
+        ],
+        "best_val_f1": 0.9112271540469974,
+        "spire": {
+          "accuracy": 0.8387096774193549,
+          "f1": 0.8809523809523809,
+          "roc_auc": 0.8962679988245666,
+          "pr_auc": 0.9349643318806333
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8548387096774194,
+          "f1": 0.891566265060241,
+          "roc_auc": 0.9015574493094328,
+          "pr_auc": 0.9322675534615276
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test": 401,
+        "best_config": [
+          64,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.9030470914127424,
+        "spire": {
+          "accuracy": 0.7955112219451371,
+          "f1": 0.8498168498168498,
+          "roc_auc": 0.8814057172829792,
+          "pr_auc": 0.9233136859249554
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8129675810473815,
+          "f1": 0.847870182555781,
+          "roc_auc": 0.9076580120639915,
+          "pr_auc": 0.939117946927726
+        }
+      },
+      "is_metamorphic_metasomatic": {
+        "n_test": 218,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.005
+        ],
+        "best_val_f1": 0.8998699609882965,
+        "spire": {
+          "accuracy": 0.7752293577981652,
+          "f1": 0.8463949843260188,
+          "roc_auc": 0.790301724137931,
+          "pr_auc": 0.8992006689984089
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8027522935779816,
+          "f1": 0.8660436137071651,
+          "roc_auc": 0.8345905172413793,
+          "pr_auc": 0.9171810561697743
+        }
+      },
+      "is_sedimentary": {
+        "n_test": 283,
+        "best_config": [
+          128,
+          2,
+          0.3,
+          0.005
+        ],
+        "best_val_f1": 0.9139072847682119,
+        "spire": {
+          "accuracy": 0.7632508833922261,
+          "f1": 0.7372549019607844,
+          "roc_auc": 0.8775479616306954,
+          "pr_auc": 0.8514516342540052
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.7703180212014135,
+          "f1": 0.7509578544061303,
+          "roc_auc": 0.8824440447641886,
+          "pr_auc": 0.8529690858648152
+        }
+      },
+      "is_placer": {
+        "n_test": 1015,
+        "best_config": [
+          64,
+          2,
+          0.5,
+          0.005
+        ],
+        "best_val_f1": 0.8674157303370786,
+        "spire": {
+          "accuracy": 0.8374384236453202,
+          "f1": 0.9079754601226994,
+          "roc_auc": 0.738086487810854,
+          "pr_auc": 0.9508067990717612
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8423645320197044,
+          "f1": 0.9102132435465768,
+          "roc_auc": 0.7786914533055657,
+          "pr_auc": 0.9625094085040178
+        }
+      },
+      "is_supergene_lateritic": {
+        "n_test": 116,
+        "best_config": [
+          32,
+          2,
+          0.3,
+          0.01
+        ],
+        "best_val_f1": 0.9228915662650602,
+        "spire": {
+          "accuracy": 0.8793103448275862,
+          "f1": 0.8157894736842105,
+          "roc_auc": 0.944268077601411,
+          "pr_auc": 0.8760406680597737
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8793103448275862,
+          "f1": 0.8292682926829268,
+          "roc_auc": 0.9587301587301587,
+          "pr_auc": 0.8997331462422571
+        }
+      },
+      "is_unclassified": {
+        "n_test": 173,
+        "best_config": [
+          32,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.9061728395061729,
+        "spire": {
+          "accuracy": 0.7630057803468208,
+          "f1": 0.3880597014925373,
+          "roc_auc": 0.7357382550335572,
+          "pr_auc": 0.4076372966322263
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8901734104046243,
+          "f1": 0.5128205128205128,
+          "roc_auc": 0.8148769574944073,
+          "pr_auc": 0.5723111520901428
+        }
+      }
+    },
+    "2": {
+      "is_carbonatite_system": {
+        "n_test": 377,
+        "best_config": [
+          32,
+          2,
+          0.3,
+          0.01
+        ],
+        "best_val_f1": 0.8939828080229226,
+        "spire": {
+          "accuracy": 0.7400530503978779,
+          "f1": 0.8164794007490637,
+          "roc_auc": 0.8168071244994322,
+          "pr_auc": 0.8565241515964989
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.7718832891246684,
+          "f1": 0.8252032520325203,
+          "roc_auc": 0.824861036399498,
+          "pr_auc": 0.8451650993430493
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test": 353,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.01
+        ],
+        "best_val_f1": 0.8977272727272727,
+        "spire": {
+          "accuracy": 0.8016997167138811,
+          "f1": 0.8616600790513834,
+          "roc_auc": 0.8717768227623,
+          "pr_auc": 0.9267480259868678
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.830028328611898,
+          "f1": 0.8755186721991701,
+          "roc_auc": 0.8683498814463545,
+          "pr_auc": 0.9149342913908309
+        }
+      },
+      "is_mafic_ultramafic": {
+        "n_test": 124,
+        "best_config": [
+          64,
+          2,
+          0.3,
+          0.01
+        ],
+        "best_val_f1": 0.9024081115335868,
+        "spire": {
+          "accuracy": 0.8064516129032258,
+          "f1": 0.8518518518518519,
+          "roc_auc": 0.8360270349691449,
+          "pr_auc": 0.9163766473327386
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8548387096774194,
+          "f1": 0.891566265060241,
+          "roc_auc": 0.9039083161915956,
+          "pr_auc": 0.9385594854782413
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test": 401,
+        "best_config": [
+          32,
+          2,
+          0.3,
+          0.01
+        ],
+        "best_val_f1": 0.9088319088319088,
+        "spire": {
+          "accuracy": 0.8354114713216958,
+          "f1": 0.8625,
+          "roc_auc": 0.9029635457644899,
+          "pr_auc": 0.9342947580456055
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8254364089775561,
+          "f1": 0.8571428571428571,
+          "roc_auc": 0.9206005769735117,
+          "pr_auc": 0.9498138388056218
+        }
+      },
+      "is_metamorphic_metasomatic": {
+        "n_test": 218,
+        "best_config": [
+          32,
+          2,
+          0.3,
+          0.005
+        ],
+        "best_val_f1": 0.9120879120879121,
+        "spire": {
+          "accuracy": 0.8256880733944955,
+          "f1": 0.8920454545454546,
+          "roc_auc": 0.775646551724138,
+          "pr_auc": 0.8710052418325116
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.7935779816513762,
+          "f1": 0.8623853211009175,
+          "roc_auc": 0.8229525862068966,
+          "pr_auc": 0.9128156633690211
+        }
+      },
+      "is_sedimentary": {
+        "n_test": 283,
+        "best_config": [
+          32,
+          2,
+          0.3,
+          0.005
+        ],
+        "best_val_f1": 0.9113924050632911,
+        "spire": {
+          "accuracy": 0.7314487632508834,
+          "f1": 0.7054263565891473,
+          "roc_auc": 0.8139988009592326,
+          "pr_auc": 0.8210101948601459
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.7773851590106007,
+          "f1": 0.7640449438202247,
+          "roc_auc": 0.8908373301358913,
+          "pr_auc": 0.865769833818185
+        }
+      },
+      "is_placer": {
+        "n_test": 1015,
+        "best_config": [
+          64,
+          2,
+          0.5,
+          0.005
+        ],
+        "best_val_f1": 0.8723897911832946,
+        "spire": {
+          "accuracy": 0.81871921182266,
+          "f1": 0.8953356086461889,
+          "roc_auc": 0.744119808893789,
+          "pr_auc": 0.9556683400809977
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8433497536945813,
+          "f1": 0.9088825214899714,
+          "roc_auc": 0.7918708399689656,
+          "pr_auc": 0.9649236597985783
+        }
+      },
+      "is_supergene_lateritic": {
+        "n_test": 116,
+        "best_config": [
+          128,
+          2,
+          0.5,
+          0.005
+        ],
+        "best_val_f1": 0.8912529550827423,
+        "spire": {
+          "accuracy": 0.8793103448275862,
+          "f1": 0.8292682926829268,
+          "roc_auc": 0.9520282186948854,
+          "pr_auc": 0.891173489242714
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8793103448275862,
+          "f1": 0.8292682926829268,
+          "roc_auc": 0.9573192239858906,
+          "pr_auc": 0.895407270122826
+        }
+      },
+      "is_unclassified": {
+        "n_test": 173,
+        "best_config": [
+          32,
+          2,
+          0.3,
+          0.01
+        ],
+        "best_val_f1": 0.9101516919486581,
+        "spire": {
+          "accuracy": 0.8728323699421965,
+          "f1": 0.5,
+          "roc_auc": 0.7625838926174497,
+          "pr_auc": 0.5508346104138973
+        },
+        "ensemble_baseline": {
+          "accuracy": 0.8901734104046243,
+          "f1": 0.5365853658536586,
+          "roc_auc": 0.7683165548098434,
+          "pr_auc": 0.5450431147252074
+        }
+      }
+    }
+  }
+}

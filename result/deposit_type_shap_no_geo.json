@@ -1,0 +1,463 @@
+{
+  "overall_top": [
+    {
+      "feature": "has_zircon",
+      "mean_abs_shap": 0.7444688677787781
+    },
+    {
+      "feature": "is_placer",
+      "mean_abs_shap": 0.43634194135665894
+    },
+    {
+      "feature": "has_magnetite",
+      "mean_abs_shap": 0.21628786623477936
+    },
+    {
+      "feature": "has_ilmenite",
+      "mean_abs_shap": 0.21356020867824554
+    },
+    {
+      "feature": "has_thorite",
+      "mean_abs_shap": 0.1373676061630249
+    },
+    {
+      "feature": "has_pyrite",
+      "mean_abs_shap": 0.12005336582660675
+    },
+    {
+      "feature": "is_carbonatite_system",
+      "mean_abs_shap": 0.11621342599391937
+    },
+    {
+      "feature": "has_fluorite",
+      "mean_abs_shap": 0.10884934663772583
+    },
+    {
+      "feature": "is_supergene_lateritic",
+      "mean_abs_shap": 0.10548174381256104
+    },
+    {
+      "feature": "has_rutile",
+      "mean_abs_shap": 0.10519552230834961
+    }
+  ],
+  "current_top10_selected": [
+    "has_rutile",
+    "is_supergene_lateritic",
+    "has_fluorite",
+    "is_carbonatite_system",
+    "has_pyrite",
+    "has_thorite",
+    "has_ilmenite",
+    "has_magnetite",
+    "is_placer",
+    "has_zircon"
+  ],
+  "by_group": {
+    "is_carbonatite_system": {
+      "n": 377,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.5193418264389038
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.4552891254425049
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.23573638498783112
+        },
+        {
+          "feature": "has_barite",
+          "mean_abs_shap": 0.23284754157066345
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.2293958216905594
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.1872379332780838
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.18706625699996948
+        },
+        {
+          "feature": "has_fluorite",
+          "mean_abs_shap": 0.18466880917549133
+        },
+        {
+          "feature": "has_pyrochlore",
+          "mean_abs_shap": 0.17633303999900818
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.1664322316646576
+        }
+      ]
+    },
+    "is_alkaline_intrusive": {
+      "n": 353,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.767150342464447
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.30063512921333313
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.283394455909729
+        },
+        {
+          "feature": "has_fluorite",
+          "mean_abs_shap": 0.23204338550567627
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.22910350561141968
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.18276070058345795
+        },
+        {
+          "feature": "is_alkaline_intrusive",
+          "mean_abs_shap": 0.17322658002376556
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.1645294725894928
+        },
+        {
+          "feature": "has_pyrochlore",
+          "mean_abs_shap": 0.13922740519046783
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.13796278834342957
+        }
+      ]
+    },
+    "is_mafic_ultramafic": {
+      "n": 124,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.6580088138580322
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.3801593780517578
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.2696767747402191
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.23905888199806213
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.2022104263305664
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.1868256777524948
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.1828078180551529
+        },
+        {
+          "feature": "is_alkaline_intrusive",
+          "mean_abs_shap": 0.14418889582157135
+        },
+        {
+          "feature": "has_apatite",
+          "mean_abs_shap": 0.13664570450782776
+        },
+        {
+          "feature": "has_titanite",
+          "mean_abs_shap": 0.1273670643568039
+        }
+      ]
+    },
+    "is_felsic_pegmatite": {
+      "n": 401,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.8349782824516296
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.24641115963459015
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.2349548190832138
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.20769624412059784
+        },
+        {
+          "feature": "has_fluorite",
+          "mean_abs_shap": 0.18491114675998688
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.14275187253952026
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.14262503385543823
+        },
+        {
+          "feature": "is_metamorphic_metasomatic",
+          "mean_abs_shap": 0.11766268312931061
+        },
+        {
+          "feature": "is_felsic_pegmatite",
+          "mean_abs_shap": 0.11021097004413605
+        },
+        {
+          "feature": "has_beryl",
+          "mean_abs_shap": 0.10810855776071548
+        }
+      ]
+    },
+    "is_metamorphic_metasomatic": {
+      "n": 218,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.6333902478218079
+        },
+        {
+          "feature": "is_metamorphic_metasomatic",
+          "mean_abs_shap": 0.3993251621723175
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.27399060130119324
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.20257197320461273
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.19437143206596375
+        },
+        {
+          "feature": "has_barite",
+          "mean_abs_shap": 0.19189372658729553
+        },
+        {
+          "feature": "has_thorite",
+          "mean_abs_shap": 0.18883739411830902
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.17220519483089447
+        },
+        {
+          "feature": "has_fluorite",
+          "mean_abs_shap": 0.15335902571678162
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.1472659856081009
+        }
+      ]
+    },
+    "is_sedimentary": {
+      "n": 283,
+      "top_features": [
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.714642345905304
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.2431522011756897
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.19704854488372803
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.15801343321800232
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.1345459371805191
+        },
+        {
+          "feature": "has_gibbsite",
+          "mean_abs_shap": 0.12840256094932556
+        },
+        {
+          "feature": "is_sedimentary",
+          "mean_abs_shap": 0.12655574083328247
+        },
+        {
+          "feature": "has_apatite",
+          "mean_abs_shap": 0.12138625234365463
+        },
+        {
+          "feature": "is_supergene_lateritic",
+          "mean_abs_shap": 0.10497789084911346
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.09611482918262482
+        }
+      ]
+    },
+    "is_placer": {
+      "n": 1015,
+      "top_features": [
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.8987765908241272
+        },
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.7833846211433411
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.3271936774253845
+        },
+        {
+          "feature": "has_garnet",
+          "mean_abs_shap": 0.21374337375164032
+        },
+        {
+          "feature": "has_rutile",
+          "mean_abs_shap": 0.17913973331451416
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.1665465086698532
+        },
+        {
+          "feature": "has_cassiterite",
+          "mean_abs_shap": 0.07703971117734909
+        },
+        {
+          "feature": "is_supergene_lateritic",
+          "mean_abs_shap": 0.07101134955883026
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.06193872541189194
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.060460563749074936
+        }
+      ]
+    },
+    "is_supergene_lateritic": {
+      "n": 116,
+      "top_features": [
+        {
+          "feature": "is_supergene_lateritic",
+          "mean_abs_shap": 1.4278326034545898
+        },
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.8015772104263306
+        },
+        {
+          "feature": "has_gibbsite",
+          "mean_abs_shap": 0.3035128116607666
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.30319151282310486
+        },
+        {
+          "feature": "is_sedimentary",
+          "mean_abs_shap": 0.21102295815944672
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.19694854319095612
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.19255436956882477
+        },
+        {
+          "feature": "has_rutile",
+          "mean_abs_shap": 0.1108388751745224
+        },
+        {
+          "feature": "has_hematite",
+          "mean_abs_shap": 0.11040546745061874
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.10026978701353073
+        }
+      ]
+    },
+    "is_unclassified": {
+      "n": 173,
+      "top_features": [
+        {
+          "feature": "is_unclassified",
+          "mean_abs_shap": 0.7588114738464355
+        },
+        {
+          "feature": "has_zircon",
+          "mean_abs_shap": 0.7301883697509766
+        },
+        {
+          "feature": "is_placer",
+          "mean_abs_shap": 0.2706540822982788
+        },
+        {
+          "feature": "has_magnetite",
+          "mean_abs_shap": 0.16198347508907318
+        },
+        {
+          "feature": "has_ilmenite",
+          "mean_abs_shap": 0.14406262338161469
+        },
+        {
+          "feature": "has_fluorite",
+          "mean_abs_shap": 0.07808145880699158
+        },
+        {
+          "feature": "has_apatite",
+          "mean_abs_shap": 0.0742841586470604
+        },
+        {
+          "feature": "has_pyrite",
+          "mean_abs_shap": 0.07217425107955933
+        },
+        {
+          "feature": "is_supergene_lateritic",
+          "mean_abs_shap": 0.057460419833660126
+        },
+        {
+          "feature": "is_carbonatite_system",
+          "mean_abs_shap": 0.05326100066304207
+        }
+      ]
+    }
+  }
+}

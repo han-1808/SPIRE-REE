@@ -1,0 +1,64 @@
+{
+  "strata": {
+    "poorly_documented": {
+      "n_predictions": 9995,
+      "n_records": 1999,
+      "prevalence": 0.5952976488244122,
+      "spire_roc_auc": 0.8292955926499154,
+      "documentation_only_roc_auc": 0.5651914906877461,
+      "gap": 0.26410410196216927
+    },
+    "well_documented": {
+      "n_predictions": 5565,
+      "n_records": 1113,
+      "prevalence": 0.7502246181491464,
+      "spire_roc_auc": 0.8336218498255288,
+      "documentation_only_roc_auc": 0.6216538146728127,
+      "gap": 0.21196803515271612
+    }
+  },
+  "n_positions_with_predictions": 3112,
+  "probe_protocol": "matched leave-one-region-out folds, fitted on unique records",
+  "quintiles": {
+    "Q1": {
+      "n_predictions": 3010,
+      "n_records": 602,
+      "prevalence": 0.5514950166112956,
+      "spire_roc_auc": 0.8452530120481927,
+      "documentation_only_roc_auc": 0.7315651494868362,
+      "gap": 0.11368786256135655
+    },
+    "Q2": {
+      "n_predictions": 3210,
+      "n_records": 642,
+      "prevalence": 0.5778816199376947,
+      "spire_roc_auc": 0.7924484538645925,
+      "documentation_only_roc_auc": 0.4027710088421639,
+      "gap": 0.3896774450224286
+    },
+    "Q3": {
+      "n_predictions": 3115,
+      "n_records": 623,
+      "prevalence": 0.6099518459069021,
+      "spire_roc_auc": 0.8411427333766515,
+      "documentation_only_roc_auc": 0.5436376434914447,
+      "gap": 0.29750508988520674
+    },
+    "Q4": {
+      "n_predictions": 3110,
+      "n_records": 622,
+      "prevalence": 0.7427652733118971,
+      "spire_roc_auc": 0.8393403679653679,
+      "documentation_only_roc_auc": 0.6043357683982684,
+      "gap": 0.23500459956709951
+    },
+    "Q5": {
+      "n_predictions": 3115,
+      "n_records": 623,
+      "prevalence": 0.7704654895666132,
+      "spire_roc_auc": 0.8356550116550117,
+      "documentation_only_roc_auc": 0.616426282051282,
+      "gap": 0.21922872960372963
+    }
+  }
+}

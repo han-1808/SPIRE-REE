@@ -1,0 +1,84 @@
+{
+  "old_dir": null,
+  "new_dir": "result",
+  "rows": [
+    {
+      "experiment": "1",
+      "description": "Leave-one-region-out (classification)",
+      "metric": "f1",
+      "higher_is_better": true,
+      "old_spire": null,
+      "old_best_baseline": null,
+      "old_best_baseline_value": null,
+      "new_spire": 0.8294279076872104,
+      "new_best_baseline": "SVM",
+      "new_best_baseline_value": 0.8316257870770819,
+      "delta_spire": null
+    },
+    {
+      "experiment": "2",
+      "description": "Per-region split (classification)",
+      "metric": "f1",
+      "higher_is_better": true,
+      "old_spire": null,
+      "old_best_baseline": null,
+      "old_best_baseline_value": null,
+      "new_spire": 0.8168527560166121,
+      "new_best_baseline": "SVM",
+      "new_best_baseline_value": 0.851036159440026,
+      "delta_spire": null
+    },
+    {
+      "experiment": "3",
+      "description": "Global inductive split (classification)",
+      "metric": "f1",
+      "higher_is_better": true,
+      "old_spire": null,
+      "old_best_baseline": null,
+      "old_best_baseline_value": null,
+      "new_spire": 0.8341289709697355,
+      "new_best_baseline": "Autoencoder",
+      "new_best_baseline_value": 0.8418322498260433,
+      "delta_spire": null
+    },
+    {
+      "experiment": "4",
+      "description": "Leave-one-region-out (proportion)",
+      "metric": "mae",
+      "higher_is_better": false,
+      "old_spire": null,
+      "old_best_baseline": null,
+      "old_best_baseline_value": null,
+      "new_spire": 0.1104675686841893,
+      "new_best_baseline": "Random Forest",
+      "new_best_baseline_value": 0.1127492043253511,
+      "delta_spire": null
+    },
+    {
+      "experiment": "5",
+      "description": "Per-region split (proportion)",
+      "metric": "mae",
+      "higher_is_better": false,
+      "old_spire": null,
+      "old_best_baseline": null,
+      "old_best_baseline_value": null,
+      "new_spire": 0.1402503815850505,
+      "new_best_baseline": "SVM",
+      "new_best_baseline_value": 0.10030731466396337,
+      "delta_spire": null
+    },
+    {
+      "experiment": "6",
+      "description": "Global inductive split (proportion)",
+      "metric": "mae",
+      "higher_is_better": false,
+      "old_spire": null,
+      "old_best_baseline": null,
+      "old_best_baseline_value": null,
+      "new_spire": 0.12618501178137723,
+      "new_best_baseline": "XGBoost",
+      "new_best_baseline_value": 0.07568492992164097,
+      "delta_spire": null
+    }
+  ]
+}
