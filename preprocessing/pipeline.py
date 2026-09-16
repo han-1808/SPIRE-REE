@@ -5,6 +5,7 @@ from time import perf_counter
 from cleaning import drop_unused_columns
 from config import (
     DATA_PATH,
+    GRAPH_MAX_DIST_KM,
     HOST_LITH_STATS_PATH,
     KNN_K,
     OUTPUT_PATH,
@@ -107,8 +108,14 @@ def main():
     X_geo = torch.tensor(
         select_geo_similarity_columns(X_selected).astype(float).values, dtype=torch.float32,
     )
+    # `max_distance_km` matches the 2,000 km adaptive-k threshold every
+    # experiment script applies. Without it the released artifact was a
+    # different graph from the one the results come from (~93k edges / mean
+    # degree 30, against the thresholded graph the models actually see), so
+    # any diagnostic quoted from it described a graph no experiment used.
     edge_index, edge_weight = build_weighted_graph(
         df[["Latitude", "Longitude"]].values, X_node, k=KNN_K, X_geo=X_geo,
+        max_distance_km=GRAPH_MAX_DIST_KM,
     )
     print(f"Weighted graph step finished in {perf_counter() - graph_start:.2f}s")
 
