@@ -57,7 +57,7 @@ import json
 import pandas as pd
 
 from config import OUTPUT_PATH
-from gnn_training import GCN
+from gnn_training import GCN, GraphSAGE
 from run_ablation import (
     _DEFAULT_SEEDS,
     run_ablation_sweep,
@@ -66,6 +66,15 @@ from run_ablation import (
 _RESULTS_PATH = "result/ablation_graph_weighting.json"
 _MODE = "no_edge_stats"
 _MODEL_CLASS = GCN  # SAGEConv/GATConv ignore edge_weight — see module docstring.
+
+# Reviewer #2 Remark #5 asks for empirical support of the 0.5/0.5 weighting for the
+# model the paper ships. The GCN/no_edge_stats default above isolates the MESSAGE
+# PASSING channel, which SPIRE does not use. The second route -- w_mean/w_max node
+# features, appended by augment_with_edge_stats -- is the only way the weighting
+# reaches SPIRE, and it is active exactly in mode="full". So the configuration that
+# actually answers the reviewer is (--model spire --mode full).
+_MODELS = {"gcn": GCN, "spire": GraphSAGE}
+_MODES = ["no_edge_stats", "full"]
 _CONDITIONS = {
     "spatial_only":  {"weighting_strategy": "distance",           "geo_fix": True},
     "geo_only":      {"weighting_strategy": "feature_similarity", "geo_fix": True},
@@ -78,21 +87,30 @@ def run_graph_weighting_comparison(
     processed_df: pd.DataFrame,
     seeds: list[int],
     regions: list[str] | None = None,
+    conditions: list[str] | None = None,
+    model_class=_MODEL_CLASS,
+    mode: str = _MODE,
 ) -> dict:
     # NOTE: `processed_df` is always passed in FULL (never pre-filtered) —
     # every region not currently held out is training data. `regions`
     # only restricts which regions are swept as the held-out test region.
     results: dict = {}
 
-    for cond_name, cond_kwargs in _CONDITIONS.items():
+    selected = list(_CONDITIONS) if not conditions else list(conditions)
+    unknown = [c for c in selected if c not in _CONDITIONS]
+    if unknown:
+        raise SystemExit(f"unknown condition(s) {unknown}; choose from {list(_CONDITIONS)}")
+
+    for cond_name in selected:
+        cond_kwargs = _CONDITIONS[cond_name]
         print(f"\n{'#'*60}\n  Condition: {cond_name}  ({cond_kwargs})\n{'#'*60}")
         cond_results, cond_summary = run_ablation_sweep(
-            processed_df, modes=[_MODE], seeds=seeds, regions=regions,
-            model_class=_MODEL_CLASS, **cond_kwargs,
+            processed_df, modes=[mode], seeds=seeds, regions=regions,
+            model_class=model_class, **cond_kwargs,
         )
         results[cond_name] = {
-            "runs": cond_results[_MODE],
-            "summary": cond_summary[_MODE],
+            "runs": cond_results[mode],
+            "summary": cond_summary[mode],
         }
 
     return results
@@ -105,13 +123,28 @@ def main():
     parser.add_argument("--seeds", nargs="+", type=int, default=_DEFAULT_SEEDS)
     parser.add_argument("--regions", nargs="+", type=str, default=None,
                          help="Restrict to a subset of regions (default: all)")
+    parser.add_argument("--conditions", nargs="+", type=str, default=None,
+                        choices=list(_CONDITIONS),
+                        help="Restrict to a subset of the 4 weighting conditions. "
+                             "Used to shard the sweep across processes; shards are "
+                             "recombined by experiment/merge_graph_weighting_shards.py")
+    parser.add_argument("--model", choices=list(_MODELS), default="gcn",
+                        help="Backbone to train. 'gcn' isolates the message-passing "
+                             "channel; 'spire' with --mode full measures the channel "
+                             "that actually reaches the shipped model.")
+    parser.add_argument("--mode", choices=_MODES, default=_MODE,
+                        help="'no_edge_stats' (11-dim) excludes w_mean/w_max; "
+                             "'full' (13-dim) includes them, as the main experiments do.")
     parser.add_argument("--out", type=str, default=_RESULTS_PATH)
     args = parser.parse_args()
 
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
 
-    results = run_graph_weighting_comparison(processed_df, args.seeds, args.regions)
+    results = run_graph_weighting_comparison(
+        processed_df, args.seeds, args.regions, args.conditions,
+        model_class=_MODELS[args.model], mode=args.mode,
+    )
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -132,8 +165,9 @@ def main():
             "produce identical predictions in mode=no_edge_stats — see module "
             "docstring."
         ),
-        "model": "gcn",
-        "conditions": {k: v for k, v in _CONDITIONS.items()},
+        "model": args.model,
+        "mode": args.mode,
+        "conditions": {k: _CONDITIONS[k] for k in results},
         "seeds": args.seeds,
         "regions": args.regions,
         "results": results,
@@ -145,7 +179,7 @@ def main():
 
     print("\n── Comment 13-B summary (avg ± std across seeds) ──────────")
     print(f"{'Condition':<16} {'F1 (avg±std)':>18}")
-    for cond in _CONDITIONS:
+    for cond in results:
         avg = results[cond]["summary"]["avg_metrics"].get("f1")
         std = results[cond]["summary"]["std_metrics"].get("f1")
         print(f"{cond:<16} {avg:.4f} ± {std:.4f}")
