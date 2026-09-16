@@ -98,8 +98,25 @@ def decompose_one_seed_run(processed_df: pd.DataFrame, run: dict,
         coords = region_rows[["Latitude", "Longitude"]].to_numpy()
         region_rows["mean_knn_dist_km"] = _mean_knn_distance_km(coords)
 
-        region_rows = region_rows.merge(
-            completeness[["ID_No", "completeness_bucket"]], on="ID_No", how="left"
+        # Join the completeness bucket POSITIONALLY, not on ID_No.
+        #
+        # ID_No is not a unique key in this dataset: records 689 and 3101 both carry
+        # ID_No 3352.0 (two East Asia occurrences ~150 m apart, 11.5000/99.5500 and
+        # 11.5011/99.5468). A left merge on ID_No therefore fans those rows out 2x2,
+        # and because n_test is taken as len(region_rows) AFTER the merge it reported
+        # East Asia as 360 instead of 358, 3,114 records per seed instead of 3,112,
+        # and 15,570 predictions instead of 15,560 -- with the duplicated rows counted
+        # twice in the confusion counts, the deposit-type breakdown, the completeness
+        # buckets and both k-NN distance means.
+        #
+        # The completeness frame is built from processed_df in the same order, so its
+        # positional index is the correct key and is unique by construction.
+        n_before = len(region_rows)
+        bucket_by_pos = completeness["completeness_bucket"].to_numpy()
+        region_rows["completeness_bucket"] = bucket_by_pos[test_idx]
+        assert len(region_rows) == n_before, (
+            f"completeness join changed row count for {region}: "
+            f"{n_before} -> {len(region_rows)}"
         )
 
         misclassified = region_rows[region_rows["confusion"].isin(["FN", "FP"])]
