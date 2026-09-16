@@ -38,6 +38,7 @@ from config import OUTPUT_PATH
 from feature_engineering import (
     build_node_features_no_leakage,
     build_weighted_graph,
+    create_buffered_region_split_indices,
     prepare_xgboost_inputs,
     select_geo_similarity_columns,
     train_xgboost_and_select_features,
@@ -53,7 +54,7 @@ from run_gnn_per_region import (
     _GRAPH_ALPHA,
     _GRAPH_K,
     _GRAPH_MAX_DIST_KM,
-    _split_region_indices,
+    _TEST_RATIO,
 )
 
 _RESULTS_PATH = "result/hparam_sensitivity.json"
@@ -74,9 +75,17 @@ def _build_region_graph(processed_df: pd.DataFrame, region: str, seed: int):
     n_nodes = len(region_global_idx)
     print(f"Region '{region}': {n_nodes} nodes total")
 
-    train_local, val_local, test_local = _split_region_indices(
-        region_global_idx, random_seed=seed
+    # `_split_region_indices` (fixed 5 test nodes/region) was removed from
+    # run_gnn_per_region.py without updating this caller, leaving the script
+    # unimportable. It now uses the same spatial-block split as Exp 2 itself.
+    coords_region_split = processed_df[["Latitude", "Longitude"]].values[region_global_idx]
+    _split = create_buffered_region_split_indices(
+        region_global_idx, coords_region_split, test_ratio=_TEST_RATIO,
+        k_for_buffer=_GRAPH_K, random_seed=seed,
     )
+    train_local = _split["train_local"]
+    val_local   = _split["val_local"]
+    test_local  = _split["test_local"]
 
     train_global = region_global_idx[train_local]
     _, X_region, y_region = prepare_xgboost_inputs(processed_df, fit_idx=train_global)
