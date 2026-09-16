@@ -15,13 +15,22 @@ import matplotlib.ticker as mticker
 with open("result/k_sensitivity.json") as f:
     d = json.load(f)
 
-ks      = [k for k in sorted(d["results"].keys(), key=int) if int(k) != 5]
+ks      = sorted(d["results"].keys(), key=int)
 k_vals  = [int(k) for k in ks]
-metrics = ["f1", "roc_auc", "pr_auc"]
-labels  = ["F1", "ROC-AUC", "PR-AUC"]
-colors  = ["#DD8452", "#55A868", "#C44E52"]
+metrics = ["val_f1", "f1", "roc_auc", "pr_auc"]
+labels  = ["Validation F1", "Test F1", "ROC-AUC", "PR-AUC"]
+colors  = ["#4C72B0", "#DD8452", "#55A868", "#C44E52"]
 
-data = {m: [d["results"][k]["avg_metrics"][m] for k in ks] for m in metrics}
+# Validation F1 is the only quantity k may legitimately be selected on, so it
+# is plotted alongside the held-out metrics rather than omitted.
+data = {
+    m: [d["results"][k]["avg_metrics"][m] for k in ks]
+    for m in metrics if m != "val_f1"
+}
+data["val_f1"] = [
+    float(np.mean([r["best_val_f1"] for r in d["results"][k]["per_region"].values()]))
+    for k in ks
+]
 
 default_k   = 15
 default_idx = k_vals.index(default_k)
@@ -30,10 +39,10 @@ default_idx = k_vals.index(default_k)
 
 y      = np.arange(len(k_vals))
 n_met  = len(metrics)
-height = 0.22
+height = 0.19
 offsets = np.linspace(-(n_met - 1) / 2 * height, (n_met - 1) / 2 * height, n_met)
 
-fig, ax = plt.subplots(figsize=(9, 6))
+fig, ax = plt.subplots(figsize=(9, 6.6))
 
 for i, (m, label, color) in enumerate(zip(metrics, labels, colors)):
     bars = ax.barh(y + offsets[i], data[m], height, label=label,
@@ -63,7 +72,7 @@ ax.set_title(
     "Graph Construction k Sensitivity — Exp 1 SPIRE",
     fontsize=12, fontweight="bold", pad=10,
 )
-ax.set_xlim(0.78, 0.96)
+ax.set_xlim(0.78, 0.97)
 ax.xaxis.set_major_locator(mticker.MultipleLocator(0.02))
 ax.xaxis.set_minor_locator(mticker.MultipleLocator(0.01))
 ax.grid(axis="x", linestyle="--", linewidth=0.5, alpha=0.6)
@@ -71,7 +80,7 @@ ax.set_axisbelow(True)
 
 ax.legend(
     loc="lower right", fontsize=9, framealpha=0.85,
-    ncol=3, columnspacing=1.0, handlelength=1.2,
+    ncol=4, columnspacing=0.9, handlelength=1.2,
 )
 
 fig.tight_layout()

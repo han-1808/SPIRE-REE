@@ -267,7 +267,12 @@ def draw_panel_c_gnn(ax, per_region, title, show_xlabel=True):
         ax.set_xticklabels(reg_labels, fontsize=8.5, rotation=30, ha="right")
     else:
         ax.set_xticklabels([])
-    ax.set_ylim(0.4, 1.0)
+    # Floor the axis below the smallest bar so no bar is clipped out of view
+    # (GAT drops to ~0.37 in one Exp 2 region, which the fixed 0.4 floor hid
+    # while still drawing its value label at the axis edge).
+    all_f1 = [per_region[r][f"{m}_f1"] for m, _ in gnn_list for r in REGIONS]
+    lo = np.nanmin(all_f1)
+    ax.set_ylim(min(0.4, np.floor(lo * 20) / 20 - 0.02), 1.0)
     ax.set_ylabel("F1 Score", fontsize=10)
     ax.set_facecolor("#FAFAFA")
     ax.grid(axis="y", linestyle="--", alpha=0.35, zorder=0)
@@ -342,8 +347,8 @@ avg3, std3, pr3 = load_exp3()
 
 data_list = [
     (avg1,  std1,  pr1,  "Exp 1 — Leave-one-region-out: Average Metrics"),
-    (avg2, std2, pr2, "Exp 2 — Per-Region, Random Split: Average Metrics"),
-    (avg3, std3, pr3, "Exp 3 — Global Inductive, Random Split: Average Metrics"),
+    (avg2, std2, pr2, "Exp 2 — Per-Region, Spatial Block Split: Average Metrics"),
+    (avg3, std3, pr3, "Exp 3 — Global Inductive, Spatial Block Split: Average Metrics"),
 ]
 
 make_fig_x(data_list)
