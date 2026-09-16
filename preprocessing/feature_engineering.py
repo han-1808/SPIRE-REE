@@ -24,11 +24,15 @@ from time import perf_counter
 
 import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 
+from torch_threads import limit_torch_threads
+
 
 from config import (
+    SKLEARN_N_JOBS,
     COMMODITY_ELEMENTS,
     GNN_EDGE_INDEX_PATH,
     GNN_EDGE_WEIGHT_PATH,
@@ -123,6 +127,18 @@ def create_deposit_type_split_indices(
     val_idx = perm[:val_size]
     train_idx = perm[val_size:]
 
+    # Reviewer #2 asked whether a multi-label record can re-enter training through one of
+    # its other deposit-type flags while the held-out flag is under test. It cannot: the
+    # train pool is the complement of the held-out flag, so carrying additional flags is
+    # irrelevant. Asserted here rather than only claimed in prose, because the
+    # leave-one-deposit-type-out result rests on this property.
+    n_tr = np.intersect1d(train_idx, test_idx).size
+    n_va = np.intersect1d(val_idx, test_idx).size
+    assert not (n_tr or n_va), (
+        f"leave-one-deposit-type-out leakage for {held_out_group}: {n_tr} train and "
+        f"{n_va} val records also appear in the test set"
+    )
+
     return {
         "train_idx": train_idx,
         "val_idx": val_idx,
@@ -149,6 +165,71 @@ def compute_mean_knn_distance_km(coords: np.ndarray, k: int = KNN_K) -> float:
     return float(dist_km.mean())
 
 
+def _coords_to_unit_sphere(coords: np.ndarray) -> np.ndarray:
+    """
+    Lat/lon degrees -> 3D unit-sphere Cartesian, so KMeans clusters by true
+    geographic proximity and is immune to the antimeridian wrap that plain
+    lat/lon clustering breaks on (Oceania and East Asia both straddle it).
+    """
+    lat = np.radians(coords[:, 0])
+    lon = np.radians(coords[:, 1])
+    return np.stack(
+        [np.cos(lat) * np.cos(lon), np.cos(lat) * np.sin(lon), np.sin(lat)], axis=1
+    )
+
+
+def make_spatial_blocks(
+    coords: np.ndarray, n_blocks: int, random_seed: int = 42
+) -> np.ndarray:
+    """
+    Partition points into `n_blocks` spatially contiguous blocks (KMeans on
+    unit-sphere coordinates). Returns an integer block label per point.
+    """
+    n_blocks = int(min(max(n_blocks, 2), len(coords)))
+    km = KMeans(n_clusters=n_blocks, n_init=10, random_state=random_seed)
+    return km.fit_predict(_coords_to_unit_sphere(coords))
+
+
+def select_test_blocks(
+    labels: np.ndarray,
+    test_ratio: float,
+    random_seed: int = 42,
+    overshoot: float = 1.6,
+) -> np.ndarray:
+    """
+    Choose whole spatial blocks at random until ~`test_ratio` of the points
+    are held out. Returns a boolean test mask.
+
+    Blocks are added in random order; a block that would push the test set
+    past `overshoot` x target is skipped (unless nothing is selected yet, so
+    at least one block always lands in the test set).
+    """
+    n = len(labels)
+    target = max(1, int(round(n * test_ratio)))
+    rng = np.random.default_rng(random_seed)
+    test_mask = np.zeros(n, dtype=bool)
+    for b in rng.permutation(np.unique(labels)):
+        if test_mask.sum() >= target:
+            break
+        candidate = test_mask | (labels == b)
+        if test_mask.any() and candidate.sum() > overshoot * target:
+            continue
+        test_mask = candidate
+    return test_mask
+
+
+def _default_n_blocks(test_ratio: float) -> int:
+    """
+    Number of spatial blocks to cut a region into. `2 / test_ratio` (13 blocks
+    at the default 15%) gives blocks about half the target test size, so the
+    accumulator in `select_test_blocks` lands close to `test_ratio` while
+    each block stays contiguous. Fewer blocks overshoot badly; many more raise
+    the total block perimeter, and it is the perimeter that the buffer ring
+    eats into the training pool.
+    """
+    return max(3, int(round(2.0 / test_ratio)))
+
+
 def create_buffered_region_split_indices(
     region_global_idx: np.ndarray,
     coords_region: np.ndarray,
@@ -157,15 +238,40 @@ def create_buffered_region_split_indices(
     buffer_km: float | None = None,
     k_for_buffer: int = KNN_K,
     random_seed: int = 42,
+    split_strategy: str = "block",
+    n_blocks: int | None = None,
 ) -> dict:
     """
     Comment (4)-A/B: per-region split with a percentage-based test holdout
     (was a fixed n=5 in run_gnn_per_region.py / run_baseline_per_region.py)
-    and spatial block / buffered CV (train/val candidates within `buffer_km`
-    of any test node are excluded from the split entirely, not just
-    re-labelled). Default `buffer_km` is the region's own mean k-NN distance
-    (`compute_mean_knn_distance_km`), so no region uses an arbitrary fixed
-    radius.
+    and spatial cross-validation.
+
+    `split_strategy`
+    ----------------
+    "block" (default) -- spatial BLOCK CV. The region is cut into
+        `n_blocks` contiguous KMeans blocks and whole blocks are held out
+        (`make_spatial_blocks` / `select_test_blocks`), then the buffer ring
+        is applied around the held-out block.
+
+    "buffer" -- the earlier behaviour: `test_ratio` of the region's nodes
+        drawn at RANDOM, then every train/val candidate within `buffer_km`
+        of any test node dropped. Retained only so the two can be compared
+        (see run_split_strategy_sensitivity.py); not recommended as the
+        headline protocol.
+
+    Why the default changed. Both strategies use the same buffer radius, but
+    with randomly scattered test points the buffer discs tile the whole
+    region: measured on this dataset it removes ~65% of the train/val pool
+    (e.g. Oceania 400 -> 99 training nodes). That penalises the GNN twice
+    over -- it is more data-hungry than the tabular baselines, and the
+    discarded nodes are exactly the spatially adjacent neighbours its
+    message passing runs on -- so "message passing does not help" becomes an
+    artefact of the split rather than a result. Holding out ONE CONTIGUOUS
+    BLOCK gives the same guarantee (no training node sits within `buffer_km`
+    of a test node) while the ring scales with the block's perimeter instead
+    of with the number of test points: ~1.5% of the pool on this dataset.
+    Reviewer #2 asked for "spatial block or buffered cross-validation", so
+    block CV is squarely within what was requested.
 
     Shared by run_gnn_per_region.py and run_baseline_per_region.py (which
     must produce the *same* split for a given seed -- the baseline script's
@@ -182,13 +288,28 @@ def create_buffered_region_split_indices(
     same order as `region_global_idx` (i.e. `coords_region[i]` is the
     coordinate of `region_global_idx[i]`).
     """
+    if split_strategy not in ("block", "buffer"):
+        raise ValueError(f"split_strategy must be 'block' or 'buffer', got {split_strategy!r}")
+
     n = len(region_global_idx)
     rng = np.random.default_rng(random_seed)
-    perm = rng.permutation(n)
 
-    n_test = max(1, int(round(n * test_ratio)))
-    test_local = perm[:n_test]
-    rest = perm[n_test:]
+    if split_strategy == "block":
+        if n_blocks is None:
+            n_blocks = _default_n_blocks(test_ratio)
+        labels = make_spatial_blocks(coords_region, n_blocks, random_seed=random_seed)
+        test_mask = select_test_blocks(labels, test_ratio, random_seed=random_seed)
+        test_local = np.where(test_mask)[0]
+        rest = rng.permutation(np.where(~test_mask)[0])
+        n_blocks_used = int(len(np.unique(labels[test_mask])))
+    else:
+        perm = rng.permutation(n)
+        n_test = max(1, int(round(n * test_ratio)))
+        test_local = perm[:n_test]
+        rest = perm[n_test:]
+        n_blocks_used = 0
+
+    n_test = len(test_local)
 
     if buffer_km is None:
         buffer_km = compute_mean_knn_distance_km(coords_region, k=min(k_for_buffer, n - 1))
@@ -208,8 +329,13 @@ def create_buffered_region_split_indices(
     train_local = rest_kept[n_val:]
 
     split_info = {
+        "split_strategy": split_strategy,
         "test_ratio": test_ratio,
         "n_test": int(n_test),
+        "n_test_frac": float(n_test / n),
+        "n_blocks_held_out": n_blocks_used,
+        "n_train": int(len(train_local)),
+        "n_val": int(len(val_local)),
         "buffer_km": float(buffer_km),
         "n_excluded_by_buffer": 0 if buffer_fallback else n_excluded,
         "buffer_fallback": buffer_fallback,
@@ -230,7 +356,9 @@ def create_buffered_sample_split_indices(
     val_ratio: float = 0.2,
     buffer_km: float | None = None,
     k_for_buffer: int = KNN_K,
-    val_seed: int = 42,
+    val_seed: int | None = None,
+    split_strategy: str = "block",
+    n_blocks: int | None = None,
 ) -> dict:
     """
     Comment (4)-A/B: global-inductive-sample split (run_inductive_sample.py /
@@ -251,10 +379,34 @@ def create_buffered_sample_split_indices(
 
     Returns {"train_idx", "val_idx", "test_idx", "n", "split_info"}.
     """
+    if split_strategy not in ("block", "buffer"):
+        raise ValueError(f"split_strategy must be 'block' or 'buffer', got {split_strategy!r}")
+
     region_idx = np.where(processed_df["Region"].values == region)[0]
     n = len(region_idx)
-    n_test = max(1, min(n, int(round(n * test_ratio))))
-    test_idx = np.sort(rng.choice(region_idx, size=n_test, replace=False))
+    coords_region = processed_df[["Latitude", "Longitude"]].to_numpy()[region_idx]
+
+    if split_strategy == "block":
+        # Same rationale as create_buffered_region_split_indices: hold out a
+        # contiguous block of the region rather than scattered points, so the
+        # buffer ring only clips the block's perimeter. `rng` is still drawn
+        # from once per call so the caller's per-seed generator advances
+        # exactly as before.
+        if n_blocks is None:
+            n_blocks = _default_n_blocks(test_ratio)
+        block_seed = int(rng.integers(0, 2**31 - 1))
+        labels = make_spatial_blocks(coords_region, n_blocks, random_seed=block_seed)
+        test_mask = select_test_blocks(labels, test_ratio, random_seed=block_seed)
+        test_idx = np.sort(region_idx[test_mask])
+        n_blocks_used = int(len(np.unique(labels[test_mask])))
+    else:
+        n_wanted = max(1, min(n, int(round(n * test_ratio))))
+        test_idx = np.sort(rng.choice(region_idx, size=n_wanted, replace=False))
+        n_blocks_used = 0
+
+    # Taken from test_idx rather than the target count: whole-block selection
+    # lands near `test_ratio` but not exactly on it.
+    n_test = len(test_idx)
 
     all_idx = np.arange(len(processed_df))
     tv_idx = np.setdiff1d(all_idx, test_idx)
@@ -275,6 +427,13 @@ def create_buffered_sample_split_indices(
         buffer_fallback = True
         tv_kept = tv_idx
 
+    # `val_seed=None` derives the train/val shuffle from the caller's per-seed
+    # `rng`, so each run really is a different split. The old hard-coded
+    # default of 42 meant every "seed" in Exp 3/6 reused one identical
+    # train/val partition and only model-side randomness varied -- the same
+    # fairness bug already fixed on the baseline side in run_baseline.py.
+    if val_seed is None:
+        val_seed = int(rng.integers(0, 2**31 - 1))
     local_rng = np.random.default_rng(val_seed)
     tv_shuffled = tv_kept.copy()
     local_rng.shuffle(tv_shuffled)
@@ -283,8 +442,13 @@ def create_buffered_sample_split_indices(
     train_idx = np.sort(tv_shuffled[n_val:])
 
     split_info = {
+        "split_strategy": split_strategy,
         "test_ratio": test_ratio,
         "n_test": int(len(test_idx)),
+        "n_test_frac": float(len(test_idx) / n),
+        "n_blocks_held_out": n_blocks_used,
+        "n_train": int(len(train_idx)),
+        "n_val": int(len(val_idx)),
         "buffer_km": float(buffer_km),
         "n_excluded_by_buffer": 0 if buffer_fallback else n_excluded,
         "buffer_fallback": buffer_fallback,
@@ -653,6 +817,7 @@ def train_xgboost_and_select_features(
         ) from exc
 
     model = XGBClassifier(
+        n_jobs=SKLEARN_N_JOBS,
         n_estimators=300,
         max_depth=6,
         learning_rate=0.05,
@@ -700,6 +865,7 @@ def _make_ensemble_models(random_state: int = 42):
 
     return [
         XGBClassifier(
+            n_jobs=SKLEARN_N_JOBS,
             n_estimators=300,
             max_depth=6,
             learning_rate=0.05,
@@ -710,6 +876,7 @@ def _make_ensemble_models(random_state: int = 42):
             random_state=random_state,
         ),
         CatBoostClassifier(
+            thread_count=SKLEARN_N_JOBS,
             iterations=300,
             depth=6,
             learning_rate=0.05,
@@ -721,7 +888,7 @@ def _make_ensemble_models(random_state: int = 42):
             n_estimators=300,
             max_depth=None,
             random_state=random_state,
-            n_jobs=-1,
+            n_jobs=SKLEARN_N_JOBS,
         ),
     ]
 
@@ -741,6 +908,7 @@ def _make_single_xgb_model(random_state: int = 42):
 
     return [
         XGBClassifier(
+            n_jobs=SKLEARN_N_JOBS,
             n_estimators=300,
             max_depth=6,
             learning_rate=0.05,
@@ -893,6 +1061,7 @@ def build_node_features(X_selected: pd.DataFrame, X_full: pd.DataFrame, models):
         import torch
     except ImportError as exc:
         raise ImportError("Missing dependency 'torch'. Install it to create GNN node features.") from exc
+    limit_torch_threads()
 
     if not isinstance(models, (list, tuple)):
         models = [models]
@@ -914,6 +1083,7 @@ def build_node_features_from_scores(X_selected: pd.DataFrame, scores: np.ndarray
         import torch
     except ImportError as exc:
         raise ImportError("Missing dependency 'torch'. Install it to create GNN node features.") from exc
+    limit_torch_threads()
 
     X_num = torch.tensor(X_selected.astype(float).values, dtype=torch.float)
     score_t = torch.tensor(np.asarray(scores, dtype=float), dtype=torch.float).unsqueeze(1)
@@ -1013,6 +1183,7 @@ def build_weighted_graph(
     fit_idx: np.ndarray | None = None,
     X_geo=None,
     unify_edge_rule: bool = False,
+    verbose: bool = True,
 ):
     """
     Weighted k-NN spatial graph with optional adaptive-k filtering.
@@ -1051,17 +1222,22 @@ def build_weighted_graph(
              recommended) — safe because `w_geo` depends only on observable
              node features (x), never the target (y), so there is no
              leakage risk in using it on non-fit (val) edges too.
+    verbose : bool  print per-build progress lines. The inductive prediction
+             path calls this once per held-out node with a mini-graph of ~11
+             nodes; at ~10 log lines a call that is hundreds of thousands of
+             lines per run, so those call sites pass verbose=False.
     """
     try:
         import torch
     except ImportError as exc:
         raise ImportError("Missing dependency 'torch'. Install it to build the weighted graph.") from exc
+    limit_torch_threads()
 
     X_sim_source = X_geo if X_geo is not None else X_node
 
     start_time = perf_counter()
     n_nodes = len(coords)
-    print(f"  [graph] N={n_nodes}, k={k}, strategy={weighting_strategy}")
+    verbose and print(f"  [graph] N={n_nodes}, k={k}, strategy={weighting_strategy}")
 
     coords_rad = np.radians(coords)
     lat = coords_rad[:, 0:1]          # (N, 1)
@@ -1100,7 +1276,7 @@ def build_weighted_graph(
         src           = src[keep]
         dst           = dst[keep]
         distance_flat = distance_flat[keep]
-        print(f"  [graph]   adaptive-k: dropped {dropped} far edges "
+        verbose and print(f"  [graph]   adaptive-k: dropped {dropped} far edges "
               f"(threshold={max_distance_km:.0f} km)")
 
     w_spatial = np.exp(-distance_flat / sigma)
@@ -1108,12 +1284,29 @@ def build_weighted_graph(
     # Cosine similarity in pure NumPy — avoids PyTorch/OpenBLAS thread deadlock
     # that occurs when torch ops (F.normalize, torch.tensor) follow heavy numpy ops.
     X_node_np = X_sim_source.detach().to(dtype=torch.float32, device="cpu").numpy()
-    norms = np.linalg.norm(X_node_np, axis=1, keepdims=True)
-    np.maximum(norms, 1e-12, out=norms)   # in-place, avoids division by zero
+    norms_raw = np.linalg.norm(X_node_np, axis=1)
+
+    # Degenerate (all-zero) similarity vectors.  Once `X_geo` excludes
+    # Latitude/Longitude (Comment 13), the remaining columns are sparse binary
+    # mineral/lithology indicators — a large minority of records carry none of
+    # the SHAP-selected ones, leaving an all-zero vector whose norm is clipped
+    # to 1e-12.  Cosine similarity is undefined there, but the old code
+    # silently returned w_geo = 0, which under "mixed" weighting halves the
+    # edge weight (0.5*w_spatial + 0.5*0) for every edge touching such a node —
+    # an artefact of missing data, not evidence of geological dissimilarity.
+    # Those edges fall back to spatial-only weighting instead.
+    degenerate = norms_raw < 1e-8
+    n_degenerate = int(degenerate.sum())
+    if n_degenerate:
+        verbose and print(f"  [graph]   {n_degenerate}/{n_nodes} nodes have an all-zero "
+              f"similarity vector — their edges use spatial-only weighting")
+
+    norms = np.maximum(norms_raw, 1e-12)[:, None]
     X_node_norm = X_node_np / norms
 
     n_edges = len(src)
     w_geo = (X_node_norm[src] * X_node_norm[dst]).sum(axis=1).clip(min=0.0)
+    edge_degenerate = degenerate[src] | degenerate[dst]
 
     # Restrict feature-similarity to edges where both endpoints are fit
     # (train) nodes; edges touching a non-fit (val) node fall back to
@@ -1134,37 +1327,42 @@ def build_weighted_graph(
             edge_weight = np.where(both_fit, w_geo, w_spatial)
         else:
             edge_weight = w_geo
+        edge_weight = np.where(edge_degenerate, w_spatial, edge_weight)
     elif weighting_strategy == "mixed":
+        w_mixed = alpha * w_spatial + (1 - alpha) * w_geo
         if apply_asymmetric_gate:
-            edge_weight = np.where(both_fit, alpha * w_spatial + (1 - alpha) * w_geo, w_spatial)
+            edge_weight = np.where(both_fit, w_mixed, w_spatial)
         else:
-            edge_weight = alpha * w_spatial + (1 - alpha) * w_geo
+            edge_weight = w_mixed
+        # Degenerate endpoints carry no geological signal — use the spatial
+        # term alone rather than blending in a meaningless zero.
+        edge_weight = np.where(edge_degenerate, w_spatial, edge_weight)
     else:
         raise ValueError(
             "weighting_strategy must be one of: "
             "'distance', 'feature_similarity', 'mixed'"
         )
-    print("  [graph]   5a done")
+    verbose and print("  [graph]   5a done")
 
-    print("  [graph]   5b: building bidirectional arrays...")
+    verbose and print("  [graph]   5b: building bidirectional arrays...")
     edge_array = np.column_stack([src, dst])
     edge_array_bidirectional = np.concatenate([edge_array, edge_array[:, ::-1]], axis=0)
     edge_weight_bidirectional = np.concatenate([edge_weight, edge_weight], axis=0)
-    print("  [graph]   5b done")
+    verbose and print("  [graph]   5b done")
 
     # Use from_numpy (zero-copy, no thread spawn) instead of torch.tensor()
     # to avoid PyTorch/OpenBLAS thread deadlock after heavy numpy ops.
-    print("  [graph]   5c: converting to torch tensors (from_numpy)...")
+    verbose and print("  [graph]   5c: converting to torch tensors (from_numpy)...")
     edge_index = torch.from_numpy(
         np.ascontiguousarray(edge_array_bidirectional.T, dtype=np.int64)
     )
     edge_weight = torch.from_numpy(
         np.ascontiguousarray(edge_weight_bidirectional, dtype=np.float32)
     )
-    print(f"Created weighted k-NN graph (k={k}, strategy={weighting_strategy})")
-    print(f"  - Total edges: {edge_index.shape[1]}")
-    print(f"  - Average degree: {edge_index.shape[1] / n_nodes:.1f}")
-    print(f"  - Graph build time: {perf_counter() - start_time:.2f}s")
+    verbose and print(f"Created weighted k-NN graph (k={k}, strategy={weighting_strategy})")
+    verbose and print(f"  - Total edges: {edge_index.shape[1]}")
+    verbose and print(f"  - Average degree: {edge_index.shape[1] / n_nodes:.1f}")
+    verbose and print(f"  - Graph build time: {perf_counter() - start_time:.2f}s")
     if return_sigma:
         return edge_index, edge_weight, sigma
     return edge_index, edge_weight
