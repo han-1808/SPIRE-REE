@@ -46,6 +46,7 @@ from feature_engineering import (
     train_xgboost_and_select_features,
 )
 from gnn_training import (
+    haversine_knn_index,
     GAT,
     GCN,
     GraphSAGE,
@@ -224,8 +225,9 @@ def _predict_node(
     sigma          = artifacts["graph_sigma"]
 
     # k-NN neighbours in train+val graph
-    nbrs = NearestNeighbors(n_neighbors=_PREDICT_K, metric="haversine")
-    nbrs.fit(np.radians(coords_tv))
+    # Cached index: coords_tv is the same for every held-out node in a region,
+    # so the tree is built once instead of once per node (see gnn_training).
+    nbrs = haversine_knn_index(coords_tv, _PREDICT_K)
     dist_rad, indices = nbrs.kneighbors(np.radians([[lat, lon]]))
     dist_km  = dist_rad[0] * _EARTH_RADIUS_KM
     indices  = indices[0]
@@ -242,6 +244,7 @@ def _predict_node(
         alpha=_GRAPH_ALPHA, k=len(neighbour_idx),
         weighting_strategy="mixed", sigma=sigma,
         X_geo=mini_X_geo,
+        verbose=False,  # one mini-graph per held-out node; logging dominates otherwise
     )
 
     mask0    = (ei_mini[0] == 0) | (ei_mini[1] == 0)

@@ -8,7 +8,8 @@ Three ablation conditions:
   no_edge_stats : 11-dim (10 SHAP + 1 ensemble, edge-stat augmentation removed)
   no_ensemble   : 10-dim (10 SHAP only, ensemble score and edge-stats both removed)
 
-Test splits (5 nodes/region) change with seed, so the graph is rebuilt per seed.
+Test splits (15% spatial block per region) change with seed, so the graph is
+rebuilt per seed.
 Test splits are shared across modes within each seed for fair comparison.
 Seeds [42, 23, 10, 16, 49] match the 5 runs in result/inductive_sample.json.
 
@@ -44,12 +45,14 @@ from torch_geometric.data import Data
 from config import OUTPUT_PATH
 from feature_engineering import (
     build_node_features_no_leakage,
+    create_buffered_sample_split_indices,
     build_weighted_graph,
     prepare_xgboost_inputs,
     select_geo_similarity_columns,
     train_xgboost_and_select_features,
 )
 from gnn_training import (
+    haversine_knn_index,
     GraphSAGE,
     augment_with_edge_stats,
     build_pyg_data,
@@ -65,7 +68,7 @@ _GRAPH_K           = 15
 _GRAPH_ALPHA       = 0.5
 _GRAPH_MAX_DIST_KM = 2000.0
 _PREDICT_K         = 10
-_N_SAMPLE          = 5
+_TEST_RATIO        = 0.15  # spatial block holdout, matching Exp 3
 _VAL_RATIO         = 0.2
 
 _RESULTS_PATH = "result/ablation_feature_exp3.json"
@@ -83,22 +86,20 @@ def _make_split(
     rng: np.random.Generator,
     val_seed: int,
 ) -> dict:
-    """Sample _N_SAMPLE test nodes from region; all other nodes → train+val."""
-    region_idx = np.where(processed_df["Region"].values == region)[0]
-    n          = min(_N_SAMPLE, len(region_idx))
-    test_idx   = np.sort(rng.choice(region_idx, size=n, replace=False))
-
-    all_idx = np.arange(len(processed_df))
-    tv_idx  = np.setdiff1d(all_idx, test_idx)
-
-    local_rng   = np.random.default_rng(val_seed)
-    tv_shuffled = tv_idx.copy()
-    local_rng.shuffle(tv_shuffled)
-    n_val     = int(len(tv_shuffled) * _VAL_RATIO)
-    val_idx   = np.sort(tv_shuffled[:n_val])
-    train_idx = np.sort(tv_shuffled[n_val:])
-
-    return {"train_idx": train_idx, "val_idx": val_idx, "test_idx": test_idx}
+    """
+    Spatial block split of one region's nodes as test; every other node in the
+    dataset → train+val. Delegates to the same
+    `create_buffered_sample_split_indices` that Exp 3 itself uses
+    (run_inductive_sample.py), so this ablation is measured on the split it is
+    ablating. It previously kept the original fixed `_N_SAMPLE = 5` test nodes
+    with no spatial control at all, which left the ablation's numbers on a
+    different protocol from the experiment they were reported against.
+    """
+    return create_buffered_sample_split_indices(
+        processed_df, region, rng,
+        test_ratio=_TEST_RATIO, val_ratio=_VAL_RATIO,
+        k_for_buffer=_GRAPH_K, val_seed=val_seed,
+    )
 
 
 # ── Graph + feature construction ──────────────────────────────────────────────
@@ -240,8 +241,9 @@ def _predict_node(
     edge_weight_tv = artifacts["edge_weight_tv"]
     sigma          = artifacts["graph_sigma"]
 
-    nbrs = NearestNeighbors(n_neighbors=_PREDICT_K, metric="haversine")
-    nbrs.fit(np.radians(coords_tv))
+    # Cached index: coords_tv is the same for every held-out node in a region,
+    # so the tree is built once instead of once per node (see gnn_training).
+    nbrs = haversine_knn_index(coords_tv, _PREDICT_K)
     dist_rad, indices = nbrs.kneighbors(np.radians([[lat, lon]]))
     dist_km  = dist_rad[0] * _EARTH_RADIUS_KM
     indices  = indices[0]
@@ -261,6 +263,7 @@ def _predict_node(
         alpha=_GRAPH_ALPHA, k=len(neighbour_idx),
         weighting_strategy="mixed", sigma=sigma,
         X_geo=mini_X_geo,
+        verbose=False,  # one mini-graph per held-out node; logging dominates otherwise
     )
 
     mask0    = (ei_mini[0] == 0) | (ei_mini[1] == 0)
