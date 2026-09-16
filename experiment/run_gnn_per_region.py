@@ -37,6 +37,11 @@ from sklearn.neighbors import NearestNeighbors
 from torch_geometric.data import Data
 
 from config import OUTPUT_PATH
+from split_manifest import (
+    DEFAULT_SEEDS,
+    assert_split_matches,
+    get_region_splits,
+)
 from feature_engineering import (
     build_node_features,
     build_node_features_no_leakage,
@@ -47,6 +52,7 @@ from feature_engineering import (
     train_xgboost_and_select_features,
 )
 from gnn_training import (
+    haversine_knn_index,
     GAT,
     GCN,
     GraphSAGE,
@@ -68,6 +74,7 @@ _RESULTS_PATH = "result/gnn_per_region.json"
 _EARTH_RADIUS_KM = 6371.0
 _PREDICT_K = 10
 N_RUNS = 5
+_SPLIT_MANIFEST = None  # set in main(); see split_manifest.py
 
 
 def _predict_node_aug(
@@ -92,8 +99,9 @@ def _predict_node_aug(
     edge_weight_tv = artifacts["edge_weight_tv"]
     sigma          = artifacts["graph_sigma"]
 
-    nbrs = NearestNeighbors(n_neighbors=_PREDICT_K, metric="haversine")
-    nbrs.fit(np.radians(coords_tv))
+    # Cached index: coords_tv is the same for every held-out node in a region,
+    # so the tree is built once instead of once per node (see gnn_training).
+    nbrs = haversine_knn_index(coords_tv, _PREDICT_K)
     dist_rad, indices = nbrs.kneighbors(np.radians([[lat, lon]]))
     dist_km  = dist_rad[0] * _EARTH_RADIUS_KM
     indices  = indices[0]
@@ -113,6 +121,7 @@ def _predict_node_aug(
         alpha=_GRAPH_ALPHA, k=len(neighbour_idx),
         weighting_strategy="mixed", sigma=sigma,
         X_geo=mini_X_geo,
+        verbose=False,  # one mini-graph per held-out node; logging dominates otherwise
     )
 
     mask0    = (ei_mini[0] == 0) | (ei_mini[1] == 0)
@@ -166,6 +175,16 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         region_global_idx, coords_region, test_ratio=_TEST_RATIO,
         k_for_buffer=_GRAPH_K, random_seed=random_seed,
     )
+    # Cross-check against the shared manifest so that a divergence between this
+    # script's split constants and any other model's is a hard failure rather than a
+    # silently unpaired comparison.
+    if _SPLIT_MANIFEST is not None:
+        assert_split_matches(
+            _SPLIT_MANIFEST, random_seed, region,
+            region_global_idx[split["train_local"]],
+            region_global_idx[split["val_local"]],
+            region_global_idx[split["test_local"]],
+        )
     train_local, val_local, test_local = split["train_local"], split["val_local"], split["test_local"]
     split_info = split["split_info"]
     print(f"  Split: n_test={split_info['n_test']} buffer_km={split_info['buffer_km']:.1f} "
@@ -368,7 +387,10 @@ def run_gnn_per_region(
     model_names = [name for name, _ in _GNN_MODELS]
 
     if seeds is None:
-        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+        # Pinned and shared across every Experiment 2 model. This line used to be
+        # `[42] + random.sample(...)` with no random.seed(), so the two scripts drew
+        # different seed lists and shared only seed 42 -- see split_manifest.py.
+        seeds = list(DEFAULT_SEEDS)
     print(f"Seeds for this run: {seeds}")
 
     runs: list = []
@@ -436,6 +458,10 @@ def main():
 
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
+    global _SPLIT_MANIFEST
+    _SPLIT_MANIFEST = get_region_splits(
+        processed_df, seeds=(args.seeds or list(DEFAULT_SEEDS))
+    )
     run_gnn_per_region(processed_df, seeds=args.seeds)
 
 

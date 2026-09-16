@@ -46,7 +46,12 @@ from sklearn.svm import SVC
 from xgboost import XGBClassifier
 
 from baseline import SimpleAutoencoder
-from config import OUTPUT_PATH
+from config import SKLEARN_N_JOBS, OUTPUT_PATH
+from split_manifest import (
+    DEFAULT_SEEDS,
+    assert_split_matches,
+    get_region_splits,
+)
 from feature_engineering import (
     _make_single_xgb_model,
     compute_ensemble_scores_no_leakage,
@@ -64,6 +69,7 @@ _MIN_REGION_NODES = 20
 _GRAPH_K_FOR_BUFFER = 10
 _RESULTS_PATH = "result/baseline_per_region.json"
 N_RUNS = 5
+_SPLIT_MANIFEST = None  # set in main(); see split_manifest.py
 
 
 def _compute_metrics(y_true: np.ndarray, y_prob: np.ndarray) -> dict:
@@ -83,22 +89,25 @@ def _compute_metrics(y_true: np.ndarray, y_prob: np.ndarray) -> dict:
 def _make_models(seed: int = 42) -> dict:
     return {
         "xgboost": XGBClassifier(
+            n_jobs=SKLEARN_N_JOBS,
             n_estimators=300, max_depth=6, learning_rate=0.05,
             subsample=0.8, colsample_bytree=0.8,
             objective="binary:logistic", eval_metric="logloss",
             random_state=seed, verbosity=0,
         ),
         "lightgbm": LGBMClassifier(
+            n_jobs=SKLEARN_N_JOBS,
             n_estimators=300, max_depth=6, learning_rate=0.05,
             subsample=0.8, colsample_bytree=0.8,
             random_state=seed, verbose=-1,
         ),
         "catboost": CatBoostClassifier(
+            thread_count=SKLEARN_N_JOBS,
             iterations=300, depth=6, learning_rate=0.05,
             loss_function="Logloss", random_seed=seed, verbose=False,
         ),
         "random_forest": RandomForestClassifier(
-            n_estimators=300, random_state=seed, n_jobs=-1,
+            n_estimators=300, random_state=seed, n_jobs=SKLEARN_N_JOBS,
         ),
         "svm": Pipeline([
             ("scaler", StandardScaler()),
@@ -125,6 +134,16 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         region_global_idx, coords_region, test_ratio=_TEST_RATIO,
         k_for_buffer=_GRAPH_K_FOR_BUFFER, random_seed=random_seed,
     )
+    # Cross-check against the shared manifest so that a divergence between this
+    # script's split constants and any other model's is a hard failure rather than a
+    # silently unpaired comparison.
+    if _SPLIT_MANIFEST is not None:
+        assert_split_matches(
+            _SPLIT_MANIFEST, random_seed, region,
+            region_global_idx[split["train_local"]],
+            region_global_idx[split["val_local"]],
+            region_global_idx[split["test_local"]],
+        )
     train_local, val_local, test_local = split["train_local"], split["val_local"], split["test_local"]
     split_info = split["split_info"]
     print(f"  Split: n_test={split_info['n_test']} buffer_km={split_info['buffer_km']:.1f} "
@@ -289,7 +308,10 @@ def run_baseline_per_region(
     print(f"Regions ({len(regions)}): {regions}")
 
     if seeds is None:
-        seeds = [42] + random.sample([s for s in range(61) if s != 42], N_RUNS - 1)
+        # Pinned and shared across every Experiment 2 model. This line used to be
+        # `[42] + random.sample(...)` with no random.seed(), so the two scripts drew
+        # different seed lists and shared only seed 42 -- see split_manifest.py.
+        seeds = list(DEFAULT_SEEDS)
     print(f"Seeds for this run: {seeds}")
 
     runs: list = []
@@ -357,6 +379,10 @@ def main():
 
     print("Loading processed data...")
     processed_df = pd.read_excel(OUTPUT_PATH)
+    global _SPLIT_MANIFEST
+    _SPLIT_MANIFEST = get_region_splits(
+        processed_df, seeds=(args.seeds or list(DEFAULT_SEEDS))
+    )
     run_baseline_per_region(processed_df, seeds=args.seeds)
 
 
