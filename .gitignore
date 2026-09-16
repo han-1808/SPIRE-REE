@@ -8,3 +8,9 @@ __pycache__/
 catboost_info/
 data/has_dash_records.xlsx
 data/host_lith_stats.xlsx
+
+# Run logs and intermediate backups from the peer-review revision
+logs/
+result/_pre_manifest_backup/
+result/_stale_pre_revision/
+figures/*_prev.png
