@@ -1,0 +1,174 @@
+{
+  "experiment": "ablation_graph_weighting",
+  "description": "Comment 13-B: graph edge-weighting comparison on Exp 1 (leave-one-region-out inductive), mode=no_edge_stats (11-dim). spatial_only=haversine distance only; geo_only=cosine similarity on the geo-only vector (Comment 13-A fix); mixed_current=alpha=0.5 combination with cosine similarity on the FULL node vector (pre-fix double-counting, reproduced only for this comparison); mixed_fixed=alpha=0.5 combination with the Comment 13-A fix applied (the default used everywhere else in the codebase). Trained on GCN, not SPIRE: SAGEConv/GATConv do not consume edge_weight in message passing (only GCNConv does), so on SPIRE these 4 conditions would produce identical predictions in mode=no_edge_stats \u2014 see module docstring.",
+  "model": "spire",
+  "mode": "full",
+  "conditions": {
+    "geo_only": {
+      "weighting_strategy": "feature_similarity",
+      "geo_fix": true
+    }
+  },
+  "seeds": [
+    42,
+    1,
+    2,
+    4,
+    7
+  ],
+  "regions": [
+    "Oceania"
+  ],
+  "results": {
+    "geo_only": {
+      "runs": {
+        "42": {
+          "avg_metrics": {
+            "accuracy": 0.8174603174603174,
+            "f1": 0.8773333333333333,
+            "pr_auc": 0.94168922414538,
+            "roc_auc": 0.838560411311054
+          },
+          "per_region": {
+            "Oceania": {
+              "n_test": 504,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.874095513748191,
+              "metrics": {
+                "accuracy": 0.8174603174603174,
+                "f1": 0.8773333333333333,
+                "roc_auc": 0.838560411311054,
+                "pr_auc": 0.94168922414538
+              }
+            }
+          }
+        },
+        "1": {
+          "avg_metrics": {
+            "accuracy": 0.8392857142857143,
+            "f1": 0.8978562421185372,
+            "pr_auc": 0.9398395053717732,
+            "roc_auc": 0.8354085168212809
+          },
+          "per_region": {
+            "Oceania": {
+              "n_test": 504,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.874095513748191,
+              "metrics": {
+                "accuracy": 0.8392857142857143,
+                "f1": 0.8978562421185372,
+                "roc_auc": 0.8354085168212809,
+                "pr_auc": 0.9398395053717732
+              }
+            }
+          }
+        },
+        "2": {
+          "avg_metrics": {
+            "accuracy": 0.7956349206349206,
+            "f1": 0.8579310344827586,
+            "pr_auc": 0.948869544129258,
+            "roc_auc": 0.8437912149323796
+          },
+          "per_region": {
+            "Oceania": {
+              "n_test": 504,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8753623188405797,
+              "metrics": {
+                "accuracy": 0.7956349206349206,
+                "f1": 0.8579310344827586,
+                "roc_auc": 0.8437912149323796,
+                "pr_auc": 0.948869544129258
+              }
+            }
+          }
+        },
+        "4": {
+          "avg_metrics": {
+            "accuracy": 0.8353174603174603,
+            "f1": 0.8961201501877347,
+            "pr_auc": 0.9399994067505548,
+            "roc_auc": 0.8361685481166872
+          },
+          "per_region": {
+            "Oceania": {
+              "n_test": 504,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8727272727272727,
+              "metrics": {
+                "accuracy": 0.8353174603174603,
+                "f1": 0.8961201501877347,
+                "roc_auc": 0.8361685481166872,
+                "pr_auc": 0.9399994067505548
+              }
+            }
+          }
+        },
+        "7": {
+          "avg_metrics": {
+            "accuracy": 0.8273809523809523,
+            "f1": 0.8932515337423312,
+            "pr_auc": 0.9020921912907652,
+            "roc_auc": 0.7935844417123058
+          },
+          "per_region": {
+            "Oceania": {
+              "n_test": 504,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8759342301943199,
+              "metrics": {
+                "accuracy": 0.8273809523809523,
+                "f1": 0.8932515337423312,
+                "roc_auc": 0.7935844417123058,
+                "pr_auc": 0.9020921912907652
+              }
+            }
+          }
+        }
+      },
+      "summary": {
+        "input_dim": 13,
+        "n_seeds": 5,
+        "avg_metrics": {
+          "accuracy": 0.823015873015873,
+          "f1": 0.8844984587729391,
+          "pr_auc": 0.9344979743375463,
+          "roc_auc": 0.8295026265787415
+        },
+        "std_metrics": {
+          "accuracy": 0.015592764051102008,
+          "f1": 0.015147788384105637,
+          "pr_auc": 0.016535952221364576,
+          "roc_auc": 0.018196907841735402
+        }
+      }
+    }
+  }
+}

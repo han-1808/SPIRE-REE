@@ -1,0 +1,173 @@
+{
+  "experiment": "ablation_graph_weighting",
+  "description": "Comment 13-B: graph edge-weighting comparison on Exp 1 (leave-one-region-out inductive), mode=no_edge_stats (11-dim). spatial_only=haversine distance only; geo_only=cosine similarity on the geo-only vector (Comment 13-A fix); mixed_current=alpha=0.5 combination with cosine similarity on the FULL node vector (pre-fix double-counting, reproduced only for this comparison); mixed_fixed=alpha=0.5 combination with the Comment 13-A fix applied (the default used everywhere else in the codebase). Trained on GCN, not SPIRE: SAGEConv/GATConv do not consume edge_weight in message passing (only GCNConv does), so on SPIRE these 4 conditions would produce identical predictions in mode=no_edge_stats \u2014 see module docstring.",
+  "model": "gcn",
+  "conditions": {
+    "mixed_current": {
+      "weighting_strategy": "mixed",
+      "geo_fix": false
+    }
+  },
+  "seeds": [
+    42,
+    1,
+    2,
+    4,
+    7
+  ],
+  "regions": [
+    "South and Central Asia"
+  ],
+  "results": {
+    "mixed_current": {
+      "runs": {
+        "42": {
+          "avg_metrics": {
+            "accuracy": 0.37593984962406013,
+            "f1": 0.546448087431694,
+            "pr_auc": 0.33894894515677854,
+            "roc_auc": 0.26534638554216866
+          },
+          "per_region": {
+            "South and Central Asia": {
+              "n_test": 532,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.001
+              ],
+              "best_val_f1": 0.8615384615384616,
+              "metrics": {
+                "accuracy": 0.37593984962406013,
+                "f1": 0.546448087431694,
+                "roc_auc": 0.26534638554216866,
+                "pr_auc": 0.33894894515677854
+              }
+            }
+          }
+        },
+        "1": {
+          "avg_metrics": {
+            "accuracy": 0.37593984962406013,
+            "f1": 0.546448087431694,
+            "pr_auc": 0.3706813042123607,
+            "roc_auc": 0.35798192771084336
+          },
+          "per_region": {
+            "South and Central Asia": {
+              "n_test": 532,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8592777085927771,
+              "metrics": {
+                "accuracy": 0.37593984962406013,
+                "f1": 0.546448087431694,
+                "roc_auc": 0.35798192771084336,
+                "pr_auc": 0.3706813042123607
+              }
+            }
+          }
+        },
+        "2": {
+          "avg_metrics": {
+            "accuracy": 0.37593984962406013,
+            "f1": 0.546448087431694,
+            "pr_auc": 0.4186944455231453,
+            "roc_auc": 0.40271084337349394
+          },
+          "per_region": {
+            "South and Central Asia": {
+              "n_test": 532,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8614609571788413,
+              "metrics": {
+                "accuracy": 0.37593984962406013,
+                "f1": 0.546448087431694,
+                "roc_auc": 0.40271084337349394,
+                "pr_auc": 0.4186944455231453
+              }
+            }
+          }
+        },
+        "4": {
+          "avg_metrics": {
+            "accuracy": 0.37781954887218044,
+            "f1": 0.5471956224350205,
+            "pr_auc": 0.5589598934126653,
+            "roc_auc": 0.5442018072289156
+          },
+          "per_region": {
+            "South and Central Asia": {
+              "n_test": 532,
+              "best_config": [
+                128,
+                1,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.8598574821852731,
+              "metrics": {
+                "accuracy": 0.37781954887218044,
+                "f1": 0.5471956224350205,
+                "roc_auc": 0.5442018072289156,
+                "pr_auc": 0.5589598934126653
+              }
+            }
+          }
+        },
+        "7": {
+          "avg_metrics": {
+            "accuracy": 0.37593984962406013,
+            "f1": 0.546448087431694,
+            "pr_auc": 0.5126219360688443,
+            "roc_auc": 0.5186897590361446
+          },
+          "per_region": {
+            "South and Central Asia": {
+              "n_test": 532,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8602150537634409,
+              "metrics": {
+                "accuracy": 0.37593984962406013,
+                "f1": 0.546448087431694,
+                "roc_auc": 0.5186897590361446,
+                "pr_auc": 0.5126219360688443
+              }
+            }
+          }
+        }
+      },
+      "summary": {
+        "input_dim": 11,
+        "n_seeds": 5,
+        "avg_metrics": {
+          "accuracy": 0.37631578947368416,
+          "f1": 0.5465975944323593,
+          "pr_auc": 0.43998130487475884,
+          "roc_auc": 0.4177861445783132
+        },
+        "std_metrics": {
+          "accuracy": 0.0007518796992481258,
+          "f1": 0.00029901400133058864,
+          "pr_auc": 0.08354127604219931,
+          "roc_auc": 0.10315439726021454
+        }
+      }
+    }
+  }
+}

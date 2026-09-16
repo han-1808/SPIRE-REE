@@ -1,0 +1,173 @@
+{
+  "experiment": "ablation_graph_weighting",
+  "description": "Comment 13-B: graph edge-weighting comparison on Exp 1 (leave-one-region-out inductive), mode=no_edge_stats (11-dim). spatial_only=haversine distance only; geo_only=cosine similarity on the geo-only vector (Comment 13-A fix); mixed_current=alpha=0.5 combination with cosine similarity on the FULL node vector (pre-fix double-counting, reproduced only for this comparison); mixed_fixed=alpha=0.5 combination with the Comment 13-A fix applied (the default used everywhere else in the codebase). Trained on GCN, not SPIRE: SAGEConv/GATConv do not consume edge_weight in message passing (only GCNConv does), so on SPIRE these 4 conditions would produce identical predictions in mode=no_edge_stats \u2014 see module docstring.",
+  "model": "gcn",
+  "conditions": {
+    "spatial_only": {
+      "weighting_strategy": "distance",
+      "geo_fix": true
+    }
+  },
+  "seeds": [
+    42,
+    1,
+    2,
+    4,
+    7
+  ],
+  "regions": [
+    "Russian Federation"
+  ],
+  "results": {
+    "spatial_only": {
+      "runs": {
+        "42": {
+          "avg_metrics": {
+            "accuracy": 0.7551020408163265,
+            "f1": 0.8125,
+            "pr_auc": 0.8257973529186377,
+            "roc_auc": 0.8304169769173493
+          },
+          "per_region": {
+            "Russian Federation": {
+              "n_test": 147,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8687898089171975,
+              "metrics": {
+                "accuracy": 0.7551020408163265,
+                "f1": 0.8125,
+                "roc_auc": 0.8304169769173493,
+                "pr_auc": 0.8257973529186377
+              }
+            }
+          }
+        },
+        "1": {
+          "avg_metrics": {
+            "accuracy": 0.7551020408163265,
+            "f1": 0.8144329896907216,
+            "pr_auc": 0.8146830623581314,
+            "roc_auc": 0.823157110945644
+          },
+          "per_region": {
+            "Russian Federation": {
+              "n_test": 147,
+              "best_config": [
+                32,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8673469387755102,
+              "metrics": {
+                "accuracy": 0.7551020408163265,
+                "f1": 0.8144329896907216,
+                "roc_auc": 0.823157110945644,
+                "pr_auc": 0.8146830623581314
+              }
+            }
+          }
+        },
+        "2": {
+          "avg_metrics": {
+            "accuracy": 0.7142857142857143,
+            "f1": 0.79,
+            "pr_auc": 0.7962531027018918,
+            "roc_auc": 0.7835070737155622
+          },
+          "per_region": {
+            "Russian Federation": {
+              "n_test": 147,
+              "best_config": [
+                32,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8682559598494354,
+              "metrics": {
+                "accuracy": 0.7142857142857143,
+                "f1": 0.79,
+                "roc_auc": 0.7835070737155622,
+                "pr_auc": 0.7962531027018918
+              }
+            }
+          }
+        },
+        "4": {
+          "avg_metrics": {
+            "accuracy": 0.7891156462585034,
+            "f1": 0.8342245989304813,
+            "pr_auc": 0.8297960086348944,
+            "roc_auc": 0.8441921072226359
+          },
+          "per_region": {
+            "Russian Federation": {
+              "n_test": 147,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.868020304568528,
+              "metrics": {
+                "accuracy": 0.7891156462585034,
+                "f1": 0.8342245989304813,
+                "roc_auc": 0.8441921072226359,
+                "pr_auc": 0.8297960086348944
+              }
+            }
+          }
+        },
+        "7": {
+          "avg_metrics": {
+            "accuracy": 0.7346938775510204,
+            "f1": 0.8020304568527918,
+            "pr_auc": 0.8129103050487921,
+            "roc_auc": 0.8248324646314222
+          },
+          "per_region": {
+            "Russian Federation": {
+              "n_test": 147,
+              "best_config": [
+                64,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8689138576779026,
+              "metrics": {
+                "accuracy": 0.7346938775510204,
+                "f1": 0.8020304568527918,
+                "roc_auc": 0.8248324646314222,
+                "pr_auc": 0.8129103050487921
+              }
+            }
+          }
+        }
+      },
+      "summary": {
+        "input_dim": 11,
+        "n_seeds": 5,
+        "avg_metrics": {
+          "accuracy": 0.7496598639455783,
+          "f1": 0.810637609094799,
+          "pr_auc": 0.8158879663324695,
+          "roc_auc": 0.8212211466865227
+        },
+        "std_metrics": {
+          "accuracy": 0.024864852901356534,
+          "f1": 0.014657513309747182,
+          "pr_auc": 0.011725832280049399,
+          "roc_auc": 0.020255217582423254
+        }
+      }
+    }
+  }
+}

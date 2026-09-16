@@ -1,0 +1,173 @@
+{
+  "experiment": "ablation_graph_weighting",
+  "description": "Comment 13-B: graph edge-weighting comparison on Exp 1 (leave-one-region-out inductive), mode=no_edge_stats (11-dim). spatial_only=haversine distance only; geo_only=cosine similarity on the geo-only vector (Comment 13-A fix); mixed_current=alpha=0.5 combination with cosine similarity on the FULL node vector (pre-fix double-counting, reproduced only for this comparison); mixed_fixed=alpha=0.5 combination with the Comment 13-A fix applied (the default used everywhere else in the codebase). Trained on GCN, not SPIRE: SAGEConv/GATConv do not consume edge_weight in message passing (only GCNConv does), so on SPIRE these 4 conditions would produce identical predictions in mode=no_edge_stats \u2014 see module docstring.",
+  "model": "gcn",
+  "conditions": {
+    "mixed_current": {
+      "weighting_strategy": "mixed",
+      "geo_fix": false
+    }
+  },
+  "seeds": [
+    42,
+    1,
+    2,
+    4,
+    7
+  ],
+  "regions": [
+    "Africa"
+  ],
+  "results": {
+    "mixed_current": {
+      "runs": {
+        "42": {
+          "avg_metrics": {
+            "accuracy": 0.7617021276595745,
+            "f1": 0.8640776699029126,
+            "pr_auc": 0.9038963774640729,
+            "roc_auc": 0.7927261975162625
+          },
+          "per_region": {
+            "Africa": {
+              "n_test": 235,
+              "best_config": [
+                128,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.8683886838868389,
+              "metrics": {
+                "accuracy": 0.7617021276595745,
+                "f1": 0.8640776699029126,
+                "roc_auc": 0.7927261975162625,
+                "pr_auc": 0.9038963774640729
+              }
+            }
+          }
+        },
+        "1": {
+          "avg_metrics": {
+            "accuracy": 0.8127659574468085,
+            "f1": 0.8829787234042553,
+            "pr_auc": 0.9011675671358848,
+            "roc_auc": 0.7881923910900848
+          },
+          "per_region": {
+            "Africa": {
+              "n_test": 235,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.005
+              ],
+              "best_val_f1": 0.8665850673194615,
+              "metrics": {
+                "accuracy": 0.8127659574468085,
+                "f1": 0.8829787234042553,
+                "roc_auc": 0.7881923910900848,
+                "pr_auc": 0.9011675671358848
+              }
+            }
+          }
+        },
+        "2": {
+          "avg_metrics": {
+            "accuracy": 0.8127659574468085,
+            "f1": 0.8842105263157894,
+            "pr_auc": 0.9104086279047039,
+            "roc_auc": 0.7997240291740587
+          },
+          "per_region": {
+            "Africa": {
+              "n_test": 235,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.005
+              ],
+              "best_val_f1": 0.8645320197044335,
+              "metrics": {
+                "accuracy": 0.8127659574468085,
+                "f1": 0.8842105263157894,
+                "roc_auc": 0.7997240291740587,
+                "pr_auc": 0.9104086279047039
+              }
+            }
+          }
+        },
+        "4": {
+          "avg_metrics": {
+            "accuracy": 0.7574468085106383,
+            "f1": 0.8619854721549637,
+            "pr_auc": 0.8870963718747787,
+            "roc_auc": 0.7697614823575794
+          },
+          "per_region": {
+            "Africa": {
+              "n_test": 235,
+              "best_config": [
+                128,
+                2,
+                0.5,
+                0.01
+              ],
+              "best_val_f1": 0.8665850673194615,
+              "metrics": {
+                "accuracy": 0.7574468085106383,
+                "f1": 0.8619854721549637,
+                "roc_auc": 0.7697614823575794,
+                "pr_auc": 0.8870963718747787
+              }
+            }
+          }
+        },
+        "7": {
+          "avg_metrics": {
+            "accuracy": 0.7787234042553192,
+            "f1": 0.8719211822660099,
+            "pr_auc": 0.9041077718045136,
+            "roc_auc": 0.7910506603587621
+          },
+          "per_region": {
+            "Africa": {
+              "n_test": 235,
+              "best_config": [
+                64,
+                2,
+                0.3,
+                0.01
+              ],
+              "best_val_f1": 0.8641370869033048,
+              "metrics": {
+                "accuracy": 0.7787234042553192,
+                "f1": 0.8719211822660099,
+                "roc_auc": 0.7910506603587621,
+                "pr_auc": 0.9041077718045136
+              }
+            }
+          }
+        }
+      },
+      "summary": {
+        "input_dim": 11,
+        "n_seeds": 5,
+        "avg_metrics": {
+          "accuracy": 0.7846808510638298,
+          "f1": 0.8730347148087862,
+          "pr_auc": 0.9013353432367908,
+          "roc_auc": 0.7882909520993494
+        },
+        "std_metrics": {
+          "accuracy": 0.024011465497303614,
+          "f1": 0.009244851985613823,
+          "pr_auc": 0.007737521636928167,
+          "roc_auc": 0.01001352691278435
+        }
+      }
+    }
+  }
+}

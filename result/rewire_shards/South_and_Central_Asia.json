@@ -1,0 +1,302 @@
+{
+  "experiment": "ablation_random_rewire",
+  "description": "Comment (17)-D: SPIRE (mode=full) on the real spatial/feature graph vs a degree-preserving randomly rewired graph (networkx double_edge_swap) -- same node features, same degree distribution, randomized connectivity.",
+  "regions": [
+    "South and Central Asia"
+  ],
+  "seeds": [
+    42,
+    1,
+    2,
+    4,
+    7
+  ],
+  "summary": {
+    "real_graph": {
+      "accuracy_mean": 0.8315789473684211,
+      "accuracy_std": 0.012331743960042647,
+      "f1_mean": 0.8096758477930545,
+      "f1_std": 0.011609127265114389,
+      "pr_auc_mean": 0.9193847265157254,
+      "pr_auc_std": 0.012520318225545255,
+      "roc_auc_mean": 0.9498283132530121,
+      "roc_auc_std": 0.006195934684875843
+    },
+    "random_rewired": {
+      "accuracy_mean": 0.8270676691729323,
+      "accuracy_std": 0.009946433500242808,
+      "f1_mean": 0.802715832095404,
+      "f1_std": 0.007509310796061808,
+      "pr_auc_mean": 0.8880956742098167,
+      "pr_auc_std": 0.025214439486280018,
+      "roc_auc_mean": 0.9306144578313253,
+      "roc_auc_std": 0.014944866499670998
+    }
+  },
+  "results": {
+    "real_graph": {
+      "42": {
+        "avg_metrics": {
+          "accuracy": 0.8552631578947368,
+          "f1": 0.8315098468271335,
+          "pr_auc": 0.9036663470770687,
+          "roc_auc": 0.9469277108433736
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.9001297016861219,
+            "metrics": {
+              "accuracy": 0.8552631578947368,
+              "f1": 0.8315098468271335,
+              "roc_auc": 0.9469277108433736,
+              "pr_auc": 0.9036663470770687
+            }
+          }
+        }
+      },
+      "1": {
+        "avg_metrics": {
+          "accuracy": 0.825187969924812,
+          "f1": 0.8033826638477801,
+          "pr_auc": 0.9119281884434488,
+          "roc_auc": 0.947289156626506
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9001297016861219,
+            "metrics": {
+              "accuracy": 0.825187969924812,
+              "f1": 0.8033826638477801,
+              "roc_auc": 0.947289156626506,
+              "pr_auc": 0.9119281884434488
+            }
+          }
+        }
+      },
+      "2": {
+        "avg_metrics": {
+          "accuracy": 0.8195488721804511,
+          "f1": 0.7974683544303798,
+          "pr_auc": 0.9129300569223165,
+          "roc_auc": 0.9410843373493977
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.8972691807542262,
+            "metrics": {
+              "accuracy": 0.8195488721804511,
+              "f1": 0.7974683544303798,
+              "roc_auc": 0.9410843373493977,
+              "pr_auc": 0.9129300569223165
+            }
+          }
+        }
+      },
+      "4": {
+        "avg_metrics": {
+          "accuracy": 0.8289473684210527,
+          "f1": 0.8067940552016986,
+          "pr_auc": 0.9347022399684022,
+          "roc_auc": 0.9567771084337349
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.8987012987012987,
+            "metrics": {
+              "accuracy": 0.8289473684210527,
+              "f1": 0.8067940552016986,
+              "roc_auc": 0.9567771084337349,
+              "pr_auc": 0.9347022399684022
+            }
+          }
+        }
+      },
+      "7": {
+        "avg_metrics": {
+          "accuracy": 0.8289473684210527,
+          "f1": 0.8092243186582809,
+          "pr_auc": 0.9336968001673909,
+          "roc_auc": 0.9570632530120482
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              128,
+              2,
+              0.5,
+              0.005
+            ],
+            "best_val_f1": 0.8980645161290323,
+            "metrics": {
+              "accuracy": 0.8289473684210527,
+              "f1": 0.8092243186582809,
+              "roc_auc": 0.9570632530120482,
+              "pr_auc": 0.9336968001673909
+            }
+          }
+        }
+      }
+    },
+    "random_rewired": {
+      "42": {
+        "avg_metrics": {
+          "accuracy": 0.8289473684210527,
+          "f1": 0.8043010752688172,
+          "pr_auc": 0.8591764057382392,
+          "roc_auc": 0.9124246987951807
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              32,
+              2,
+              0.5,
+              0.01
+            ],
+            "best_val_f1": 0.9051282051282051,
+            "metrics": {
+              "accuracy": 0.8289473684210527,
+              "f1": 0.8043010752688172,
+              "roc_auc": 0.9124246987951807,
+              "pr_auc": 0.8591764057382392
+            }
+          }
+        }
+      },
+      "1": {
+        "avg_metrics": {
+          "accuracy": 0.8176691729323309,
+          "f1": 0.7974947807933194,
+          "pr_auc": 0.9008755531903174,
+          "roc_auc": 0.9389307228915662
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9048239895697523,
+            "metrics": {
+              "accuracy": 0.8176691729323309,
+              "f1": 0.7974947807933194,
+              "roc_auc": 0.9389307228915662,
+              "pr_auc": 0.9008755531903174
+            }
+          }
+        }
+      },
+      "2": {
+        "avg_metrics": {
+          "accuracy": 0.8402255639097744,
+          "f1": 0.8131868131868132,
+          "pr_auc": 0.9253162256253561,
+          "roc_auc": 0.9547289156626506
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9090909090909091,
+            "metrics": {
+              "accuracy": 0.8402255639097744,
+              "f1": 0.8131868131868132,
+              "roc_auc": 0.9547289156626506,
+              "pr_auc": 0.9253162256253561
+            }
+          }
+        }
+      },
+      "4": {
+        "avg_metrics": {
+          "accuracy": 0.8139097744360902,
+          "f1": 0.791578947368421,
+          "pr_auc": 0.8944609096376547,
+          "roc_auc": 0.9276054216867469
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              128,
+              2,
+              0.3,
+              0.005
+            ],
+            "best_val_f1": 0.9043250327653998,
+            "metrics": {
+              "accuracy": 0.8139097744360902,
+              "f1": 0.791578947368421,
+              "roc_auc": 0.9276054216867469,
+              "pr_auc": 0.8944609096376547
+            }
+          }
+        }
+      },
+      "7": {
+        "avg_metrics": {
+          "accuracy": 0.8345864661654135,
+          "f1": 0.8070175438596491,
+          "pr_auc": 0.8606492768575166,
+          "roc_auc": 0.919382530120482
+        },
+        "per_region": {
+          "South and Central Asia": {
+            "n_test": 532,
+            "best_config": [
+              32,
+              2,
+              0.3,
+              0.01
+            ],
+            "best_val_f1": 0.9090909090909091,
+            "metrics": {
+              "accuracy": 0.8345864661654135,
+              "f1": 0.8070175438596491,
+              "roc_auc": 0.919382530120482,
+              "pr_auc": 0.8606492768575166
+            }
+          }
+        }
+      }
+    }
+  }
+}
