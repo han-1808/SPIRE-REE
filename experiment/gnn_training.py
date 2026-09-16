@@ -3,8 +3,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "preprocessing"))
 
 import numpy as np
+from sklearn.neighbors import NearestNeighbors
 import torch
 import torch.nn.functional as F
+
+from torch_threads import limit_torch_threads
+
+limit_torch_threads()  # see preprocessing/torch_threads.py: avoids an OpenMP deadlock
 from sklearn.metrics import (
     accuracy_score,
     average_precision_score,
@@ -15,7 +20,7 @@ from sklearn.metrics import (
 )
 from torch.nn import Identity, Linear
 from torch_geometric.data import Data
-from torch_geometric.nn import GATConv, GCNConv, SAGEConv
+from torch_geometric.nn import GATConv, GCNConv, GraphConv, SAGEConv
 
 
 class GraphSAGE(torch.nn.Module):
@@ -43,6 +48,60 @@ class GraphSAGE(torch.nn.Module):
             x = F.relu(h + self.skips[i](x))
             x = F.dropout(x, p=self.dropout, training=self.training)
         return self.convs[-1](x, edge_index)
+
+
+class GraphSAGEWeighted(torch.nn.Module):
+    """
+    SPIRE's GraphSAGE backbone, made edge-weight aware.
+
+    The graph this pipeline builds is explicitly weighted -- w_ij blends a
+    haversine spatial term with a cosine geological-similarity term (the
+    0.5/0.5 mix of Reviewer #2 Remark #5).  But `SAGEConv` takes only
+    (x, edge_index): SPIRE throws every one of those weights away and treats a
+    2,000 km neighbour identically to an adjacent one.  GCN and GAT do consume
+    `edge_weight`, which is why repairing the degenerate similarity vectors
+    (52% of edges had been silently halved) lifted GCN by +0.029 F1 / +0.108
+    ROC-AUC on Exp 1 while SPIRE barely moved -- the repaired signal travels a
+    channel SPIRE does not read.
+
+    `GraphConv` is the same functional form as `SAGEConv` with the weights put
+    back:
+
+        SAGEConv   x'_i = W1 x_i + W2 * mean_j(x_j)
+        GraphConv  x'_i = W1 x_i + W2 * aggr_j(e_ji * x_j)
+
+    With aggr="mean" the two are identical when every e_ji = 1, so this is
+    strictly a generalisation of the published architecture rather than a
+    different model -- the skip connections, batch norm, dropout and layer
+    sizing are unchanged.  That matters for the paper: it is the graph
+    weighting the method claims to exploit, finally reaching the encoder.
+    """
+
+    def __init__(self, in_dim, hidden_dim, out_dim, num_layers=2, dropout=0.5):
+        super().__init__()
+        self.dropout = dropout
+        self.convs = torch.nn.ModuleList()
+        self.bns = torch.nn.ModuleList()
+        self.skips = torch.nn.ModuleList()
+
+        dims = [in_dim] + [hidden_dim] * (num_layers - 1) + [out_dim]
+        for i in range(num_layers - 1):
+            self.convs.append(GraphConv(dims[i], dims[i + 1], aggr="mean"))
+            self.bns.append(torch.nn.BatchNorm1d(dims[i + 1]))
+            self.skips.append(
+                Linear(dims[i], dims[i + 1], bias=False) if dims[i] != dims[i + 1] else Identity()
+            )
+        self.convs.append(GraphConv(dims[-2], dims[-1], aggr="mean"))
+
+    def forward(self, data):
+        x, edge_index = data.x, data.edge_index
+        edge_weight = getattr(data, "edge_weight", None)
+        for i, conv in enumerate(self.convs[:-1]):
+            h = conv(x, edge_index, edge_weight)
+            h = self.bns[i](h)
+            x = F.relu(h + self.skips[i](x))
+            x = F.dropout(x, p=self.dropout, training=self.training)
+        return self.convs[-1](x, edge_index, edge_weight)
 
 
 class GCN(torch.nn.Module):
@@ -410,3 +469,40 @@ def train_gnn_model(
         print(f"Final Test Metrics: {final_test_metrics}")
 
     return model, history, final_test_metrics
+
+
+# ── Cached nearest-neighbour index ────────────────────────────────────────────
+
+_KNN_INDEX_CACHE: dict = {}
+_KNN_INDEX_CACHE_MAX = 16
+
+
+def haversine_knn_index(coords, n_neighbors: int):
+    """
+    Haversine NearestNeighbors index over `coords`, cached on the coordinate
+    values.
+
+    The inductive prediction path (`_predict_node` in run_gnn.py and its
+    siblings) asks for the nearest train+val nodes to ONE held-out node at a
+    time, and is called once per held-out node per model -- but it always
+    queries the same `coords_tv`. Rebuilding the tree on every call meant
+    roughly 12,000 index builds over ~2,700 points per seed in Exp 1, which
+    dominated its runtime. Results are identical either way: the same points
+    produce the same tree and the same neighbours.
+
+    Keyed on the coordinate bytes rather than object identity, so a new split
+    (different coords) transparently builds its own index and a recreated but
+    equal array still hits.
+    """
+    import hashlib
+
+    arr = np.ascontiguousarray(coords, dtype=np.float64)
+    key = (hashlib.blake2b(arr.tobytes(), digest_size=16).digest(), int(n_neighbors))
+    index = _KNN_INDEX_CACHE.get(key)
+    if index is None:
+        index = NearestNeighbors(n_neighbors=n_neighbors, metric="haversine")
+        index.fit(np.radians(arr))
+        if len(_KNN_INDEX_CACHE) >= _KNN_INDEX_CACHE_MAX:
+            _KNN_INDEX_CACHE.clear()
+        _KNN_INDEX_CACHE[key] = index
+    return index
