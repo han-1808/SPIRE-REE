@@ -118,6 +118,19 @@ def run_random_rewire_comparison(
         print(f"\n{'#'*60}\n  RUN seed={seed}\n{'#'*60}")
         for cond_name, rewire in [("real_graph", False), ("random_rewired", True)]:
             print(f"\n  ── {cond_name} ──")
+            # Seed the network initialisation, not just the rewiring RNG.
+            #
+            # Previously `seed` reached only _apply_rewire (nx.double_edge_swap and
+            # the weight permutation), so the GNN weights were drawn from whatever
+            # global torch state happened to be current. The five "seeds" were
+            # therefore five uncontrolled repeats of one configuration: the reported
+            # f1_std measured run-to-run jitter rather than seed variance, the run was
+            # not reproducible, and the real_graph arm did not reproduce the value the
+            # feature-ablation harness obtains for the identical configuration
+            # (0.8367 against 0.8374). Seeding here restores both properties and makes
+            # the two arms paired on initialisation as well as on split.
+            torch.manual_seed(seed)
+            np.random.seed(seed)
             per_region: dict = {}
             for region in regions:
                 graph_artifacts = _build_graph_artifacts(processed_df, region, _MODE)
@@ -142,10 +155,23 @@ def run_random_rewire_comparison(
 
 
 def _summarize(results: dict, seeds: list[int]) -> dict:
+    """Store every metric, not F1 alone.
+
+    The previous version kept only f1_mean/f1_std, which forced the ROC-AUC and
+    PR-AUC values quoted in the response to be averaged by hand from the per-seed
+    records. Those are precisely the metrics on which the real graph separates from
+    the rewired one, so they belong in the stored summary.
+    """
     summary = {}
     for cond in ["real_graph", "random_rewired"]:
-        f1s = [results[cond][str(s)]["avg_metrics"]["f1"] for s in seeds]
-        summary[cond] = {"f1_mean": float(np.mean(f1s)), "f1_std": float(np.std(f1s))}
+        per_seed = [results[cond][str(s)]["avg_metrics"] for s in seeds]
+        keys = {k for m in per_seed for k in m}
+        block = {}
+        for k in sorted(keys):
+            vals = [m[k] for m in per_seed if k in m]
+            block[f"{k}_mean"] = float(np.mean(vals))
+            block[f"{k}_std"] = float(np.std(vals))  # population SD (ddof=0)
+        summary[cond] = block
     return summary
 
 
@@ -184,8 +210,12 @@ def main():
     print(f"\nResults saved → {out_path}")
 
     print("\n── Comment (17)-D summary ──")
-    print(f"real_graph      F1 = {summary['real_graph']['f1_mean']:.4f} ± {summary['real_graph']['f1_std']:.4f}")
-    print(f"random_rewired  F1 = {summary['random_rewired']['f1_mean']:.4f} ± {summary['random_rewired']['f1_std']:.4f}")
+    print(f"{'condition':<16}{'F1':>18}{'ROC-AUC':>18}{'PR-AUC':>18}")
+    for cond in ("real_graph", "random_rewired"):
+        row = f"{cond:<16}"
+        for k in ("f1", "roc_auc", "pr_auc"):
+            row += f"{summary[cond][f'{k}_mean']:.4f} ± {summary[cond][f'{k}_std']:.4f}".rjust(18)
+        print(row)
 
 
 if __name__ == "__main__":
