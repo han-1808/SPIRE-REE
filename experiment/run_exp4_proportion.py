@@ -40,7 +40,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from xgboost import XGBClassifier
 
-from config import OUTPUT_PATH
+from config import SKLEARN_N_JOBS, OUTPUT_PATH
 from feature_engineering import (
     _make_single_xgb_model,
     build_node_features_no_leakage,
@@ -78,22 +78,25 @@ N_RUNS = 5
 def _make_baseline_models(seed: int = 42) -> dict:
     return {
         "xgboost": XGBClassifier(
+            n_jobs=SKLEARN_N_JOBS,
             n_estimators=300, max_depth=6, learning_rate=0.05,
             subsample=0.8, colsample_bytree=0.8,
             objective="binary:logistic", eval_metric="logloss",
             random_state=seed, verbosity=0,
         ),
         "lightgbm": LGBMClassifier(
+            n_jobs=SKLEARN_N_JOBS,
             n_estimators=300, max_depth=6, learning_rate=0.05,
             subsample=0.8, colsample_bytree=0.8,
             random_state=seed, verbose=-1,
         ),
         "catboost": CatBoostClassifier(
+            thread_count=SKLEARN_N_JOBS,
             iterations=300, depth=6, learning_rate=0.05,
             loss_function="Logloss", random_seed=seed, verbose=False,
         ),
         "random_forest": RandomForestClassifier(
-            n_estimators=300, random_state=seed, n_jobs=-1,
+            n_estimators=300, random_state=seed, n_jobs=SKLEARN_N_JOBS,
         ),
         "svm": Pipeline([
             ("scaler", StandardScaler()),

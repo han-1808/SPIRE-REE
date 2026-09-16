@@ -25,6 +25,7 @@ from sklearn.svm import SVC
 from xgboost import XGBClassifier
 
 from config import (
+    SKLEARN_N_JOBS,
     BASELINE_METRICS_PATH,
 )
 from feature_engineering import create_spatial_split_indices
@@ -182,6 +183,7 @@ def train_xgboost_baseline(
     seed=42,
 ):
     model = XGBClassifier(
+        n_jobs=SKLEARN_N_JOBS,
         n_estimators=300,
         max_depth=6,
         learning_rate=0.05,
@@ -216,6 +218,7 @@ def train_lightgbm_baseline(
     from lightgbm import LGBMClassifier
 
     model = LGBMClassifier(
+        n_jobs=SKLEARN_N_JOBS,
         n_estimators=300,
         learning_rate=0.05,
         num_leaves=31,
@@ -247,6 +250,7 @@ def train_catboost_baseline(
     from catboost import CatBoostClassifier
 
     model = CatBoostClassifier(
+        thread_count=SKLEARN_N_JOBS,
         iterations=300,
         depth=6,
         learning_rate=0.05,
@@ -283,7 +287,7 @@ def train_random_forest_baseline(
         min_samples_split=2,
         min_samples_leaf=1,
         random_state=seed,
-        n_jobs=-1,
+        n_jobs=SKLEARN_N_JOBS,
     )
     return train_tabular_baseline(
         model=model,

@@ -40,7 +40,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from xgboost import XGBClassifier
 
-from config import OUTPUT_PATH, SAMPLE_INDUCTIVE_METRICS_PATH
+from config import SKLEARN_N_JOBS, OUTPUT_PATH, SAMPLE_INDUCTIVE_METRICS_PATH
 from feature_engineering import (
     _make_single_xgb_model,
     build_node_features_no_leakage,
@@ -182,6 +182,7 @@ def _run_baseline_for_region(
 
     tabular_models = {
         "xgboost": XGBClassifier(
+            n_jobs=SKLEARN_N_JOBS,
             n_estimators=300, max_depth=6, learning_rate=0.05,
             subsample=0.8, colsample_bytree=0.8,
             objective="binary:logistic", eval_metric="logloss", random_state=seed,
@@ -191,6 +192,7 @@ def _run_baseline_for_region(
             random_state=seed, verbose=-1, n_jobs=1,
         ),
         "catboost": CatBoostClassifier(
+            thread_count=SKLEARN_N_JOBS,
             iterations=300, depth=6, learning_rate=0.05,
             loss_function="Logloss", eval_metric="Logloss",
             random_seed=seed, verbose=False,
@@ -198,7 +200,7 @@ def _run_baseline_for_region(
         "random_forest": RandomForestClassifier(
             n_estimators=300, max_depth=None,
             min_samples_split=2, min_samples_leaf=1,
-            random_state=seed, n_jobs=-1,
+            random_state=seed, n_jobs=SKLEARN_N_JOBS,
         ),
         "svm": Pipeline([
             ("scaler", StandardScaler()),
