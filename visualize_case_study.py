@@ -110,25 +110,56 @@ def get_test_coords(df, n_sample=5, seed=42):
 
 
 def compute_metrics(gnn, bl):
-    """Avg SPIRE vs XGBoost F1 per region across all seeds."""
-    seeds = list(gnn["runs"].keys())
+    """Avg SPIRE vs XGBoost F1 per region, each averaged over its OWN seeds.
+
+    The two result files draw independent seed lists -- gnn_inductive.json uses
+    [1, 2, 4, 7, 42] and baseline.json uses [18, 19, 34, 36, 42], sharing only
+    seed 42. An earlier version read both models inside a single try/except and
+    appended only when BOTH lookups succeeded, so a seed missing from the
+    baseline file silently discarded the SPIRE value for that seed too. With one
+    shared seed that reduced the map to seed-42-only numbers: China showed 0.693
+    where the five-seed mean is 0.749, contradicting every per-region figure in
+    the paper and the response letter (whose macro-average, 0.829, is reproduced
+    only by averaging all five).
+
+    Each model is therefore now averaged over its own full seed list, and the
+    lookups are independent so one model's gaps cannot truncate the other's.
+    `f1_diff` is consequently a difference of means and NOT a paired difference;
+    the paired comparisons are in run_paired_significance_test.py, which handles
+    the seed mismatch explicitly.
+    """
+    def _per_region_f1(doc, extract):
+        acc = {}
+        for seed, run in doc.get("runs", {}).items():
+            for region, entry in (run.get("per_region") or {}).items():
+                v = extract(entry)
+                if isinstance(v, (int, float)):
+                    acc.setdefault(region, []).append(float(v))
+        return acc
+
+    spire = _per_region_f1(
+        gnn, lambda e: (e.get("test_metrics", {}).get("spire", {}) or {}).get("f1")
+    )
+    xgb = _per_region_f1(
+        bl, lambda e: (e.get("xgboost", {}).get("test_metrics", {}) or {}).get("f1")
+    )
+
     out = {}
     for region in gnn["regions"]:
-        spire_f1s, xgb_f1s = [], []
-        for seed in seeds:
-            try:
-                spire_f1 = gnn["runs"][seed]["per_region"][region]["test_metrics"]["spire"]["f1"]
-                xgb_f1   = bl["runs"][seed]["per_region"][region]["xgboost"]["test_metrics"]["f1"]
-                spire_f1s.append(spire_f1)
-                xgb_f1s.append(xgb_f1)
-            except Exception:
-                pass
-        if spire_f1s:
-            out[region] = {
-                "spire_f1": float(np.mean(spire_f1s)),
-                "xgb_f1":   float(np.mean(xgb_f1s)),
-                "f1_diff":  float(np.mean(spire_f1s) - np.mean(xgb_f1s)),
-            }
+        sv, xv = spire.get(region, []), xgb.get(region, [])
+        if not sv:
+            continue
+        entry = {"spire_f1": float(np.mean(sv)), "n_seeds_spire": len(sv)}
+        if xv:
+            entry["xgb_f1"] = float(np.mean(xv))
+            entry["f1_diff"] = float(np.mean(sv) - np.mean(xv))
+            entry["n_seeds_xgb"] = len(xv)
+        out[region] = entry
+
+    ns = {len(v) for v in spire.values()} | {len(v) for v in xgb.values()}
+    print(f"  Per-region F1 averaged over seeds per model "
+          f"(SPIRE n={sorted({len(v) for v in spire.values()})}, "
+          f"XGBoost n={sorted({len(v) for v in xgb.values()})})")
     return out
 
 
