@@ -1,3 +1,4 @@
+import os
 DATA_PATH = "data/Global_REE_occurrence_database.xlsx"
 OUTPUT_PATH = "data/Global_REE_occurrence_database_processed.xlsx"
 DASH_RECORDS_PATH = "data/has_dash_records.xlsx"
@@ -61,8 +62,21 @@ BASELINE_METRICS_PATH       = "result/baseline.json"
 GNN_INDUCTIVE_METRICS_PATH  = "result/gnn_inductive.json"
 SAMPLE_INDUCTIVE_METRICS_PATH = "result/inductive_sample.json"
 
+# Worker count for sklearn estimators that would otherwise take every core
+# (n_jobs=-1).  run_all.sh runs several experiment scripts at once, and one
+# process grabbing all cores oversubscribes the machine badly (observed load
+# average 60+ on 20 cores, with each process spawning 30-100 threads).
+# Results are unaffected: RandomForest parallelises over trees, so a given
+# random_state produces the same forest at any n_jobs.
+SKLEARN_N_JOBS = int(os.environ.get("SKLEARN_N_JOBS", "-1"))
+
 # ── Graph construction ───────────────────────────────────────────────────────
 KNN_K = 15
+# Adaptive-k threshold: edges longer than this are dropped (the closest
+# neighbour is always kept, so no node is isolated). Every experiment script
+# applies it; the preprocessing pipeline now does too, so the released graph
+# artifact is the same object the models are trained on.
+GRAPH_MAX_DIST_KM = 2000.0
 TOP_K_SHAP_FEATURES = 10
 DEFAULT_GNN_REGION_SWEEP_CONFIG = (32, 2, 0.5, 0.001)
 
