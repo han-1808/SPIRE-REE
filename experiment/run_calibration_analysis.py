@@ -175,9 +175,11 @@ def _plot_reliability(results: dict, out_plot: str) -> None:
         ax.set_ylim(0, 1)
         ax.set_xlabel("Mean predicted probability")
         ax.set_ylabel("Observed frequency")
-        brier = exp_result[model_name]["brier_score"]
-        ax.set_title(f"{exp_name} — {model_name} (Brier={brier:.3f})")
         ax.legend(fontsize=8)
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
+        ax.annotate(lbl, xy=(-0.02, 1.03), xycoords="axes fraction",
+                    fontsize=12, fontweight="bold", color="#1A1A2E",
+                    annotation_clip=False)
     fig.tight_layout()
     Path(out_plot).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_plot, dpi=150)

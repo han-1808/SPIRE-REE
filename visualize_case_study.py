@@ -218,12 +218,6 @@ def make_world_overview(df, test_coords, metrics, save_path):
                       edgecolor=color, alpha=0.93),
         )
 
-    ax.set_title(
-        "Global REE Deposit Distribution — Test Nodes Highlighted (Exp 1)\n"
-        "Annotated: regions where SPIRE F1 > XGBoost  (avg over 5 seeds)",
-        fontsize=11, fontweight="bold",
-    )
-
     region_patches = [
         mpatches.Patch(facecolor=REGION_COLORS.get(r, "#999999"), label=r)
         for r in sorted(REGION_COLORS)

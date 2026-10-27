@@ -157,13 +157,14 @@ def _save_histogram_plot(edge_weights: dict, out_path: str):
     import matplotlib.pyplot as plt
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4), sharey=True)
-    titles = {"spatial": "Spatial only", "geo": "Geological only (fixed)", "combined": "Combined (mixed, α=0.5)"}
     for ax, (name, ew) in zip(axes, edge_weights.items()):
         ax.hist(ew, bins=20, range=(0.0, 1.0), color="steelblue", edgecolor="white")
-        ax.set_title(titles.get(name, name))
         ax.set_xlabel("edge weight")
     axes[0].set_ylabel("edge count")
-    fig.suptitle("Edge-weight distributions (Comment 13-D)")
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
+        ax.annotate(lbl, xy=(-0.02, 1.03), xycoords="axes fraction",
+                    fontsize=12, fontweight="bold", color="#1A1A2E",
+                    annotation_clip=False)
     fig.tight_layout()
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_path, dpi=150)
