@@ -102,21 +102,19 @@ def _series(ablation_path, main_path):
 
 
 panels = [
-    ("result/ablation_feature.json", "result/gnn_inductive.json",
-     "Exp 1 — Leave-one-region-out"),
-    ("result/ablation_feature_exp3.json", "result/inductive_sample.json",
-     "Exp 3 — Global inductive"),
+    ("result/ablation_feature.json", "result/gnn_inductive.json"),
+    ("result/ablation_feature_exp3.json", "result/inductive_sample.json"),
 ]
 
-loaded = [(t, *_series(a, m)) for a, m, t in panels]
-available = [(t, l, d) for t, l, d in loaded if l]
+loaded = [_series(a, m) for a, m in panels]
+available = [(l, d) for l, d in loaded if l]
 if not available:
     raise SystemExit("No ablation result files found — run experiment/run_ablation*.py first.")
 
 fig, axes = plt.subplots(1, len(available), figsize=(6 * len(available), 4.5), squeeze=False)
 axes = axes[0]
 
-for ax, (title, conditions, data) in zip(axes, available):
+for ax, (conditions, data) in zip(axes, available):
     x = np.arange(len(conditions))
     width = 0.22
     offsets = np.linspace(-(len(METRICS) - 1) / 2 * width,
@@ -137,7 +135,6 @@ for ax, (title, conditions, data) in zip(axes, available):
     ax.set_xticks(x)
     ax.set_xticklabels(conditions, fontsize=8.5)
     ax.set_ylabel("Score", fontsize=10)
-    ax.set_title(title, fontsize=11, fontweight="bold", pad=8)
 
     # Scale to the data rather than a fixed window -- the pre-revision limits
     # (0.74-1.02) clipped the lower conditions once the corrected numbers came in.
@@ -152,8 +149,6 @@ for ax, (title, conditions, data) in zip(axes, available):
     ax.legend(fontsize=8, framealpha=0.85, loc="lower left",
               ncol=3, columnspacing=0.8, handlelength=1.2)
 
-fig.suptitle("Feature Ablation Study — SPIRE (avg ± std)",
-             fontsize=13, fontweight="bold", y=1.01)
 fig.tight_layout()
 out = "figures/fig_ablation.png"
 fig.savefig(out, dpi=150, bbox_inches="tight")

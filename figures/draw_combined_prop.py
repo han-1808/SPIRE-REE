@@ -156,7 +156,7 @@ def load_exp6():
 
 # ── Panel drawers ─────────────────────────────────────────────────────────────
 
-def draw_panel_a(ax, avg, title, std=None):
+def draw_panel_a(ax, avg, std=None):
     x       = np.arange(len(ALL_MODELS))
     w       = 0.35
     offsets = np.array([-w / 2, w / 2])
@@ -191,10 +191,9 @@ def draw_panel_a(ax, avg, title, std=None):
         loc="lower right", fontsize=9, framealpha=0.8,
         title="Metric", title_fontsize=9,
     )
-    ax.set_title(title, fontsize=11, fontweight="bold", pad=8)
 
 
-def draw_panel_b(ax, avg, per_region, title):
+def draw_panel_b(ax, avg, per_region):
     reg_list = [r for r in REGIONS if r in per_region]
     actual   = [per_region[r]["actual_proportion"] for r in reg_list]
 
@@ -227,10 +226,9 @@ def draw_panel_b(ax, avg, per_region, title):
     ax.grid(linestyle="--", alpha=0.4, zorder=0)
     ax.spines[["top", "right"]].set_visible(False)
     ax.legend(fontsize=8, framealpha=0.85)
-    ax.set_title(title, fontsize=11, fontweight="bold", pad=24)
 
 
-def draw_panel_c(ax, per_region, title, show_xlabel=True):
+def draw_panel_c(ax, per_region, show_xlabel=True):
     reg_list   = [r for r in REGIONS if r in per_region]
     reg_labels = [REG_SHORT[r] for r in reg_list]
     x2       = np.arange(len(reg_list))
@@ -265,7 +263,6 @@ def draw_panel_c(ax, per_region, title, show_xlabel=True):
     ax.grid(axis="y", linestyle="--", alpha=0.35, zorder=0)
     ax.spines[["top", "right"]].set_visible(False)
     ax.legend(loc="lower right", fontsize=8.5, framealpha=0.85)
-    ax.set_title(title, fontsize=11, fontweight="bold")
 
 
 # ── Figure A — Panel A × 3 ───────────────────────────────────────────────────
@@ -274,10 +271,10 @@ def make_fig_a(data_list):
     fig, axes = plt.subplots(3, 1, figsize=(18, 21))
     fig.patch.set_facecolor("#F8F9FA")
     fig.subplots_adjust(hspace=0.3)
-    for ax, (avg, std, _, title) in zip(axes, data_list):
+    for ax, (avg, std, _) in zip(axes, data_list):
         ax.set_facecolor("#F8F9FA")
-        draw_panel_a(ax, avg, title, std=std)
-    for ax, lbl in zip(axes, ["(1)", "(2)", "(3)"]):
+        draw_panel_a(ax, avg, std=std)
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
         ax.annotate(lbl, xy=(-0.02, 1.03), xycoords="axes fraction",
                     fontsize=12, fontweight="bold", color="#1A1A2E",
                     annotation_clip=False)
@@ -293,10 +290,10 @@ def make_fig_b(data_list):
     fig, axes = plt.subplots(1, 3, figsize=(18, 7))
     fig.patch.set_facecolor("#F8F9FA")
     fig.subplots_adjust(wspace=0.55)
-    for ax, (avg, _, pr, title) in zip(axes, data_list):
+    for ax, (avg, _, pr) in zip(axes, data_list):
         ax.set_facecolor("#F8F9FA")
-        draw_panel_b(ax, avg, pr, title)
-    for ax, lbl in zip(axes, ["(1)", "(2)", "(3)"]):
+        draw_panel_b(ax, avg, pr)
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
         ax.annotate(lbl, xy=(-0.08, 1.02), xycoords="axes fraction",
                     fontsize=12, fontweight="bold", color="#1A1A2E",
                     annotation_clip=False)
@@ -312,10 +309,10 @@ def make_fig_c(data_list):
     fig, axes = plt.subplots(3, 1, figsize=(18, 18))
     fig.patch.set_facecolor("#F8F9FA")
     fig.subplots_adjust(hspace=0.25)
-    for i, (ax, (_, _std, pr, title)) in enumerate(zip(axes, data_list)):
+    for i, (ax, (_, _std, pr)) in enumerate(zip(axes, data_list)):
         ax.set_facecolor("#F8F9FA")
-        draw_panel_c(ax, pr, title, show_xlabel=(i == 2))
-    for ax, lbl in zip(axes, ["(1)", "(2)", "(3)"]):
+        draw_panel_c(ax, pr, show_xlabel=(i == 2))
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
         ax.annotate(lbl, xy=(-0.02, 1.03), xycoords="axes fraction",
                     fontsize=12, fontweight="bold", color="#1A1A2E",
                     annotation_clip=False)
@@ -332,9 +329,9 @@ avg5, std5, pr5 = load_exp5()
 avg6, std6, pr6 = load_exp6()
 
 data_list = [
-    (avg4,  std4,  pr4,  "Exp 4 — Global Proportion: Error Metrics"),
-    (avg5, std5, pr5, "Exp 5 — Per-Region Proportion: Error Metrics"),
-    (avg6, std6, pr6, "Exp 6 — Global Inductive Proportion: Error Metrics"),
+    (avg4,  std4,  pr4),
+    (avg5, std5, pr5),
+    (avg6, std6, pr6),
 ]
 
 make_fig_a(data_list)

@@ -68,10 +68,6 @@ ax.set_yticklabels(
     fontsize=9,
 )
 ax.set_xlabel("Score", fontsize=11)
-ax.set_title(
-    "Graph Construction k Sensitivity — Exp 1 SPIRE",
-    fontsize=12, fontweight="bold", pad=10,
-)
 ax.set_xlim(0.78, 0.97)
 ax.xaxis.set_major_locator(mticker.MultipleLocator(0.02))
 ax.xaxis.set_minor_locator(mticker.MultipleLocator(0.01))

@@ -18,7 +18,6 @@ with open("result/hparam_sensitivity.json") as f:
     res = json.load(f)
 
 records = res["records"]
-region = res["region"]
 best_hidden, best_layers, best_dropout, best_lr = res["best_config"]
 
 hidden_dims = res["search_space"]["hidden_dim"]
@@ -46,14 +45,6 @@ ax.set_yticks(np.arange(len(hidden_dims)))
 ax.set_yticklabels(hidden_dims, fontsize=10)
 ax.set_xlabel("Learning rate", fontsize=11)
 ax.set_ylabel("Hidden dimension", fontsize=11)
-
-mean_f1 = float(np.nanmean(surface))
-std_f1 = float(np.nanstd(surface))
-ax.set_title(
-    f"Validation F1 — hidden dim × learning rate ({region})\n"
-    f"num_layers={best_layers}, dropout={best_dropout} fixed",
-    fontsize=11, fontweight="bold", pad=10,
-)
 
 # Cell annotations
 for i in range(len(hidden_dims)):

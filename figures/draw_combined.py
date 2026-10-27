@@ -170,7 +170,7 @@ def load_exp3():
 
 # ── Panel drawers ─────────────────────────────────────────────────────────────
 
-def draw_panel_a(ax, avg, title, std=None):
+def draw_panel_a(ax, avg, std=None):
     x       = np.arange(len(ALL_MODELS))
     w       = 0.26
     offsets = np.array([-w, 0, w])
@@ -205,10 +205,9 @@ def draw_panel_a(ax, avg, title, std=None):
         loc="lower right", fontsize=9, framealpha=0.8,
         title="Metric", title_fontsize=9,
     )
-    ax.set_title(title, fontsize=11, fontweight="bold", pad=8)
 
 
-def draw_panel_b(ax, avg, title):
+def draw_panel_b(ax, avg):
     N      = len(RADAR_METRICS)
     angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
     angles += angles[:1]
@@ -236,10 +235,9 @@ def draw_panel_b(ax, avg, title):
         ax.fill(angles, vals, color=color, alpha=0.05)
     ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.30),
               fontsize=7.5, framealpha=0.85, ncol=2)
-    ax.set_title(title, fontsize=11, fontweight="bold", pad=18)
 
 
-def draw_panel_c_gnn(ax, per_region, title, show_xlabel=True):
+def draw_panel_c_gnn(ax, per_region, show_xlabel=True):
     reg_labels = [REG_SHORT[r] for r in REGIONS]
     x2       = np.arange(len(REGIONS))
     gnn_list = [("spire", "SPIRE"), ("gcn", "GCN"), ("gat", "GAT")]
@@ -278,7 +276,6 @@ def draw_panel_c_gnn(ax, per_region, title, show_xlabel=True):
     ax.grid(axis="y", linestyle="--", alpha=0.35, zorder=0)
     ax.spines[["top", "right"]].set_visible(False)
     ax.legend(loc="lower right", fontsize=8.5, framealpha=0.85)
-    ax.set_title(title, fontsize=11, fontweight="bold")
 
 
 # ── Figure X — Panel A × 3 ───────────────────────────────────────────────────
@@ -287,10 +284,10 @@ def make_fig_x(data_list):
     fig, axes = plt.subplots(3, 1, figsize=(18, 21))
     fig.patch.set_facecolor("#F8F9FA")
     fig.subplots_adjust(hspace=0.3)
-    for ax, (avg, std, _, title) in zip(axes, data_list):
+    for ax, (avg, std, _) in zip(axes, data_list):
         ax.set_facecolor("#F8F9FA")
-        draw_panel_a(ax, avg, title, std=std)
-    for ax, lbl in zip(axes, ["(1)", "(2)", "(3)"]):
+        draw_panel_a(ax, avg, std=std)
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
         ax.annotate(lbl, xy=(-0.02, 1.03), xycoords="axes fraction",
                     fontsize=12, fontweight="bold", color="#1A1A2E",
                     annotation_clip=False)
@@ -307,10 +304,10 @@ def make_fig_y(data_list):
                              subplot_kw={"projection": "polar"})
     fig.patch.set_facecolor("#F8F9FA")
     fig.subplots_adjust(wspace=0.55)
-    for ax, (avg, _, __, title) in zip(axes, data_list):
+    for ax, (avg, _, __) in zip(axes, data_list):
         ax.set_facecolor("#FAFAFA")
-        draw_panel_b(ax, avg, title)
-    for ax, lbl in zip(axes, ["(1)", "(2)", "(3)"]):
+        draw_panel_b(ax, avg)
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
         ax.annotate(lbl, xy=(-0.08, 1.10), xycoords="axes fraction",
                     fontsize=12, fontweight="bold", color="#1A1A2E",
                     annotation_clip=False)
@@ -326,10 +323,10 @@ def make_fig_z(data_list):
     fig, axes = plt.subplots(3, 1, figsize=(18, 18))
     fig.patch.set_facecolor("#F8F9FA")
     fig.subplots_adjust(hspace=0.25)
-    for i, (ax, (_, _std, pr, title)) in enumerate(zip(axes, data_list)):
+    for i, (ax, (_, _std, pr)) in enumerate(zip(axes, data_list)):
         ax.set_facecolor("#F8F9FA")
-        draw_panel_c_gnn(ax, pr, title, show_xlabel=(i == 2))
-    for ax, lbl in zip(axes, ["(1)", "(2)", "(3)"]):
+        draw_panel_c_gnn(ax, pr, show_xlabel=(i == 2))
+    for ax, lbl in zip(axes, ["a", "b", "c"]):
         ax.annotate(lbl, xy=(-0.02, 1.03), xycoords="axes fraction",
                     fontsize=12, fontweight="bold", color="#1A1A2E",
                     annotation_clip=False)
@@ -346,9 +343,9 @@ avg2, std2, pr2 = load_exp2()
 avg3, std3, pr3 = load_exp3()
 
 data_list = [
-    (avg1,  std1,  pr1,  "Exp 1 — Leave-one-region-out: Average Metrics"),
-    (avg2, std2, pr2, "Exp 2 — Per-Region, Spatial Block Split: Average Metrics"),
-    (avg3, std3, pr3, "Exp 3 — Global Inductive, Spatial Block Split: Average Metrics"),
+    (avg1,  std1,  pr1),
+    (avg2, std2, pr2),
+    (avg3, std3, pr3),
 ]
 
 make_fig_x(data_list)
