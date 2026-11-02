@@ -1,0 +1,655 @@
+{
+  "experiment": "pooled_vs_stratified",
+  "description": "Experiment 1 (leave-one-region-out). Tabular XGBoost+CatBoost+RF ensemble (SPIRE's prior configuration) fitted on all training records (pooled) or only on the training records of one lithological group (stratified), scored on the same held-out records of that group. Not a stratified SPIRE.",
+  "seeds": [
+    42,
+    1,
+    2,
+    4,
+    7
+  ],
+  "groups": [
+    "is_placer",
+    "is_felsic_pegmatite",
+    "is_carbonatite_system",
+    "is_alkaline_intrusive",
+    "is_sedimentary"
+  ],
+  "min_train_records": 30,
+  "summary": {
+    "is_placer": {
+      "n_test_predictions_per_seed": [
+        987,
+        987,
+        987,
+        987,
+        987
+      ],
+      "f1": {
+        "pooled_mean": 0.9332374004695476,
+        "stratified_mean": 0.9357201494320415,
+        "mean_diff_stratified_minus_pooled": 0.0024827489624939412,
+        "n_seeds_stratified_higher": 3,
+        "wilcoxon_statistic": 5.0,
+        "wilcoxon_p": 0.625
+      },
+      "roc_auc": {
+        "pooled_mean": 0.734645851767581,
+        "stratified_mean": 0.6318206716386466,
+        "mean_diff_stratified_minus_pooled": -0.10282518012893438,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      },
+      "pr_auc": {
+        "pooled_mean": 0.9509561399585419,
+        "stratified_mean": 0.9353898166067041,
+        "mean_diff_stratified_minus_pooled": -0.015566323351837785,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      }
+    },
+    "is_felsic_pegmatite": {
+      "n_test_predictions_per_seed": [
+        401,
+        401,
+        401,
+        401,
+        401
+      ],
+      "f1": {
+        "pooled_mean": 0.8577071734576662,
+        "stratified_mean": 0.8194583744343248,
+        "mean_diff_stratified_minus_pooled": -0.03824879902334142,
+        "n_seeds_stratified_higher": 1,
+        "wilcoxon_statistic": 1.0,
+        "wilcoxon_p": 0.125
+      },
+      "roc_auc": {
+        "pooled_mean": 0.8986782061369001,
+        "stratified_mean": 0.8738683451350644,
+        "mean_diff_stratified_minus_pooled": -0.024809861001835798,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      },
+      "pr_auc": {
+        "pooled_mean": 0.9350480438768825,
+        "stratified_mean": 0.9194003181287534,
+        "mean_diff_stratified_minus_pooled": -0.01564772574812905,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      }
+    },
+    "is_carbonatite_system": {
+      "n_test_predictions_per_seed": [
+        377,
+        377,
+        377,
+        377,
+        377
+      ],
+      "f1": {
+        "pooled_mean": 0.8225063829104189,
+        "stratified_mean": 0.8170841380848882,
+        "mean_diff_stratified_minus_pooled": -0.0054222448255305975,
+        "n_seeds_stratified_higher": 1,
+        "wilcoxon_statistic": 4.0,
+        "wilcoxon_p": 0.4375
+      },
+      "roc_auc": {
+        "pooled_mean": 0.8176050445281214,
+        "stratified_mean": 0.7901888709581018,
+        "mean_diff_stratified_minus_pooled": -0.027416173570019776,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      },
+      "pr_auc": {
+        "pooled_mean": 0.8600488584236358,
+        "stratified_mean": 0.8294545682690255,
+        "mean_diff_stratified_minus_pooled": -0.030594290154610036,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      }
+    },
+    "is_alkaline_intrusive": {
+      "n_test_predictions_per_seed": [
+        353,
+        353,
+        353,
+        353,
+        353
+      ],
+      "f1": {
+        "pooled_mean": 0.8595503097396383,
+        "stratified_mean": 0.8545822785523075,
+        "mean_diff_stratified_minus_pooled": -0.004968031187330735,
+        "n_seeds_stratified_higher": 2,
+        "wilcoxon_statistic": 4.0,
+        "wilcoxon_p": 0.4375
+      },
+      "roc_auc": {
+        "pooled_mean": 0.8594398340248963,
+        "stratified_mean": 0.8572021339656194,
+        "mean_diff_stratified_minus_pooled": -0.002237700059276859,
+        "n_seeds_stratified_higher": 2,
+        "wilcoxon_statistic": 5.0,
+        "wilcoxon_p": 0.625
+      },
+      "pr_auc": {
+        "pooled_mean": 0.9259450314300561,
+        "stratified_mean": 0.926694981192942,
+        "mean_diff_stratified_minus_pooled": 0.0007499497628858043,
+        "n_seeds_stratified_higher": 3,
+        "wilcoxon_statistic": 7.0,
+        "wilcoxon_p": 1.0
+      }
+    },
+    "is_sedimentary": {
+      "n_test_predictions_per_seed": [
+        278,
+        278,
+        278,
+        278,
+        278
+      ],
+      "f1": {
+        "pooled_mean": 0.670081861442769,
+        "stratified_mean": 0.5781901503971334,
+        "mean_diff_stratified_minus_pooled": -0.09189171104563565,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      },
+      "roc_auc": {
+        "pooled_mean": 0.6941773200144921,
+        "stratified_mean": 0.5185704673671135,
+        "mean_diff_stratified_minus_pooled": -0.17560685264737852,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      },
+      "pr_auc": {
+        "pooled_mean": 0.7000128189358192,
+        "stratified_mean": 0.5588905458648028,
+        "mean_diff_stratified_minus_pooled": -0.14112227307101655,
+        "n_seeds_stratified_higher": 0,
+        "wilcoxon_statistic": 0.0,
+        "wilcoxon_p": 0.0625
+      }
+    }
+  },
+  "per_seed": {
+    "42": {
+      "is_placer": {
+        "n_test_predictions": 987,
+        "n_regions": 8,
+        "pooled": {
+          "f1": 0.9341252699784017,
+          "roc_auc": 0.7593329962499473,
+          "pr_auc": 0.957925254172973
+        },
+        "stratified": {
+          "f1": 0.9312398484028154,
+          "roc_auc": 0.6558905321703956,
+          "pr_auc": 0.9421069263286204
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test_predictions": 401,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8382066276803118,
+          "roc_auc": 0.8922764227642277,
+          "pr_auc": 0.9323959758984224
+        },
+        "stratified": {
+          "f1": 0.8410852713178295,
+          "roc_auc": 0.877445580907422,
+          "pr_auc": 0.922295001477695
+        }
+      },
+      "is_carbonatite_system": {
+        "n_test_predictions": 377,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8267716535433071,
+          "roc_auc": 0.8222013029705337,
+          "pr_auc": 0.8634284837550237
+        },
+        "stratified": {
+          "f1": 0.8044692737430168,
+          "roc_auc": 0.7745801207339669,
+          "pr_auc": 0.8159317346810685
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test_predictions": 353,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8656126482213439,
+          "roc_auc": 0.8579579134558388,
+          "pr_auc": 0.9260436915103183
+        },
+        "stratified": {
+          "f1": 0.8490945674044266,
+          "roc_auc": 0.8678682572614108,
+          "pr_auc": 0.9338843300757074
+        }
+      },
+      "is_sedimentary": {
+        "n_test_predictions": 278,
+        "n_regions": 9,
+        "pooled": {
+          "f1": 0.6644518272425249,
+          "roc_auc": 0.6707468557528079,
+          "pr_auc": 0.678887063450235
+        },
+        "stratified": {
+          "f1": 0.5648414985590778,
+          "roc_auc": 0.5403964598105688,
+          "pr_auc": 0.5603462932099184
+        }
+      }
+    },
+    "1": {
+      "is_placer": {
+        "n_test_predictions": 987,
+        "n_regions": 8,
+        "pooled": {
+          "f1": 0.9300054259359739,
+          "roc_auc": 0.7169974297391817,
+          "pr_auc": 0.9449663214846056
+        },
+        "stratified": {
+          "f1": 0.9312398484028154,
+          "roc_auc": 0.6220926557957275,
+          "pr_auc": 0.9336318412994815
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test_predictions": 401,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8670756646216768,
+          "roc_auc": 0.9061369000786782,
+          "pr_auc": 0.9379110478791429
+        },
+        "stratified": {
+          "f1": 0.8387096774193549,
+          "roc_auc": 0.8932730133752951,
+          "pr_auc": 0.9290475911478844
+        }
+      },
+      "is_carbonatite_system": {
+        "n_test_predictions": 377,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8096192384769539,
+          "roc_auc": 0.8122796007411391,
+          "pr_auc": 0.8587347658221921
+        },
+        "stratified": {
+          "f1": 0.806949806949807,
+          "roc_auc": 0.782051282051282,
+          "pr_auc": 0.8279234128315581
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test_predictions": 353,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8629032258064516,
+          "roc_auc": 0.8587544457617072,
+          "pr_auc": 0.9266003110027294
+        },
+        "stratified": {
+          "f1": 0.8663967611336032,
+          "roc_auc": 0.8625333432128037,
+          "pr_auc": 0.9274855822333159
+        }
+      },
+      "is_sedimentary": {
+        "n_test_predictions": 278,
+        "n_regions": 9,
+        "pooled": {
+          "f1": 0.6366782006920415,
+          "roc_auc": 0.6728947777030174,
+          "pr_auc": 0.6898755400850555
+        },
+        "stratified": {
+          "f1": 0.543859649122807,
+          "roc_auc": 0.45854251850318306,
+          "pr_auc": 0.5291269294154499
+        }
+      }
+    },
+    "2": {
+      "is_placer": {
+        "n_test_predictions": 987,
+        "n_regions": 8,
+        "pooled": {
+          "f1": 0.93756727664155,
+          "roc_auc": 0.7503476172418151,
+          "pr_auc": 0.9514692555788727
+        },
+        "stratified": {
+          "f1": 0.9364224137931034,
+          "roc_auc": 0.6776640121350019,
+          "pr_auc": 0.9433432703988751
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test_predictions": 401,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8616600790513834,
+          "roc_auc": 0.8997115132441647,
+          "pr_auc": 0.9345221580831296
+        },
+        "stratified": {
+          "f1": 0.826271186440678,
+          "roc_auc": 0.8833988985051141,
+          "pr_auc": 0.9252185582235495
+        }
+      },
+      "is_carbonatite_system": {
+        "n_test_predictions": 377,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8330058939096268,
+          "roc_auc": 0.8197806467037237,
+          "pr_auc": 0.85714344505642
+        },
+        "stratified": {
+          "f1": 0.8223938223938224,
+          "roc_auc": 0.7988613950152411,
+          "pr_auc": 0.8433276970461517
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test_predictions": 353,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8502994011976048,
+          "roc_auc": 0.8529379075281565,
+          "pr_auc": 0.9213770663635786
+        },
+        "stratified": {
+          "f1": 0.8466257668711656,
+          "roc_auc": 0.8422125074096029,
+          "pr_auc": 0.9177579504017593
+        }
+      },
+      "is_sedimentary": {
+        "n_test_predictions": 278,
+        "n_regions": 9,
+        "pooled": {
+          "f1": 0.6666666666666666,
+          "roc_auc": 0.6849541949174474,
+          "pr_auc": 0.6799851526735363
+        },
+        "stratified": {
+          "f1": 0.5555555555555556,
+          "roc_auc": 0.45411728171419696,
+          "pr_auc": 0.49163724028238687
+        }
+      }
+    },
+    "4": {
+      "is_placer": {
+        "n_test_predictions": 987,
+        "n_regions": 8,
+        "pooled": {
+          "f1": 0.9381387842926304,
+          "roc_auc": 0.7396820882315763,
+          "pr_auc": 0.9538591054121901
+        },
+        "stratified": {
+          "f1": 0.9404186795491143,
+          "roc_auc": 0.5885897273838115,
+          "pr_auc": 0.9280588921689715
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test_predictions": 401,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.872,
+          "roc_auc": 0.9100970364542355,
+          "pr_auc": 0.9399399042901135
+        },
+        "stratified": {
+          "f1": 0.8057851239669421,
+          "roc_auc": 0.8766719118804092,
+          "pr_auc": 0.9159879855437484
+        }
+      },
+      "is_carbonatite_system": {
+        "n_test_predictions": 377,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.831013916500994,
+          "roc_auc": 0.8231874962644194,
+          "pr_auc": 0.8596846800064225
+        },
+        "stratified": {
+          "f1": 0.8278529980657641,
+          "roc_auc": 0.7992050684358376,
+          "pr_auc": 0.8301679641373804
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test_predictions": 353,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8600405679513184,
+          "roc_auc": 0.864830320094843,
+          "pr_auc": 0.9261926057947611
+        },
+        "stratified": {
+          "f1": 0.8676171079429735,
+          "roc_auc": 0.861106994665086,
+          "pr_auc": 0.9275711094533833
+        }
+      },
+      "is_sedimentary": {
+        "n_test_predictions": 278,
+        "n_regions": 9,
+        "pooled": {
+          "f1": 0.6959459459459459,
+          "roc_auc": 0.7163966668391907,
+          "pr_auc": 0.7235479416843555
+        },
+        "stratified": {
+          "f1": 0.5756676557863502,
+          "roc_auc": 0.5430878318927592,
+          "pr_auc": 0.5939136634079548
+        }
+      }
+    },
+    "7": {
+      "is_placer": {
+        "n_test_predictions": 987,
+        "n_regions": 8,
+        "pooled": {
+          "f1": 0.9263502454991817,
+          "roc_auc": 0.7068691273753845,
+          "pr_auc": 0.9465607631440677
+        },
+        "stratified": {
+          "f1": 0.939279957012359,
+          "roc_auc": 0.6148664307082965,
+          "pr_auc": 0.9298081528375717
+        }
+      },
+      "is_felsic_pegmatite": {
+        "n_test_predictions": 401,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8495934959349594,
+          "roc_auc": 0.8851691581431943,
+          "pr_auc": 0.9304711332336042
+        },
+        "stratified": {
+          "f1": 0.7854406130268199,
+          "roc_auc": 0.838552321007081,
+          "pr_auc": 0.90445245425089
+        }
+      },
+      "is_carbonatite_system": {
+        "n_test_predictions": 377,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8121212121212121,
+          "roc_auc": 0.8105761759607913,
+          "pr_auc": 0.8612529174781202
+        },
+        "stratified": {
+          "f1": 0.8237547892720306,
+          "roc_auc": 0.7962464885541809,
+          "pr_auc": 0.8299220326489696
+        }
+      },
+      "is_alkaline_intrusive": {
+        "n_test_predictions": 353,
+        "n_regions": 10,
+        "pooled": {
+          "f1": 0.8588957055214724,
+          "roc_auc": 0.862718583283936,
+          "pr_auc": 0.9295114824788934
+        },
+        "stratified": {
+          "f1": 0.8431771894093686,
+          "roc_auc": 0.8522895672791938,
+          "pr_auc": 0.926775933800544
+        }
+      },
+      "is_sedimentary": {
+        "n_test_predictions": 278,
+        "n_regions": 9,
+        "pooled": {
+          "f1": 0.6866666666666666,
+          "roc_auc": 0.7258941048599968,
+          "pr_auc": 0.7277683967859142
+        },
+        "stratified": {
+          "f1": 0.6510263929618768,
+          "roc_auc": 0.5967082449148595,
+          "pr_auc": 0.6194286030083038
+        }
+      }
+    }
+  },
+  "skipped_folds": [
+    {
+      "seed": 42,
+      "region": "East Asia",
+      "group": "is_sedimentary",
+      "n_test": 5,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 42,
+      "region": "Europe",
+      "group": "is_placer",
+      "n_test": 22,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 42,
+      "region": "Middle East",
+      "group": "is_placer",
+      "n_test": 6,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 1,
+      "region": "East Asia",
+      "group": "is_sedimentary",
+      "n_test": 5,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 1,
+      "region": "Europe",
+      "group": "is_placer",
+      "n_test": 22,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 1,
+      "region": "Middle East",
+      "group": "is_placer",
+      "n_test": 6,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 2,
+      "region": "East Asia",
+      "group": "is_sedimentary",
+      "n_test": 5,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 2,
+      "region": "Europe",
+      "group": "is_placer",
+      "n_test": 22,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 2,
+      "region": "Middle East",
+      "group": "is_placer",
+      "n_test": 6,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 4,
+      "region": "East Asia",
+      "group": "is_sedimentary",
+      "n_test": 5,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 4,
+      "region": "Europe",
+      "group": "is_placer",
+      "n_test": 22,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 4,
+      "region": "Middle East",
+      "group": "is_placer",
+      "n_test": 6,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 7,
+      "region": "East Asia",
+      "group": "is_sedimentary",
+      "n_test": 5,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 7,
+      "region": "Europe",
+      "group": "is_placer",
+      "n_test": 22,
+      "reason": "single class in held-out region"
+    },
+    {
+      "seed": 7,
+      "region": "Middle East",
+      "group": "is_placer",
+      "n_test": 6,
+      "reason": "single class in held-out region"
+    }
+  ]
+}

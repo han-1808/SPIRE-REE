@@ -1,0 +1,402 @@
+{
+  "experiment": "geology_rationale",
+  "description": "Descriptive statistics for the geological rationale (Reviewer 1, Remark 1). Labels: has_ree = REE_Mins documented. Errors are SPIRE Experiment 1 predictions averaged over runs per record.",
+  "n_records": 3112,
+  "n_positive": 2025,
+  "minerals_by_group": {
+    "is_carbonatite_system": {
+      "n_positive_records": 234,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.6752136752136753,
+      "monazite_record_share": 0.6752136752136753,
+      "top3_mineral_mentions": {
+        "monazite": 148,
+        "bastnäsite": 87,
+        "allanite": 41
+      }
+    },
+    "is_alkaline_intrusive": {
+      "n_positive_records": 241,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.4854771784232365,
+      "monazite_record_share": 0.4854771784232365,
+      "top3_mineral_mentions": {
+        "monazite": 108,
+        "bastnäsite": 71,
+        "allanite": 54
+      }
+    },
+    "is_mafic_ultramafic": {
+      "n_positive_records": 83,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.5783132530120482,
+      "monazite_record_share": 0.5783132530120482,
+      "top3_mineral_mentions": {
+        "monazite": 40,
+        "apatite": 23,
+        "allanite": 17
+      }
+    },
+    "is_felsic_pegmatite": {
+      "n_positive_records": 246,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.6178861788617886,
+      "monazite_record_share": 0.6178861788617886,
+      "top3_mineral_mentions": {
+        "monazite": 132,
+        "allanite": 89,
+        "xenotime": 66
+      }
+    },
+    "is_metamorphic_metasomatic": {
+      "n_positive_records": 160,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.59375,
+      "monazite_record_share": 0.59375,
+      "top3_mineral_mentions": {
+        "monazite": 87,
+        "allanite": 51,
+        "bastnäsite": 30
+      }
+    },
+    "is_sedimentary": {
+      "n_positive_records": 144,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.5902777777777778,
+      "monazite_record_share": 0.5902777777777778,
+      "top3_mineral_mentions": {
+        "monazite": 77,
+        "xenotime": 36,
+        "bastnäsite": 24
+      }
+    },
+    "is_placer": {
+      "n_positive_records": 907,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.9867695700110254,
+      "monazite_record_share": 0.9867695700110254,
+      "top3_mineral_mentions": {
+        "monazite": 880,
+        "xenotime": 152,
+        "allanite": 27
+      }
+    },
+    "is_supergene_lateritic": {
+      "n_positive_records": 35,
+      "top_mineral": "monazite",
+      "top_mineral_record_share": 0.7428571428571429,
+      "monazite_record_share": 0.7428571428571429,
+      "top3_mineral_mentions": {
+        "monazite": 25,
+        "bastnäsite": 10,
+        "xenotime": 9
+      }
+    },
+    "is_unclassified": {
+      "n_positive_records": 24,
+      "top_mineral": "allanite",
+      "top_mineral_record_share": 0.375,
+      "monazite_record_share": 0.375,
+      "top3_mineral_mentions": {
+        "allanite": 9,
+        "monazite": 8,
+        "xenotime": 2
+      }
+    }
+  },
+  "carbonatite_dep_type": {
+    "carbonatite": 250,
+    "carbonatite with residual enrichment": 93,
+    "carbonatite(?)": 10,
+    "carbonatite with residual enrichment(?)": 8,
+    "alkaline igneous; carbonatite(?)": 2,
+    "alkaline igneous; carbonatite": 2,
+    "carbonatite; carbonatite with residual enrichment(?)": 1,
+    "carbonatite with residual enrichment; tailings": 1,
+    "carbonatite with residual enrichment; carbonatite": 1,
+    "alkaline igneous with residual enrichment": 1,
+    "alkaline igneous": 1,
+    "other igneous deposit": 1,
+    "other igneous deposit; supergene": 1,
+    "carbonatite; alkaline igneous": 1,
+    "other igneous deposit; carbonatite(?)": 1,
+    "other igneous deposit; carbonatite": 1,
+    "uranium deposit; supergene": 1,
+    "other igneous deposit(?)": 1
+  },
+  "ion_adsorption": {
+    "rule": "'adsorp' in Dep_Type or Dep_Note (case-insensitive)",
+    "n_records": 59,
+    "record_ids": [
+      4086,
+      4090,
+      4094,
+      4105,
+      5002,
+      5006,
+      5012,
+      5013,
+      5018,
+      5045,
+      5046,
+      5048,
+      5051,
+      5055,
+      5061,
+      5077,
+      5089,
+      5104,
+      5111,
+      5113,
+      5123,
+      5125,
+      5126,
+      5127,
+      5133,
+      5139,
+      5141,
+      5152,
+      5159,
+      5164,
+      5187,
+      5203,
+      5231,
+      5237,
+      5278,
+      5295,
+      5307,
+      5312,
+      5313,
+      5314,
+      5315,
+      5343,
+      5370,
+      5396,
+      5400,
+      5403,
+      5408,
+      5422,
+      5433,
+      5457,
+      5469,
+      5488,
+      5490,
+      3384,
+      3390,
+      3398,
+      3439,
+      8074,
+      4732
+    ],
+    "by_region": {
+      "China": 49,
+      "Africa": 4,
+      "East Asia": 4,
+      "Europe": 1,
+      "South America": 1
+    },
+    "group_flags": {
+      "is_carbonatite_system": 0,
+      "is_alkaline_intrusive": 3,
+      "is_mafic_ultramafic": 1,
+      "is_felsic_pegmatite": 18,
+      "is_metamorphic_metasomatic": 1,
+      "is_sedimentary": 4,
+      "is_placer": 0,
+      "is_supergene_lateritic": 0,
+      "is_unclassified": 30
+    },
+    "positive_rate": 0.3728813559322034,
+    "spire_exp1": {
+      "n_runs": 5,
+      "error_rate": 0.3932203389830508,
+      "error_rate_other_records": 0.2288241074353095,
+      "error_rate_negatives": 0.5243243243243243,
+      "error_rate_positives": 0.17272727272727273,
+      "share_of_china_errors": 0.31921824104234525
+    }
+  },
+  "region_group_cells": {
+    "counts": {
+      "Africa": {
+        "is_carbonatite_system": 77,
+        "is_alkaline_intrusive": 54,
+        "is_mafic_ultramafic": 7,
+        "is_felsic_pegmatite": 33,
+        "is_metamorphic_metasomatic": 40,
+        "is_sedimentary": 14,
+        "is_placer": 47,
+        "is_supergene_lateritic": 6,
+        "is_unclassified": 9
+      },
+      "China": {
+        "is_carbonatite_system": 36,
+        "is_alkaline_intrusive": 34,
+        "is_mafic_ultramafic": 8,
+        "is_felsic_pegmatite": 32,
+        "is_metamorphic_metasomatic": 8,
+        "is_sedimentary": 17,
+        "is_placer": 34,
+        "is_supergene_lateritic": 8,
+        "is_unclassified": 58
+      },
+      "East Asia": {
+        "is_carbonatite_system": 11,
+        "is_alkaline_intrusive": 21,
+        "is_mafic_ultramafic": 4,
+        "is_felsic_pegmatite": 36,
+        "is_metamorphic_metasomatic": 9,
+        "is_sedimentary": 5,
+        "is_placer": 207,
+        "is_supergene_lateritic": 2,
+        "is_unclassified": 21
+      },
+      "Europe": {
+        "is_carbonatite_system": 29,
+        "is_alkaline_intrusive": 42,
+        "is_mafic_ultramafic": 19,
+        "is_felsic_pegmatite": 75,
+        "is_metamorphic_metasomatic": 57,
+        "is_sedimentary": 47,
+        "is_placer": 22,
+        "is_supergene_lateritic": 8,
+        "is_unclassified": 5
+      },
+      "Middle East": {
+        "is_carbonatite_system": 4,
+        "is_alkaline_intrusive": 7,
+        "is_mafic_ultramafic": 3,
+        "is_felsic_pegmatite": 9,
+        "is_metamorphic_metasomatic": 3,
+        "is_sedimentary": 14,
+        "is_placer": 6,
+        "is_supergene_lateritic": 4,
+        "is_unclassified": 4
+      },
+      "North America": {
+        "is_carbonatite_system": 79,
+        "is_alkaline_intrusive": 67,
+        "is_mafic_ultramafic": 33,
+        "is_felsic_pegmatite": 52,
+        "is_metamorphic_metasomatic": 52,
+        "is_sedimentary": 52,
+        "is_placer": 64,
+        "is_supergene_lateritic": 6,
+        "is_unclassified": 32
+      },
+      "Oceania": {
+        "is_carbonatite_system": 27,
+        "is_alkaline_intrusive": 5,
+        "is_mafic_ultramafic": 3,
+        "is_felsic_pegmatite": 12,
+        "is_metamorphic_metasomatic": 10,
+        "is_sedimentary": 35,
+        "is_placer": 342,
+        "is_supergene_lateritic": 8,
+        "is_unclassified": 11
+      },
+      "Russian Federation": {
+        "is_carbonatite_system": 44,
+        "is_alkaline_intrusive": 57,
+        "is_mafic_ultramafic": 11,
+        "is_felsic_pegmatite": 55,
+        "is_metamorphic_metasomatic": 5,
+        "is_sedimentary": 9,
+        "is_placer": 3,
+        "is_supergene_lateritic": 0,
+        "is_unclassified": 0
+      },
+      "South America": {
+        "is_carbonatite_system": 51,
+        "is_alkaline_intrusive": 25,
+        "is_mafic_ultramafic": 14,
+        "is_felsic_pegmatite": 19,
+        "is_metamorphic_metasomatic": 15,
+        "is_sedimentary": 8,
+        "is_placer": 132,
+        "is_supergene_lateritic": 10,
+        "is_unclassified": 3
+      },
+      "South and Central Asia": {
+        "is_carbonatite_system": 19,
+        "is_alkaline_intrusive": 41,
+        "is_mafic_ultramafic": 22,
+        "is_felsic_pegmatite": 78,
+        "is_metamorphic_metasomatic": 19,
+        "is_sedimentary": 82,
+        "is_placer": 158,
+        "is_supergene_lateritic": 64,
+        "is_unclassified": 30
+      }
+    },
+    "n_cells": 90,
+    "n_multi_label_records": 366,
+    "n_unflagged_records": 496,
+    "n_cells_below_30": 53,
+    "n_cells_below_10": 31
+  },
+  "raw_fill_rates": {
+    "Alteration": 0.07420494699646643,
+    "Assoc_Rock": 0.11692900738837135,
+    "Host_Age": 0.26309026662383556
+  },
+  "entropy_vs_f1": {
+    "source": "result/deposit_type_entropy_vs_f1.json",
+    "per_region": {
+      "Africa": {
+        "entropy": 2.953486937938388,
+        "n": 235,
+        "spire_f1": 0.8569499327481616
+      },
+      "China": {
+        "entropy": 3.045528306131436,
+        "n": 214,
+        "spire_f1": 0.7492567825443508
+      },
+      "East Asia": {
+        "entropy": 2.157587496041196,
+        "n": 358,
+        "spire_f1": 0.8777925692517187
+      },
+      "Europe": {
+        "entropy": 2.8865322438830328,
+        "n": 383,
+        "spire_f1": 0.8580767721828406
+      },
+      "Middle East": {
+        "entropy": 2.976732460879573,
+        "n": 63,
+        "spire_f1": 0.8599230840909629
+      },
+      "North America": {
+        "entropy": 3.1678294669802907,
+        "n": 423,
+        "spire_f1": 0.7775958974105028
+      },
+      "Oceania": {
+        "entropy": 1.808083265321506,
+        "n": 504,
+        "spire_f1": 0.8653516954485674
+      },
+      "Russian Federation": {
+        "entropy": 2.4278136345512653,
+        "n": 147,
+        "spire_f1": 0.788488082808118
+      },
+      "South America": {
+        "entropy": 2.5928351298053003,
+        "n": 253,
+        "spire_f1": 0.9094054359307675
+      },
+      "South and Central Asia": {
+        "entropy": 3.0029066605504298,
+        "n": 532,
+        "spire_f1": 0.7514388244561139
+      }
+    },
+    "spearman_r": -0.7333333333333332,
+    "spearman_p": 0.01580059625057158,
+    "pearson_r": -0.4829296907005598,
+    "pearson_p": 0.15740634959904148
+  }
+}
