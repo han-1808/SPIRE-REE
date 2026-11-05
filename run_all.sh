@@ -60,7 +60,6 @@ STAGE2=(
 # Depend only on the data, not on stage 2's result files.
 STAGE3=(
   "experiment/run_graph_diagnostics.py"
-  "experiment/run_class_counts_per_fold.py"
   "experiment/run_documentation_completeness.py"
   "experiment/run_deposit_type_analysis.py"
   "experiment/run_lodto.py"
