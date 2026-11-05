@@ -112,9 +112,9 @@ def get_test_coords(df, n_sample=5, seed=42):
 def compute_metrics(gnn, bl):
     """Avg SPIRE vs XGBoost F1 per region, each averaged over its OWN seeds.
 
-    The two result files draw independent seed lists -- gnn_inductive.json uses
-    [1, 2, 4, 7, 42] and baseline.json uses [18, 19, 34, 36, 42], sharing only
-    seed 42. An earlier version read both models inside a single try/except and
+    Both result files now use seeds [1, 2, 4, 7, 42]. They previously drew
+    independent seed lists (baseline.json used [18, 19, 34, 36, 42]), sharing
+    only seed 42. An earlier version read both models inside a single try/except and
     appended only when BOTH lookups succeeded, so a seed missing from the
     baseline file silently discarded the SPIRE value for that seed too. With one
     shared seed that reduced the map to seed-42-only numbers: China showed 0.693

@@ -1,6 +1,6 @@
 {
   "experiment": "exp1_paired_tests",
-  "description": "Experiment 1 (leave-one-region-out). Per-region metrics averaged over five runs per model; two-sided Wilcoxon signed-rank test over the ten regions, SPIRE minus baseline. Runs are not paired by seed because the two result files use different seeds. p-values are uncorrected.",
+  "description": "Experiment 1 (leave-one-region-out). Per-region metrics averaged over five runs per model; two-sided Wilcoxon signed-rank test over the ten regions, SPIRE minus baseline. Both result files use seeds 42, 1, 2, 4, 7; pairs are regions, not seeds. p-values are uncorrected.",
   "seeds": {
     "spire": [
       1,
@@ -10,10 +10,10 @@
       42
     ],
     "baselines": [
-      18,
-      19,
-      34,
-      36,
+      1,
+      2,
+      4,
+      7,
       42
     ]
   },
@@ -93,400 +93,400 @@
     "xgboost": {
       "f1": {
         "per_region": {
-          "Africa": 0.8766444448835653,
-          "China": 0.677536442242545,
-          "East Asia": 0.885066049328384,
-          "Europe": 0.8925870287282341,
-          "Middle East": 0.8270600735547868,
-          "North America": 0.7802658245043415,
-          "Oceania": 0.8812269409862118,
-          "Russian Federation": 0.7524311524441567,
-          "South America": 0.8355363683935113,
-          "South and Central Asia": 0.7782454195362764
+          "Africa": 0.8738748876904321,
+          "China": 0.6770636760662576,
+          "East Asia": 0.8838038718502101,
+          "Europe": 0.890667953114875,
+          "Middle East": 0.8335668711008516,
+          "North America": 0.7840282537285586,
+          "Oceania": 0.8733491518116882,
+          "Russian Federation": 0.7514803675310155,
+          "South America": 0.8313297720035875,
+          "South and Central Asia": 0.8213870625617501
         },
-        "mean_over_regions": 0.8186599744602013,
+        "mean_over_regions": 0.8220551867459227,
         "worst_region": "China",
-        "worst_region_value": 0.677536442242545,
-        "between_region_sd": 0.06701994463697816
+        "worst_region_value": 0.6770636760662576,
+        "between_region_sd": 0.0644246367381806
       },
       "roc_auc": {
         "per_region": {
-          "Africa": 0.7997043169722058,
-          "China": 0.8342679400683432,
-          "East Asia": 0.883449551180799,
-          "Europe": 0.7442509942554131,
-          "Middle East": 0.7184090909090909,
-          "North America": 0.7938316899793625,
-          "Oceania": 0.8032480160947804,
-          "Russian Federation": 0.8564780342516753,
-          "South America": 0.7540284360189573,
-          "South and Central Asia": 0.9462168674698794
+          "Africa": 0.7872067809974373,
+          "China": 0.8299570665031105,
+          "East Asia": 0.8851716300034672,
+          "Europe": 0.7539549270879363,
+          "Middle East": 0.6954545454545454,
+          "North America": 0.8074868149506994,
+          "Oceania": 0.8076494914496479,
+          "Russian Federation": 0.839463886820551,
+          "South America": 0.8018957345971565,
+          "South and Central Asia": 0.9478117469879518
         },
-        "mean_over_regions": 0.8133884937200506,
+        "mean_over_regions": 0.8156052624852503,
         "worst_region": "Middle East",
-        "worst_region_value": 0.7184090909090909,
-        "between_region_sd": 0.0654536784464352
+        "worst_region_value": 0.6954545454545454,
+        "between_region_sd": 0.06515660313003344
       },
       "pr_auc": {
         "per_region": {
-          "Africa": 0.9041523992782257,
-          "China": 0.8349644290877964,
-          "East Asia": 0.9437674848044713,
-          "Europe": 0.9207339285708738,
-          "Middle East": 0.9465248730647826,
-          "North America": 0.8337318359154325,
-          "Oceania": 0.9172126774221396,
-          "Russian Federation": 0.8671549440406418,
-          "South America": 0.9232366038589582,
-          "South and Central Asia": 0.9185854184346288
+          "Africa": 0.897151763037129,
+          "China": 0.8337617086206072,
+          "East Asia": 0.9443324849971191,
+          "Europe": 0.9243071723798657,
+          "Middle East": 0.9456796914458746,
+          "North America": 0.838950103219493,
+          "Oceania": 0.9209329805845379,
+          "Russian Federation": 0.8618942788906931,
+          "South America": 0.9419639330699624,
+          "South and Central Asia": 0.9250232637083918
         },
-        "mean_over_regions": 0.9010064594477951,
-        "worst_region": "North America",
-        "worst_region_value": 0.8337318359154325,
-        "between_region_sd": 0.03924116678268744
+        "mean_over_regions": 0.9033997379953673,
+        "worst_region": "China",
+        "worst_region_value": 0.8337617086206072,
+        "between_region_sd": 0.04114285422724662
       }
     },
     "lightgbm": {
       "f1": {
         "per_region": {
-          "Africa": 0.876669453693269,
-          "China": 0.6789948448011536,
-          "East Asia": 0.8805894265068084,
-          "Europe": 0.8845185684843416,
-          "Middle East": 0.8327857174857757,
-          "North America": 0.7788293727415394,
-          "Oceania": 0.886573989831988,
-          "Russian Federation": 0.7480940065958686,
-          "South America": 0.8577915279870394,
-          "South and Central Asia": 0.7688475460875208
+          "Africa": 0.8721445275229357,
+          "China": 0.6812956992912345,
+          "East Asia": 0.8798902901673881,
+          "Europe": 0.8817963665527232,
+          "Middle East": 0.8297507936965178,
+          "North America": 0.7803691478242352,
+          "Oceania": 0.875099601799126,
+          "Russian Federation": 0.7584601315735939,
+          "South America": 0.8331553685088666,
+          "South and Central Asia": 0.7895177780662906
         },
-        "mean_over_regions": 0.8193694454215305,
+        "mean_over_regions": 0.8181479705002912,
         "worst_region": "China",
-        "worst_region_value": 0.6789948448011536,
-        "between_region_sd": 0.06813917032544639
+        "worst_region_value": 0.6812956992912345,
+        "between_region_sd": 0.06238614104858818
       },
       "roc_auc": {
         "per_region": {
-          "Africa": 0.7995860437610881,
-          "China": 0.8240602821344082,
-          "East Asia": 0.8881188118811881,
-          "Europe": 0.7294829871851525,
-          "Middle East": 0.7377272727272727,
-          "North America": 0.7864434762669112,
-          "Oceania": 0.8207533251369175,
-          "Russian Federation": 0.8442479523454951,
-          "South America": 0.7475626269465132,
-          "South and Central Asia": 0.9438042168674698
+          "Africa": 0.7812339838359943,
+          "China": 0.8285113467098922,
+          "East Asia": 0.8888507916939554,
+          "Europe": 0.7536367653557224,
+          "Middle East": 0.721590909090909,
+          "North America": 0.8047947718413206,
+          "Oceania": 0.8101285347043701,
+          "Russian Federation": 0.8217423678332093,
+          "South America": 0.7932972241029113,
+          "South and Central Asia": 0.942859939759036
         },
-        "mean_over_regions": 0.8121786995252416,
-        "worst_region": "Europe",
-        "worst_region_value": 0.7294829871851525,
-        "between_region_sd": 0.06458561758542639
+        "mean_over_regions": 0.814664663492732,
+        "worst_region": "Middle East",
+        "worst_region_value": 0.721590909090909,
+        "between_region_sd": 0.06021522411548955
       },
       "pr_auc": {
         "per_region": {
-          "Africa": 0.9016751095223805,
-          "China": 0.8265729174660805,
-          "East Asia": 0.9494515610368106,
-          "Europe": 0.9175954217523511,
-          "Middle East": 0.9523854650419986,
-          "North America": 0.8335047459114586,
-          "Oceania": 0.9288396463432157,
-          "Russian Federation": 0.8405294579563298,
-          "South America": 0.9170342249290755,
-          "South and Central Asia": 0.9172489466604992
+          "Africa": 0.8884247296645054,
+          "China": 0.835685223428659,
+          "East Asia": 0.9482354423564134,
+          "Europe": 0.9279736714902385,
+          "Middle East": 0.9493100451461268,
+          "North America": 0.847040472211907,
+          "Oceania": 0.9290905502353819,
+          "Russian Federation": 0.8229480968967791,
+          "South America": 0.9412109214078919,
+          "South and Central Asia": 0.9226299642244772
         },
-        "mean_over_regions": 0.8984837496620202,
-        "worst_region": "China",
-        "worst_region_value": 0.8265729174660805,
-        "between_region_sd": 0.044998250368284524
+        "mean_over_regions": 0.901254911706238,
+        "worst_region": "Russian Federation",
+        "worst_region_value": 0.8229480968967791,
+        "between_region_sd": 0.04646904009723491
       }
     },
     "catboost": {
       "f1": {
         "per_region": {
-          "Africa": 0.8747238277444389,
-          "China": 0.6808599638142404,
-          "East Asia": 0.8795077548923034,
-          "Europe": 0.8863247542992317,
-          "Middle East": 0.8259111860950616,
-          "North America": 0.7946871391350927,
-          "Oceania": 0.8802246208808059,
-          "Russian Federation": 0.7468960915213012,
-          "South America": 0.8261831138158848,
-          "South and Central Asia": 0.8091800628709261
+          "Africa": 0.8707682640501767,
+          "China": 0.6826891480805177,
+          "East Asia": 0.8810253980233176,
+          "Europe": 0.8846140086693758,
+          "Middle East": 0.830695901230181,
+          "North America": 0.7817909845912725,
+          "Oceania": 0.8726263101269698,
+          "Russian Federation": 0.7515903841905487,
+          "South America": 0.8364038681776057,
+          "South and Central Asia": 0.8154820412790175
         },
-        "mean_over_regions": 0.8204498515069287,
+        "mean_over_regions": 0.8207686308418983,
         "worst_region": "China",
-        "worst_region_value": 0.6808599638142404,
-        "between_region_sd": 0.06332056587825415
+        "worst_region_value": 0.6826891480805177,
+        "between_region_sd": 0.062159538393267884
       },
       "roc_auc": {
         "per_region": {
-          "Africa": 0.8094618568894146,
-          "China": 0.8543327784105845,
-          "East Asia": 0.8853488461686636,
-          "Europe": 0.7788113124171454,
-          "Middle East": 0.7493181818181818,
-          "North America": 0.8056936482458152,
-          "Oceania": 0.7661093103833688,
-          "Russian Federation": 0.8539650037230082,
-          "South America": 0.7388851275107198,
-          "South and Central Asia": 0.9550301204819277
+          "Africa": 0.801291149221368,
+          "China": 0.8580303163059669,
+          "East Asia": 0.8894710482721425,
+          "Europe": 0.7797569597878922,
+          "Middle East": 0.7506818181818182,
+          "North America": 0.826686539784453,
+          "Oceania": 0.7084005812004023,
+          "Russian Federation": 0.8434661206254654,
+          "South America": 0.7865831640713157,
+          "South and Central Asia": 0.948887048192771
         },
-        "mean_over_regions": 0.8196956186048829,
-        "worst_region": "South America",
-        "worst_region_value": 0.7388851275107198,
-        "between_region_sd": 0.06428609518179217
+        "mean_over_regions": 0.8193254745643597,
+        "worst_region": "Oceania",
+        "worst_region_value": 0.7084005812004023,
+        "between_region_sd": 0.06619733408341623
       },
       "pr_auc": {
         "per_region": {
-          "Africa": 0.9073048906431378,
-          "China": 0.864326482231732,
-          "East Asia": 0.9425605812949645,
-          "Europe": 0.9319168628542635,
-          "Middle East": 0.9554008578810056,
-          "North America": 0.8374577134172512,
-          "Oceania": 0.8982785518901858,
-          "Russian Federation": 0.8618858149020913,
-          "South America": 0.9174738500035516,
-          "South and Central Asia": 0.9289634113953283
+          "Africa": 0.8992447637321069,
+          "China": 0.8658728035617493,
+          "East Asia": 0.9451101972932813,
+          "Europe": 0.9314485547673466,
+          "Middle East": 0.960143543410332,
+          "North America": 0.8405189772441961,
+          "Oceania": 0.8806622176733997,
+          "Russian Federation": 0.8439108942822063,
+          "South America": 0.9414779453673617,
+          "South and Central Asia": 0.9187576525881521
         },
-        "mean_over_regions": 0.904556901651351,
+        "mean_over_regions": 0.9027147549920131,
         "worst_region": "North America",
-        "worst_region_value": 0.8374577134172512,
-        "between_region_sd": 0.036781868866491214
+        "worst_region_value": 0.8405189772441961,
+        "between_region_sd": 0.041064490059853
       }
     },
     "random_forest": {
       "f1": {
         "per_region": {
-          "Africa": 0.8774590554232337,
-          "China": 0.6804434590675971,
-          "East Asia": 0.865817509798984,
-          "Europe": 0.8850568159826582,
-          "Middle East": 0.8257477414241274,
-          "North America": 0.7736209244671185,
-          "Oceania": 0.8816327701392008,
-          "Russian Federation": 0.7609363661619142,
-          "South America": 0.8910903533070998,
-          "South and Central Asia": 0.7809068256330836
+          "Africa": 0.8720315609325869,
+          "China": 0.6784822218040576,
+          "East Asia": 0.8662206853188357,
+          "Europe": 0.8843148877993066,
+          "Middle East": 0.8372240458250809,
+          "North America": 0.787281506116698,
+          "Oceania": 0.8738966799853463,
+          "Russian Federation": 0.7592369592217431,
+          "South America": 0.8889922091787457,
+          "South and Central Asia": 0.804777182843979
         },
-        "mean_over_regions": 0.8222711821405018,
+        "mean_over_regions": 0.825245793902638,
         "worst_region": "China",
-        "worst_region_value": 0.6804434590675971,
-        "between_region_sd": 0.06716465066189253
+        "worst_region_value": 0.6784822218040576,
+        "between_region_sd": 0.06456621702566806
       },
       "roc_auc": {
         "per_region": {
-          "Africa": 0.8028385570668244,
-          "China": 0.8118373784281083,
-          "East Asia": 0.8799321955541858,
-          "Europe": 0.7468846663720725,
-          "Middle East": 0.7218181818181819,
-          "North America": 0.7832469617060307,
-          "Oceania": 0.7987504191349056,
-          "Russian Federation": 0.8887751303052868,
-          "South America": 0.7495712028887385,
-          "South and Central Asia": 0.9437123493975903
+          "Africa": 0.785491819436231,
+          "China": 0.836808902129151,
+          "East Asia": 0.8834148784528258,
+          "Europe": 0.7600176756517898,
+          "Middle East": 0.7170454545454545,
+          "North America": 0.795106626920431,
+          "Oceania": 0.7826355202861295,
+          "Russian Federation": 0.8601824274013403,
+          "South America": 0.8070074475287745,
+          "South and Central Asia": 0.948808734939759
         },
-        "mean_over_regions": 0.8127367042671925,
+        "mean_over_regions": 0.8176519487291888,
         "worst_region": "Middle East",
-        "worst_region_value": 0.7218181818181819,
-        "between_region_sd": 0.06723710900812756
+        "worst_region_value": 0.7170454545454545,
+        "between_region_sd": 0.06326775892821523
       },
       "pr_auc": {
         "per_region": {
-          "Africa": 0.9006303391865378,
-          "China": 0.8271064982977794,
-          "East Asia": 0.9438063353328339,
-          "Europe": 0.9217898450395421,
-          "Middle East": 0.9475199491106092,
-          "North America": 0.8102005038589729,
-          "Oceania": 0.9032837268536458,
-          "Russian Federation": 0.9018292097089023,
-          "South America": 0.9073596385547112,
-          "South and Central Asia": 0.9135658005672775
+          "Africa": 0.8912697565075696,
+          "China": 0.8449460167196585,
+          "East Asia": 0.9444841946514689,
+          "Europe": 0.9247059210066382,
+          "Middle East": 0.9490929778702156,
+          "North America": 0.8202558113366066,
+          "Oceania": 0.8946237193216777,
+          "Russian Federation": 0.8801549982958157,
+          "South America": 0.941546896296332,
+          "South and Central Asia": 0.9224141091094264
         },
-        "mean_over_regions": 0.8977091846510813,
+        "mean_over_regions": 0.9013494401115411,
         "worst_region": "North America",
-        "worst_region_value": 0.8102005038589729,
-        "between_region_sd": 0.04269612757143922
+        "worst_region_value": 0.8202558113366066,
+        "between_region_sd": 0.04135056942080228
       }
     },
     "svm": {
       "f1": {
         "per_region": {
-          "Africa": 0.8874469273072807,
-          "China": 0.7012866464513786,
-          "East Asia": 0.8740659028090446,
-          "Europe": 0.8515908400315804,
-          "Middle East": 0.8230826429581732,
-          "North America": 0.7518939279630767,
-          "Oceania": 0.8875306571555873,
-          "Russian Federation": 0.8110621181440252,
-          "South America": 0.8778469757332049,
-          "South and Central Asia": 0.8504512322174671
+          "Africa": 0.8766750078051878,
+          "China": 0.7034629671517107,
+          "East Asia": 0.8665064913871798,
+          "Europe": 0.8517840297102577,
+          "Middle East": 0.8237660757874377,
+          "North America": 0.7716610707157759,
+          "Oceania": 0.8778383845351933,
+          "Russian Federation": 0.8031866234217444,
+          "South America": 0.8745457354167803,
+          "South and Central Asia": 0.839959451962736
         },
-        "mean_over_regions": 0.8316257870770819,
+        "mean_over_regions": 0.8289385837894002,
         "worst_region": "China",
-        "worst_region_value": 0.7012866464513786,
-        "between_region_sd": 0.058968828504285385
+        "worst_region_value": 0.7034629671517107,
+        "between_region_sd": 0.053403607333740694
       },
       "roc_auc": {
         "per_region": {
-          "Africa": 0.8113542282672974,
-          "China": 0.8394287216332252,
-          "East Asia": 0.8646530800940017,
-          "Europe": 0.7877861246133452,
-          "Middle East": 0.7495454545454546,
-          "North America": 0.7931850493006192,
-          "Oceania": 0.8297395775120153,
-          "Russian Federation": 0.8796351451973194,
-          "South America": 0.76788535319341,
-          "South and Central Asia": 0.9202831325301204
+          "Africa": 0.8085945200078848,
+          "China": 0.8469815123105231,
+          "East Asia": 0.8576414839927573,
+          "Europe": 0.7741935483870968,
+          "Middle East": 0.7647727272727272,
+          "North America": 0.8045631735840404,
+          "Oceania": 0.833620207890913,
+          "Russian Federation": 0.8814408041697692,
+          "South America": 0.8141051681336042,
+          "South and Central Asia": 0.9224518072289156
         },
-        "mean_over_regions": 0.8243495866886809,
+        "mean_over_regions": 0.8308364952978232,
         "worst_region": "Middle East",
-        "worst_region_value": 0.7495454545454546,
-        "between_region_sd": 0.05039980598147594
+        "worst_region_value": 0.7647727272727272,
+        "between_region_sd": 0.045802679608807705
       },
       "pr_auc": {
         "per_region": {
-          "Africa": 0.9081096952759982,
-          "China": 0.8131145564036389,
-          "East Asia": 0.9279442987733557,
-          "Europe": 0.932185655004881,
-          "Middle East": 0.9551404136675176,
-          "North America": 0.8146365729862609,
-          "Oceania": 0.9349039941926239,
-          "Russian Federation": 0.8686477311459366,
-          "South America": 0.9011720228871942,
-          "South and Central Asia": 0.8647717765339962
+          "Africa": 0.9070982216092688,
+          "China": 0.8203872995582031,
+          "East Asia": 0.9320024599798687,
+          "Europe": 0.9236892333874046,
+          "Middle East": 0.963021469880897,
+          "North America": 0.8234025835589419,
+          "Oceania": 0.9351885883118406,
+          "Russian Federation": 0.8641191228969101,
+          "South America": 0.9380885080827225,
+          "South and Central Asia": 0.8675790452827107
         },
-        "mean_over_regions": 0.8920626716871404,
+        "mean_over_regions": 0.8974576532548768,
         "worst_region": "China",
-        "worst_region_value": 0.8131145564036389,
-        "between_region_sd": 0.04751070480538304
+        "worst_region_value": 0.8203872995582031,
+        "between_region_sd": 0.04772385722925201
       }
     },
     "mlp": {
       "f1": {
         "per_region": {
-          "Africa": 0.887627015595343,
-          "China": 0.6988182383626818,
-          "East Asia": 0.8759739438950916,
-          "Europe": 0.8242972503416258,
-          "Middle East": 0.8267126370995589,
-          "North America": 0.7816856460123807,
-          "Oceania": 0.8786393654757838,
-          "Russian Federation": 0.7783654588024931,
-          "South America": 0.8987797062863928,
-          "South and Central Asia": 0.8346517715448846
+          "Africa": 0.8859601839425757,
+          "China": 0.7018213786407118,
+          "East Asia": 0.8777104275390253,
+          "Europe": 0.8223243326285153,
+          "Middle East": 0.8495477855477855,
+          "North America": 0.7639182654090233,
+          "Oceania": 0.8734581181530559,
+          "Russian Federation": 0.7747840176446987,
+          "South America": 0.8986148443223968,
+          "South and Central Asia": 0.8343919823860306
         },
-        "mean_over_regions": 0.8285551033416236,
+        "mean_over_regions": 0.828253133621382,
         "worst_region": "China",
-        "worst_region_value": 0.6988182383626818,
-        "between_region_sd": 0.05897801231822728
+        "worst_region_value": 0.7018213786407118,
+        "between_region_sd": 0.06023254700115862
       },
       "roc_auc": {
         "per_region": {
-          "Africa": 0.8153755174452986,
-          "China": 0.8653114869009025,
-          "East Asia": 0.8874369148977156,
-          "Europe": 0.7951391957578436,
-          "Middle East": 0.7781818181818181,
-          "North America": 0.8052648475120385,
-          "Oceania": 0.7943310606907343,
-          "Russian Federation": 0.906403574087863,
-          "South America": 0.8056872037914691,
-          "South and Central Asia": 0.9501024096385542
+          "Africa": 0.807037256061502,
+          "China": 0.865819679313064,
+          "East Asia": 0.8932619331972107,
+          "Europe": 0.791064958020327,
+          "Middle East": 0.7799999999999999,
+          "North America": 0.8039853244668654,
+          "Oceania": 0.7842539398681123,
+          "Russian Federation": 0.9018242740134028,
+          "South America": 0.8269690814714512,
+          "South and Central Asia": 0.9462680722891565
         },
-        "mean_over_regions": 0.8403234028904236,
+        "mean_over_regions": 0.8400484518701091,
         "worst_region": "Middle East",
-        "worst_region_value": 0.7781818181818181,
-        "between_region_sd": 0.055074274349281985
+        "worst_region_value": 0.7799999999999999,
+        "between_region_sd": 0.055022064365510846
       },
       "pr_auc": {
         "per_region": {
-          "Africa": 0.9164897143251973,
-          "China": 0.8824446857897724,
-          "East Asia": 0.9400376872890268,
-          "Europe": 0.938467699983603,
-          "Middle East": 0.9646817678483748,
-          "North America": 0.8363763418030897,
-          "Oceania": 0.9035122407500161,
-          "Russian Federation": 0.91076617048737,
-          "South America": 0.9387238959876413,
-          "South and Central Asia": 0.9160681769468946
+          "Africa": 0.9146260594463422,
+          "China": 0.881069163880548,
+          "East Asia": 0.945013833595884,
+          "Europe": 0.937737792375931,
+          "Middle East": 0.9662514237904463,
+          "North America": 0.8356761228533495,
+          "Oceania": 0.8895710588356961,
+          "Russian Federation": 0.904783213266192,
+          "South America": 0.9479089905467623,
+          "South and Central Asia": 0.9130870401508586
         },
-        "mean_over_regions": 0.9147568381210984,
+        "mean_over_regions": 0.9135724698742009,
         "worst_region": "North America",
-        "worst_region_value": 0.8363763418030897,
-        "between_region_sd": 0.03406304601024638
+        "worst_region_value": 0.8356761228533495,
+        "between_region_sd": 0.03647678883642636
       }
     },
     "autoencoder_predictor": {
       "f1": {
         "per_region": {
-          "Africa": 0.881361365714004,
-          "China": 0.6865225458684372,
-          "East Asia": 0.8745009507504836,
-          "Europe": 0.8653828830234028,
-          "Middle East": 0.8420200362252874,
-          "North America": 0.7851416579461931,
-          "Oceania": 0.8782559080427517,
-          "Russian Federation": 0.7810067650181274,
-          "South America": 0.8861969140285341,
-          "South and Central Asia": 0.8357936085570341
+          "Africa": 0.8808176255919363,
+          "China": 0.686689080454413,
+          "East Asia": 0.8771102880477194,
+          "Europe": 0.8648970662448876,
+          "Middle East": 0.8438027733347433,
+          "North America": 0.795485275141117,
+          "Oceania": 0.8744884491613657,
+          "Russian Federation": 0.7662789940781236,
+          "South America": 0.8774166085646936,
+          "South and Central Asia": 0.8311316360129597
         },
-        "mean_over_regions": 0.8316182635174256,
+        "mean_over_regions": 0.829811779663196,
         "worst_region": "China",
-        "worst_region_value": 0.6865225458684372,
-        "between_region_sd": 0.06042122631728397
+        "worst_region_value": 0.686689080454413,
+        "between_region_sd": 0.06018992257133112
       },
       "roc_auc": {
         "per_region": {
-          "Africa": 0.8154740784545634,
-          "China": 0.8632261456234118,
-          "East Asia": 0.8859344300188774,
-          "Europe": 0.7965532479010162,
-          "Middle East": 0.7872727272727273,
-          "North America": 0.8178812199036918,
-          "Oceania": 0.8304370179948588,
-          "Russian Federation": 0.9014519731943409,
-          "South America": 0.7921913789212367,
-          "South and Central Asia": 0.9533102409638554
+          "Africa": 0.8132071752414746,
+          "China": 0.8655217734162797,
+          "East Asia": 0.8867588704395732,
+          "Europe": 0.7843393725143615,
+          "Middle East": 0.7790909090909091,
+          "North America": 0.8220132997019032,
+          "Oceania": 0.811136693863865,
+          "Russian Federation": 0.9052866716306776,
+          "South America": 0.8296772737531031,
+          "South and Central Asia": 0.9504518072289155
         },
-        "mean_over_regions": 0.844373246024858,
+        "mean_over_regions": 0.8447483846881061,
         "worst_region": "Middle East",
-        "worst_region_value": 0.7872727272727273,
-        "between_region_sd": 0.052162621006422404
+        "worst_region_value": 0.7790909090909091,
+        "between_region_sd": 0.05278568110413836
       },
       "pr_auc": {
         "per_region": {
-          "Africa": 0.9181840343348876,
-          "China": 0.8787499503650855,
-          "East Asia": 0.9404927591006078,
-          "Europe": 0.9386516125899492,
-          "Middle East": 0.9669868332903425,
-          "North America": 0.8411276644421669,
-          "Oceania": 0.9379240208144495,
-          "Russian Federation": 0.9035803013911654,
-          "South America": 0.9340723688733265,
-          "South and Central Asia": 0.9229955537457123
+          "Africa": 0.916796990499203,
+          "China": 0.8853188971366739,
+          "East Asia": 0.9388678089416922,
+          "Europe": 0.9353302266406935,
+          "Middle East": 0.9660799547544945,
+          "North America": 0.8404867379303547,
+          "Oceania": 0.9223102405698654,
+          "Russian Federation": 0.9037195741490063,
+          "South America": 0.9546440998054491,
+          "South and Central Asia": 0.9135452362654533
         },
-        "mean_over_regions": 0.9182765098947694,
+        "mean_over_regions": 0.9177099766692886,
         "worst_region": "North America",
-        "worst_region_value": 0.8411276644421669,
-        "between_region_sd": 0.0341606289813678
+        "worst_region_value": 0.8404867379303547,
+        "between_region_sd": 0.034219284532195374
       }
     },
     "spatial_knn_regression": {
       "f1": {
         "per_region": {
           "Africa": 0.8619854721549636,
-          "China": 0.6230769230769231,
+          "China": 0.6254826254826255,
           "East Asia": 0.8029739776951674,
           "Europe": 0.8946608946608947,
           "Middle East": 0.7741935483870968,
@@ -496,10 +496,10 @@
           "South America": 0.8166259168704156,
           "South and Central Asia": 0.7344110854503464
         },
-        "mean_over_regions": 0.7647828301367514,
+        "mean_over_regions": 0.7650234003773216,
         "worst_region": "Russian Federation",
         "worst_region_value": 0.593939393939394,
-        "between_region_sd": 0.1000892635648922
+        "between_region_sd": 0.09975069472953597
       },
       "roc_auc": {
         "per_region": {
@@ -598,168 +598,168 @@
   "spire_vs_baseline": {
     "xgboost": {
       "f1": {
-        "mean_diff": 0.01076793322700913,
+        "mean_diff": 0.0073727209412877805,
         "n_regions_spire_higher": 4,
         "n_regions": 10,
-        "wilcoxon_statistic": 22.0,
-        "wilcoxon_p": 0.625
+        "wilcoxon_statistic": 24.0,
+        "wilcoxon_p": 0.76953125
       },
       "roc_auc": {
-        "mean_diff": 0.018017228320989932,
-        "n_regions_spire_higher": 7,
-        "n_regions": 10,
-        "wilcoxon_statistic": 10.0,
-        "wilcoxon_p": 0.083984375
-      },
-      "pr_auc": {
-        "mean_diff": 0.012122894928406801,
-        "n_regions_spire_higher": 6,
-        "n_regions": 10,
-        "wilcoxon_statistic": 13.0,
-        "wilcoxon_p": 0.16015625
-      }
-    },
-    "lightgbm": {
-      "f1": {
-        "mean_diff": 0.010058462265679968,
-        "n_regions_spire_higher": 4,
-        "n_regions": 10,
-        "wilcoxon_statistic": 21.0,
-        "wilcoxon_p": 0.556640625
-      },
-      "roc_auc": {
-        "mean_diff": 0.019227022515798976,
-        "n_regions_spire_higher": 8,
-        "n_regions": 10,
-        "wilcoxon_statistic": 10.0,
-        "wilcoxon_p": 0.083984375
-      },
-      "pr_auc": {
-        "mean_diff": 0.014645604714181859,
-        "n_regions_spire_higher": 8,
-        "n_regions": 10,
-        "wilcoxon_statistic": 8.0,
-        "wilcoxon_p": 0.048828125
-      }
-    },
-    "catboost": {
-      "f1": {
-        "mean_diff": 0.008978056180281723,
-        "n_regions_spire_higher": 4,
-        "n_regions": 10,
-        "wilcoxon_statistic": 23.0,
-        "wilcoxon_p": 0.6953125
-      },
-      "roc_auc": {
-        "mean_diff": 0.011710103436157648,
-        "n_regions_spire_higher": 6,
+        "mean_diff": 0.01580045955579028,
+        "n_regions_spire_higher": 5,
         "n_regions": 10,
         "wilcoxon_statistic": 15.0,
         "wilcoxon_p": 0.232421875
       },
       "pr_auc": {
-        "mean_diff": 0.00857245272485072,
-        "n_regions_spire_higher": 6,
-        "n_regions": 10,
-        "wilcoxon_statistic": 16.0,
-        "wilcoxon_p": 0.275390625
-      }
-    },
-    "random_forest": {
-      "f1": {
-        "mean_diff": 0.007156725546708686,
-        "n_regions_spire_higher": 6,
-        "n_regions": 10,
-        "wilcoxon_statistic": 22.0,
-        "wilcoxon_p": 0.625
-      },
-      "roc_auc": {
-        "mean_diff": 0.01866901777384814,
+        "mean_diff": 0.009729616380834494,
         "n_regions_spire_higher": 7,
         "n_regions": 10,
-        "wilcoxon_statistic": 12.0,
-        "wilcoxon_p": 0.130859375
+        "wilcoxon_statistic": 15.0,
+        "wilcoxon_p": 0.232421875
+      }
+    },
+    "lightgbm": {
+      "f1": {
+        "mean_diff": 0.011279937186919243,
+        "n_regions_spire_higher": 4,
+        "n_regions": 10,
+        "wilcoxon_statistic": 23.0,
+        "wilcoxon_p": 0.6953125
+      },
+      "roc_auc": {
+        "mean_diff": 0.01674105854830855,
+        "n_regions_spire_higher": 7,
+        "n_regions": 10,
+        "wilcoxon_statistic": 13.0,
+        "wilcoxon_p": 0.16015625
       },
       "pr_auc": {
-        "mean_diff": 0.015420169725120659,
+        "mean_diff": 0.011874442669963858,
         "n_regions_spire_higher": 7,
         "n_regions": 10,
         "wilcoxon_statistic": 13.0,
         "wilcoxon_p": 0.16015625
       }
     },
-    "svm": {
+    "catboost": {
       "f1": {
-        "mean_diff": -0.002197879389871471,
-        "n_regions_spire_higher": 6,
+        "mean_diff": 0.008659276845312114,
+        "n_regions_spire_higher": 4,
         "n_regions": 10,
         "wilcoxon_statistic": 23.0,
         "wilcoxon_p": 0.6953125
       },
       "roc_auc": {
-        "mean_diff": 0.007056135352359771,
-        "n_regions_spire_higher": 7,
+        "mean_diff": 0.012080247476681094,
+        "n_regions_spire_higher": 6,
         "n_regions": 10,
-        "wilcoxon_statistic": 17.0,
-        "wilcoxon_p": 0.322265625
+        "wilcoxon_statistic": 23.0,
+        "wilcoxon_p": 0.6953125
       },
       "pr_auc": {
-        "mean_diff": 0.021066682689061544,
+        "mean_diff": 0.01041459938418866,
         "n_regions_spire_higher": 7,
         "n_regions": 10,
-        "wilcoxon_statistic": 7.0,
-        "wilcoxon_p": 0.037109375
+        "wilcoxon_statistic": 13.0,
+        "wilcoxon_p": 0.16015625
+      }
+    },
+    "random_forest": {
+      "f1": {
+        "mean_diff": 0.004182113784572439,
+        "n_regions_spire_higher": 5,
+        "n_regions": 10,
+        "wilcoxon_statistic": 23.0,
+        "wilcoxon_p": 0.6953125
+      },
+      "roc_auc": {
+        "mean_diff": 0.013753773311851958,
+        "n_regions_spire_higher": 6,
+        "n_regions": 10,
+        "wilcoxon_statistic": 16.0,
+        "wilcoxon_p": 0.275390625
+      },
+      "pr_auc": {
+        "mean_diff": 0.01177991426466094,
+        "n_regions_spire_higher": 7,
+        "n_regions": 10,
+        "wilcoxon_statistic": 11.0,
+        "wilcoxon_p": 0.10546875
+      }
+    },
+    "svm": {
+      "f1": {
+        "mean_diff": 0.0004893238978100456,
+        "n_regions_spire_higher": 6,
+        "n_regions": 10,
+        "wilcoxon_statistic": 25.0,
+        "wilcoxon_p": 0.845703125
+      },
+      "roc_auc": {
+        "mean_diff": 0.0005692267432174658,
+        "n_regions_spire_higher": 4,
+        "n_regions": 10,
+        "wilcoxon_statistic": 26.0,
+        "wilcoxon_p": 0.921875
+      },
+      "pr_auc": {
+        "mean_diff": 0.015671701121325078,
+        "n_regions_spire_higher": 8,
+        "n_regions": 10,
+        "wilcoxon_statistic": 9.0,
+        "wilcoxon_p": 0.064453125
       }
     },
     "mlp": {
       "f1": {
-        "mean_diff": 0.0008728043455868084,
-        "n_regions_spire_higher": 6,
+        "mean_diff": 0.00117477406582851,
+        "n_regions_spire_higher": 7,
         "n_regions": 10,
-        "wilcoxon_statistic": 23.0,
-        "wilcoxon_p": 0.6953125
+        "wilcoxon_statistic": 19.0,
+        "wilcoxon_p": 0.431640625
       },
       "roc_auc": {
-        "mean_diff": -0.008917680849383136,
+        "mean_diff": -0.008642729829068574,
         "n_regions_spire_higher": 2,
         "n_regions": 10,
         "wilcoxon_statistic": 14.0,
         "wilcoxon_p": 0.193359375
       },
       "pr_auc": {
-        "mean_diff": -0.0016274837448967295,
+        "mean_diff": -0.00044311549799912474,
         "n_regions_spire_higher": 4,
         "n_regions": 10,
-        "wilcoxon_statistic": 27.0,
-        "wilcoxon_p": 1.0
+        "wilcoxon_statistic": 24.0,
+        "wilcoxon_p": 0.76953125
       }
     },
     "autoencoder_predictor": {
       "f1": {
-        "mean_diff": -0.0021903558302151294,
+        "mean_diff": -0.00038387197598551694,
         "n_regions_spire_higher": 5,
         "n_regions": 10,
-        "wilcoxon_statistic": 26.0,
-        "wilcoxon_p": 0.921875
+        "wilcoxon_statistic": 27.0,
+        "wilcoxon_p": 1.0
       },
       "roc_auc": {
-        "mean_diff": -0.012967523983817364,
-        "n_regions_spire_higher": 2,
+        "mean_diff": -0.013342662647065618,
+        "n_regions_spire_higher": 3,
         "n_regions": 10,
         "wilcoxon_statistic": 9.0,
         "wilcoxon_p": 0.064453125
       },
       "pr_auc": {
-        "mean_diff": -0.005147155518567448,
-        "n_regions_spire_higher": 2,
+        "mean_diff": -0.0045806222930867115,
+        "n_regions_spire_higher": 4,
         "n_regions": 10,
-        "wilcoxon_statistic": 15.0,
-        "wilcoxon_p": 0.232421875
+        "wilcoxon_statistic": 20.0,
+        "wilcoxon_p": 0.4921875
       }
     },
     "spatial_knn_regression": {
       "f1": {
-        "mean_diff": 0.06464507755045894,
+        "mean_diff": 0.0644045073098887,
         "n_regions_spire_higher": 7,
         "n_regions": 10,
         "wilcoxon_statistic": 7.0,

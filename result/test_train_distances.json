@@ -1,0 +1,1918 @@
+{
+  "exp2": {
+    "source": "result/split_manifest_per_region.json",
+    "summary": {
+      "n_folds": 50,
+      "min_test_to_train_km": {
+        "min": 85.87806921647721,
+        "median": 207.2396638909418,
+        "max": 525.5429433691833
+      },
+      "min_over_buffer_ratio": {
+        "min": 1.000146996060302,
+        "median": 1.1217035601589758
+      },
+      "n_folds_min_exceeds_buffer": 50,
+      "n_folds_buffer_fallback": 0
+    },
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 41,
+          "n_train_val": 174,
+          "buffer_km": 346.009104259681,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 359.93016580644246,
+          "median_test_to_train_km": 926.9843697825943,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 42,
+          "n_train_val": 159,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 201.57990691611104,
+          "median_test_to_train_km": 328.7641103759802,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 67,
+          "n_train_val": 285,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 159.53004805775183,
+          "median_test_to_train_km": 481.83553427151037,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_train_val": 309,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 158.41065070719557,
+          "median_test_to_train_km": 499.30267625437057,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 13,
+          "n_train_val": 46,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 262.0199376502583,
+          "median_test_to_train_km": 324.86082694085263,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 91,
+          "n_train_val": 330,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 185.81685203199967,
+          "median_test_to_train_km": 839.7605258805714,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 95,
+          "n_train_val": 406,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 139.00973021947908,
+          "median_test_to_train_km": 367.60885738183475,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 33,
+          "n_train_val": 114,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 423.3279858567255,
+          "median_test_to_train_km": 634.5535129482303,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 40,
+          "n_train_val": 210,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 213.5711799584971,
+          "median_test_to_train_km": 382.1355256046909,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 81,
+          "n_train_val": 450,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 104.26610139922589,
+          "median_test_to_train_km": 313.5544381262974,
+          "min_exceeds_buffer": true
+        }
+      },
+      "1": {
+        "Africa": {
+          "n_test": 54,
+          "n_train_val": 172,
+          "buffer_km": 346.009104259681,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 348.5982377981275,
+          "median_test_to_train_km": 620.9058778441874,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 49,
+          "n_train_val": 157,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 187.6940899343414,
+          "median_test_to_train_km": 406.6038616447402,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 60,
+          "n_train_val": 298,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 193.4255443453582,
+          "median_test_to_train_km": 709.8958385010685,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 63,
+          "n_train_val": 318,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 158.41065070719557,
+          "median_test_to_train_km": 456.6837657839445,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 11,
+          "n_train_val": 51,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 262.0199376502583,
+          "median_test_to_train_km": 436.887401876367,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 78,
+          "n_train_val": 341,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 182.6529748640757,
+          "median_test_to_train_km": 640.6342998098537,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 81,
+          "n_train_val": 422,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 97.20220412789234,
+          "median_test_to_train_km": 390.56774429367044,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_train_val": 112,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 332.7242446221789,
+          "median_test_to_train_km": 625.5663400693289,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 60,
+          "n_train_val": 193,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 297.1096129549274,
+          "median_test_to_train_km": 533.6861641543767,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_train_val": 449,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 226.80919708555973,
+          "median_test_to_train_km": 746.7964573311085,
+          "min_exceeds_buffer": true
+        }
+      },
+      "2": {
+        "Africa": {
+          "n_test": 54,
+          "n_train_val": 152,
+          "buffer_km": 346.009104259681,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 359.93016580644246,
+          "median_test_to_train_km": 697.8695706754958,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 40,
+          "n_train_val": 174,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 337.24382390787986,
+          "median_test_to_train_km": 594.0844641605433,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 70,
+          "n_train_val": 286,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 190.59088980767035,
+          "median_test_to_train_km": 576.2838908545882,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 86,
+          "n_train_val": 293,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 162.52755560654316,
+          "median_test_to_train_km": 385.3519702927433,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 14,
+          "n_train_val": 48,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 297.21998016753327,
+          "median_test_to_train_km": 339.9445719075733,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 84,
+          "n_train_val": 336,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 185.81685203199967,
+          "median_test_to_train_km": 582.5032648536221,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 111,
+          "n_train_val": 389,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 85.87806921647721,
+          "median_test_to_train_km": 372.49496077709546,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 22,
+          "n_train_val": 124,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 329.7052251810696,
+          "median_test_to_train_km": 573.5484565439716,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 50,
+          "n_train_val": 203,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 525.5429433691833,
+          "median_test_to_train_km": 1000.2549444888054,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 119,
+          "n_train_val": 407,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 93.41773223091276,
+          "median_test_to_train_km": 650.5060288215358,
+          "min_exceeds_buffer": true
+        }
+      },
+      "4": {
+        "Africa": {
+          "n_test": 48,
+          "n_train_val": 187,
+          "buffer_km": 346.009104259681,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 390.91628291902765,
+          "median_test_to_train_km": 941.4562586153036,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 39,
+          "n_train_val": 173,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 237.18862854624098,
+          "median_test_to_train_km": 484.3619951098531,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 69,
+          "n_train_val": 289,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 193.4255443453582,
+          "median_test_to_train_km": 583.9487705374866,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 90,
+          "n_train_val": 290,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 162.52755560654316,
+          "median_test_to_train_km": 387.4185813136037,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_train_val": 53,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 475.7248159253347,
+          "median_test_to_train_km": 505.60120823166494,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 72,
+          "n_train_val": 349,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 206.00674129345572,
+          "median_test_to_train_km": 796.0017044941667,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 117,
+          "n_train_val": 384,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 85.87806921647721,
+          "median_test_to_train_km": 387.6842228513381,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 30,
+          "n_train_val": 115,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 329.7052251810696,
+          "median_test_to_train_km": 555.0444375517459,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 46,
+          "n_train_val": 203,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 208.4725864884279,
+          "median_test_to_train_km": 452.4827403787079,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 93,
+          "n_train_val": 439,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 132.06527594522106,
+          "median_test_to_train_km": 317.0519916280466,
+          "min_exceeds_buffer": true
+        }
+      },
+      "7": {
+        "Africa": {
+          "n_test": 40,
+          "n_train_val": 192,
+          "buffer_km": 346.009104259681,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 454.8844689147701,
+          "median_test_to_train_km": 1095.4841666424154,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 41,
+          "n_train_val": 168,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 192.77533821872208,
+          "median_test_to_train_km": 366.59835496144035,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 68,
+          "n_train_val": 290,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 221.1748103204318,
+          "median_test_to_train_km": 791.0015884117805,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 74,
+          "n_train_val": 306,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 161.26045328904857,
+          "median_test_to_train_km": 382.88415124940525,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 12,
+          "n_train_val": 50,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 273.864531851806,
+          "median_test_to_train_km": 441.227569117661,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 72,
+          "n_train_val": 347,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 187.60627909604307,
+          "median_test_to_train_km": 502.3993903758096,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 89,
+          "n_train_val": 415,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 272.55248836402995,
+          "median_test_to_train_km": 737.2503056381124,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 27,
+          "n_train_val": 116,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 329.7052251810696,
+          "median_test_to_train_km": 888.4635728115403,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 41,
+          "n_train_val": 208,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 208.4725864884279,
+          "median_test_to_train_km": 451.6271880825299,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 84,
+          "n_train_val": 448,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 132.06527594522106,
+          "median_test_to_train_km": 380.24288003523156,
+          "min_exceeds_buffer": true
+        }
+      }
+    }
+  },
+  "exp5": {
+    "source": "result/exp5_proportion_per_region.json",
+    "summary": {
+      "n_folds": 50,
+      "min_test_to_train_km": {
+        "min": 84.74331613834593,
+        "median": 197.8970012278133,
+        "max": 538.9381919578132
+      },
+      "min_over_buffer_ratio": {
+        "min": 1.0074828480134541,
+        "median": 1.1470813954750299
+      },
+      "n_folds_min_exceeds_buffer": 50,
+      "n_folds_buffer_fallback": 0
+    },
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 41,
+          "n_train_val": 174,
+          "buffer_km": 346.00910425968095,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 359.93016580644246,
+          "median_test_to_train_km": 926.9843697825943,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 42,
+          "n_train_val": 159,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 201.57990691611104,
+          "median_test_to_train_km": 328.7641103759802,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 67,
+          "n_train_val": 285,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 159.53004805775183,
+          "median_test_to_train_km": 481.83553427151037,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_train_val": 309,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 158.41065070719557,
+          "median_test_to_train_km": 499.30267625437057,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 13,
+          "n_train_val": 46,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 262.0199376502583,
+          "median_test_to_train_km": 324.86082694085263,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 91,
+          "n_train_val": 330,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 185.81685203199967,
+          "median_test_to_train_km": 839.7605258805714,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 95,
+          "n_train_val": 406,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 139.00973021947908,
+          "median_test_to_train_km": 367.60885738183475,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 33,
+          "n_train_val": 114,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 423.3279858567255,
+          "median_test_to_train_km": 634.5535129482303,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 40,
+          "n_train_val": 210,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 213.5711799584971,
+          "median_test_to_train_km": 382.1355256046909,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 81,
+          "n_train_val": 450,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 104.26610139922589,
+          "median_test_to_train_km": 313.5544381262974,
+          "min_exceeds_buffer": true
+        }
+      },
+      "59": {
+        "Africa": {
+          "n_test": 44,
+          "n_train_val": 187,
+          "buffer_km": 346.00910425968095,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 436.48120622259216,
+          "median_test_to_train_km": 1123.475650786202,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 37,
+          "n_train_val": 168,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 192.10875797115577,
+          "median_test_to_train_km": 450.00125676171456,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 76,
+          "n_train_val": 278,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 184.41613022816242,
+          "median_test_to_train_km": 539.8972736470992,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 58,
+          "n_train_val": 325,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 161.26045328904857,
+          "median_test_to_train_km": 734.2457825273842,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 14,
+          "n_train_val": 48,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 262.0199376502583,
+          "median_test_to_train_km": 474.89429175944315,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 84,
+          "n_train_val": 338,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 223.46848109205337,
+          "median_test_to_train_km": 622.6579147730275,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 89,
+          "n_train_val": 412,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 139.00973021947908,
+          "median_test_to_train_km": 549.7682164022815,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 27,
+          "n_train_val": 119,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 329.7052251810696,
+          "median_test_to_train_km": 676.3328482563192,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 42,
+          "n_train_val": 207,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 208.4725864884279,
+          "median_test_to_train_km": 472.26722088649694,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 113,
+          "n_train_val": 418,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 108.55007041419509,
+          "median_test_to_train_km": 262.4263598684383,
+          "min_exceeds_buffer": true
+        }
+      },
+      "52": {
+        "Africa": {
+          "n_test": 42,
+          "n_train_val": 188,
+          "buffer_km": 346.00910425968095,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 353.9505091474956,
+          "median_test_to_train_km": 738.9185778309806,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 36,
+          "n_train_val": 174,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 194.21409553951557,
+          "median_test_to_train_km": 471.0035991110385,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 54,
+          "n_train_val": 300,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 184.41613022816242,
+          "median_test_to_train_km": 572.6022559723481,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 82,
+          "n_train_val": 297,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 158.41065070719557,
+          "median_test_to_train_km": 401.0963718712436,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 14,
+          "n_train_val": 48,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 297.21998016753327,
+          "median_test_to_train_km": 339.9445719075733,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 98,
+          "n_train_val": 316,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 188.4187609838231,
+          "median_test_to_train_km": 835.6100233491236,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 83,
+          "n_train_val": 421,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 184.710163943791,
+          "median_test_to_train_km": 527.5803988809473,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 25,
+          "n_train_val": 122,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 410.8538554585408,
+          "median_test_to_train_km": 672.2078945548005,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 41,
+          "n_train_val": 200,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 214.96986903047116,
+          "median_test_to_train_km": 443.7012500916999,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 93,
+          "n_train_val": 439,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 132.06527594522106,
+          "median_test_to_train_km": 317.61693698601096,
+          "min_exceeds_buffer": true
+        }
+      },
+      "46": {
+        "Africa": {
+          "n_test": 56,
+          "n_train_val": 168,
+          "buffer_km": 346.00910425968095,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 348.5982377981275,
+          "median_test_to_train_km": 615.2528908816394,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 33,
+          "n_train_val": 177,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 192.77533821872208,
+          "median_test_to_train_km": 425.4165297180352,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 68,
+          "n_train_val": 287,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 163.96094827475963,
+          "median_test_to_train_km": 736.5133701307782,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 67,
+          "n_train_val": 316,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 193.0797564860975,
+          "median_test_to_train_km": 497.19055418292965,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_train_val": 53,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 475.7248159253347,
+          "median_test_to_train_km": 505.60120823166494,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 84,
+          "n_train_val": 333,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 188.4187609838231,
+          "median_test_to_train_km": 589.6553294208201,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 90,
+          "n_train_val": 410,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 85.87806921647721,
+          "median_test_to_train_km": 296.7610703174321,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_train_val": 112,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 332.7242446221789,
+          "median_test_to_train_km": 625.5663400693289,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 38,
+          "n_train_val": 215,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 527.648902963654,
+          "median_test_to_train_km": 722.7297336860756,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 113,
+          "n_train_val": 415,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 91.55653054179487,
+          "median_test_to_train_km": 327.1201733106526,
+          "min_exceeds_buffer": true
+        }
+      },
+      "9": {
+        "Africa": {
+          "n_test": 41,
+          "n_train_val": 191,
+          "buffer_km": 346.00910425968095,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 538.9381919578132,
+          "median_test_to_train_km": 967.4268736891169,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 35,
+          "n_train_val": 175,
+          "buffer_km": 187.6665036976472,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 194.21409553951557,
+          "median_test_to_train_km": 476.6504624524367,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 68,
+          "n_train_val": 290,
+          "buffer_km": 143.25344782361208,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 231.03903071277477,
+          "median_test_to_train_km": 508.4184431098223,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 84,
+          "n_train_val": 296,
+          "buffer_km": 154.72660106043642,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 182.03817126351066,
+          "median_test_to_train_km": 447.21922792713406,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 11,
+          "n_train_val": 52,
+          "buffer_km": 254.06971388282162,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 341.3937948778862,
+          "median_test_to_train_km": 459.4535013584881,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 93,
+          "n_train_val": 330,
+          "buffer_km": 172.56708328561587,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 223.46848109205337,
+          "median_test_to_train_km": 833.5903221938293,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 82,
+          "n_train_val": 420,
+          "buffer_km": 83.25270180366239,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 84.74331613834593,
+          "median_test_to_train_km": 283.7511520546352,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 29,
+          "n_train_val": 116,
+          "buffer_km": 262.78426751915924,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 318.8927379946375,
+          "median_test_to_train_km": 597.9248230502376,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 50,
+          "n_train_val": 199,
+          "buffer_km": 205.8043212685313,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 208.4725864884279,
+          "median_test_to_train_km": 452.4827403787079,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_train_val": 449,
+          "buffer_km": 90.69683120071882,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 226.80919708555973,
+          "median_test_to_train_km": 746.7964573311085,
+          "min_exceeds_buffer": true
+        }
+      }
+    }
+  },
+  "exp3": {
+    "source": "result/inductive_sample.json",
+    "summary": {
+      "n_folds": 50,
+      "min_test_to_train_km": {
+        "min": 114.37891789170415,
+        "median": 272.8612933383886,
+        "max": 538.9381919578132
+      },
+      "min_over_buffer_ratio": {
+        "min": 1.0003862326527284,
+        "median": 1.060794230299571
+      },
+      "n_folds_min_exceeds_buffer": 50,
+      "n_folds_buffer_fallback": 0
+    },
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 45,
+          "n_train_val": 3067,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 538.9381919578132,
+          "median_test_to_train_km": 967.4268736891169,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 47,
+          "n_train_val": 3015,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 244.98061499532403,
+          "median_test_to_train_km": 368.1920065828309,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 77,
+          "n_train_val": 3028,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 209.14559850519862,
+          "median_test_to_train_km": 484.2433379045147,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 101,
+          "n_train_val": 3003,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 224.56434399440062,
+          "median_test_to_train_km": 423.2748365043891,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_train_val": 3089,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 378.27514824753456,
+          "median_test_to_train_km": 545.0900953509528,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 63,
+          "n_train_val": 3049,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 287.18524071658834,
+          "median_test_to_train_km": 1004.1750253958232,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 112,
+          "n_train_val": 2997,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 139.00973021947908,
+          "median_test_to_train_km": 377.86104444458584,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_train_val": 3044,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 350.1515138296976,
+          "median_test_to_train_km": 500.4813432359179,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 54,
+          "n_train_val": 3056,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 341.6215971098338,
+          "median_test_to_train_km": 783.4054940794545,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_train_val": 3028,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 124.16617607648095,
+          "median_test_to_train_km": 288.4493209797348,
+          "min_exceeds_buffer": true
+        }
+      },
+      "47": {
+        "Africa": {
+          "n_test": 55,
+          "n_train_val": 3038,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 477.5198985746144,
+          "median_test_to_train_km": 645.3028082162482,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 40,
+          "n_train_val": 3037,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 252.916180523966,
+          "median_test_to_train_km": 393.97420326578293,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 78,
+          "n_train_val": 3030,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 199.02596084916726,
+          "median_test_to_train_km": 397.47777257740916,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 67,
+          "n_train_val": 3042,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 230.2531246826821,
+          "median_test_to_train_km": 605.3816030208914,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_train_val": 3094,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 378.27514824753456,
+          "median_test_to_train_km": 420.1828508598036,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 90,
+          "n_train_val": 3007,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 330.088530494315,
+          "median_test_to_train_km": 763.0798157767681,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 92,
+          "n_train_val": 3017,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 124.46383548141281,
+          "median_test_to_train_km": 425.910650491443,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 32,
+          "n_train_val": 3061,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 363.29421517196806,
+          "median_test_to_train_km": 609.0636523466452,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 41,
+          "n_train_val": 3059,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 286.4170869522428,
+          "median_test_to_train_km": 544.0705447868348,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 97,
+          "n_train_val": 3013,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 122.68135817199499,
+          "median_test_to_train_km": 378.66362858061706,
+          "min_exceeds_buffer": true
+        }
+      },
+      "33": {
+        "Africa": {
+          "n_test": 36,
+          "n_train_val": 3065,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 493.7617518772955,
+          "median_test_to_train_km": 701.685958657723,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 39,
+          "n_train_val": 3055,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 247.14874360358604,
+          "median_test_to_train_km": 364.10680965155086,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 75,
+          "n_train_val": 3032,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 198.23670506207407,
+          "median_test_to_train_km": 651.34807277429,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 74,
+          "n_train_val": 3036,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 340.1588473962485,
+          "median_test_to_train_km": 611.9850644335918,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 12,
+          "n_train_val": 3095,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 385.1835620478774,
+          "median_test_to_train_km": 604.6661848057192,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 92,
+          "n_train_val": 3006,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 259.3054997245344,
+          "median_test_to_train_km": 835.6681590310282,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 77,
+          "n_train_val": 3035,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 488.4130142398268,
+          "median_test_to_train_km": 1111.8136333847124,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 22,
+          "n_train_val": 3024,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 363.29421517196806,
+          "median_test_to_train_km": 472.7081153279504,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 39,
+          "n_train_val": 3073,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 286.4170869522428,
+          "median_test_to_train_km": 701.6571785682553,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 103,
+          "n_train_val": 2999,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 118.93877327221699,
+          "median_test_to_train_km": 389.3924345342453,
+          "min_exceeds_buffer": true
+        }
+      },
+      "25": {
+        "Africa": {
+          "n_test": 40,
+          "n_train_val": 3062,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 487.6782350660752,
+          "median_test_to_train_km": 722.7292325379321,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 34,
+          "n_train_val": 3055,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 243.7413748318056,
+          "median_test_to_train_km": 450.07568226332097,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 70,
+          "n_train_val": 3031,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 198.23670506207407,
+          "median_test_to_train_km": 407.218395021143,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_train_val": 3013,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 201.412328305078,
+          "median_test_to_train_km": 419.76858976781153,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 10,
+          "n_train_val": 3096,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 378.27514824753456,
+          "median_test_to_train_km": 551.7913788053581,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 97,
+          "n_train_val": 3013,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 308.62054114684366,
+          "median_test_to_train_km": 919.5867414228953,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 108,
+          "n_train_val": 3002,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 124.46383548141281,
+          "median_test_to_train_km": 557.0126003786564,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_train_val": 3044,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 350.1515138296976,
+          "median_test_to_train_km": 500.4813432359179,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 57,
+          "n_train_val": 3055,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 286.4170869522428,
+          "median_test_to_train_km": 463.5734937254568,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 100,
+          "n_train_val": 3011,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 124.16617607648095,
+          "median_test_to_train_km": 299.66468644049445,
+          "min_exceeds_buffer": true
+        }
+      },
+      "31": {
+        "Africa": {
+          "n_test": 56,
+          "n_train_val": 3036,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 477.5198985746144,
+          "median_test_to_train_km": 701.5798779125394,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 37,
+          "n_train_val": 3031,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 250.1019202546477,
+          "median_test_to_train_km": 389.66375511565195,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 62,
+          "n_train_val": 3047,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 198.23670506207407,
+          "median_test_to_train_km": 708.5911944699006,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 75,
+          "n_train_val": 3031,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 202.59112299271052,
+          "median_test_to_train_km": 417.53529239769966,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 12,
+          "n_train_val": 3078,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 394.07972829913774,
+          "median_test_to_train_km": 435.36739150913286,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 63,
+          "n_train_val": 3049,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 256.8638894872463,
+          "median_test_to_train_km": 336.58480298467464,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 86,
+          "n_train_val": 3018,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 114.37891789170415,
+          "median_test_to_train_km": 367.3793560504564,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_train_val": 3077,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 423.3279858567255,
+          "median_test_to_train_km": 635.2149658283897,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 43,
+          "n_train_val": 3069,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 337.0980946820906,
+          "median_test_to_train_km": 609.9030212412198,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 120,
+          "n_train_val": 2985,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 122.68135817199499,
+          "median_test_to_train_km": 319.0803081605019,
+          "min_exceeds_buffer": true
+        }
+      }
+    }
+  },
+  "exp6": {
+    "source": "result/exp6_proportion_inductive_sample.json",
+    "summary": {
+      "n_folds": 50,
+      "min_test_to_train_km": {
+        "min": 114.37891789170415,
+        "median": 247.14874360358604,
+        "max": 538.9381919578132
+      },
+      "min_over_buffer_ratio": {
+        "min": 1.0003862326527284,
+        "median": 1.0550787119543958
+      },
+      "n_folds_min_exceeds_buffer": 50,
+      "n_folds_buffer_fallback": 0
+    },
+    "per_seed_per_region": {
+      "42": {
+        "Africa": {
+          "n_test": 45,
+          "n_train_val": 3067,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 538.9381919578132,
+          "median_test_to_train_km": 967.4268736891169,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 47,
+          "n_train_val": 3015,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 244.98061499532403,
+          "median_test_to_train_km": 368.1920065828309,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 77,
+          "n_train_val": 3028,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 209.14559850519862,
+          "median_test_to_train_km": 484.2433379045147,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 101,
+          "n_train_val": 3003,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 224.56434399440062,
+          "median_test_to_train_km": 423.2748365043891,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_train_val": 3089,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 378.27514824753456,
+          "median_test_to_train_km": 545.0900953509528,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 63,
+          "n_train_val": 3049,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 287.18524071658834,
+          "median_test_to_train_km": 1004.1750253958232,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 112,
+          "n_train_val": 2997,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 139.00973021947908,
+          "median_test_to_train_km": 377.86104444458584,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 35,
+          "n_train_val": 3044,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 350.1515138296976,
+          "median_test_to_train_km": 500.4813432359179,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 54,
+          "n_train_val": 3056,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 341.6215971098338,
+          "median_test_to_train_km": 783.4054940794545,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 83,
+          "n_train_val": 3028,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 124.16617607648095,
+          "median_test_to_train_km": 288.4493209797348,
+          "min_exceeds_buffer": true
+        }
+      },
+      "46": {
+        "Africa": {
+          "n_test": 40,
+          "n_train_val": 3030,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 466.29276491441533,
+          "median_test_to_train_km": 795.2286883019733,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 36,
+          "n_train_val": 3059,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 244.98061499532403,
+          "median_test_to_train_km": 394.66289436922,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 79,
+          "n_train_val": 3013,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 199.02596084916726,
+          "median_test_to_train_km": 429.0173428114415,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 70,
+          "n_train_val": 3025,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 257.4698928566857,
+          "median_test_to_train_km": 815.0018776721372,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_train_val": 3093,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 379.5617596923866,
+          "median_test_to_train_km": 538.0138044726117,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 87,
+          "n_train_val": 3023,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 253.52500897595178,
+          "median_test_to_train_km": 608.4997855667245,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 83,
+          "n_train_val": 3029,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 184.710163943791,
+          "median_test_to_train_km": 605.8309085519319,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 26,
+          "n_train_val": 3052,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 351.89143728456054,
+          "median_test_to_train_km": 479.8437295114536,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 51,
+          "n_train_val": 3049,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 321.8197588182204,
+          "median_test_to_train_km": 917.050760046615,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 111,
+          "n_train_val": 2989,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 118.44226703694407,
+          "median_test_to_train_km": 353.55217579711723,
+          "min_exceeds_buffer": true
+        }
+      },
+      "11": {
+        "Africa": {
+          "n_test": 40,
+          "n_train_val": 3066,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 491.5824152558217,
+          "median_test_to_train_km": 735.6672999338225,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 40,
+          "n_train_val": 3059,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 247.14874360358604,
+          "median_test_to_train_km": 398.2155717629958,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 70,
+          "n_train_val": 3038,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 209.14559850519862,
+          "median_test_to_train_km": 480.2554827981772,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_train_val": 3013,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 201.412328305078,
+          "median_test_to_train_km": 419.76858976781153,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_train_val": 3098,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 413.61596398520703,
+          "median_test_to_train_km": 428.97257588860754,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 68,
+          "n_train_val": 3033,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 241.89683972433923,
+          "median_test_to_train_km": 606.3664856366415,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 105,
+          "n_train_val": 3007,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 183.26568413892886,
+          "median_test_to_train_km": 573.8936542537409,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 31,
+          "n_train_val": 2995,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 351.89143728456054,
+          "median_test_to_train_km": 460.392100155127,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 45,
+          "n_train_val": 3058,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 274.3554507720463,
+          "median_test_to_train_km": 674.5814392206626,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 95,
+          "n_train_val": 3013,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 122.68135817199499,
+          "median_test_to_train_km": 306.282899122997,
+          "min_exceeds_buffer": true
+        }
+      },
+      "4": {
+        "Africa": {
+          "n_test": 46,
+          "n_train_val": 3059,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 493.7908267298515,
+          "median_test_to_train_km": 960.9672178842534,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 41,
+          "n_train_val": 3057,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 247.14874360358604,
+          "median_test_to_train_km": 378.32868793345193,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 69,
+          "n_train_val": 3039,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 231.03903071277477,
+          "median_test_to_train_km": 342.4478660284007,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 71,
+          "n_train_val": 3013,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 201.412328305078,
+          "median_test_to_train_km": 419.76858976781153,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 9,
+          "n_train_val": 3091,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 379.5617596923866,
+          "median_test_to_train_km": 428.9946199834954,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 72,
+          "n_train_val": 3034,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 231.80621763883192,
+          "median_test_to_train_km": 532.3786291260226,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 100,
+          "n_train_val": 3012,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 184.710163943791,
+          "median_test_to_train_km": 525.251184881349,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 23,
+          "n_train_val": 3073,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 351.89143728456054,
+          "median_test_to_train_km": 559.5851423503731,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 54,
+          "n_train_val": 3056,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 301.32813021406355,
+          "median_test_to_train_km": 758.2708525891869,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 97,
+          "n_train_val": 3010,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 151.27160065770667,
+          "median_test_to_train_km": 345.56345530982594,
+          "min_exceeds_buffer": true
+        }
+      },
+      "34": {
+        "Africa": {
+          "n_test": 43,
+          "n_train_val": 3069,
+          "buffer_km": 464.63932854002013,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 491.5824152558217,
+          "median_test_to_train_km": 869.2492276659636,
+          "min_exceeds_buffer": true
+        },
+        "China": {
+          "n_test": 35,
+          "n_train_val": 3061,
+          "buffer_km": 243.629299711413,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 243.7413748318056,
+          "median_test_to_train_km": 361.5029592179608,
+          "min_exceeds_buffer": true
+        },
+        "East Asia": {
+          "n_test": 65,
+          "n_train_val": 3033,
+          "buffer_km": 196.5624232726616,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 200.69012067465198,
+          "median_test_to_train_km": 408.8606038747663,
+          "min_exceeds_buffer": true
+        },
+        "Europe": {
+          "n_test": 75,
+          "n_train_val": 3031,
+          "buffer_km": 201.33456632144174,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 202.59112299271052,
+          "median_test_to_train_km": 417.53529239769966,
+          "min_exceeds_buffer": true
+        },
+        "Middle East": {
+          "n_test": 13,
+          "n_train_val": 3091,
+          "buffer_km": 371.1529308418237,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 385.1835620478774,
+          "median_test_to_train_km": 441.76220712965824,
+          "min_exceeds_buffer": true
+        },
+        "North America": {
+          "n_test": 65,
+          "n_train_val": 3042,
+          "buffer_km": 226.44087318959663,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 274.4023826189561,
+          "median_test_to_train_km": 746.4083436889515,
+          "min_exceeds_buffer": true
+        },
+        "Oceania": {
+          "n_test": 102,
+          "n_train_val": 3002,
+          "buffer_km": 113.24053361319054,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 114.37891789170415,
+          "median_test_to_train_km": 434.42014871306253,
+          "min_exceeds_buffer": true
+        },
+        "Russian Federation": {
+          "n_test": 28,
+          "n_train_val": 3016,
+          "buffer_km": 349.7901907072129,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 351.89143728456054,
+          "median_test_to_train_km": 468.9636917422549,
+          "min_exceeds_buffer": true
+        },
+        "South America": {
+          "n_test": 43,
+          "n_train_val": 3067,
+          "buffer_km": 267.9807485047332,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 281.9613912394112,
+          "median_test_to_train_km": 330.815797330628,
+          "min_exceeds_buffer": true
+        },
+        "South and Central Asia": {
+          "n_test": 87,
+          "n_train_val": 3021,
+          "buffer_km": 115.65047647115263,
+          "buffer_fallback": false,
+          "min_test_to_train_km": 132.06527594522106,
+          "median_test_to_train_km": 391.05808738146396,
+          "min_exceeds_buffer": true
+        }
+      }
+    }
+  }
+}

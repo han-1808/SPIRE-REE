@@ -11,8 +11,8 @@
       "old_best_baseline": null,
       "old_best_baseline_value": null,
       "new_spire": 0.8294279076872104,
-      "new_best_baseline": "SVM",
-      "new_best_baseline_value": 0.8316257870770819,
+      "new_best_baseline": "Autoencoder",
+      "new_best_baseline_value": 0.829811779663196,
       "delta_spire": null
     },
     {

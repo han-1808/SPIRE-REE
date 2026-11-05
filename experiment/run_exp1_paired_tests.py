@@ -6,9 +6,9 @@ each baseline in Experiment 1 (leave-one-region-out).
 
 Needs no model: reads the stored per-region test metrics of
 `gnn_inductive.json` (SPIRE) and `baseline.json` (tabular and spatial
-baselines). The two files use different seeds (SPIRE 42, 1, 2, 4, 7;
-baselines 42, 19, 34, 36, 18), so runs cannot be paired by seed. Instead,
-each model's metric is averaged over its five runs within each held-out
+baselines). Both files use seeds 42, 1, 2, 4, 7 (the baselines were rerun
+with `run_baseline.py --seeds 42 1 2 4 7`), but the comparison is made over
+regions, not seeds: each model's metric is averaged over its five runs within each held-out
 region, and the ten regions form the pairs of a two-sided Wilcoxon
 signed-rank test.
 
@@ -95,8 +95,8 @@ def run_exp1_paired_tests() -> dict:
         "description": (
             "Experiment 1 (leave-one-region-out). Per-region metrics averaged over "
             "five runs per model; two-sided Wilcoxon signed-rank test over the ten "
-            "regions, SPIRE minus baseline. Runs are not paired by seed because the "
-            "two result files use different seeds. p-values are uncorrected."
+            "regions, SPIRE minus baseline. Both result files use seeds 42, 1, 2, 4, 7; "
+            "pairs are regions, not seeds. p-values are uncorrected."
         ),
         "seeds": {
             "spire": sorted(int(s) for s in gnn["runs"]),
