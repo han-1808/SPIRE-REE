@@ -332,14 +332,17 @@ def _run_region(processed_df: pd.DataFrame, region: str, random_seed: int = 42) 
         y_prob = np.array(y_probs)
         y_pred = (y_prob >= 0.5).astype(int)
 
+        # ROC-AUC and PR-AUC are undefined for a single-class test fold; they
+        # are stored as None and _avg_model_metrics leaves the fold out.
+        has_both = len(np.unique(y_true)) > 1
         try:
             metrics = {
                 "accuracy":  float(accuracy_score(y_true, y_pred)),
                 "precision": float(precision_score(y_true, y_pred, zero_division=0)),
                 "recall":    float(recall_score(y_true, y_pred, zero_division=0)),
                 "f1":        float(f1_score(y_true, y_pred, zero_division=0)),
-                "roc_auc":   float(roc_auc_score(y_true, y_prob)) if len(np.unique(y_true)) > 1 else (1.0 if np.all(y_pred == y_true) else 0.0),
-                "pr_auc":    float(average_precision_score(y_true, y_prob)) if len(np.unique(y_true)) > 1 else (1.0 if np.all(y_pred == y_true) else 0.0),
+                "roc_auc":   float(roc_auc_score(y_true, y_prob)) if has_both else None,
+                "pr_auc":    float(average_precision_score(y_true, y_prob)) if has_both else None,
             }
         except Exception as exc:
             metrics = {"error": str(exc)}
@@ -373,8 +376,15 @@ def _avg_model_metrics(per_region: dict, model_name: str) -> dict:
             valid[r] = m
     if not valid:
         return {}
-    scalar_keys = [k for k, v in next(iter(valid.values())).items() if v is not None]
-    return {k: float(np.mean([v[k] for v in valid.values() if v.get(k) is not None])) for k in scalar_keys}
+    # Union of keys so a None (single-class fold) in the first region does not
+    # drop a metric; None values are skipped in each mean.
+    keys = list(dict.fromkeys(k for m in valid.values() for k in m))
+    out = {}
+    for k in keys:
+        vals = [v[k] for v in valid.values() if v.get(k) is not None]
+        if vals:
+            out[k] = float(np.mean(vals))
+    return out
 
 
 def run_gnn_per_region(

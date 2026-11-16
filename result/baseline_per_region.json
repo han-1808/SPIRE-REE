@@ -11874,56 +11874,56 @@
         "xgboost": {
           "accuracy": 0.7811662799740775,
           "f1": 0.8353817935849914,
-          "roc_auc": 0.7778019624342835,
-          "pr_auc": 0.8849360022502084
+          "roc_auc": 0.7531132915936483,
+          "pr_auc": 0.8721511136113427
         },
         "lightgbm": {
           "accuracy": 0.7753598826676802,
           "f1": 0.8326513856283009,
-          "roc_auc": 0.7786943885220872,
-          "pr_auc": 0.8871213025787787
+          "roc_auc": 0.7541048761356524,
+          "pr_auc": 0.874579225087532
         },
         "catboost": {
           "accuracy": 0.7530561028987842,
           "f1": 0.8124901257023932,
-          "roc_auc": 0.6768433870358133,
-          "pr_auc": 0.7778998292758359
+          "roc_auc": 0.7520482078175703,
+          "pr_auc": 0.8643331436398176
         },
         "random_forest": {
           "accuracy": 0.7809197672275648,
           "f1": 0.8294713906558275,
-          "roc_auc": 0.7664083813546672,
-          "pr_auc": 0.8730615562966552
+          "roc_auc": 0.7404537570607412,
+          "pr_auc": 0.8589572847740613
         },
         "svm": {
           "accuracy": 0.8210125060480739,
           "f1": 0.8539158422511044,
-          "roc_auc": 0.8279899779948394,
-          "pr_auc": 0.9031377453994764
+          "roc_auc": 0.8088777533275994,
+          "pr_auc": 0.892375272666085
         },
         "mlp": {
           "accuracy": 0.8152109187464864,
           "f1": 0.8470947808490117,
-          "roc_auc": 0.8196636201148614,
-          "pr_auc": 0.903095701238683
+          "roc_auc": 0.7996262445720683,
+          "pr_auc": 0.89232855693187
         },
         "autoencoder_predictor": {
           "accuracy": 0.7957642704174852,
           "f1": 0.8368755338405827,
-          "roc_auc": 0.8213812165738738,
-          "pr_auc": 0.9153140989472076
+          "roc_auc": 0.801534685082082,
+          "pr_auc": 0.9059045543857862
         },
         "spatial_knn_regression": {
           "accuracy": 0.7521947986770149,
           "f1": 0.7933602186937176,
-          "roc_auc": 0.6546466360661317,
-          "pr_auc": 0.7969389927115554
+          "roc_auc": 0.6162740400734797,
+          "pr_auc": 0.7743766585683949
         },
         "kriging": {
           "accuracy": 0.7575952315774478,
           "f1": 0.7168367508151097,
-          "roc_auc": 0.659923191469437,
-          "pr_auc": 0.8093498864525893
+          "roc_auc": 0.6221368794104856,
+          "pr_auc": 0.788166540502877
         }
       },
       "per_region": {
@@ -17042,72 +17042,72 @@
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "lightgbm": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "catboost": {
               "accuracy": 0.9285714285714286,
               "precision": 1.0,
               "recall": 0.9285714285714286,
               "f1": 0.9629629629629629,
-              "roc_auc": 0.0,
-              "pr_auc": 0.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "random_forest": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "svm": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "mlp": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "autoencoder_predictor": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "spatial_knn_regression": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "kriging": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             }
           },
           "predictions": {
@@ -60956,5 +60956,6 @@
     7,
     42
   ],
-  "_note_split_manifest": "Runs restricted to the five pinned seeds defined in result/split_manifest_per_region.json; earlier runs on unseeded, non-manifest splits were removed rather than averaged in."
+  "_note_split_manifest": "Runs restricted to the five pinned seeds defined in result/split_manifest_per_region.json; earlier runs on unseeded, non-manifest splits were removed rather than averaged in.",
+  "_note_single_class_folds": "ROC-AUC and PR-AUC are undefined for a single-class test fold. Such folds store None and are omitted from avg_metrics (regional mean). Applied by experiment/recompute_single_class_auc.py. Folds affected (seed, region, n_test): (2, Middle East, 14)"
 }

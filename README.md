@@ -1,1027 +1,287 @@
-# SPatially-augmented Inductive REpresentation lEarning for REE
+# SPIRE-REE
 
-Spatially-augmented inductive graph representation learning for Rare Earth Element (REE) deposit classification using a global geoscience database.
+Code, processed data and result files for the manuscript
+
+> **Integrative Tabular and Inductive Graph Representation Learning for Cross-Region Rare Earth Occurrence Classification**
+
+SPIRE (SPatially-augmented Inductive REpresentation lEarning) combines an out-of-fold tabular ensemble prior with an inductive GraphSAGE model. It classifies whether a USGS occurrence record documents at least one REE mineral and estimates the positive fraction among held-out records.
+
+This README is also the reproducibility note for the manuscript. It covers the experiment protocol, seed sets, the use of the validation set, the treatment of single-class test folds, and where each table and figure comes from.
+
+**Repository version cited in the manuscript:** release tag `v2.1-revision3`. The results and figures in that release are the ones reported in the revised manuscript.
 
 ---
 
-## Getting Started
+## Contents
 
-### Prerequisites
+- [Installation](#installation)
+- [Data](#data)
+- [Experiments](#experiments)
+- [Seeds](#seeds)
+- [Training, validation and test partitions](#training-validation-and-test-partitions)
+- [Metrics and single-class test folds](#metrics-and-single-class-test-folds)
+- [Where each manuscript result comes from](#where-each-manuscript-result-comes-from)
+- [Headline results](#headline-results)
+- [Reproducing the results](#reproducing-the-results)
+- [Repository layout](#repository-layout)
+- [Known limitations of the record](#known-limitations-of-the-record)
 
-- Python 3.10+
-- `pip` and (recommended) a virtual environment tool
+---
 
-### Installation
+## Installation
+
+Python 3.10 or later.
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/han-1808/SPIRE-REE.git
 cd SPIRE-REE
+git checkout v2.1-revision3
 python -m venv venv
-source venv/bin/activate    # Windows: venv\Scripts\activate
+source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
-
-### Quick Start
-
-```bash
-# 1. Preprocess raw data — generates data/gnn_features.parquet,
-#    data/gnn_target.npy, data/gnn_edge_index.npy, data/gnn_edge_weight.npy
-python preprocessing/pipeline.py
-
-# 2. Run any experiment, e.g. Exp 1 (leave-one-region-out)
-python experiment/run_baseline.py
-python experiment/run_gnn.py
-```
-
-Results are written as JSON to `result/`. See [Running Order](#running-order) for the full experiment sequence, [Project Structure](#project-structure) for what each script does, and [Preprocessing Pipeline](#preprocessing-pipeline) / [GNN Architecture](#gnn-architecture) / [Experiments](#experiments) for methodology documentation.
 
 ---
 
 ## Data
 
-**Source:** `data/Global_REE_occurrence_database.xlsx` — 3,114 REE deposit records with ~60 raw columns.
-
-**Target variable:** `has_ree` — binary label indicating whether a deposit has documented REE minerals (1 = yes, 0 = no). ~65% positive class.
-
-**10 geographic regions** (Antarctica excluded — too few records):
-Africa, China, East Asia, Europe, Middle East, North America, Oceania, Russian Federation, South America, South and Central Asia.
-
----
-
-## Project Structure
-
-```
-preprocessing/                           # Data cleaning and feature engineering
-├── config.py                            # All constants: paths, thresholds, GNN parameters
-├── cleaning.py                          # Column removal and text normalisation
-├── host_lith.py                         # Host lithology inference and group features
-├── mineral_processing.py                # REE detection, Sig_Mins cleaning, binary features
-├── feature_engineering.py              # XGBoost inputs, SHAP selection, graph construction
-└── pipeline.py                          # Orchestrates preprocessing Steps 1–10
-
-experiment/                              # Model training and evaluation
-├── baseline.py                          # Baseline model definitions
-├── gnn_training.py                      # SPIRE / GCN / GAT architecture + training loop
-├── run_baseline.py                      # Exp 1 baseline — leave-one-region-out
-├── run_baseline_per_region.py           # Exp 2 baseline — per-region, random split
-├── run_gnn.py                           # Exp 1 GNN — leave-one-region-out (inductive)
-├── run_gnn_per_region.py                # Exp 2 GNN — per-region, random split
-├── run_inductive_sample.py              # Exp 3 GNN+baseline — global inductive, random
-├── run_exp4_proportion.py               # Exp 4 — region-level proportion prediction
-├── run_exp5_proportion_per_region.py    # Exp 5 — per-region proportion, random split
-└── run_exp6_proportion_inductive_sample.py    # Exp 6 — global inductive proportion, random
-
-result/                                  # Output JSON files
-├── baseline.json                        # Exp 1 baseline results
-├── gnn_inductive.json                   # Exp 1 GNN results
-├── baseline_per_region.json             # Exp 2 baseline results
-├── gnn_per_region.json                  # Exp 2 GNN results
-├── inductive_sample.json                # Exp 3 results (GNN + baselines)
-├── exp4_proportion.json                 # Exp 4 results (proportion prediction)
-├── exp5_proportion_per_region.json      # Exp 5 results
-└── exp6_proportion_inductive_sample.json    # Exp 6 results
-```
-
----
-
-## Preprocessing Pipeline
-
-```bash
-python preprocessing/pipeline.py
-```
-
-**Step 1** — Antarctica records removed. 40+ administrative/redundant columns dropped (all `RR_*` reserve fields, notes, leakage columns `REE`, `LREE_Note`, `HREE_Note`, `REE_Ratio`).
-
-**Step 2** — ~1,109 records with missing `Host_Lith` filled via multi-tier rule engine: Dep_Type rules → REE_Mins fallback → Sig_Mins fallback.
-
-**Step 3** — Normalise `REE_Mins`, create binary target `has_ree`, strip REE symbols from `Sig_Mins`, create 180 binary `has_{mineral}` features from top Sig_Mins entries.
-
-**Step 4** — `Host_Lith` free-text classified into 8 rock group binary columns: `is_carbonatite_system`, `is_alkaline_intrusive`, `is_mafic_ultramafic`, `is_felsic_pegmatite`, `is_metamorphic_metasomatic`, `is_sedimentary`, `is_placer`, `is_supergene_lateritic`.
-
-**Step 5** — Save processed dataset → `data/Global_REE_occurrence_database_processed.xlsx`.
-
-**Step 6** — Prepare XGBoost inputs: drop leakage columns, `StandardScaler` on lat/lon (fit on train), drop high-missing columns, impute nulls with train median/`"Unknown"`, one-hot encode categoricals. Result: `X` ~(3100, 309), `y` ~(3100,).
-
-**Step 7** — Train XGBoost + SHAP selection: top `k=10` features by mean |SHAP| retained. Example: `has_thorite`, `has_magnetite`, `is_unclassified`, `is_alkaline_intrusive`, `has_pyrochlore`, `has_ilmenite`, `Latitude`, `is_placer`, `Longitude`, `has_zircon`.
-
-**Step 8** — Build node features: 10 SHAP-selected features + 1 ensemble probability score (mean of XGBoost, CatBoost, RandomForest `predict_proba`, all fit on train only) = **11 features per node**.
-
-**Step 9** — Build weighted spatial graph: `w = 0.5 × w_spatial + 0.5 × w_feature`, where `w_spatial` is Gaussian decay on haversine distance (max 2000 km) and `w_feature` is cosine similarity. `k=10` nearest neighbours per node.
-
-**Step 10** — Save GNN artifacts: `data/gnn_features.parquet`, `data/gnn_target.npy`, `data/gnn_edge_index.npy`, `data/gnn_edge_weight.npy`.
-
----
-
-## GNN Architecture
-
-Three architectures are evaluated in all experiments. **SPIRE is tuned via grid search; GCN and GAT reuse the same best hyperparameters** (hidden dim, num layers, dropout, learning rate) to reduce training cost.
-
-| Model | Architecture | Edge weights |
-|-------|-------------|--------------|
-| **SPIRE** | SAGEConv × L layers, BN + residual, dropout | Not used natively — encoded via edge-stat augmentation |
-| **GCN** | GCNConv × L layers, BN + residual, dropout | Used (normalised adjacency) |
-| **GAT** | GATConv × L layers, 4 attention heads, BN + residual | Learned (attention) |
-
-**Hyperparameter grid (SPIRE tuned, others reuse):**
-- Hidden dim: {32, 64, 128} — Layers: {1, 2} — Dropout: {0.3, 0.5} — LR: {0.01, 0.005, 0.001}
-
-**Training:** early stopping on val F1 (patience=20), best checkpoint restored before evaluation.
-
-**Edge-weight augmentation** — After building the train+val graph (Step 9), compute mean and max of incoming edge weights for each node and append to the 11-dim base features → **13 features per node**. For inductive test nodes, edge stats are derived at inference time from a k-NN mini-graph using the same graph parameters. This gives SPIRE access to spatial-proximity signals without architectural changes. Applied in all GNN experiments.
+- **Source:** USGS global database of REE deposits and occurrences (Orris et al., 2018), stored as `data/Global_REE_occurrence_database.xlsx`.
+- **Records:** after removing Antarctic records, 3,112 records remain.
+- **Label (`has_ree`):** 1 if the record documents at least one REE mineral (2,025 records, 65.1%); 0 if no REE mineral is documented (1,087 records). Class 0 means *no REE mineral documented*. It does not establish that REEs are absent.
+- **Regions:** the ten groups of the source `Region` field, used without redefining their boundaries: Africa, China, East Asia, Europe, Middle East, North America, Oceania, Russian Federation, South America, South and Central Asia. One China record near the Mongolian border is coded East Asia, and three Labrador (Canada) records are coded Europe in the source field. These assignments are retained.
+- **Processed outputs** (written by `preprocessing/pipeline.py`):
+  - `data/Global_REE_occurrence_database_processed.xlsx`
+  - `data/gnn_features.parquet`, `data/gnn_target.npy`, `data/gnn_edge_index.npy`, `data/gnn_edge_weight.npy`
 
 ---
 
 ## Experiments
 
-### Overview
+Six main experiments cross two tasks (classification and proportion estimation) with three spatial settings.
 
-| Experiment | Train data | Test nodes | Sampling | Task |
-|-----------|------------|------------|----------|------|
-| **Exp 1** — Leave-one-region-out | 9 other regions | All nodes in held-out region (63–532) | — | Classification |
-| **Exp 2** — Per-region random | Region's own graph | 5 per region | Random | Classification |
-| **Exp 3** — Global inductive random | All nodes except 5 per region | 5 per region | Random | Classification |
-| **Exp 4** — Region proportion | 9 other regions | All nodes in held-out region | — | Proportion MAE/RMSE |
-| **Exp 5** — Per-region proportion, random | Region's own graph | 5 per region | Random | Proportion MAE/RMSE |
-| **Exp 6** — Global inductive proportion, random | All nodes except 5 per region | 5 per region | Random | Proportion MAE/RMSE |
+| Exp | Task | Setting | Held-out set | Graph |
+|---|---|---|---|---|
+| 1 | Classification | Leave-one-region-out | All records of one region | Global, nine training regions |
+| 2 | Classification | Per-region spatial blocks | About 15% of each region, as whole spatial blocks | One graph per region |
+| 3 | Classification | Global spatial blocks | About 15% of each region, as whole spatial blocks | Global |
+| 4 | Proportion | Leave-one-region-out | All records of one region | Global, nine training regions |
+| 5 | Proportion | Per-region spatial blocks | As Exp 2 | One graph per region |
+| 6 | Proportion | Global spatial blocks | As Exp 3 | Global |
 
-**Inductive inference (all GNN experiments):** each test node is augmented into the train+val graph one-by-one — k=10 nearest spatial neighbours connected, one forward pass, then removed. Test nodes never interact with each other.
+**Spatial blocks (Exp 2, 3, 5, 6).** Within each region, k-means on unit-sphere coordinates forms spatial blocks. Whole blocks are held out until about 15% of the region is selected. Training and validation candidates within the region's mean k-nearest-neighbour distance of any held-out record are then excluded (the buffer). The realised held-out fraction is 15.0–23.8% (Exp 2 and 5) and 14.3–26.4% (Exp 3 and 6). Exp 1 and 4 hold out complete regions and use no buffer.
 
-**Feature parity:** all baselines and GNNs use the same 11 base features (10 SHAP-selected + 1 ensemble score) across all experiments. GNNs additionally receive 2 edge-stat features (mean and max of incoming edge weights) → 13-dim total in all experiments (see edge-weight augmentation in GNN Architecture).
+**Proportion (Exp 4–6).** The predicted fraction is the mean positive-class probability over the held-out records. It is compared with the observed fraction of positive labels.
 
-**Leakage controls:** StandardScaler, XGBoost, SHAP selection, ensemble models, graph construction — all fit on `train_idx` only.
+**Models.**
 
-**Proportion prediction (Exp 4–6):** `predicted_proportion = mean(y_prob)` over all test nodes in a region. Compared to `actual_proportion = fraction of has_ree=1` among those nodes.
+- *Graph models:* SPIRE (GraphSAGE, unweighted mean aggregation) and its GCN and GAT variants. All three use the same 13-dimensional node vector: 10 SHAP-selected attributes, the ensemble prior (mean of XGBoost, CatBoost and Random Forest probabilities), and the mean and maximum incoming edge weights.
+- *Tabular baselines:* XGBoost, LightGBM, CatBoost, Random Forest, RBF-kernel SVM, MLP, and an autoencoder followed by logistic regression. Their input is the 10 SHAP-selected attributes plus an out-of-fold XGBoost score.
+- *Position-only baselines:* ordinary kriging and distance-weighted spatial k-NN regression. These use coordinates only.
 
----
-
-## Results
-
-> **Metric direction:** Classification — F1 ⬆, ROC-AUC ⬆, PR-AUC ⬆ (higher is better). Proportion — MAE ⬇, RMSE ⬇ (lower is better).
-
-All metrics averaged across 10 regions. ROC-AUC / PR-AUC averaged only over regions where both classes appear in the test set.
+**Neighbourhood sizes.** Training graph k and attachment size k_pred are 15/15 in Exp 1 and 4, 10/10 in Exp 2 and 5, and 15/10 in Exp 3 and 6.
 
 ---
 
-### Exp 1 — Leave-one-region-out (Classification)
+## Seeds
 
-GNN trains on 9 regions (test region absent from graph), predicts all nodes in held-out region **inductively**. Baselines train on 9 regions, predict held-out region **transductively**. Note: these are different settings — GNN faces the harder cross-region generalisation task.
+Each main experiment uses five runs. Seeds vary the training/validation partition, the out-of-fold prior and the initialisation. In the block experiments they also vary the held-out blocks. These are the seed lists stored in the result files and reported in the protocol-configuration table of the manuscript.
 
-#### F1 ⬆, ROC-AUC ⬆, PR-AUC ⬆
+| Run | Seeds | Result file |
+|---|---|---|
+| Exp 1 graph models | 42, 1, 2, 4, 7 | `result/gnn_inductive.json` |
+| Exp 1 tabular baselines | 42, 1, 2, 4, 7 | `result/baseline.json` |
+| Exp 2 graph models and baselines | 42, 1, 2, 4, 7 | `result/gnn_per_region.json`, `result/baseline_per_region.json` |
+| Exp 3 | 42, 47, 33, 25, 31 | `result/inductive_sample.json` |
+| Exp 4 | 42, 47, 14, 30, 35 | `result/exp4_proportion.json` |
+| Exp 5 | 42, 59, 52, 46, 9 | `result/exp5_proportion_per_region.json` |
+| Exp 6 | 42, 46, 11, 4, 34 | `result/exp6_proportion_inductive_sample.json` |
+| Feature ablation, Exp 1 | 42, 1, 2, 4, 7 (initialisation only) | `result/ablation_feature.json` |
+| Feature ablation, Exp 3 | 42, 23, 10, 16, 49 (initialisation only) | `result/ablation_feature_exp3.json` |
+| Same-input MLP control | 42, 1, 2, 4, 7 (initialisation only) | `result/ablation_no_message_passing.json` |
+| Ensemble-only control | 42, 1, 2, 4, 7 | `result/ablation_ensemble_only.json` |
+| Rewiring control | 42, 1, 2, 4, 7 | `result/ablation_random_rewire.json` |
+| Leave-one-deposit-type-out | 42, 1, 2 | `result/lodto.json` |
+| k sweep, hyperparameter sweep, feature-selection record | 42 | `result/k_sensitivity.json`, `result/hparam_sensitivity.json`, `result/feature_selection_per_fold.json` |
 
-#### Run 1 — seed=42 (reference)
+Controlled ablations fix the split and the prior at seed 42 and vary only initialisation (and, for rewiring, the topology). Their Exp 1 reference (F1 = 0.837) therefore differs from the main Exp 1 result (0.829).
 
-##### GNN (inductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.769** | **0.827** | **0.834** | **0.907** |
-| GCN | 0.693 | 0.798 | 0.659 | 0.791 |
-| GAT | 0.643 | 0.750 | 0.616 | 0.762 |
-
-##### Baselines (transductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| MLP | 0.757 | 0.823 | 0.803 | 0.869 |
-| SVM | 0.752 | 0.819 | 0.768 | 0.824 |
-| Autoencoder | 0.752 | 0.819 | 0.802 | 0.864 |
-| RandomForest | 0.748 | 0.816 | 0.820 | 0.897 |
-| LightGBM | 0.749 | 0.816 | 0.826 | 0.889 |
-| XGBoost | 0.742 | 0.812 | 0.833 | 0.901 |
-| CatBoost | 0.739 | 0.809 | 0.833 | 0.906 |
-| Kriging | 0.673 | 0.793 | 0.613 | 0.770 |
-| Spatial kNN | 0.684 | 0.765 | 0.579 | 0.750 |
-
-#### Run 2 — seed=1
-
-##### GNN (inductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.799** | **0.849** | **0.841** | **0.915** |
-| GCN | 0.675 | 0.785 | 0.659 | 0.792 |
-| GAT | 0.610 | 0.702 | 0.592 | 0.746 |
-
-##### Baselines (transductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| MLP | 0.755 | 0.821 | 0.816 | 0.889 |
-| SVM | 0.752 | 0.819 | 0.768 | 0.824 |
-| Autoencoder | 0.749 | 0.816 | 0.799 | 0.865 |
-| LightGBM | 0.749 | 0.816 | 0.826 | 0.889 |
-| RandomForest | 0.748 | 0.816 | 0.811 | 0.882 |
-| XGBoost | 0.741 | 0.812 | 0.833 | 0.902 |
-| CatBoost | 0.741 | 0.810 | 0.831 | 0.903 |
-| Kriging | 0.673 | 0.793 | 0.613 | 0.770 |
-| Spatial kNN | 0.684 | 0.765 | 0.579 | 0.750 |
-
-#### Run 3 — seed=2
-
-##### GNN (inductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.797** | **0.847** | **0.847** | **0.912** |
-| GCN | 0.692 | 0.793 | 0.688 | 0.817 |
-| GAT | 0.615 | 0.713 | 0.633 | 0.768 |
-
-##### Baselines (transductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| Autoencoder | 0.753 | 0.819 | 0.812 | 0.872 |
-| SVM | 0.751 | 0.819 | 0.768 | 0.824 |
-| MLP | 0.749 | 0.817 | 0.803 | 0.876 |
-| LightGBM | 0.749 | 0.816 | 0.826 | 0.889 |
-| RandomForest | 0.747 | 0.815 | 0.813 | 0.887 |
-| XGBoost | 0.743 | 0.813 | 0.834 | 0.904 |
-| CatBoost | 0.739 | 0.810 | 0.831 | 0.907 |
-| Kriging | 0.673 | 0.793 | 0.613 | 0.770 |
-| Spatial kNN | 0.684 | 0.765 | 0.579 | 0.750 |
-
-#### Run 4 — seed=4
-
-##### GNN (inductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.801** | **0.851** | **0.843** | **0.914** |
-| GCN | 0.670 | 0.779 | 0.660 | 0.794 |
-| GAT | 0.625 | 0.718 | 0.626 | 0.766 |
-
-##### Baselines (transductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| MLP | 0.753 | 0.820 | 0.801 | 0.875 |
-| SVM | 0.751 | 0.819 | 0.768 | 0.824 |
-| LightGBM | 0.749 | 0.816 | 0.826 | 0.889 |
-| RandomForest | 0.747 | 0.815 | 0.822 | 0.891 |
-| XGBoost | 0.745 | 0.815 | 0.833 | 0.900 |
-| Autoencoder | 0.742 | 0.811 | 0.815 | 0.882 |
-| CatBoost | 0.736 | 0.806 | 0.832 | 0.904 |
-| Kriging | 0.673 | 0.793 | 0.613 | 0.770 |
-| Spatial kNN | 0.684 | 0.765 | 0.579 | 0.750 |
-
-#### Run 5 — seed=7
-
-##### GNN (inductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.800** | **0.845** | **0.841** | **0.913** |
-| GCN | 0.690 | 0.791 | 0.678 | 0.809 |
-| GAT | 0.667 | 0.738 | 0.637 | 0.777 |
-
-##### Baselines (transductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| MLP | 0.756 | 0.823 | 0.821 | 0.892 |
-| SVM | 0.751 | 0.819 | 0.768 | 0.824 |
-| LightGBM | 0.749 | 0.816 | 0.826 | 0.889 |
-| RandomForest | 0.748 | 0.815 | 0.823 | 0.893 |
-| Autoencoder | 0.747 | 0.815 | 0.802 | 0.867 |
-| XGBoost | 0.744 | 0.814 | 0.835 | 0.904 |
-| CatBoost | 0.742 | 0.811 | 0.834 | 0.907 |
-| Kriging | 0.673 | 0.793 | 0.613 | 0.770 |
-| Spatial kNN | 0.684 | 0.765 | 0.579 | 0.750 |
-
-#### Average — 5 runs (seeds 42, 1, 2, 4, 7)
-
-##### GNN (inductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.793±0.012** | **0.844±0.009** | **0.841±0.004** | **0.912±0.003** |
-| GCN | 0.684±0.009 | 0.789±0.007 | 0.669±0.012 | 0.801±0.011 |
-| GAT | 0.632±0.021 | 0.724±0.017 | 0.621±0.016 | 0.764±0.010 |
-
-##### Baselines (transductive)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| MLP | 0.754±0.003 | 0.821±0.002 | 0.809±0.008 | 0.880±0.009 |
-| SVM | 0.752±0.001 | 0.819±0.000 | 0.768±0.000 | 0.824±0.000 |
-| Autoencoder | 0.749±0.004 | 0.816±0.003 | 0.806±0.006 | 0.870±0.007 |
-| LightGBM | 0.749±0.000 | 0.816±0.000 | 0.826±0.000 | 0.889±0.000 |
-| RandomForest | 0.748±0.000 | 0.816±0.000 | 0.818±0.005 | 0.890±0.005 |
-| XGBoost | 0.743±0.001 | 0.813±0.001 | 0.834±0.001 | 0.902±0.002 |
-| CatBoost | 0.739±0.002 | 0.809±0.002 | 0.832±0.001 | 0.905±0.002 |
-| Kriging | 0.673±0.000 | 0.793±0.000 | 0.613±0.000 | 0.770±0.000 |
-| Spatial kNN | 0.684±0.000 | 0.765±0.000 | 0.579±0.000 | 0.750±0.000 |
-
-#### SPIRE per-region breakdown (seed=42)
-
-| Region | n\_test | Accuracy | F1 | ROC-AUC |
-|--------|---------|----------|----|---------|
-| Africa | 235 | 0.749 | 0.856 | 0.792 |
-| China | 214 | 0.607 | 0.693 | 0.889 |
-| East Asia | 358 | 0.818 | 0.874 | 0.892 |
-| Europe | 383 | 0.736 | 0.820 | 0.799 |
-| Middle East | 63 | 0.730 | 0.832 | 0.734 |
-| North America | 423 | 0.719 | 0.713 | 0.843 |
-| Oceania | 504 | 0.782 | 0.876 | 0.737 |
-| Russian Federation | 147 | 0.850 | 0.871 | 0.905 |
-| South America | 253 | 0.866 | 0.924 | 0.816 |
-| South and Central Asia | 532 | 0.831 | 0.807 | 0.933 |
-
-Sources: `result/baseline.json`, `result/gnn_inductive.json`
+Exp 2 graph models and baselines use the same held-out records by construction. The record identifiers of every split are stored in `result/split_manifest_per_region.json`, and both scripts check their splits against it.
 
 ---
 
-### Exp 2 — Per-region, random split (Classification)
+## Training, validation and test partitions
 
-Each region forms its own isolated graph. 5 nodes randomly selected as test (seed=42). **Same 5 nodes for GNN and baselines — direct head-to-head.** GNNs use 13-dim features (with edge-stat augmentation); baselines use 11-dim features.
+Within one outer fold and seed (Algorithm 1 in the manuscript):
 
-#### F1 ⬆, ROC-AUC ⬆, PR-AUC ⬆
+1. The held-out records T (a region or spatial blocks) are separated first. Then 20% of the remaining records (after the buffer, in block experiments) are drawn at random as the validation set V. The rest form the training set Tr.
+2. Encoders, coordinate scaling and SHAP feature selection are fitted on Tr. Feature selection is done once on Tr and is not repeated inside the inner folds.
+3. Inner five-fold cross-validation on Tr gives the out-of-fold ensemble prior for training records. The ensemble is then refitted on all of Tr to give the prior for V and T.
+4. The k-NN graph is built on Tr ∪ V. The edge-weight scale σ is computed from training nodes only.
+5. SPIRE is trained with the loss computed on Tr labels only.
+6. Each record in T is attached individually to its k_pred nearest nodes of the Tr ∪ V graph, predicted and removed before the next record. Held-out records never interact.
 
-#### Run 1 — seed=42 (reference)
+**What the validation set is used for.**
 
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.900** | **0.935** | **0.952** | **0.972** |
-| XGBoost | 0.860 | 0.913 | 0.845 | 0.949 |
-| CatBoost | 0.860 | 0.913 | 0.833 | 0.939 |
-| RandomForest | 0.860 | 0.913 | 0.798 | 0.923 |
-| SVM | 0.860 | 0.913 | 0.726 | 0.900 |
-| MLP | 0.860 | 0.913 | 0.798 | 0.930 |
-| Autoencoder | 0.840 | 0.902 | 0.833 | 0.956 |
-| LightGBM | 0.820 | 0.883 | 0.619 | 0.845 |
-| Kriging | 0.800 | 0.852 | 0.762 | 0.911 |
-| Spatial kNN | 0.760 | 0.837 | 0.738 | 0.898 |
-| GCN | 0.760 | 0.837 | 0.595 | 0.815 |
-| GAT | 0.760 | 0.837 | 0.619 | 0.832 |
+- **Validation labels** are used only for model selection:
+  - choosing among the 36 SPIRE configurations by validation F1;
+  - early stopping and checkpoint selection;
+  - choosing the neighbourhood size k (Exp 1 k sweep, by validation F1).
+- **Validation labels are not used** for the training loss, feature selection, ensemble fitting, the edge-weight scale or the decision threshold (fixed at 0.5). The selected model is not refitted on Tr ∪ V.
+- **Validation features** are part of the graph. Validation nodes take part in message passing during training, and they can be neighbours of held-out records at inference.
+- **GCN and GAT** reuse the configuration selected for SPIRE.
+- **The same-input MLP control** uses the same 36-configuration search on the same validation set.
+- **Tabular baselines** use fixed configurations, are trained on Tr only, and do not use V.
 
-#### Run 2 — seed=50
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.900** | **0.942** | **0.950** | **0.990** |
-| SVM | 0.820 | 0.877 | 0.850 | 0.890 |
-| Autoencoder | 0.800 | 0.863 | 0.850 | 0.890 |
-| LightGBM | 0.780 | 0.852 | 0.850 | 0.890 |
-| CatBoost | 0.800 | 0.851 | 0.850 | 0.890 |
-| RandomForest | 0.800 | 0.851 | 0.850 | 0.890 |
-| MLP | 0.800 | 0.851 | 0.850 | 0.890 |
-| XGBoost | 0.800 | 0.847 | 0.825 | 0.885 |
-| Spatial kNN | 0.800 | 0.783 | 0.825 | 0.907 |
-| GAT | 0.740 | 0.817 | 0.700 | 0.843 |
-| GCN | 0.680 | 0.720 | 0.775 | 0.905 |
-| Kriging | 0.640 | 0.619 | 0.750 | 0.884 |
-
-#### Run 3 — seed=32
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.900** | **0.927** | **0.967** | **0.981** |
-| Autoencoder | 0.860 | 0.899 | 0.858 | 0.878 |
-| XGBoost | 0.840 | 0.882 | 0.800 | 0.868 |
-| LightGBM | 0.840 | 0.882 | 0.850 | 0.889 |
-| SVM | 0.840 | 0.879 | 0.808 | 0.864 |
-| MLP | 0.840 | 0.879 | 0.808 | 0.864 |
-| RandomForest | 0.820 | 0.865 | 0.812 | 0.868 |
-| CatBoost | 0.820 | 0.871 | 0.800 | 0.868 |
-| Kriging | 0.780 | 0.829 | 0.825 | 0.913 |
-| GAT | 0.740 | 0.807 | 0.667 | 0.852 |
-| Spatial kNN | 0.720 | 0.771 | 0.650 | 0.786 |
-| GCN | 0.680 | 0.763 | 0.558 | 0.760 |
-
-#### Run 4 — seed=17
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.860** | **0.900** | 0.817 | 0.932 |
-| Autoencoder | 0.880 | 0.893 | 0.810 | 0.929 |
-| Spatial kNN | 0.860 | 0.880 | 0.780 | 0.899 |
-| SVM | 0.860 | 0.827 | **0.833** | **0.905** |
-| RandomForest | 0.860 | 0.827 | 0.762 | 0.862 |
-| LightGBM | 0.820 | 0.854 | 0.762 | 0.882 |
-| XGBoost | 0.840 | 0.813 | 0.762 | 0.886 |
-| CatBoost | 0.840 | 0.813 | 0.750 | 0.876 |
-| MLP | 0.840 | 0.827 | 0.810 | 0.893 |
-| Kriging | 0.820 | 0.804 | 0.798 | 0.853 |
-| GAT | 0.740 | 0.806 | 0.775 | 0.902 |
-| GCN | 0.700 | 0.745 | 0.575 | 0.759 |
-
-#### Run 5 — seed=21
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.840** | **0.893** | **0.900** | **0.939** |
-| XGBoost | 0.860 | 0.883 | 0.742 | 0.767 |
-| LightGBM | 0.840 | 0.872 | 0.767 | 0.778 |
-| CatBoost | 0.840 | 0.872 | 0.717 | 0.756 |
-| RandomForest | 0.840 | 0.872 | 0.667 | 0.709 |
-| SVM | 0.840 | 0.872 | 0.683 | 0.731 |
-| MLP | 0.840 | 0.872 | 0.700 | 0.734 |
-| Autoencoder | 0.840 | 0.872 | 0.733 | 0.759 |
-| Spatial kNN | 0.800 | 0.813 | 0.808 | 0.867 |
-| GCN | 0.760 | 0.837 | 0.700 | 0.888 |
-| GAT | 0.740 | 0.815 | 0.767 | 0.916 |
-| Kriging | 0.760 | 0.794 | 0.817 | 0.924 |
-
-#### Average — 5 runs (seeds 42, 50, 32, 17, 21)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.880 ± 0.025** | **0.919 ± 0.019** | **0.917 ± 0.055** | **0.963 ± 0.023** |
-| Autoencoder | 0.844 ± 0.027 | 0.886 ± 0.016 | 0.817 ± 0.045 | 0.882 ± 0.068 |
-| SVM | 0.844 ± 0.015 | 0.874 ± 0.028 | 0.780 ± 0.064 | 0.858 ± 0.065 |
-| MLP | 0.836 ± 0.020 | 0.868 ± 0.029 | 0.793 ± 0.050 | 0.862 ± 0.068 |
-| XGBoost | 0.840 ± 0.022 | 0.868 ± 0.034 | 0.795 ± 0.038 | 0.871 ± 0.059 |
-| CatBoost | 0.832 ± 0.020 | 0.864 ± 0.032 | 0.790 ± 0.050 | 0.866 ± 0.060 |
-| RandomForest | 0.836 ± 0.023 | 0.865 ± 0.028 | 0.778 ± 0.062 | 0.851 ± 0.074 |
-| LightGBM | 0.820 ± 0.022 | 0.869 ± 0.013 | 0.770 ± 0.084 | 0.857 ± 0.042 |
-| Spatial kNN | 0.788 ± 0.047 | 0.817 ± 0.039 | 0.760 ± 0.062 | 0.872 ± 0.045 |
-| Kriging | 0.760 ± 0.063 | 0.780 ± 0.083 | 0.790 ± 0.030 | 0.897 ± 0.026 |
-| GAT | 0.744 ± 0.008 | 0.816 ± 0.011 | 0.705 ± 0.059 | 0.869 ± 0.033 |
-| GCN | 0.716 ± 0.037 | 0.780 ± 0.048 | 0.641 ± 0.083 | 0.826 ± 0.062 |
-
-Sources: `result/baseline_per_region.json`, `result/gnn_per_region.json`
+Held-out labels are never used for fitting or selection.
 
 ---
 
-### Exp 3 — Global inductive, random split (Classification)
+## Metrics and single-class test folds
 
-5 nodes per region held out; **all remaining nodes (including the rest of the same region) form the global training graph**. Each test node predicted inductively. Same 5 nodes for GNN and baselines.
+- **Classification metrics:** F1, ROC-AUC and PR-AUC.
+- **Proportion metrics:** MAE and RMSE.
+- **Spread:** ± is the population standard deviation (`ddof=0`) over the five runs.
+- **Averaging:** leave-one-region-out and per-region results are averaged over regions within a run, then over runs.
+- **Pooled ROC-AUC** concatenates all held-out predictions. It is a different quantity from the mean of per-region ROC-AUC values.
 
-#### F1 ⬆, ROC-AUC ⬆, PR-AUC ⬆
+**Single-class test folds.** ROC-AUC and PR-AUC are undefined when a test fold contains only one class. Such folds store `null` for both metrics and are left out of the regional mean. F1, accuracy, precision and recall are still computed for these folds. The rule is the same for every model.
 
-#### Run 1 — seed=42 (reference)
+| Experiment | Single-class folds (seed, region, n) | Where recorded |
+|---|---|---|
+| Exp 2 | (2, Middle East, 14), all positive | `per_region["Middle East"]` of the seed-2 run in `result/gnn_per_region.json` and `result/baseline_per_region.json`; field `_note_single_class_folds` |
+| Exp 3 | (42, South America, 54), all positive | seed-42 run of `result/inductive_sample.json` (`roc_auc` and `pr_auc` are `null`) |
 
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.960** | **0.956** | —¹ | —¹ |
-| CatBoost | 0.940 | 0.944 | —¹ | —¹ |
-| MLP | 0.940 | 0.944 | —¹ | —¹ |
-| Autoencoder | 0.940 | 0.944 | —¹ | —¹ |
-| RandomForest | 0.920 | 0.911 | —¹ | —¹ |
-| SVM | 0.920 | 0.911 | —¹ | —¹ |
-| XGBoost | 0.900 | 0.919 | —¹ | —¹ |
-| LightGBM | 0.900 | 0.919 | —¹ | —¹ |
-| Spatial kNN | 0.840 | 0.799 | 0.979 | 0.979 |
-| Kriging | 0.680 | 0.784 | 0.792 | 0.877 |
-| GCN | 0.700 | 0.713 | 0.656 | 0.865 |
-| GAT | 0.680 | 0.703 | 0.604 | 0.826 |
-
-> ¹ ROC-AUC/PR-AUC reach 1.000 for most models with 5-node test sets (classes perfectly separable in probability space); reported as — to avoid misleading averages. SPIRE also achieves ROC-AUC=1.000, PR-AUC=1.000 here.
-
-#### Run 2 — seed=23
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.960** | **0.967** | 1.000 | 1.000 |
-| MLP | 0.960 | 0.969 | 0.944 | 0.931 |
-| Autoencoder | 0.960 | 0.969 | 0.944 | 0.931 |
-| XGBoost | 0.940 | 0.956 | 1.000 | 1.000 |
-| CatBoost | 0.940 | 0.956 | 0.972 | 0.972 |
-| RandomForest | 0.940 | 0.955 | 1.000 | 1.000 |
-| SVM | 0.940 | 0.956 | 0.944 | 0.931 |
-| LightGBM | 0.920 | 0.942 | 1.000 | 1.000 |
-| Spatial kNN | 0.840 | 0.852 | 0.806 | 0.900 |
-| Kriging | 0.720 | 0.810 | 0.833 | 0.867 |
-| GCN | 0.620 | 0.692 | 0.694 | 0.760 |
-| GAT | 0.620 | 0.713 | 0.708 | 0.793 |
-
-#### Run 3 — seed=10
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.880** | **0.913** | 0.917 | 0.957 |
-| LightGBM | 0.860 | 0.871 | 0.976 | 0.976 |
-| RandomForest | 0.860 | 0.880 | 0.917 | 0.893 |
-| MLP | 0.860 | 0.880 | 0.952 | 0.964 |
-| XGBoost | 0.840 | 0.861 | 0.976 | 0.976 |
-| CatBoost | 0.840 | 0.861 | 0.976 | 0.976 |
-| SVM | 0.840 | 0.861 | 0.893 | 0.921 |
-| Autoencoder | 0.840 | 0.861 | 0.976 | 0.976 |
-| Spatial kNN | 0.820 | 0.833 | 0.798 | 0.815 |
-| Kriging | 0.720 | 0.807 | 0.536 | 0.711 |
-| GCN | 0.580 | 0.698 | 0.571 | 0.752 |
-| GAT | 0.520 | 0.622 | 0.548 | 0.725 |
-
-#### Run 4 — seed=16
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.860** | **0.913** | 0.861 | 0.942 |
-| LightGBM | 0.880 | 0.905 | 0.824 | 0.942 |
-| RandomForest | 0.860 | 0.891 | 0.870 | 0.969 |
-| MLP | 0.840 | 0.899 | 0.769 | 0.925 |
-| SVM | 0.840 | 0.880 | 0.824 | 0.946 |
-| CatBoost | 0.840 | 0.875 | 0.806 | 0.919 |
-| XGBoost | 0.800 | 0.850 | 0.889 | 0.899 |
-| Autoencoder | 0.820 | 0.865 | 0.852 | 0.955 |
-| Spatial kNN | 0.760 | 0.785 | 0.620 | 0.819 |
-| Kriging | 0.680 | 0.785 | 0.481 | 0.794 |
-| GCN | 0.580 | 0.651 | 0.491 | 0.745 |
-| GAT | 0.680 | 0.745 | 0.519 | 0.821 |
-
-#### Run 5 — seed=49
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.920** | **0.947** | 0.958 | 0.992 |
-| LightGBM | 0.900 | 0.933 | 0.917 | 0.983 |
-| SVM | 0.900 | 0.942 | 0.667 | 0.906 |
-| Autoencoder | 0.900 | 0.942 | 0.917 | 0.983 |
-| XGBoost | 0.880 | 0.922 | 0.833 | 0.965 |
-| RandomForest | 0.880 | 0.922 | 0.625 | 0.895 |
-| MLP | 0.880 | 0.922 | 0.875 | 0.973 |
-| CatBoost | 0.860 | 0.911 | 0.917 | 0.983 |
-| Kriging | 0.820 | 0.888 | 0.597 | 0.881 |
-| Spatial kNN | 0.780 | 0.851 | 0.632 | 0.867 |
-| GAT | 0.760 | 0.848 | 0.556 | 0.805 |
-| GCN | 0.740 | 0.835 | 0.458 | 0.766 |
-
-#### Average — 5 runs (seeds 42, 23, 10, 16, 49)
-
-| Model | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-------|----------|----|---------|--------|
-| **SPIRE** | **0.916 ± 0.041** | **0.939 ± 0.022** | **0.947 ± 0.053** | **0.978 ± 0.024** |
-| MLP | 0.896 ± 0.046 | 0.923 ± 0.032 | 0.908 ± 0.080 | 0.958 ± 0.028 |
-| Autoencoder | 0.892 ± 0.055 | 0.916 ± 0.044 | 0.938 ± 0.051 | 0.969 ± 0.024 |
-| LightGBM | 0.892 ± 0.020 | 0.914 ± 0.025 | 0.943 ± 0.067 | 0.980 ± 0.021 |
-| RandomForest | 0.892 ± 0.032 | 0.912 ± 0.026 | 0.882 ± 0.138 | 0.951 ± 0.048 |
-| SVM | 0.888 ± 0.041 | 0.910 ± 0.036 | 0.866 ± 0.115 | 0.941 ± 0.032 |
-| CatBoost | 0.884 ± 0.046 | 0.909 ± 0.037 | 0.934 ± 0.070 | 0.970 ± 0.027 |
-| XGBoost | 0.872 ± 0.048 | 0.901 ± 0.040 | 0.940 ± 0.067 | 0.968 ± 0.037 |
-| Spatial kNN | 0.808 ± 0.032 | 0.824 ± 0.027 | 0.767 ± 0.132 | 0.876 ± 0.060 |
-| Kriging | 0.724 ± 0.051 | 0.815 ± 0.038 | 0.648 ± 0.140 | 0.826 ± 0.066 |
-| GAT | 0.652 ± 0.080 | 0.726 ± 0.073 | 0.587 ± 0.067 | 0.794 ± 0.036 |
-| GCN | 0.644 ± 0.065 | 0.718 ± 0.062 | 0.574 ± 0.091 | 0.778 ± 0.044 |
-
-Source: `result/inductive_sample.json`
+Exp 1 and 4 hold out whole regions, which always contain both classes. Exp 5 and 6 report pooled ROC-AUC only. Pooled ROC-AUC and the region-cluster bootstrap intervals (all experiments) use the stored predictions directly and are not affected by this rule.
 
 ---
 
-### Exp 4 — Region-level proportion prediction (Proportion)
+## Where each manuscript result comes from
 
-For each held-out region (leave-one-region-out, same split as Exp 1), every node is predicted. `predicted_proportion = mean(y_prob)`. GCN and GAT use the same hyperparameters tuned for SPIRE.
+Tables and figures are listed by content because their numbers depend on the journal layout.
 
-#### MAE ⬇, RMSE ⬇
+**Main experiments**
 
-#### Run 1 — seed=42 (reference)
+| Manuscript item | Result file(s) | Produced by |
+|---|---|---|
+| Protocol configurations (seeds, k, k_pred) | see [Seeds](#seeds) | — |
+| Per-region leave-one-region-out F1 | `result/gnn_inductive.json`, `result/baseline.json` | `experiment/run_gnn.py`, `experiment/run_baseline.py` |
+| Classification bar chart and radar plot (Exp 1–3) | `result/gnn_inductive.json`, `result/baseline.json`, `result/gnn_per_region.json`, `result/baseline_per_region.json`, `result/inductive_sample.json` | `figures/draw_combined.py` → `fig_X_panel_A.png`, `fig_Y_panel_B.png` |
+| Per-region F1 of SPIRE, GCN and GAT | same files | `figures/draw_combined.py` → `fig_Z_panel_C.png` |
+| Proportion figures (Exp 4–6) | `result/exp4_proportion.json`, `result/exp5_proportion_per_region.json`, `result/exp6_proportion_inductive_sample.json` | `figures/draw_combined_prop.py` → `fig_A/B/C_panel_*.png` |
+| Paired comparisons with the strongest tabular baseline | `result/exp1_paired_tests.json`, `result/paired_significance_test.json` | `experiment/run_exp1_paired_tests.py`, `experiment/run_paired_significance_test.py` |
+| Pooled ROC-AUC with region-cluster bootstrap intervals | `result/pooled_auc_ci.json` | `experiment/run_pooled_auc_ci.py` |
+| Paired region-cluster bootstrap differences | `result/cluster_bootstrap_ci.json` | `experiment/run_cluster_bootstrap_ci.py` |
+| Brier scores and reliability curves | `result/calibration_analysis.json` | `experiment/run_calibration_analysis.py` → `fig_calibration.png` |
 
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.1026** | **0.1238** |
-| RandomForest | 0.1371 | 0.1694 |
-| SVM | 0.1412 | 0.1729 |
-| Autoencoder | 0.1427 | 0.1704 |
-| CatBoost | 0.1442 | 0.1766 |
-| MLP | 0.1446 | 0.1812 |
-| GCN | 0.1469 | 0.1689 |
-| XGBoost | 0.1480 | 0.1799 |
-| LightGBM | 0.1510 | 0.1833 |
-| Spatial kNN | 0.1624 | 0.1960 |
-| Kriging | 0.1682 | 0.1830 |
-| GAT | 0.1935 | 0.2308 |
+**Controls and ablations**
 
-#### Run 2 — seed=1
+| Manuscript item | Result file(s) | Produced by |
+|---|---|---|
+| Same-input MLP, ensemble-only and rewiring controls | `result/ablation_no_message_passing.json`, `result/ablation_ensemble_only.json`, `result/ablation_random_rewire.json` | `experiment/run_ablation_no_message_passing.py`, `experiment/run_ablation_ensemble_only.py`, `experiment/run_ablation_random_rewire.py` (+ `merge_rewire_shards.py`) |
+| Two-factor feature ablation and ablation figure | `result/ablation_feature.json`, `result/ablation_feature_exp3.json` | `experiment/run_ablation.py`, `experiment/run_ablation_exp3.py`, `figures/draw_ablation.py` |
+| k sensitivity | `result/k_sensitivity.json` | `experiment/run_k_sensitivity.py`, `figures/draw_k_sensitivity.py` |
+| Hyperparameter heat map | `result/hparam_sensitivity.json` | `experiment/run_hparam_sensitivity.py`, `figures/draw_hparam_heatmap.py` |
+| Leave-one-deposit-type-out | `result/lodto.json` | `experiment/run_lodto.py` |
+| Pooled versus group-specific ensemble | `result/pooled_vs_stratified.json` | `experiment/run_pooled_vs_stratified.py` |
 
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0917** | **0.1100** |
-| RandomForest | 0.1362 | 0.1704 |
-| Autoencoder | 0.1363 | 0.1659 |
-| SVM | 0.1409 | 0.1727 |
-| CatBoost | 0.1444 | 0.1773 |
-| MLP | 0.1449 | 0.1885 |
-| XGBoost | 0.1473 | 0.1789 |
-| LightGBM | 0.1502 | 0.1845 |
-| Spatial kNN | 0.1624 | 0.1960 |
-| GCN | 0.1625 | 0.1849 |
-| Kriging | 0.1682 | 0.1830 |
-| GAT | 0.1918 | 0.2177 |
+**Diagnostics**
 
-#### Run 3 — seed=8
+| Manuscript item | Result file(s) | Produced by |
+|---|---|---|
+| Node representation and selection frequencies | `result/feature_selection_per_fold.json` | `experiment/run_feature_selection_stability.py` |
+| Correlates of misclassification | `result/region_error_decomposition.json` | `experiment/run_region_error_decomposition.py` |
+| Completeness-stratified ROC-AUC | `result/completeness_stratified.json`, `result/documentation_completeness*.json` | `experiment/run_completeness_stratified.py`, `experiment/run_documentation_completeness.py` |
+| Edge-weight distributions | `result/graph_diagnostics.json`, `result/graph_diagnostics_edge_weights.png` | `experiment/run_graph_diagnostics.py` |
+| Deposit-type SHAP and geological rationale | `result/deposit_type_*.json`, `result/geology_rationale.json` | `experiment/run_deposit_type_analysis.py`, `experiment/run_geology_rationale.py` |
+| Test-to-training distances after buffering | `result/test_train_distances.json` | `experiment/run_test_train_distances.py` |
+| World overview map | `data/` | `visualize_case_study.py` → `fig_world_overview_exp1.png` |
 
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.1120** | **0.1376** |
-| RandomForest | 0.1369 | 0.1693 |
-| MLP | 0.1402 | 0.1805 |
-| SVM | 0.1413 | 0.1730 |
-| Autoencoder | 0.1416 | 0.1685 |
-| CatBoost | 0.1438 | 0.1776 |
-| XGBoost | 0.1458 | 0.1788 |
-| GCN | 0.1470 | 0.1710 |
-| LightGBM | 0.1525 | 0.1853 |
-| Spatial kNN | 0.1624 | 0.1960 |
-| Kriging | 0.1682 | 0.1830 |
-| GAT | 0.1975 | 0.2464 |
+**Split information**
 
-#### Run 4 — seed=9
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.1037** | **0.1170** |
-| RandomForest | 0.1381 | 0.1697 |
-| SVM | 0.1409 | 0.1727 |
-| CatBoost | 0.1448 | 0.1783 |
-| Autoencoder | 0.1479 | 0.1768 |
-| MLP | 0.1481 | 0.1870 |
-| XGBoost | 0.1490 | 0.1801 |
-| LightGBM | 0.1516 | 0.1819 |
-| GCN | 0.1543 | 0.1747 |
-| Spatial kNN | 0.1624 | 0.1960 |
-| Kriging | 0.1682 | 0.1830 |
-| GAT | 0.1956 | 0.2305 |
-
-#### Run 5 — seed=10
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0750** | **0.0914** |
-| GAT | 0.1364 | 0.1662 |
-| RandomForest | 0.1377 | 0.1704 |
-| Autoencoder | 0.1383 | 0.1685 |
-| SVM | 0.1411 | 0.1731 |
-| CatBoost | 0.1462 | 0.1780 |
-| XGBoost | 0.1468 | 0.1803 |
-| LightGBM | 0.1511 | 0.1834 |
-| MLP | 0.1530 | 0.1919 |
-| GCN | 0.1583 | 0.1873 |
-| Spatial kNN | 0.1624 | 0.1960 |
-| Kriging | 0.1682 | 0.1830 |
-
-#### Average — 5 runs (seeds 42, 1, 8, 9, 10)
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0970±0.0128** | **0.1159±0.0153** |
-| RandomForest | 0.1372±0.0007 | 0.1698±0.0005 |
-| SVM | 0.1411±0.0001 | 0.1729±0.0002 |
-| Autoencoder | 0.1413±0.0040 | 0.1700±0.0037 |
-| CatBoost | 0.1447±0.0008 | 0.1776±0.0006 |
-| MLP | 0.1462±0.0043 | 0.1858±0.0044 |
-| XGBoost | 0.1474±0.0011 | 0.1796±0.0006 |
-| LightGBM | 0.1513±0.0008 | 0.1837±0.0011 |
-| GCN | 0.1538±0.0062 | 0.1773±0.0074 |
-| Spatial kNN | 0.1624±0.0000 | 0.1960±0.0000 |
-| Kriging | 0.1682±0.0000 | 0.1830±0.0000 |
-| GAT | 0.1830±0.0234 | 0.2183±0.0276 |
-
-Source: `result/exp4_proportion.json`
+- **Train/validation/test sizes and buffer details** for each block fold are stored under `per_region[<region>]` of each run: `n_train`, `n_val`, `n_test` and `split_info` (`buffer_km`, `n_excluded_by_buffer`, `n_test_frac`, `buffer_fallback`).
+- **Exp 3 and 6 post-buffer counts** are in `result/buffer_counts_exp3_exp6.json`.
+- **Held-out class counts** for any fold can be recovered from the stored `y_true` in `predictions`.
+- **Record identifiers:**
+  - Exp 2 splits: `result/split_manifest_per_region.json`.
+  - Exp 3 held-out records: `sample_idx` in `result/inductive_sample.json`.
+  - Exp 5 splits are reconstructed from the recorded seeds; `experiment/run_check_exp5_splits.py` checks the reconstruction against the saved test labels and sizes.
 
 ---
 
-### Exp 5 — Per-region proportion, random split (Proportion)
+## Headline results
 
-Per-region isolated graph, same random split as Exp 2. `predicted_proportion = mean(y_prob)` over 5 test nodes.
+These numbers are from the manuscript's paired comparison with the strongest evaluated tabular baseline. Exp 1 pairs regions; Exp 2–6 pair seeds on matched splits.
 
-#### MAE ⬇, RMSE ⬇
+| Exp | Metric | SPIRE | Best tabular baseline | p (Wilcoxon) |
+|---|---|---|---|---|
+| 1 | F1 ↑ | 0.829 | 0.830 (autoencoder) | 1.000 |
+| 2 | F1 ↑ | 0.817 | 0.851 (SVM) | 0.438 |
+| 3 | F1 ↑ | 0.834 | 0.842 (autoencoder) | 0.625 |
+| 4 | MAE ↓ | 0.110 | 0.113 (Random Forest) | 1.000 |
+| 5 | MAE ↓ | 0.140 | 0.100 (SVM) | 0.125 |
+| 6 | MAE ↓ | 0.126 | 0.076 (XGBoost) | 0.062 |
 
-#### Run 1 — seed=42 (reference)
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.1333** | **0.1644** |
-| Autoencoder | 0.1444 | 0.1867 |
-| MLP | 0.1467 | 0.1958 |
-| SVM | 0.1478 | 0.1878 |
-| XGBoost | 0.1478 | 0.1947 |
-| RandomForest | 0.1478 | 0.1912 |
-| CatBoost | 0.1494 | 0.2006 |
-| Kriging | 0.1829 | 0.2056 |
-| Spatial kNN | 0.1840 | 0.2150 |
-| LightGBM | 0.1760 | 0.2354 |
-| GCN | 0.2056 | 0.2489 |
-| GAT | 0.2502 | 0.2780 |
-
-#### Run 2 — seed=18
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0795** | **0.0964** |
-| GCN | 0.0905 | 0.1270 |
-| Kriging | 0.1338 | 0.1757 |
-| GAT | 0.1341 | 0.1750 |
-| Autoencoder | 0.1543 | 0.1870 |
-| SVM | 0.1604 | 0.1848 |
-| Spatial kNN | 0.1655 | 0.1952 |
-| RandomForest | 0.1742 | 0.1982 |
-| LightGBM | 0.1744 | 0.1996 |
-| XGBoost | 0.1753 | 0.2031 |
-| CatBoost | 0.1809 | 0.2084 |
-| MLP | 0.1902 | 0.2108 |
-
-#### Run 3 — seed=20
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0963** | **0.1362** |
-| Autoencoder | 0.1039 | 0.1536 |
-| SVM | 0.1043 | 0.1676 |
-| RandomForest | 0.1084 | 0.1916 |
-| CatBoost | 0.1089 | 0.2071 |
-| MLP | 0.1125 | 0.1891 |
-| LightGBM | 0.1209 | 0.1987 |
-| XGBoost | 0.1341 | 0.2326 |
-| Spatial kNN | 0.1781 | 0.2096 |
-| GCN | 0.2091 | 0.2309 |
-| GAT | 0.1984 | 0.2268 |
-| Kriging | 0.2143 | 0.2493 |
-
-#### Run 4 — seed=48
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0795** | **0.0964** |
-| GCN | 0.0905 | 0.1270 |
-| Kriging | 0.1338 | 0.1757 |
-| GAT | 0.1341 | 0.1750 |
-| Autoencoder | 0.1543 | 0.1870 |
-| SVM | 0.1604 | 0.1848 |
-| Spatial kNN | 0.1655 | 0.1952 |
-| RandomForest | 0.1742 | 0.1982 |
-| LightGBM | 0.1744 | 0.1996 |
-| XGBoost | 0.1753 | 0.2031 |
-| CatBoost | 0.1809 | 0.2084 |
-| MLP | 0.1902 | 0.2108 |
-
-#### Run 5 — seed=50
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0963** | **0.1362** |
-| Autoencoder | 0.1039 | 0.1536 |
-| SVM | 0.1043 | 0.1676 |
-| RandomForest | 0.1084 | 0.1916 |
-| CatBoost | 0.1089 | 0.2071 |
-| MLP | 0.1125 | 0.1891 |
-| LightGBM | 0.1209 | 0.1987 |
-| XGBoost | 0.1341 | 0.2326 |
-| Spatial kNN | 0.1781 | 0.2096 |
-| GAT | 0.1984 | 0.2268 |
-| GCN | 0.2091 | 0.2309 |
-| Kriging | 0.2143 | 0.2493 |
-
-#### Average — 5 runs (seeds 42, 18, 20, 48, 50)
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0970 ± 0.0196** | **0.1259 ± 0.0262** |
-| Autoencoder | 0.1322 ± 0.0234 | 0.1736 ± 0.0163 |
-| SVM | 0.1354 ± 0.0258 | 0.1785 ± 0.0090 |
-| RandomForest | 0.1426 ± 0.0295 | 0.1941 ± 0.0033 |
-| CatBoost | 0.1458 ± 0.0322 | 0.2063 ± 0.0029 |
-| MLP | 0.1504 ± 0.0348 | 0.1991 ± 0.0098 |
-| XGBoost | 0.1533 ± 0.0186 | 0.2132 ± 0.0161 |
-| LightGBM | 0.1533 ± 0.0265 | 0.2064 ± 0.0145 |
-| Spatial kNN | 0.1742 ± 0.0074 | 0.2049 ± 0.0082 |
-| Kriging | 0.1758 ± 0.0362 | 0.2111 ± 0.0330 |
-| GCN | 0.1610 ± 0.0575 | 0.1929 ± 0.0542 |
-| GAT | 0.1831 ± 0.0442 | 0.2163 ± 0.0386 |
-
-Source: `result/exp5_proportion_per_region.json`
+With five pairs, the smallest possible exact two-sided Wilcoxon p-value is 0.0625. Most tabular baselines have higher pooled ROC-AUC in the spatial-block settings. The same-input MLP, ensemble-only and rewiring controls show no consistent additional gain from message passing.
 
 ---
 
-### Exp 6 — Global inductive proportion, random split (Proportion)
+## Reproducing the results
 
-Global inductive setting, same split as Exp 3. `predicted_proportion = mean(y_prob)` over 5 test nodes per region.
-
-#### MAE ⬇, RMSE ⬇
-
-#### Run 1 — seed=42 (reference)
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0807** | **0.0994** |
-| Autoencoder | 0.0885 | 0.1116 |
-| CatBoost | 0.0946 | 0.1151 |
-| SVM | 0.0958 | 0.1182 |
-| LightGBM | 0.0966 | 0.1180 |
-| XGBoost | 0.0995 | 0.1233 |
-| RandomForest | 0.0996 | 0.1209 |
-| Spatial kNN | 0.1227 | 0.1449 |
-| MLP | 0.1301 | 0.1632 |
-| GAT | 0.1805 | 0.2168 |
-| GCN | 0.2012 | 0.2233 |
-| Kriging | 0.2293 | 0.2407 |
-
-#### Run 2 — seed=20
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| Autoencoder | 0.0646 | 0.0922 |
-| **SPIRE** | **0.0648** | **0.0882** |
-| SVM | 0.0657 | 0.0945 |
-| MLP | 0.0681 | 0.0986 |
-| LightGBM | 0.0725 | 0.1024 |
-| CatBoost | 0.0726 | 0.0999 |
-| RandomForest | 0.0727 | 0.0988 |
-| XGBoost | 0.0757 | 0.1033 |
-| Spatial kNN | 0.1682 | 0.2189 |
-| Kriging | 0.2208 | 0.2798 |
-| GCN | 0.2291 | 0.2613 |
-| GAT | 0.2619 | 0.2921 |
-
-#### Run 3 — seed=11
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0841** | **0.1167** |
-| LightGBM | 0.1090 | 0.1515 |
-| MLP | 0.1158 | 0.1633 |
-| RandomForest | 0.1185 | 0.1651 |
-| XGBoost | 0.1188 | 0.1575 |
-| Autoencoder | 0.1215 | 0.1651 |
-| CatBoost | 0.1221 | 0.1613 |
-| SVM | 0.1244 | 0.1634 |
-| Spatial kNN | 0.1441 | 0.1805 |
-| Kriging | 0.1624 | 0.1967 |
-| GCN | 0.2191 | 0.2820 |
-| GAT | 0.2545 | 0.2991 |
-
-#### Run 4 — seed=60
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0718** | **0.0944** |
-| MLP | 0.0899 | 0.1127 |
-| SVM | 0.0975 | 0.1240 |
-| Autoencoder | 0.0993 | 0.1256 |
-| RandomForest | 0.1181 | 0.1418 |
-| CatBoost | 0.1196 | 0.1414 |
-| LightGBM | 0.1361 | 0.1720 |
-| XGBoost | 0.1363 | 0.1658 |
-| Spatial kNN | 0.1591 | 0.1692 |
-| Kriging | 0.1834 | 0.2095 |
-| GCN | 0.2308 | 0.2798 |
-| GAT | 0.2442 | 0.3084 |
-
-#### Run 5 — seed=48
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0958** | **0.1183** |
-| RandomForest | 0.1148 | 0.1501 |
-| Autoencoder | 0.1186 | 0.1537 |
-| MLP | 0.1263 | 0.1757 |
-| CatBoost | 0.1292 | 0.1681 |
-| SVM | 0.1307 | 0.1676 |
-| XGBoost | 0.1436 | 0.1807 |
-| LightGBM | 0.1472 | 0.1849 |
-| Spatial kNN | 0.1475 | 0.1988 |
-| GAT | 0.1800 | 0.2222 |
-| GCN | 0.1816 | 0.2194 |
-| Kriging | 0.1948 | 0.2315 |
-
-#### Average — 5 runs (seeds 42, 20, 11, 60, 48)
-
-| Model | MAE | RMSE |
-|-------|-----|------|
-| **SPIRE** | **0.0795 ± 0.0106** | **0.1034 ± 0.0120** |
-| Autoencoder | 0.0985 ± 0.0209 | 0.1296 ± 0.0268 |
-| SVM | 0.1028 ± 0.0232 | 0.1335 ± 0.0279 |
-| RandomForest | 0.1047 ± 0.0175 | 0.1353 ± 0.0232 |
-| MLP | 0.1060 ± 0.0236 | 0.1427 ± 0.0309 |
-| CatBoost | 0.1076 ± 0.0210 | 0.1371 ± 0.0262 |
-| LightGBM | 0.1123 ± 0.0269 | 0.1458 ± 0.0313 |
-| XGBoost | 0.1148 ± 0.0248 | 0.1461 ± 0.0285 |
-| Spatial kNN | 0.1483 ± 0.0154 | 0.1825 ± 0.0252 |
-| Kriging | 0.1981 ± 0.0244 | 0.2316 ± 0.0287 |
-| GCN | 0.2124 ± 0.0187 | 0.2532 ± 0.0270 |
-| GAT | 0.2242 ± 0.0363 | 0.2677 ± 0.0397 |
-
-Source: `result/exp6_proportion_inductive_sample.json`
-
----
-
-## Ablation Study — Feature Component Validation (SPIRE)
-
-Validates the two feature engineering choices central to the GNN pipeline: (a) edge-stat augmentation and (b) the ensemble prior score. Each ablation removes one component and measures the F1 drop on Exp 1 (leave-one-region-out inductive, seeds 42/1/2/4/7) and Exp 3 (global inductive, 5 nodes/region, seeds 42/23/10/16/49). Full model figures are taken from the existing multi-run averages.
-
-### Exp 1 — Leave-one-region-out (avg ± std, 5 seeds)
-
-| Condition | Dim | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-----------|-----|----------|----|---------|--------|
-| **Full** (SHAP + ensemble + edge-stat) | 13 | **0.793 ± 0.012** | **0.844 ± 0.009** | **0.841 ± 0.004** | **0.912 ± 0.003** |
-| − Edge-stat augmentation | 11 | 0.767 ± 0.014 | 0.828 ± 0.012 | 0.842 ± 0.007 | 0.915 ± 0.009 |
-| − Ensemble prior | 10 | 0.732 ± 0.025 | 0.807 ± 0.014 | 0.781 ± 0.006 | 0.895 ± 0.006 |
-
-### Exp 3 — Global inductive, random sample (avg ± std, 5 seeds)
-
-| Condition | Dim | Accuracy | F1 | ROC-AUC | PR-AUC |
-|-----------|-----|----------|----|---------|--------|
-| **Full** (SHAP + ensemble + edge-stat) | 13 | **0.916 ± 0.041** | **0.939 ± 0.022** | **0.947 ± 0.053** | **0.978 ± 0.024** |
-| − Edge-stat augmentation | 11 | 0.876 ± 0.042 | 0.901 ± 0.041 | 0.920 ± 0.038 | 0.960 ± 0.033 |
-| − Ensemble prior | 10 | 0.793 ± 0.081 | 0.820 ± 0.076 | 0.844 ± 0.071 | 0.913 ± 0.053 |
-
-Both components contribute positively across all settings. Removing the ensemble prior (mean predict_proba of XGBoost + CatBoost + RF, fitted on train only) causes the larger drop — −0.037 F1 in Exp 1 and −0.119 in Exp 3 — because it strips the strongest tabular signal and removes cross-regional probability calibration, forcing the GNN to infer REE likelihood from SHAP features alone. Removing edge-stat augmentation (mean and max incoming edge weights appended to the 11-dim base) has a smaller but consistent effect (−0.016 in Exp 1, −0.038 in Exp 3), confirming that spatial-proximity signals encoded in edge statistics complement neighbourhood aggregation. The higher variance in Exp 3 under no-ensemble (std = ±0.076) reflects sensitivity to which 5 nodes are sampled per region: when sampled nodes are spatially representative the drop is moderate; when they are outliers the degradation is severe.
-
-Sources: `result/ablation_feature.json`, `result/ablation_feature_exp3.json`
-
-### Graph Construction k Sensitivity — Exp 1 (SPIRE, seed=42)
-
-Sweeps the number of nearest neighbours k used to build the spatial graph in Exp 1 (leave-one-region-out inductive). All other settings fixed (13-dim full pipeline, seed=42).
-
-| k | Accuracy | F1 | ROC-AUC | PR-AUC |
-|---|----------|----|---------|--------|
-| 5 | 0.802 | 0.854 | 0.844 | 0.916 |
-| 10 | 0.743 | 0.806 | 0.833 | 0.910 |
-| **15** *(default)* | **0.792** | **0.844** | **0.838** | **0.919** |
-| 20 | 0.777 | 0.837 | 0.827 | 0.907 |
-| 25 | 0.800 | 0.845 | 0.817 | 0.905 |
-| 30 | 0.789 | 0.846 | 0.831 | 0.911 |
-| 35 | 0.796 | 0.845 | 0.833 | 0.911 |
-| 40 | 0.808 | 0.856 | 0.827 | 0.909 |
-| 45 | 0.791 | 0.847 | 0.833 | 0.907 |
-
-F1 is stable across k ∈ {15, …, 45} (0.844–0.856) with no monotonic trend. k=10 is the only outlier (F1=0.806), likely because sparser graphs leave some deposits with weak neighbourhood signals. k=5 performs well (F1=0.854) but may underrepresent spatial context in dense regions. The default k=15 sits in the stable plateau and is a robust choice across the tested range.
-
-Source: `result/k_sensitivity.json`
-
----
-
-## Cross-Experiment Comparison
-
-### Classification — SPIRE vs best baseline (F1 ⬆)
-
-| Experiment | Setting | SPIRE F1 | Best baseline F1 | Best baseline | Winner |
-|-----------|---------|-------------|-----------------|---------------|--------|
-| Exp 1 — Leave-one-region-out | Cross-region, inductive vs transductive | **0.827** | 0.823 | MLP | **GNN** |
-| Exp 2 — Per-region random | Same-region, 5 test nodes | **0.935** | 0.913 | XGB/CatBoost/RF/SVM/MLP | **GNN** |
-| Exp 3 — Global inductive random | Global graph, 5 test nodes | **0.956** | 0.944 | CatBoost/MLP | **GNN** |
-
-### Classification — GNN model comparison (F1 ⬆)
-
-| Experiment | SPIRE | GCN | GAT |
-|-----------|-----------|-----|-----|
-| Exp 1 — Leave-one-region-out | **0.827** | 0.798 | 0.750 |
-| Exp 2 — Per-region random | **0.935** | 0.837 | 0.837 |
-| Exp 3 — Global inductive random | **0.956** | 0.713 | 0.703 |
-
-### Proportion — SPIRE vs best baseline (MAE ⬇)
-
-| Experiment | Setting | SPIRE MAE | Best baseline MAE | Best baseline | Winner |
-|-----------|---------|--------------|------------------|---------------|--------|
-| Exp 4 — Leave-one-region-out | All nodes, cross-region | **0.1026** | 0.1371 | RandomForest | **GNN** |
-| Exp 5 — Per-region random | 5 nodes, same-region | **0.1333** | 0.1467 | MLP | **GNN** |
-| Exp 6 — Global inductive random | 5 nodes, global graph | **0.0807** | 0.0885 | Autoencoder | **GNN** |
-
----
-
-## Key Findings
-
-### Classification experiments (Exp 1–3)
-
-- **SPIRE outperforms baselines across all classification experiments:** F1=0.827 vs 0.823 MLP (Exp 1), 0.935 vs 0.913 (Exp 2), 0.956 vs 0.944 (Exp 3). Graph structure consistently adds value over tabular models with random test splits.
-- **SPIRE consistently dominates GCN and GAT:** Best GNN in all classification experiments. Gap largest in Exp 3 (0.956 vs GCN 0.713). GCN/GAT reuse SPIRE's tuned config, which likely underestimates their potential.
-- **Small test sets inflate baseline AUC:** With 5 test nodes (Exp 2, 3), ROC-AUC/PR-AUC≈1.000 for most baselines — not reliable at this scale. Use F1 for comparison.
-- **Exp 1 is the most methodologically sound classification benchmark:** Only experiment where GNN and baselines face equal distributional shift (unseen region).
-
-### Proportion experiments (Exp 4–6)
-
-- **SPIRE wins proportion prediction across all settings:** MAE: 0.1026 (Exp 4), 0.1333 (Exp 5), 0.0807 (Exp 6). Graph structure helps estimate region-level proportions better than tabular models when test nodes are representative.
-- **Global training context is key for proportion accuracy (Exp 6 vs Exp 5):** MAE drops significantly when the full global graph is used (SPIRE: 0.1333→0.0807). Tree models also benefit substantially from the larger training context.
-- **GCN and GAT underperform on proportion tasks:** MAE=0.19–0.26 in Exp 5 and Exp 6 — far worse than tabular baselines. Only SPIRE (with edge-stat augmentation) consistently matches or beats tabular models.
-
----
-
-## Running Order
+`run_all.sh` runs the pipeline in dependency order, one log per script under `logs/`:
 
 ```bash
-# 0. Preprocess raw data
-python preprocessing/pipeline.py
+./run_all.sh            # everything
+./run_all.sh core       # preprocessing and the six main experiments
+./run_all.sh analysis   # controls, ablations and response analyses
+```
 
-# Exp 1 — Leave-one-region-out
-python experiment/run_baseline.py
-python experiment/run_gnn.py
+Individual steps:
 
-# Exp 2 — Per-region, random split
-python experiment/run_baseline_per_region.py
-python experiment/run_gnn_per_region.py
+```bash
+python preprocessing/pipeline.py                          # processed data and graph artefacts
 
-# Exp 3 — Global inductive, random split
-python experiment/run_inductive_sample.py
+python experiment/run_baseline.py                         # Exp 1 baselines
+python experiment/run_gnn.py --seeds 1 2 4 7              # Exp 1 graph models (seed 42 is the reference run)
+python experiment/run_baseline_per_region.py              # Exp 2 baselines
+python experiment/run_gnn_per_region.py                   # Exp 2 graph models
+python experiment/run_inductive_sample.py                 # Exp 3
+python experiment/run_exp4_proportion.py                  # Exp 4
+python experiment/run_exp5_proportion_per_region.py       # Exp 5
+python experiment/run_exp6_proportion_inductive_sample.py # Exp 6
 
-# Exp 4 — Region-level proportion prediction
-python experiment/run_exp4_proportion.py
+python experiment/recompute_single_class_auc.py           # Exp 2 regional means from the stored predictions (single-class rule)
 
-# Exp 5 — Per-region proportion, random split
-python experiment/run_exp5_proportion_per_region.py
+python figures/draw_combined.py                           # classification figures
+python figures/draw_combined_prop.py                      # proportion figures
+python figures/flatten_png.py                             # RGBA -> RGB for pdfTeX
+```
 
-# Exp 6 — Global inductive proportion, random split
-python experiment/run_exp6_proportion_inductive_sample.py
+`JOBS` and `THREADS` in `run_all.sh` control parallelism.
+
+---
+
+## Repository layout
+
+```
+preprocessing/      cleaning, host-lithology inference, features, graph construction, split manifest
+experiment/         training code (gnn_training.py, baseline.py) and one run_*.py per experiment or analysis
+figures/            plotting scripts and the figures used in the manuscript
+result/             JSON outputs of every experiment and analysis
+data/               raw USGS workbook and processed artefacts
+run_all.sh          full pipeline
 ```
 
 ---
 
-## Dependencies
+## Known limitations of the record
 
-```
-pandas numpy scikit-learn scipy openpyxl pyarrow networkx
-xgboost lightgbm catboost shap
-torch torch-geometric
-pykrige
-```
+- Feature selection is fitted once on each outer training set. The ensemble prior is therefore out of fold with respect to ensemble fitting, but not with respect to the preceding supervised feature-selection step.
+- Model-selection effort differs between models. SPIRE and the same-input MLP each receive a 36-configuration search; GCN and GAT inherit SPIRE's configuration; tabular baselines use fixed settings.
+- The Middle East (n = 63, about 87% positive) gives small and near-single-class test folds in the block experiments.
+- Exp 5 splits are reconstructed from seeds rather than stored as record identifiers. The check matches labels and sizes but does not by itself establish record identity.
 
-```bash
-pip install -r requirements.txt
-```
+---
+
+## Citation and availability
+
+The raw data are publicly available from the USGS (Orris et al., 2018). Processed data, code and result files are in this repository. An archived DOI will be issued on acceptance. The files are also available from the corresponding authors on request.

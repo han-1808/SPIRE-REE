@@ -74,15 +74,16 @@ _SPLIT_MANIFEST = None  # set in main(); see split_manifest.py
 
 def _compute_metrics(y_true: np.ndarray, y_prob: np.ndarray) -> dict:
     y_pred = (y_prob >= 0.5).astype(int)
+    # ROC-AUC and PR-AUC are undefined for a single-class test fold; they are
+    # stored as None and _avg_metrics leaves the fold out of the regional mean.
     has_both = len(np.unique(y_true)) > 1
-    single_score = 1.0 if np.all(y_pred == y_true) else 0.0
     return {
         "accuracy":  float(accuracy_score(y_true, y_pred)),
         "precision": float(precision_score(y_true, y_pred, zero_division=0)),
         "recall":    float(recall_score(y_true, y_pred, zero_division=0)),
         "f1":        float(f1_score(y_true, y_pred, zero_division=0)),
-        "roc_auc":   float(roc_auc_score(y_true, y_prob)) if has_both else single_score,
-        "pr_auc":    float(average_precision_score(y_true, y_prob)) if has_both else single_score,
+        "roc_auc":   float(roc_auc_score(y_true, y_prob)) if has_both else None,
+        "pr_auc":    float(average_precision_score(y_true, y_prob)) if has_both else None,
     }
 
 

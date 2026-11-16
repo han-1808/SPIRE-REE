@@ -294,15 +294,16 @@ def evaluate_metrics(model, data, idx, threshold=0.5):
     y_pred = preds[idx].cpu().numpy()
     y_prob = probs[idx].cpu().numpy()
 
+    # ROC-AUC and PR-AUC are undefined when the evaluated set holds a single
+    # class; they are stored as None and left out of any regional mean.
     has_both_classes = len(np.unique(y_true)) > 1
-    single_score = 1.0 if np.all(y_pred == y_true) else 0.0
     metrics = {
         "accuracy":  accuracy_score(y_true, y_pred),
         "precision": precision_score(y_true, y_pred, zero_division=0),
         "recall":    recall_score(y_true, y_pred, zero_division=0),
         "f1":        f1_score(y_true, y_pred, zero_division=0),
-        "roc_auc":   roc_auc_score(y_true, y_prob) if has_both_classes else single_score,
-        "pr_auc":    average_precision_score(y_true, y_prob) if has_both_classes else single_score,
+        "roc_auc":   roc_auc_score(y_true, y_prob) if has_both_classes else None,
+        "pr_auc":    average_precision_score(y_true, y_prob) if has_both_classes else None,
     }
 
     return metrics

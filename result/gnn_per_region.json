@@ -5997,24 +5997,24 @@
           "precision": 0.7581247850865017,
           "recall": 0.945332422586521,
           "f1": 0.8338763658180394,
-          "roc_auc": 0.8457440953375546,
-          "pr_auc": 0.9150752154278907
+          "roc_auc": 0.8286045503750604,
+          "pr_auc": 0.9056391282532117
         },
         "gcn": {
           "accuracy": 0.7101237589589162,
           "precision": 0.7168332647625004,
           "recall": 0.854804189435337,
           "f1": 0.7497531610588456,
-          "roc_auc": 0.6072011915739537,
-          "pr_auc": 0.7693458632995547
+          "roc_auc": 0.5635568795266153,
+          "pr_auc": 0.7437176258883942
         },
         "gat": {
           "accuracy": 0.6768962247019703,
           "precision": 0.6680361440843574,
           "recall": 0.9039162112932605,
           "f1": 0.7514210392853383,
-          "roc_auc": 0.5738292454345967,
-          "pr_auc": 0.7398486906061186
+          "roc_auc": 0.5264769393717742,
+          "pr_auc": 0.7109429895623538
         }
       },
       "per_region": {
@@ -8606,24 +8606,24 @@
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "gcn": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             },
             "gat": {
               "accuracy": 1.0,
               "precision": 1.0,
               "recall": 1.0,
               "f1": 1.0,
-              "roc_auc": 1.0,
-              "pr_auc": 1.0
+              "roc_auc": null,
+              "pr_auc": null
             }
           },
           "predictions": {
@@ -30678,5 +30678,6 @@
     7,
     42
   ],
-  "_note_split_manifest": "Runs restricted to the five pinned seeds defined in result/split_manifest_per_region.json; earlier runs on unseeded, non-manifest splits were removed rather than averaged in."
+  "_note_split_manifest": "Runs restricted to the five pinned seeds defined in result/split_manifest_per_region.json; earlier runs on unseeded, non-manifest splits were removed rather than averaged in.",
+  "_note_single_class_folds": "ROC-AUC and PR-AUC are undefined for a single-class test fold. Such folds store None and are omitted from avg_metrics (regional mean). Applied by experiment/recompute_single_class_auc.py. Folds affected (seed, region, n_test): (2, Middle East, 14)"
 }
