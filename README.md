@@ -103,7 +103,7 @@ Each main experiment uses five runs. Seeds vary the training/validation partitio
 | Leave-one-deposit-type-out | 42, 1, 2 | `result/lodto.json` |
 | k sweep, hyperparameter sweep, feature-selection record | 42 | `result/k_sensitivity.json`, `result/hparam_sensitivity.json`, `result/feature_selection_per_fold.json` |
 
-Controlled ablations fix the split and the prior at seed 42 and vary only initialisation (and, for rewiring, the topology). Their Exp 1 reference (F1 = 0.837) therefore differs from the main Exp 1 result (0.829).
+Controlled ablations use k_pred = 10 and fix the split and the prior at seed 42. They vary only initialisation (and, for rewiring, the topology). Their Exp 1 reference (F1 = 0.837) therefore differs from the main Exp 1 result (0.829).
 
 Exp 2 graph models and baselines use the same held-out records by construction. The record identifiers of every split are stored in `result/split_manifest_per_region.json`, and both scripts check their splits against it.
 
@@ -126,6 +126,7 @@ Within one outer fold and seed (Algorithm 1 in the manuscript):
   - choosing among the 36 SPIRE configurations by validation F1;
   - early stopping and checkpoint selection;
   - choosing the neighbourhood size k (Exp 1 k sweep, by validation F1).
+- **Validation F1 is also reported** for a diagnostic sweep of 100 hyperparameter settings on one fold (Exp 2 split, seed 42; hyperparameter heat map). This sweep was not used for model selection.
 - **Validation labels are not used** for the training loss, feature selection, ensemble fitting, the edge-weight scale or the decision threshold (fixed at 0.5). The selected model is not refitted on Tr ∪ V.
 - **Validation features** are part of the graph. Validation nodes take part in message passing during training, and they can be neighbours of held-out records at inference.
 - **GCN and GAT** reuse the configuration selected for SPIRE.
@@ -169,7 +170,7 @@ Tables and figures are listed by content because their numbers depend on the jou
 | Per-region F1 of SPIRE, GCN and GAT | same files | `figures/draw_combined.py` → `fig_Z_panel_C.png` |
 | Proportion figures (Exp 4–6) | `result/exp4_proportion.json`, `result/exp5_proportion_per_region.json`, `result/exp6_proportion_inductive_sample.json` | `figures/draw_combined_prop.py` → `fig_A/B/C_panel_*.png` |
 | Paired comparisons with the strongest tabular baseline | `result/exp1_paired_tests.json`, `result/paired_significance_test.json` | `experiment/run_exp1_paired_tests.py`, `experiment/run_paired_significance_test.py` |
-| Pooled ROC-AUC with region-cluster bootstrap intervals | `result/pooled_auc_ci.json` | `experiment/run_pooled_auc_ci.py` |
+| Pooled ROC-AUC with region-cluster bootstrap intervals | `result/cluster_bootstrap_ci.json` | `experiment/run_cluster_bootstrap_ci.py` |
 | Paired region-cluster bootstrap differences | `result/cluster_bootstrap_ci.json` | `experiment/run_cluster_bootstrap_ci.py` |
 | Brier scores and reliability curves | `result/calibration_analysis.json` | `experiment/run_calibration_analysis.py` → `fig_calibration.png` |
 
